@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KaamConnect</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#123c69;color:white;padding:24px 18px}
+header h1{margin:0 0 8px}
+main{padding:18px;max-width:850px;margin:auto}
+input{width:100%;padding:13px;border:1px solid #ccd3df;border-radius:9px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;padding:15px;border-radius:12px;box-shadow:0 2px 8px #0001}
+.card h3{margin-top:0}
+button{background:#1769aa;color:white;border:0;border-radius:8px;padding:11px;width:100%;font-size:15px}
+#message{color:#1769aa;font-weight:bold}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+<h1>KaamConnect 🤝</h1>
+<p>All Services, One App</p>
+</header>
+<main>
+<h2>Find local services</h2>
+<p>Apne ghar ke kaam ke liye trusted service chunein.</p>
+<input id="search" placeholder="Search plumber, electrician..." oninput="searchServices()">
+<p id="message"></p>
+<h2>Popular Services</h2>
+<div class="grid" id="services">
+<div class="card" data-name="plumber">
+<h3>🔧 Plumber</h3><p>Pipe aur tap repair</p>
+<button onclick="book('Plumber')">Book service</button>
+</div>
+<div class="card" data-name="electrician">
+<h3>💡 Electrician</h3><p>Electrical repair</p>
+<button onclick="book('Electrician')">Book service</button>
+</div>
+<div class="card" data-name="cleaning">
+<h3>🧹 Cleaning</h3><p>Home cleaning</p>
+<button onclick="book('Home Cleaning')">Book service</button>
+</div>
+<div class="card" data-name="carpenter">
+<h3>🪚 Carpenter</h3><p>Furniture repair</p>
+<button onclick="book('Carpenter')">Book service</button>
+</div>
+<div class="card" data-name="ac repair">
+<h3>❄️ AC Repair</h3><p>AC servicing</p>
+<button onclick="book('AC Repair')">Book service</button>
+</div>
+<div class="card" data-name="painter">
+<h3>🎨 Painter</h3><p>Painting services</p>
+<button onclick="book('Painter')">Book service</button>
+</div>
+</div>
+</main>
+<script>
+function book(service){
+document.getElementById('message').textContent=
+service+' selected! Real booking feature is coming next.';
+}
+function searchServices(){
+const q=document.getElementById('search').value.toLowerCase().trim();
+document.querySelectorAll('.card').forEach(card=>{
+card.style.display=card.dataset.name.includes(q)?'':'none';
+});
+}
+</script>
+</body>
+</html>
