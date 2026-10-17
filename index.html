@@ -1,74 +1,143 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KaamConnect</title>
+<meta name="theme-color" content="#0f766e">
+<title>KaamConnect — Local Services, Made Easy</title>
 <style>
+:root{--green:#0f766e;--green-dark:#115e59;--mint:#e6fffa;--ink:#152b2a;--muted:#617572;--line:#dce9e6;--surface:#fff;--bg:#f5faf8;--shadow:0 10px 28px #123c6910}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
-header{background:#123c69;color:white;padding:24px 18px}
-header h1{margin:0 0 8px}
-main{padding:18px;max-width:850px;margin:auto}
-input{width:100%;padding:13px;border:1px solid #ccd3df;border-radius:9px;font-size:16px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:white;padding:15px;border-radius:12px;box-shadow:0 2px 8px #0001}
-.card h3{margin-top:0}
-button{background:#1769aa;color:white;border:0;border-radius:8px;padding:11px;width:100%;font-size:15px}
-#message{color:#1769aa;font-weight:bold}
-@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+button,input{font:inherit}
+button{cursor:pointer}
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.nav{max-width:1100px;margin:auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:850;color:var(--green-dark);letter-spacing:-.5px}
+.brand-mark{width:39px;height:39px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:1.35rem}
+.nav-note{font-size:.9rem;color:var(--muted)}
+.hero{background:linear-gradient(130deg,#0f766e,#164e63);color:#fff;padding:52px 22px 48px;overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;width:290px;height:290px;border:48px solid #ffffff0d;border-radius:50%;right:-55px;top:-105px}
+.hero-inner{max-width:1100px;margin:auto;position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;background:#ffffff1c;border:1px solid #ffffff35;border-radius:99px;padding:7px 12px;font-size:.82rem;font-weight:700}
+.hero h1{font-size:clamp(2rem,5vw,3.45rem);line-height:1.08;letter-spacing:-1.7px;max-width:690px;margin:18px 0 12px}
+.hero p{color:#d7f5ee;max-width:560px;line-height:1.65;margin:0 0 24px}
+.searchbox{display:flex;align-items:center;gap:10px;background:#fff;border-radius:15px;padding:8px;max-width:680px;box-shadow:0 12px 30px #062b2a33}
+.search-icon{font-size:1.2rem;padding-left:9px;color:var(--muted)}
+.searchbox input{width:100%;min-width:0;border:0;outline:0;padding:11px 4px;color:var(--ink);background:transparent}
+.searchbox button{border:0;border-radius:10px;background:var(--green);color:#fff;font-weight:750;padding:12px 17px}
+main{max-width:1100px;margin:auto;padding:32px 22px 54px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:18px}
+.section-head h2{margin:0;font-size:1.55rem;letter-spacing:-.5px}
+.section-head p{margin:6px 0 0;color:var(--muted);font-size:.94rem}
+.results-label{color:var(--muted);font-size:.88rem}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{background:var(--surface);padding:19px;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:210px;transition:transform .18s,border-color .18s}
+.card:hover{transform:translateY(-3px);border-color:#9fd4ca}
+.service-icon{width:50px;height:50px;border-radius:15px;background:var(--mint);display:grid;place-items:center;font-size:1.65rem;margin-bottom:14px}
+.card h3{margin:0 0 6px;font-size:1.08rem}
+.card p{margin:0 0 18px;color:var(--muted);font-size:.92rem;line-height:1.5}
+.card button{margin-top:auto;border:1px solid #b8ddd6;background:#f2fbf8;color:var(--green-dark);border-radius:10px;padding:11px 12px;font-weight:750}
+.card button:hover{background:var(--green);color:white}
+#message{display:none;margin:0 0 20px;padding:13px 15px;border-radius:12px;background:#e6fffa;color:#115e59;border:1px solid #a7e6d9;line-height:1.5}
+#message.show{display:block}
+.empty{display:none;text-align:center;background:#fff;border:1px dashed #b8cec9;border-radius:16px;padding:28px;color:var(--muted);grid-column:1/-1}
+.trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:28px}
+.trust-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;gap:11px;align-items:flex-start}
+.trust-item span{font-size:1.3rem}
+.trust-item strong{display:block;font-size:.94rem;margin-bottom:4px}
+.trust-item small{color:var(--muted);line-height:1.45}
+footer{border-top:1px solid var(--line);background:#fff;padding:22px;color:var(--muted);text-align:center;font-size:.88rem}
+@media(max-width:700px){.hero{padding:38px 18px 34px}.nav{padding:12px 18px}.nav-note{font-size:.78rem}main{padding:27px 16px 40px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.card{padding:14px;min-height:202px}.section-head h2{font-size:1.35rem}.trust{grid-template-columns:1fr}.hero h1{letter-spacing:-1px}}
+@media(max-width:390px){.grid{grid-template-columns:1fr}.card{min-height:0}.searchbox button{padding:11px 12px}.nav-note{display:none}}
 </style>
 </head>
 <body>
-<header>
-<h1>KaamConnect 🤝</h1>
-<p>All Services, One App</p>
+<div class="topbar">
+  <nav class="nav" aria-label="Main navigation">
+    <div class="brand"><span class="brand-mark">🤝</span><span>KaamConnect</span></div>
+    <div class="nav-note">Local help, made simple</div>
+  </nav>
+</div>
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">✨ Your neighbourhood, connected</span>
+    <h1>Find the right help for every job.</h1>
+    <p>Plumbers, electricians, cleaners and more — discover the service you need for your home, all in one place.</p>
+    <div class="searchbox">
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="search" type="search" placeholder="Try “plumber” or “AC repair”" aria-label="Search services" oninput="searchServices()">
+      <button type="button" onclick="focusServices()">Explore</button>
+    </div>
+  </div>
 </header>
 <main>
-<h2>Find local services</h2>
-<p>Apne ghar ke kaam ke liye trusted service chunein.</p>
-<input id="search" placeholder="Search plumber, electrician..." oninput="searchServices()">
-<p id="message"></p>
-<h2>Popular Services</h2>
-<div class="grid" id="services">
-<div class="card" data-name="plumber">
-<h3>🔧 Plumber</h3><p>Pipe aur tap repair</p>
-<button onclick="book('Plumber')">Book service</button>
-</div>
-<div class="card" data-name="electrician">
-<h3>💡 Electrician</h3><p>Electrical repair</p>
-<button onclick="book('Electrician')">Book service</button>
-</div>
-<div class="card" data-name="cleaning">
-<h3>🧹 Cleaning</h3><p>Home cleaning</p>
-<button onclick="book('Home Cleaning')">Book service</button>
-</div>
-<div class="card" data-name="carpenter">
-<h3>🪚 Carpenter</h3><p>Furniture repair</p>
-<button onclick="book('Carpenter')">Book service</button>
-</div>
-<div class="card" data-name="ac repair">
-<h3>❄️ AC Repair</h3><p>AC servicing</p>
-<button onclick="book('AC Repair')">Book service</button>
-</div>
-<div class="card" data-name="painter">
-<h3>🎨 Painter</h3><p>Painting services</p>
-<button onclick="book('Painter')">Book service</button>
-</div>
-</div>
+  <div id="message" role="status" aria-live="polite"></div>
+  <section id="service-section">
+    <div class="section-head">
+      <div><h2>Popular services</h2><p>What can we help you with today?</p></div>
+      <span class="results-label" id="result-count">6 services</span>
+    </div>
+    <div class="grid" id="services">
+      <article class="card" data-name="plumber plumbing pipe tap repair">
+        <div class="service-icon">🔧</div><h3>Plumber</h3><p>Pipe leaks, taps and bathroom repairs.</p>
+        <button type="button" onclick="book('Plumber')">Request service →</button>
+      </article>
+      <article class="card" data-name="electrician electrical wiring light repair">
+        <div class="service-icon">💡</div><h3>Electrician</h3><p>Electrical fixes, wiring and lighting.</p>
+        <button type="button" onclick="book('Electrician')">Request service →</button>
+      </article>
+      <article class="card" data-name="cleaning home cleaner house cleaning">
+        <div class="service-icon">🧹</div><h3>Home cleaning</h3><p>Help keep your home fresh and tidy.</p>
+        <button type="button" onclick="book('Home Cleaning')">Request service →</button>
+      </article>
+      <article class="card" data-name="carpenter carpentry furniture wood repair">
+        <div class="service-icon">🪚</div><h3>Carpenter</h3><p>Furniture fixes, fittings and woodwork.</p>
+        <button type="button" onclick="book('Carpenter')">Request service →</button>
+      </article>
+      <article class="card" data-name="ac repair air conditioner cooling servicing">
+        <div class="service-icon">❄️</div><h3>AC repair</h3><p>AC servicing and cooling problems.</p>
+        <button type="button" onclick="book('AC Repair')">Request service →</button>
+      </article>
+      <article class="card" data-name="painter painting wall home colour">
+        <div class="service-icon">🎨</div><h3>Painter</h3><p>Wall painting and home refreshes.</p>
+        <button type="button" onclick="book('Painter')">Request service →</button>
+      </article>
+      <div class="empty" id="empty">No matching services found. Try a different search.</div>
+    </div>
+  </section>
+  <section class="trust" aria-label="How it works">
+    <div class="trust-item"><span>🔎</span><div><strong>Find a service</strong><small>Search for the help you need.</small></div></div>
+    <div class="trust-item"><span>📋</span><div><strong>Request a booking</strong><small>Choose a service to start your request.</small></div></div>
+    <div class="trust-item"><span>🤝</span><div><strong>Local connection</strong><small>Built to bring customers and local workers together.</small></div></div>
+  </section>
 </main>
+<footer>© <span id="year"></span> KaamConnect · All services, one place.</footer>
 <script>
+const message = document.getElementById('message');
 function book(service){
-document.getElementById('message').textContent=
-service+' selected! Real booking feature is coming next.';
+  message.textContent = service + ' selected. This demo does not send a booking yet; worker listings and booking setup are the next step.';
+  message.classList.add('show');
+  message.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function searchServices(){
-const q=document.getElementById('search').value.toLowerCase().trim();
-document.querySelectorAll('.card').forEach(card=>{
-card.style.display=card.dataset.name.includes(q)?'':'none';
-});
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const cards = [...document.querySelectorAll('.card[data-name]')];
+  let visible = 0;
+  cards.forEach(card => {
+    const match = card.dataset.name.includes(q) || card.textContent.toLowerCase().includes(q);
+    card.style.display = match ? '' : 'none';
+    if(match) visible++;
+  });
+  document.getElementById('empty').style.display = visible ? 'none' : 'block';
+  document.getElementById('result-count').textContent = visible + (visible === 1 ? ' service' : ' services');
 }
+function focusServices(){
+  document.getElementById('service-section').scrollIntoView({behavior:'smooth'});
+  document.getElementById('search').focus({preventScroll:true});
+}
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
