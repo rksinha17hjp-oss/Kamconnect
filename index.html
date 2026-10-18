@@ -679,6 +679,9 @@ async function loadWorkerBookings() {
           <strong>${safe(b.service || "Service")}</strong>
           <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
           <p class="muted">Phone: ${safe(b.phone || "Not provided")}</p>
+${b.phone ? `
+  <a class="btn" href="tel:${safe(b.phone)}">📞 Call Customer</a>
+` : ""}
           <p class="muted">Address: ${safe(b.address || "")}</p>
           <p class="muted">Date: ${safe(b.booking_date || "")}</p>
           <p class="muted">Status: ${safe(status.toUpperCase())}</p>
