@@ -267,7 +267,7 @@ async function loadWorkers() {
   showNotice("workerNotice","Loading available workers…");
   const {data,error} = await client
     .from("worker_profiles")
-    .select("id, full_name, service, price, area, photo_url, available")
+    .select("id, full_name, service, price, area, phone, photo_url, available")
     .eq("available",true)
     .order("full_name");
   if(error) {
@@ -290,8 +290,9 @@ function renderWorkers() {
       <div class="service-icon">${icon}</div>
       <span class="tag">● Available</span>
       <h3>${safe(w.full_name)}</h3>
-      <p class="muted">${safe(w.service)}${w.area ? " · "+safe(w.area) : ""}</p>
-      <div class="price">${money(w.price)}</div>
+<p class="muted">${safe(w.service)}${w.area ? " · "+safe(w.area) : ""}</p>
+${w.phone ? `<p class="muted">📞 ${safe(w.phone)}</p>` : ""}
+<div class="price">${money(w.price)}</div>
       <div class="worker-bottom">
         <span class="muted">Service professional</span>
         <button class="btn primary" onclick="bookWorker('${safe(w.id)}')">Select</button>
