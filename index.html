@@ -140,14 +140,31 @@ function focusServices(){
 document.getElementById('year').textContent = new Date().getFullYear();
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 const SUPABASE_URL = 'https://unbxdvoqjbefnsnrsmck.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_kt1bWOAe1U3vjTOr-tvYlQ_j0RNNAU7';
+
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-  console.log("Supabase client loaded:", !!supabaseClient);
+
+console.log("Supabase client loaded:", !!supabaseClient);
 </script>
+
+<div id="connectionStatus" style="padding:12px; text-align:center;">
+  Supabase test ho raha hai...
+</div>
+
+<script>
+document.getElementById('connectionStatus').textContent =
+  window.supabase && typeof supabaseClient !== 'undefined'
+    ? 'Supabase client loaded ✅'
+    : 'Supabase client load nahi hua ❌';
+</script>
+
 </body>
 </html>
+
