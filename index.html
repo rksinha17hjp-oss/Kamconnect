@@ -628,7 +628,7 @@ $("bookingForm").addEventListener("submit",async event=>{
         <p class="muted">Date: ${safe(b.booking_date || "")}</p>
         <p class="muted">Status: ${safe(b.status || "pending")}</p>
         ${b.notes ? `<p class="muted">Notes: ${safe(b.notes)}</p>` : ""}
-        ${b.status === "pending" ? `
+        ${(b.status || "").trim().toLowerCase() === "pending" ? `
           <button class="btn" onclick="updateWorkerBookingStatus('${b.id}','accepted')">Accept</button>
           <button class="btn secondary" onclick="updateWorkerBookingStatus('${b.id}','rejected')">Reject</button>
         ` : ""}
