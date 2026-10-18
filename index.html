@@ -65,6 +65,200 @@ footer strong{color:white}
 .small{font-size:12px;color:var(--muted);line-height:1.5}
 @media(max-width:760px){.hero{grid-template-columns:1fr}.hero-art{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:17px}}
 @media(max-width:480px){header{padding:14px 16px}.logo{font-size:21px}nav{width:100%;justify-content:space-between}main{padding:16px 12px 40px}.hero{border-radius:21px;padding:25px 20px}.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.stats{grid-template-columns:1fr 1fr}.stat:last-child{display:none}.panel{padding:17px}.section-head h2{font-size:23px}}
+
+/* KaamConnect — Premium UI upgrade */
+:root {
+  --bg: #f3f6fb;
+  --ink: #152238;
+  --muted: #64748b;
+  --green: #0d9965;
+  --dark: #101a2c;
+  --line: #e2e8f0;
+  --white: #ffffff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top left, #e0f8ec 0, transparent 35%),
+    var(--bg);
+  color: var(--ink);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(16, 26, 44, 0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid #ffffff16;
+  box-shadow: 0 5px 24px #101a2c18;
+}
+
+.logo {
+  font-size: 25px;
+  letter-spacing: -1.2px;
+}
+
+nav a {
+  border-radius: 9px;
+  transition: background .2s, color .2s;
+}
+
+nav a:hover {
+  background: #ffffff15;
+  color: #7af0ba;
+}
+
+.btn {
+  border-radius: 12px;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px #101a2c20;
+}
+
+.primary {
+  background: linear-gradient(135deg, #10a66d, #087f56);
+  color: #fff;
+}
+
+main {
+  padding-top: 30px;
+}
+
+.hero {
+  position: relative;
+  background: linear-gradient(125deg, #101a2c 0%, #153d38 60%, #176b50 100%);
+  border: 1px solid #ffffff18;
+  box-shadow: 0 22px 55px #153d3824;
+}
+
+.hero h1 {
+  letter-spacing: -2.4px;
+}
+
+.search {
+  border: 1px solid #ffffff70;
+  box-shadow: 0 12px 30px #00000016;
+}
+
+.search input {
+  background: transparent;
+}
+
+.stat {
+  border-radius: 18px;
+  box-shadow: 0 5px 20px #15223806;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px #15223810;
+}
+
+.chip {
+  transition: all .2s;
+}
+
+.chip:hover {
+  border-color: #0d9965;
+  transform: translateY(-1px);
+}
+
+.chip.active {
+  background: #d8f8e8;
+  border-color: #94e5bd;
+}
+
+.grid {
+  gap: 18px;
+}
+
+.card {
+  position: relative;
+  border-radius: 21px;
+  border: 1px solid #e1e8f0;
+  padding: 20px;
+  box-shadow: 0 7px 24px #15223808;
+  transition: transform .22s, box-shadow .22s, border-color .22s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #a6e7c5;
+  box-shadow: 0 17px 38px #15223812;
+}
+
+.service-icon {
+  border-radius: 17px;
+  background: linear-gradient(135deg, #e4f9ed, #d1f4e2);
+}
+
+.card h3 {
+  font-size: 18px;
+  letter-spacing: -.3px;
+}
+
+.price {
+  color: #087f56;
+  font-size: 22px;
+}
+
+.tag {
+  background: #e1f8eb;
+  color: #08794b;
+  letter-spacing: .2px;
+}
+
+.worker-bottom {
+  padding-top: 12px;
+  border-top: 1px solid #edf1f6;
+}
+
+.panel {
+  border-radius: 22px;
+  box-shadow: 0 10px 35px #15223808;
+}
+
+input, select, textarea {
+  border-radius: 12px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+footer {
+  margin-top: 35px;
+  border-top: 3px solid #16a36a;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding-top: 17px;
+  }
+
+  .hero {
+    box-shadow: 0 12px 30px #153d381c;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  nav {
+    gap: 5px;
+  }
+
+  nav a {
+    padding: 7px 5px;
+    font-size: 13px;
+  }
+}
 </style>
 </head>
 <body>
