@@ -705,7 +705,7 @@ if (!["accepted", "rejected", "completed"].includes(newStatus)) return;
     .update({ status: newStatus })
     .eq("id", id)
     .eq("worker_id", currentUser.id)
-    .eq("status", "pending")
+.eq("status", newStatus === "completed" ? "accepted" : "pending")
     .select("id");
 
   if (error) {
