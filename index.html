@@ -566,7 +566,8 @@ $("bookingForm").addEventListener("submit",async event=>{
     $("bookingList").innerHTML='<div class="empty">No bookings yet. Choose a service to get started.</div>';return;
   }
   async function loadWorkerBookings() {
-  const panel = $("workerDashboard");
+  alert("Worker dashboard function started");
+    const panel = $("workerDashboard");
 
   if (!currentUser) {
     panel.style.display = "none";
