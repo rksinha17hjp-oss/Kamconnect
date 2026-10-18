@@ -556,19 +556,45 @@ $("bookingForm").addEventListener("submit",async event=>{
   }catch(error){showNotice("bookingNotice","Booking could not be saved: "+error.message,"bad")}
   finally{button.disabled=false;button.textContent="Request booking →"}
 });
- async function loadMyBookings(){
-  if(!currentUser)return;
-  const {data,error}=await client.from("bookings")
+   async function loadMyBookings() {
+  if (!currentUser) return;
+
+  const { data, error } = await client
+    .from("bookings")
     .select("id, service, address, booking_date, status, created_at, worker_id")
-    .eq("customer_id",currentUser.id).order("created_at",{ascending:false});
-  if(error){showNotice("myBookingsNotice","Could not load bookings: "+error.message,"bad");return}
-  hideNotice("myBookingsNotice");
-  if(!data||!data.length){
-    $("bookingList").innerHTML='<div class="empty">No bookings yet. Choose a service to get started.</div>';return;
+    .eq("customer_id", currentUser.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showNotice("myBookingsNotice", "Could not load bookings: " + error.message, "bad");
+    return;
   }
-  async function loadWorkerBookings() {
-  alert("Worker dashboard function started");
-    const panel = $("workerDashboard");
+
+  hideNotice("myBookingsNotice");
+
+  if (!data || !data.length) {
+    $("bookingList").innerHTML =
+      '<div class="empty">No bookings yet. Choose a service to get started.</div>';
+    return;
+  }
+
+  $("bookingList").innerHTML = data.map(b => {
+    const worker = workers.find(w => w.id === b.worker_id);
+
+    return `<article class="booking-item">
+      <div>
+        <strong>${safe(b.service || "Service")}</strong>
+        <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
+        <p class="muted">${safe(b.address || "")}</p>
+        <p class="muted">Date: ${safe(b.booking_date || "")}</p>
+      </div>
+      <span class="tag">${safe(String(b.status || "pending").toUpperCase())}</span>
+    </article>`;
+  }).join("");
+}
+
+async function loadWorkerBookings() {
+  const panel = $("workerDashboard");
 
   if (!currentUser) {
     panel.style.display = "none";
@@ -580,8 +606,7 @@ $("bookingForm").addEventListener("submit",async event=>{
     .select("id")
     .eq("id", currentUser.id)
     .maybeSingle();
-alert("Login ID: " + currentUser.id +
-      "\nWorker profile: " + (profile ? profile.id : "NOT FOUND"));
+
   if (profileError) {
     showNotice(
       "workerBookingsNotice",
@@ -590,7 +615,7 @@ alert("Login ID: " + currentUser.id +
     );
     return;
   }
-panel.style.display = "block";
+
   if (!profile) {
     panel.style.display = "none";
     return;
@@ -600,17 +625,10 @@ panel.style.display = "block";
 
   const { data, error } = await client
     .from("bookings")
-    .select("id, customer_name, phone, service, address, booking_date, notes, status")
+    .select("id, customer_name, phone, service, address, booking_date, notes, status, created_at")
     .eq("worker_id", currentUser.id)
     .order("created_at", { ascending: false });
-console.log("Worker ID:", currentUser.id);
-console.log("Bookings:", data);
-    if (error) {
-  alert("Booking error: " + error.message);
-} else {
-  alert("Worker ID: " + currentUser.id +
-        "\nBookings found: " + (data ? data.length : 0));
-    }
+
   if (error) {
     showNotice(
       "workerBookingsNotice",
@@ -639,8 +657,8 @@ console.log("Bookings:", data);
         <p class="muted">Status: ${safe(b.status || "pending")}</p>
         ${b.notes ? `<p class="muted">Notes: ${safe(b.notes)}</p>` : ""}
         ${(b.status || "").trim().toLowerCase() === "pending" ? `
-          <button class="btn" onclick="updateWorkerBookingStatus('${b.id}','accepted')">Accept</button>
-          <button class="btn secondary" onclick="updateWorkerBookingStatus('${b.id}','rejected')">Reject</button>
+          <button class="btn" onclick="updateWorkerBookingStatus('${b.id}', 'accepted')">Accept</button>
+          <button class="btn secondary" onclick="updateWorkerBookingStatus('${b.id}', 'rejected')">Reject</button>
         ` : ""}
       </div>
     </article>
@@ -672,29 +690,15 @@ async function updateWorkerBookingStatus(id, newStatus) {
   if (!data || !data.length) {
     showNotice(
       "workerBookingsNotice",
-      "Booking was not updated. It may no longer be pending, or permission was denied.",
+      "Booking was not updated. Check database permissions or whether it is still pending.",
       "bad"
     );
     return;
   }
 
-  showNotice(
-    "workerBookingsNotice",
-    "Booking " + newStatus + " successfully!"
-  );
-
+  showNotice("workerBookingsNotice", "Booking " + newStatus + " successfully!");
   await loadWorkerBookings();
-      } 
-  $("bookingList").innerHTML=data.map(b=>{
-    const worker=workers.find(w=>w.id===b.worker_id);
-    return `<article class="booking-item"><div>
-      <strong>${safe(b.service)}</strong>
-      <p class="muted">Worker: ${safe(worker?.full_name||"Assigned professional")}</p>
-      <p class="muted">${safe(b.address)}</p>
-      <p class="muted">Date: ${safe(b.booking_date)}</p>
-    </div><span class="tag">${safe(String(b.status||"pending").toUpperCase())}</span></article>`;
-  }).join("");
-}
+          }
 client.auth.onAuthStateChange((_event,session)=>{
   currentUser=session?.user||null;updateAccountUI();
 });
