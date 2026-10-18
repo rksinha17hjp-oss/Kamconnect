@@ -303,7 +303,21 @@ footer a{color:#ffad91;font-size:12px}
     <div id="myBookingsNotice" class="notice"></div>
     <div id="bookingList"><p class="muted">Log in to view your bookings.</p></div>
   </section>
+<section id="workerDashboard" class="panel" style="display:none">
+  <div class="section-head">
+    <div>
+      <div class="kicker">Worker area</div>
+      <h2>Booking requests</h2>
+      <p class="sub">Accept or reject requests assigned to you.</p>
+    </div>
+    <button class="btn secondary" onclick="loadWorkerBookings()">↻ Refresh</button>
+  </div>
 
+  <div id="workerBookingsNotice" class="notice"></div>
+  <div id="workerBookingList">
+    <p class="muted">Log in to view assigned requests.</p>
+  </div>
+</section>
   <section id="authSection" class="panel auth-box hidden">
     <div class="kicker">Welcome to KaamConnect</div>
     <h2 id="authTitle">Welcome back</h2>
