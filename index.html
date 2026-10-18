@@ -3,268 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10251f">
+<meta name="description" content="KaamConnect — find trusted home service professionals near you.">
 <title>KaamConnect | Home Services</title>
-<meta name="theme-color" content="#101827">
-<meta name="description" content="Book trusted home service professionals with KaamConnect.">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--bg:#f5f7fb;--ink:#172033;--muted:#697386;--green:#16a36a;--dark:#101827;--line:#e5e9f1;--white:#fff}
+:root {
+  --bg:#f5f7f4;
+  --ink:#14251f;
+  --muted:#65746d;
+  --green:#0b8c62;
+  --green2:#16b981;
+  --dark:#10251f;
+  --line:#e1e9e3;
+  --white:#fff;
+  --soft:#e7f7ee;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at top left,#e0f8ec 0,transparent 35%),var(--bg);
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-header{background:var(--dark);color:white;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:23px;font-weight:900;letter-spacing:-1px}.logo span{color:#46e2a0}
-nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-nav a{color:#e1e7f0;text-decoration:none;font-size:14px;padding:8px}
-.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:750;transition:.2s}
-.btn:hover{transform:translateY(-1px)}
-.primary{background:var(--green);color:white}
-.light{background:#e8fff3;color:#08794b}
-.ghost{background:#263247;color:white}
-main{max-width:1120px;margin:auto;padding:24px 18px 60px}
-.hero{background:linear-gradient(120deg,#101827,#183d36);color:white;border-radius:28px;padding:clamp(25px,5vw,55px);display:grid;grid-template-columns:1.3fr .7fr;gap:22px;align-items:center;overflow:hidden}
-.eyebrow{color:#7af0ba;font-size:12px;letter-spacing:2px;font-weight:850;text-transform:uppercase}
-h1{font-size:clamp(35px,5vw,58px);line-height:1.04;letter-spacing:-2px;margin:14px 0}
-.hero p{color:#c6d2d8;line-height:1.7;max-width:500px}
-.hero-art{font-size:105px;text-align:center;filter:drop-shadow(0 12px 30px #0005)}
-.search{display:flex;gap:10px;background:white;border-radius:16px;padding:8px;margin-top:22px;max-width:560px}
-.search input{border:0;outline:none;min-width:0;flex:1;padding:10px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 34px}
-.stat{background:white;border:1px solid var(--line);border-radius:16px;padding:16px}
-.stat strong{display:block;font-size:20px}.stat span{color:var(--muted);font-size:12px}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:34px 0 17px}
-h2{font-size:26px;letter-spacing:-.7px;margin:0 0 6px}.sub{color:var(--muted);font-size:14px;margin:0}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}
-.chip{border:1px solid var(--line);background:white;color:#465166;padding:9px 13px;border-radius:30px}
-.chip.active{background:#dff9eb;border-color:#b3edce;color:#08794b;font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-.card{background:white;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 5px 18px #16233a06}
-.service-icon{height:53px;width:53px;display:grid;place-items:center;background:#e7faef;border-radius:16px;font-size:27px;margin-bottom:13px}
-.card h3{margin:5px 0 7px;font-size:17px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
-.price{font-size:19px;font-weight:850;margin:12px 0}
-.tag{display:inline-block;border-radius:20px;background:#e8fff3;color:#08794b;font-size:11px;font-weight:800;padding:5px 9px}
-.worker-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:14px}
-.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:22px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.field{display:flex;flex-direction:column;gap:7px;min-width:0}
+a{color:inherit}
+header{
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:18px;padding:14px 5%;
+  background:rgba(16,37,31,.96);backdrop-filter:blur(14px);
+  color:white;border-bottom:1px solid #ffffff16;
+}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1.2px;white-space:nowrap}
+.logo span,footer span{color:#58e3a5}
+nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+nav a{
+  color:#e1eee7;text-decoration:none;font-size:14px;font-weight:650;
+  padding:10px 12px;border-radius:10px;transition:.2s;
+}
+nav a:hover{background:#ffffff13;color:#69e7b0}
+.btn{
+  border:0;border-radius:12px;padding:12px 17px;
+  font-weight:800;transition:transform .2s,box-shadow .2s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px #10251f20}
+.primary{background:linear-gradient(135deg,#14a875,#087a54);color:#fff}
+.light{background:#e3f8ec;color:#08764f}
+.ghost{background:#293e36;color:#fff}
+main{max-width:1180px;margin:auto;padding:30px 20px 64px}
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:grid;grid-template-columns:1.2fr .8fr;align-items:center;
+  gap:24px;min-height:360px;padding:clamp(28px,5vw,64px);
+  border-radius:30px;color:white;
+  background:radial-gradient(circle at 85% 20%,#2c8b64 0,transparent 30%),
+  linear-gradient(125deg,#10251f 0%,#164737 65%,#1d7653 100%);
+  box-shadow:0 24px 60px #123d2a24;
+}
+.hero:after{
+  content:"";position:absolute;z-index:-1;width:340px;height:340px;
+  right:-100px;bottom:-190px;border:1px solid #ffffff20;border-radius:50%;
+  box-shadow:0 0 0 36px #ffffff08,0 0 0 72px #ffffff06;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;color:#83f0bd;
+  font-size:12px;letter-spacing:1.8px;font-weight:900;text-transform:uppercase;
+}
+.eyebrow:before{content:"";width:24px;height:2px;background:#83f0bd}
+h1{max-width:650px;font-size:clamp(38px,5.4vw,66px);line-height:1.02;letter-spacing:-2.8px;margin:18px 0}
+.hero p{max-width:570px;color:#d1e3d9;font-size:16px;line-height:1.8;margin:0}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.hero-actions a{text-decoration:none}
+.hero-art{display:grid;place-items:center;min-height:230px;font-size:clamp(100px,14vw,170px)}
+.hero-art span{
+  display:grid;place-items:center;width:220px;height:220px;border-radius:50%;
+  background:linear-gradient(145deg,#ffffff1d,#ffffff06);border:1px solid #ffffff20;
+}
+.search{display:flex;gap:8px;max-width:590px;padding:8px;margin-top:25px;border-radius:16px;background:white;box-shadow:0 12px 32px #0002}
+.search input{min-width:0;flex:1;border:0;outline:none;padding:10px 12px;color:var(--ink);background:transparent}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 38px}
+.stat{display:flex;align-items:center;gap:13px;background:white;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 5px 22px #15223805;transition:.2s}
+.stat:hover{transform:translateY(-3px);box-shadow:0 12px 26px #15223810}
+.stat-icon{display:grid;place-items:center;width:45px;height:45px;flex-shrink:0;border-radius:14px;background:var(--soft);font-size:22px}
+.stat strong{display:block;font-size:18px;letter-spacing:-.4px}
+.stat span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.section{margin-top:42px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin:0 0 18px}
+.kicker{color:var(--green);font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:900}
+h2{font-size:clamp(24px,3vw,32px);letter-spacing:-1px;margin:5px 0 7px}
+.sub{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
+.chip{border:1px solid var(--line);background:white;color:#405249;padding:10px 15px;border-radius:30px;font-size:13px;font-weight:750;transition:.2s}
+.chip:hover,.chip.active{background:#dff7e9;border-color:#a8e7c2;color:#08764f}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{
+  background:white;border:1px solid var(--line);border-radius:21px;
+  padding:21px;box-shadow:0 6px 24px #15223806;
+  transition:transform .22s,box-shadow .22s,border-color .22s;min-width:0;
+}
+.card:hover{transform:translateY(-4px);border-color:#b4e8c9;box-shadow:0 17px 38px #15223810}
+.service-icon{display:grid;place-items:center;width:58px;height:58px;margin-bottom:16px;border-radius:18px;background:linear-gradient(135deg,#e5f9ed,#d3f3e1);font-size:29px}
+.card h3{font-size:18px;letter-spacing:-.35px;margin:7px 0}
+.muted{color:var(--muted);font-size:13px;line-height:1.6}
+.card .btn{margin-top:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;border-radius:30px;background:#e3f8ec;color:#08764f;font-size:11px;font-weight:900;padding:6px 10px}
+.price{font-size:23px;font-weight:900;letter-spacing:-.5px;color:#087a54;margin:12px 0}
+.worker-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:14px;margin-top:14px;border-top:1px solid #edf2ee}
+.panel{background:white;border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,30px);margin-top:22px;box-shadow:0 10px 35px #15223808}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
 .field.full{grid-column:1/-1}
-label{font-size:13px;font-weight:750}
-input,select,textarea{width:100%;border:1px solid #dce2ec;background:#fff;border-radius:11px;padding:12px;color:var(--ink);outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #16a36a18}
-textarea{resize:vertical;min-height:80px}
-.notice{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:14px;line-height:1.5;display:none}
+label{font-size:13px;font-weight:800;color:#33463c}
+input,select,textarea{width:100%;border:1px solid #dce6df;background:white;border-radius:12px;padding:13px 14px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 4px #16a36a18}
+textarea{resize:vertical;min-height:88px}
+.notice{padding:13px 15px;border-radius:13px;margin:12px 0;font-size:14px;line-height:1.55;display:none}
 .notice.show{display:block}.notice.ok{background:#e7faef;color:#08794b}.notice.bad{background:#fff0ef;color:#a12b27}
-.auth-box{max-width:620px;margin:24px auto}
-.auth-tabs{display:flex;gap:8px;margin-bottom:18px}
-.auth-tabs button{flex:1}
+.auth-box{max-width:650px;margin:24px auto}
+.auth-tabs{display:flex;gap:8px;margin-bottom:18px}.auth-tabs button{flex:1}
 .hidden{display:none!important}
-.booking-item{border:1px solid var(--line);border-radius:14px;padding:15px;margin-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-footer{background:var(--dark);color:#c8d1de;text-align:center;padding:28px 18px;font-size:13px}
-footer strong{color:white}
-.small{font-size:12px;color:var(--muted);line-height:1.5}
-@media(max-width:760px){.hero{grid-template-columns:1fr}.hero-art{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:17px}}
-@media(max-width:480px){header{padding:14px 16px}.logo{font-size:21px}nav{width:100%;justify-content:space-between}main{padding:16px 12px 40px}.hero{border-radius:21px;padding:25px 20px}.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.stats{grid-template-columns:1fr 1fr}.stat:last-child{display:none}.panel{padding:17px}.section-head h2{font-size:23px}}
-
-/* KaamConnect — Premium UI upgrade */
-:root {
-  --bg: #f3f6fb;
-  --ink: #152238;
-  --muted: #64748b;
-  --green: #0d9965;
-  --dark: #101a2c;
-  --line: #e2e8f0;
-  --white: #ffffff;
+.booking-item{border:1px solid var(--line);border-radius:15px;padding:16px;margin-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.small{font-size:12px;color:var(--muted);line-height:1.6}
+footer{background:#10251f;color:#c8d9d0;text-align:center;padding:32px 18px;font-size:13px;margin-top:24px;border-top:3px solid #16a36a}
+footer strong{color:white;font-size:18px}
+.empty{grid-column:1/-1;text-align:center;padding:28px;border:1px dashed #cbd8cf;border-radius:18px;color:var(--muted);background:#ffffffa8}
+@media(max-width:800px){
+  header{padding:13px 18px}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-art{display:none}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats{gap:9px}.stat{padding:14px}.stat-icon{width:39px;height:39px}
+  .stat strong{font-size:16px}
 }
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background:
-    radial-gradient(ellipse at top left, #e0f8ec 0, transparent 35%),
-    var(--bg);
-  color: var(--ink);
-}
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: rgba(16, 26, 44, 0.96);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid #ffffff16;
-  box-shadow: 0 5px 24px #101a2c18;
-}
-
-.logo {
-  font-size: 25px;
-  letter-spacing: -1.2px;
-}
-
-nav a {
-  border-radius: 9px;
-  transition: background .2s, color .2s;
-}
-
-nav a:hover {
-  background: #ffffff15;
-  color: #7af0ba;
-}
-
-.btn {
-  border-radius: 12px;
-  transition: transform .2s, box-shadow .2s, background .2s;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 18px #101a2c20;
-}
-
-.primary {
-  background: linear-gradient(135deg, #10a66d, #087f56);
-  color: #fff;
-}
-
-main {
-  padding-top: 30px;
-}
-
-.hero {
-  position: relative;
-  background: linear-gradient(125deg, #101a2c 0%, #153d38 60%, #176b50 100%);
-  border: 1px solid #ffffff18;
-  box-shadow: 0 22px 55px #153d3824;
-}
-
-.hero h1 {
-  letter-spacing: -2.4px;
-}
-
-.search {
-  border: 1px solid #ffffff70;
-  box-shadow: 0 12px 30px #00000016;
-}
-
-.search input {
-  background: transparent;
-}
-
-.stat {
-  border-radius: 18px;
-  box-shadow: 0 5px 20px #15223806;
-  transition: transform .2s, box-shadow .2s;
-}
-
-.stat:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 26px #15223810;
-}
-
-.chip {
-  transition: all .2s;
-}
-
-.chip:hover {
-  border-color: #0d9965;
-  transform: translateY(-1px);
-}
-
-.chip.active {
-  background: #d8f8e8;
-  border-color: #94e5bd;
-}
-
-.grid {
-  gap: 18px;
-}
-
-.card {
-  position: relative;
-  border-radius: 21px;
-  border: 1px solid #e1e8f0;
-  padding: 20px;
-  box-shadow: 0 7px 24px #15223808;
-  transition: transform .22s, box-shadow .22s, border-color .22s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  border-color: #a6e7c5;
-  box-shadow: 0 17px 38px #15223812;
-}
-
-.service-icon {
-  border-radius: 17px;
-  background: linear-gradient(135deg, #e4f9ed, #d1f4e2);
-}
-
-.card h3 {
-  font-size: 18px;
-  letter-spacing: -.3px;
-}
-
-.price {
-  color: #087f56;
-  font-size: 22px;
-}
-
-.tag {
-  background: #e1f8eb;
-  color: #08794b;
-  letter-spacing: .2px;
-}
-
-.worker-bottom {
-  padding-top: 12px;
-  border-top: 1px solid #edf1f6;
-}
-
-.panel {
-  border-radius: 22px;
-  box-shadow: 0 10px 35px #15223808;
-}
-
-input, select, textarea {
-  border-radius: 12px;
-  transition: border-color .2s, box-shadow .2s;
-}
-
-footer {
-  margin-top: 35px;
-  border-top: 3px solid #16a36a;
-}
-
-@media (max-width: 480px) {
-  main {
-    padding-top: 17px;
-  }
-
-  .hero {
-    box-shadow: 0 12px 30px #153d381c;
-  }
-
-  .card {
-    padding: 18px;
-  }
-
-  nav {
-    gap: 5px;
-  }
-
-  nav a {
-    padding: 7px 5px;
-    font-size: 13px;
-  }
+@media(max-width:540px){
+  header{align-items:flex-start;flex-direction:column;gap:9px}
+  .logo{font-size:22px}
+  nav{width:100%;gap:3px}
+  nav a{font-size:12px;padding:8px 7px}
+  nav .btn{padding:9px 11px;font-size:12px}
+  main{padding:17px 12px 40px}
+  .hero{border-radius:22px;padding:28px 21px}
+  h1{font-size:42px;letter-spacing:-2px}
+  .hero p{font-size:14px}
+  .search{gap:4px}.search input{padding:9px 6px;font-size:13px}
+  .search .btn{padding:10px 12px;font-size:13px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{align-items:flex-start;padding:12px;gap:9px}
+  .stat:last-child{display:none}
+  .stat-icon{width:34px;height:34px;font-size:18px;border-radius:10px}
+  .stat strong{font-size:14px}.stat span{font-size:11px}
+  .grid{grid-template-columns:1fr}
+  .card{padding:19px}
+  .form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .panel{padding:18px;border-radius:20px}
+  .section{margin-top:34px}
+  .section-head h2{font-size:25px}
 }
 </style>
 </head>
+
 <body>
 <header>
-  <div class="logo">Kaam<span>Connect</span></div>
-  <nav>
+  <a href="#" class="logo" style="text-decoration:none">Kaam<span>Connect</span></a>
+  <nav aria-label="Main navigation">
     <a href="#services">Services</a>
     <a href="#workers">Workers</a>
     <a href="#booking">Book now</a>
@@ -276,34 +182,38 @@ footer {
 <main>
   <section class="hero">
     <div>
-      <div class="eyebrow">Your home. Our responsibility.</div>
-      <h1>Good help.<br>Right at home.</h1>
-      <p>Find home service professionals for everyday repairs and maintenance. Choose a service, select an available worker and request your booking.</p>
+      <div class="eyebrow">Reliable help, right at home</div>
+      <h1>Good help.<br>Happier home.</h1>
+      <p>Find trusted local professionals for repairs, cleaning and everyday home needs. Choose a service, compare available workers and request a booking in minutes.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#services">Explore services →</a>
+        <a class="btn ghost" href="#workers">Meet our workers</a>
+      </div>
       <div class="search">
         <input id="searchInput" placeholder="Search plumber, electrician..." aria-label="Search services">
         <button class="btn primary" onclick="searchServices()">Search</button>
       </div>
     </div>
-    <div class="hero-art" aria-hidden="true">🏡</div>
+    <div class="hero-art" aria-hidden="true"><span>🏡</span></div>
   </section>
 
   <section class="stats">
-    <div class="stat"><strong>6 Services</strong><span>Everyday home needs</span></div>
-    <div class="stat"><strong>Easy Booking</strong><span>Simple request process</span></div>
-    <div class="stat"><strong>Secure Access</strong><span>Your account, your bookings</span></div>
+    <div class="stat"><div class="stat-icon">🛠️</div><div><strong>6 Services</strong><span>Everyday home needs</span></div></div>
+    <div class="stat"><div class="stat-icon">⚡</div><div><strong>Easy Booking</strong><span>Simple request process</span></div></div>
+    <div class="stat"><div class="stat-icon">🔒</div><div><strong>Account Access</strong><span>Your bookings in one place</span></div></div>
   </section>
 
-  <section id="services">
+  <section id="services" class="section">
     <div class="section-head">
-      <div><h2>What do you need?</h2><p class="sub">Choose a service to find available workers.</p></div>
+      <div><div class="kicker">What we can help with</div><h2>What do you need today?</h2><p class="sub">Choose a service to find the right professional.</p></div>
     </div>
     <div class="chips" id="serviceChips"></div>
     <div class="grid" id="serviceGrid"></div>
   </section>
 
-  <section id="workers">
+  <section id="workers" class="section">
     <div class="section-head">
-      <div><h2>Available professionals</h2><p class="sub">Worker details are loaded from the database.</p></div>
+      <div><div class="kicker">Local professionals</div><h2>Available professionals</h2><p class="sub">Worker details are loaded live from our database.</p></div>
       <button class="btn light" onclick="loadWorkers()">Refresh list ↻</button>
     </div>
     <div id="workerNotice" class="notice"></div>
@@ -312,7 +222,7 @@ footer {
 
   <section id="booking" class="panel">
     <div class="section-head" style="margin-top:0">
-      <div><h2>Book a service</h2><p class="sub">Fill in your details to request a booking.</p></div>
+      <div><div class="kicker">Quick and simple</div><h2>Book a service</h2><p class="sub">Share your details and preferred date to request a booking.</p></div>
     </div>
     <div id="bookingNotice" class="notice"></div>
     <div id="bookingLoginHint" class="notice show">Please log in or create an account before booking.</div>
@@ -323,18 +233,18 @@ footer {
         <div class="field"><label for="serviceSelect">Service</label><select id="serviceSelect" required></select></div>
         <div class="field"><label for="workerSelect">Available worker</label><select id="workerSelect" required><option value="">Choose a service first</option></select></div>
         <div class="field full"><label for="address">Full address</label><textarea id="address" required maxlength="500" placeholder="House number, street, area, city"></textarea></div>
-        <div class="field"><label for="postalCode">PIN code (optional)</label><input id="postalCode" inputmode="numeric" maxlength="10" placeholder="e.g. 800001"></div>
+        <div class="field"><label for="postalCode">PIN code (optional)</label><input id="postalCode" inputmode="numeric" maxlength="10" placeholder="e.g. 844101"></div>
         <div class="field"><label for="bookingDate">Preferred date</label><input id="bookingDate" type="date" required></div>
         <div class="field full"><label for="notes">Additional details (optional)</label><textarea id="notes" maxlength="1000" placeholder="Describe the work you need"></textarea></div>
-        <div class="field full"><button id="bookBtn" class="btn primary" type="submit">Request Booking →</button></div>
+        <div class="field full"><button id="bookBtn" class="btn primary" type="submit">Request booking →</button></div>
       </div>
     </form>
-    <p class="small">Your booking starts as Pending. Contact or payment features may require separate setup.</p>
+    <p class="small">Your booking starts as Pending. Please confirm final pricing and timing with the professional.</p>
   </section>
 
   <section id="myBookings" class="panel">
     <div class="section-head" style="margin-top:0">
-      <div><h2>My bookings</h2><p class="sub">See the booking requests linked to your account.</p></div>
+      <div><div class="kicker">Your activity</div><h2>My bookings</h2><p class="sub">See the booking requests linked to your account.</p></div>
       <button class="btn light" onclick="loadMyBookings()">Refresh ↻</button>
     </div>
     <div id="myBookingsNotice" class="notice"></div>
@@ -343,7 +253,7 @@ footer {
 
   <section id="authSection" class="panel auth-box hidden">
     <div class="section-head" style="margin-top:0">
-      <div><h2 id="authTitle">Welcome back</h2><p class="sub">Sign in to manage your service bookings.</p></div>
+      <div><div class="kicker">Welcome to KaamConnect</div><h2 id="authTitle">Welcome back</h2><p class="sub">Sign in to manage your service bookings.</p></div>
     </div>
     <div class="auth-tabs">
       <button class="btn light" id="loginTab" onclick="setAuthMode('login')">Login</button>
@@ -359,11 +269,14 @@ footer {
         <div class="field full"><button id="authSubmit" class="btn primary" type="submit">Login</button></div>
       </div>
     </form>
-    <p class="small">Never share your password or your private Supabase keys.</p>
+    <p class="small">Never share your password or private Supabase keys.</p>
   </section>
 </main>
 
-<footer><strong>KaamConnect</strong><br>Helping you take care of home, one service at a time.</footer>
+<footer>
+  <strong>Kaam<span>Connect</span></strong>
+  <p>Helping you take care of home, one service at a time.</p>
+</footer>
 
 <script>
 const SUPABASE_URL = "https://unbxdvoqjbefnsnrsmck.supabase.co";
@@ -371,301 +284,292 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_kt1bWOAe1U3vjTOr-tvYlQ_j0RNNAU7
 const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const services = [
-  {name:"Plumber", icon:"🔧", description:"Taps, pipes and plumbing repairs"},
-  {name:"Electrician", icon:"⚡", description:"Electrical repairs and fittings"},
-  {name:"Home Cleaning", icon:"🧹", description:"A fresher, cleaner home"},
-  {name:"Carpenter", icon:"🪚", description:"Furniture and woodwork"},
-  {name:"AC Repair", icon:"❄️", description:"Air conditioner service and repair"},
-  {name:"Painter", icon:"🖌️", description:"Fresh paint for your home"}
+  {name:"Plumber",icon:"🔧",description:"Taps, pipes and plumbing repairs"},
+  {name:"Electrician",icon:"⚡",description:"Electrical repairs and fittings"},
+  {name:"Home Cleaning",icon:"🧹",description:"A fresher, cleaner home"},
+  {name:"Carpenter",icon:"🪚",description:"Furniture and woodwork"},
+  {name:"AC Repair",icon:"❄️",description:"Air conditioner service and repair"},
+  {name:"Painter",icon:"🖌️",description:"Fresh paint for your home"}
 ];
 
-let currentUser = null;
-let authMode = "login";
-let workers = [];
-let selectedService = "All";
+let currentUser=null;
+let authMode="login";
+let workers=[];
+let selectedService="All";
+const $=id=>document.getElementById(id);
 
-const $ = id => document.getElementById(id);
-
-function showNotice(id, message, type="ok") {
-  const el = $(id);
-  el.textContent = message;
-  el.className = "notice show " + type;
+function showNotice(id,message,type="ok"){
+  const el=$(id);
+  el.textContent=message;
+  el.className="notice show "+type;
 }
-function hideNotice(id) {
-  $(id).className = "notice";
-}
-function safe(value) {
-  return String(value ?? "").replace(/[&<>"']/g, ch => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+function hideNotice(id){$(id).className="notice"}
+function safe(value){
+  return String(value??"").replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   })[ch]);
 }
-function localDateString() {
-  const d = new Date();
+function localDateString(){
+  const d=new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
-function money(value) {
-  if (value === null || value === undefined || value === "") return "Price on request";
-  const n = Number(value);
-  return Number.isFinite(n) ? "₹" + n.toLocaleString("en-IN") : "Price on request";
+function money(value){
+  if(value===null||value===undefined||value==="")return "Price on request";
+  const n=Number(value);
+  return Number.isFinite(n)?"₹"+n.toLocaleString("en-IN"):"Price on request";
 }
-function showAuth() {
+function showAuth(){
   $("authSection").classList.remove("hidden");
-  $("authSection").scrollIntoView({behavior:"smooth", block:"start"});
+  $("authSection").scrollIntoView({behavior:"smooth",block:"start"});
 }
-function setAuthMode(mode) {
-  authMode = mode;
-  const signup = mode === "signup";
-  $("authTitle").textContent = signup ? "Create your account" : "Welcome back";
-  $("authSubmit").textContent = signup ? "Create account" : "Login";
-  $("nameField").classList.toggle("hidden", !signup);
-  $("phoneField").classList.toggle("hidden", !signup);
-  $("fullName").required = signup;
-  $("loginTab").className = "btn " + (signup ? "" : "light");
-  $("signupTab").className = "btn " + (signup ? "light" : "");
+function setAuthMode(mode){
+  authMode=mode;
+  const signup=mode==="signup";
+  $("authTitle").textContent=signup?"Create your account":"Welcome back";
+  $("authSubmit").textContent=signup?"Create account":"Login";
+  $("nameField").classList.toggle("hidden",!signup);
+  $("phoneField").classList.toggle("hidden",!signup);
+  $("fullName").required=signup;
+  $("loginTab").className="btn "+(signup?"":"light");
+  $("signupTab").className="btn "+(signup?"light":"");
   hideNotice("authNotice");
 }
-function renderServices() {
-  $("serviceChips").innerHTML = ["All", ...services.map(s=>s.name)].map(name =>
+function renderServices(){
+  $("serviceChips").innerHTML=["All",...services.map(s=>s.name)].map(name=>
     `<button class="chip ${selectedService===name?"active":""}" onclick="chooseService('${safe(name)}')">${safe(name)}</button>`
   ).join("");
-  const query = $("searchInput").value.trim().toLowerCase();
-  const filtered = services.filter(s =>
-    (selectedService==="All" || s.name===selectedService) &&
-    (!query || (s.name+" "+s.description).toLowerCase().includes(query))
+  const query=$("searchInput").value.trim().toLowerCase();
+  const filtered=services.filter(s=>
+    (selectedService==="All"||s.name===selectedService)&&
+    (!query||(s.name+" "+s.description).toLowerCase().includes(query))
   );
-  $("serviceGrid").innerHTML = filtered.map(s => `
+  $("serviceGrid").innerHTML=filtered.map(s=>`
     <article class="card">
       <div class="service-icon">${s.icon}</div>
       <h3>${safe(s.name)}</h3>
       <p class="muted">${safe(s.description)}</p>
-      <button class="btn light" onclick="chooseService('${safe(s.name)}');document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book service →</button>
-    </article>`).join("") || `<p class="muted">No matching services. Try another search.</p>`;
+      <button class="btn light" onclick="chooseService('${safe(s.name)}');document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book this service →</button>
+    </article>
+  `).join("")||`<div class="empty">No matching services. Try another search.</div>`;
 }
-function chooseService(name) {
-  selectedService = name;
-  $("serviceSelect").value = name === "All" ? "" : name;
+function chooseService(name){
+  selectedService=name;
+  $("serviceSelect").value=name==="All"?"":name;
   renderServices();
   renderWorkerSelect();
   renderWorkers();
 }
-function searchServices() {
-  selectedService = "All";
+function searchServices(){
+  selectedService="All";
   renderServices();
   $("services").scrollIntoView({behavior:"smooth"});
 }
-function renderServiceSelect() {
-  $("serviceSelect").innerHTML = `<option value="">Choose service</option>` +
+function renderServiceSelect(){
+  $("serviceSelect").innerHTML=`<option value="">Choose service</option>`+
     services.map(s=>`<option value="${safe(s.name)}">${safe(s.name)}</option>`).join("");
 }
-async function loadWorkers() {
+async function loadWorkers(){
   showNotice("workerNotice","Loading available workers…");
-  const {data,error} = await client
-    .from("worker_profiles")
+  const {data,error}=await client.from("worker_profiles")
     .select("id, full_name, service, price, area, phone, photo_url, available")
-    .eq("available",true)
-    .order("full_name");
-  if(error) {
-    workers = [];
+    .eq("available",true).order("full_name");
+  if(error){
+    workers=[];
     renderWorkers();
-    showNotice("workerNotice","Could not load workers. Check your Supabase worker_profiles table and access policies. Details: "+error.message,"bad");
+    showNotice("workerNotice","Could not load workers. Check Supabase worker_profiles table and access policies. Details: "+error.message,"bad");
     return;
   }
-  workers = data || [];
-  if(workers.length) hideNotice("workerNotice");
-  else showNotice("workerNotice","No available workers have been added yet. Add workers in Supabase → Table Editor → worker_profiles and set available = true.","bad");
+  workers=data||[];
+  if(workers.length)hideNotice("workerNotice");
+  else showNotice("workerNotice","No available workers have been added yet. Please check back soon.","bad");
   renderWorkers();
   renderWorkerSelect();
 }
-function renderWorkers() {
-  const list = workers.filter(w => selectedService==="All" || w.service.toLowerCase()===selectedService.toLowerCase());
-  $("workerGrid").innerHTML = list.map(w => {
-    const icon = (services.find(s=>s.name.toLowerCase()===w.service.toLowerCase()) || {icon:"🧰"}).icon;
-    return `<article class="card">
+function renderWorkers(){
+  const list=workers.filter(w=>selectedService==="All"||String(w.service||"").toLowerCase()===selectedService.toLowerCase());
+  $("workerGrid").innerHTML=list.map(w=>{
+    const icon=(services.find(s=>s.name.toLowerCase()===String(w.service||"").toLowerCase())||{icon:"🧰"}).icon;
+    const photo=w.photo_url?`<img src="${safe(w.photo_url)}" alt="" style="width:100%;height:140px;object-fit:cover;border-radius:14px;margin-bottom:14px" onerror="this.style.display='none'">`:"";
+    const phone=w.phone?`<p class="muted">📞 ${safe(w.phone)}</p>`:"";
+    return `<article class="card">${photo}
       <div class="service-icon">${icon}</div>
       <span class="tag">● Available</span>
       <h3>${safe(w.full_name)}</h3>
-<p class="muted">${safe(w.service)}${w.area ? " · "+safe(w.area) : ""}</p>
-${w.phone ? `<p class="muted">📞 ${safe(w.phone)}</p>` : ""}
-<div class="price">${money(w.price)}</div>
-      <div class="worker-bottom">
-        <span class="muted">Service professional</span>
-        <button class="btn primary" onclick="bookWorker('${safe(w.id)}')">Select</button>
-      </div>
+      <p class="muted">${safe(w.service)}${w.area?" · "+safe(w.area):""}</p>
+      ${phone}
+      <div class="price">${money(w.price)}</div>
+      <div class="worker-bottom"><span class="muted">Service professional</span>
+      <button class="btn primary" onclick="bookWorker('${safe(w.id)}')">Select</button></div>
     </article>`;
-  }).join("") || `<div class="card"><p class="muted">No workers found for this service yet.</p></div>`;
+  }).join("")||`<div class="empty">No workers found for this service yet.</div>`;
 }
-function renderWorkerSelect() {
-  const service = $("serviceSelect").value;
-  const list = workers.filter(w => !service || w.service.toLowerCase()===service.toLowerCase());
-  const previous = $("workerSelect").value;
-  $("workerSelect").innerHTML = `<option value="">Choose available worker</option>` +
+function renderWorkerSelect(){
+  const service=$("serviceSelect").value;
+  const list=workers.filter(w=>!service||String(w.service||"").toLowerCase()===service.toLowerCase());
+  const previous=$("workerSelect").value;
+  $("workerSelect").innerHTML=`<option value="">Choose available worker</option>`+
     list.map(w=>`<option value="${safe(w.id)}">${safe(w.full_name)} — ${safe(w.service)} (${money(w.price)})</option>`).join("");
-  if(list.some(w=>w.id===previous)) $("workerSelect").value=previous;
+  if(list.some(w=>w.id===previous))$("workerSelect").value=previous;
 }
-function bookWorker(id) {
-  const worker = workers.find(w=>w.id===id);
-  if(!worker) return;
-  $("serviceSelect").value = services.some(s=>s.name.toLowerCase()===worker.service.toLowerCase()) ? worker.service : "";
+function bookWorker(id){
+  const worker=workers.find(w=>w.id===id);
+  if(!worker)return;
+  $("serviceSelect").value=services.some(s=>s.name.toLowerCase()===String(worker.service).toLowerCase())?worker.service:"";
   renderWorkerSelect();
-  $("workerSelect").value = worker.id;
+  $("workerSelect").value=worker.id;
   $("booking").scrollIntoView({behavior:"smooth"});
 }
 $("serviceSelect").addEventListener("change",renderWorkerSelect);
 
-async function logout() {
-  const {error} = await client.auth.signOut();
-  if(error) alert("Logout failed: "+error.message);
+async function logout(){
+  const {error}=await client.auth.signOut();
+  if(error)alert("Logout failed: "+error.message);
 }
-function updateAccountUI() {
+function updateAccountUI(){
   $("accountBtn").classList.toggle("hidden",!!currentUser);
   $("logoutBtn").classList.toggle("hidden",!currentUser);
   $("bookingLoginHint").classList.toggle("hidden",!!currentUser);
   $("authSection").classList.toggle("hidden",!!currentUser);
-  if(currentUser) {
-    $("customerName").value = currentUser.user_metadata?.full_name || "";
-    $("customerPhone").value = currentUser.user_metadata?.phone || "";
+  if(currentUser){
+    $("customerName").value=currentUser.user_metadata?.full_name||"";
+    $("customerPhone").value=currentUser.user_metadata?.phone||"";
     loadMyBookings();
-  } else {
-    $("bookingList").innerHTML = `<p class="muted">Log in to view your bookings.</p>`;
+  }else{
+    $("bookingList").innerHTML=`<p class="muted">Log in to view your bookings.</p>`;
   }
 }
 $("authForm").addEventListener("submit",async event=>{
   event.preventDefault();
-  const email = $("email").value.trim();
-  const password = $("password").value;
-  const button = $("authSubmit");
-  button.disabled = true;
-  button.textContent = "Please wait…";
+  const email=$("email").value.trim();
+  const password=$("password").value;
+  const button=$("authSubmit");
+  button.disabled=true;
+  button.textContent="Please wait…";
   hideNotice("authNotice");
-  try {
-    if(authMode==="signup") {
-      const full_name = $("fullName").value.trim();
-      const phone = $("signupPhone").value.trim();
-      if(!full_name) throw new Error("Please enter your full name.");
-      const {data,error} = await client.auth.signUp({
-  email,
-  password,
-  options: {
-    emailRedirectTo: "https://rksinha17hjp-oss.github.io/Kamconnect/",
-    data: { full_name, phone }
-  }
-});
-      if(error) throw error;
-      if(data.session) {
-        showNotice("authNotice","Account created successfully! You are logged in.");
-      } else {
-        showNotice("authNotice","Account request created. Check your email for a confirmation link, then log in.");
-      }
-    } else {
-      const {error} = await client.auth.signInWithPassword({email,password});
-      if(error) throw error;
+  try{
+    if(authMode==="signup"){
+      const full_name=$("fullName").value.trim();
+      const phone=$("signupPhone").value.trim();
+      if(!full_name)throw new Error("Please enter your full name.");
+      const {data,error}=await client.auth.signUp({
+        email,password,
+        options:{
+          emailRedirectTo:"https://rksinha17hjp-oss.github.io/Kamconnect/",
+          data:{full_name,phone}
+        }
+      });
+      if(error)throw error;
+      if(data.session)showNotice("authNotice","Account created successfully! You are logged in.");
+      else showNotice("authNotice","Account created. Check your email for a confirmation link, then log in.");
+    }else{
+      const {error}=await client.auth.signInWithPassword({email,password});
+      if(error)throw error;
       showNotice("authNotice","Login successful!");
     }
-  } catch(error) {
-    showNotice("authNotice",error.message || "Something went wrong.","bad");
-  } finally {
-    button.disabled = false;
-    button.textContent = authMode==="signup" ? "Create account" : "Login";
+  }catch(error){
+    showNotice("authNotice",error.message||"Something went wrong.","bad");
+  }finally{
+    button.disabled=false;
+    button.textContent=authMode==="signup"?"Create account":"Login";
   }
 });
 
 $("bookingForm").addEventListener("submit",async event=>{
   event.preventDefault();
   hideNotice("bookingNotice");
-  if(!currentUser) {
+  if(!currentUser){
     showNotice("bookingNotice","Please log in before making a booking.","bad");
     showAuth();
     return;
   }
-  const worker = workers.find(w=>w.id===$("workerSelect").value);
-  if(!worker) {
-    showNotice("bookingNotice","Please choose an available worker.","bad");
-    return;
-  }
-  if(worker.service.toLowerCase()!==$("serviceSelect").value.toLowerCase()) {
+  const worker=workers.find(w=>w.id===$("workerSelect").value);
+  if(!worker){showNotice("bookingNotice","Please choose an available worker.","bad");return}
+  if(String(worker.service).toLowerCase()!==$("serviceSelect").value.toLowerCase()){
     showNotice("bookingNotice","Please select a worker for your chosen service.","bad");
     return;
   }
-  const bookingDate = $("bookingDate").value;
-  if(!bookingDate || bookingDate < localDateString()) {
+  const bookingDate=$("bookingDate").value;
+  if(!bookingDate||bookingDate<localDateString()){
     showNotice("bookingNotice","Please choose today or a future date.","bad");
     return;
   }
-  const button = $("bookBtn");
-  button.disabled = true;
-  button.textContent = "Submitting…";
-  const payload = {
+  const button=$("bookBtn");
+  button.disabled=true;
+  button.textContent="Submitting…";
+  const payload={
     customer_id:currentUser.id,
     worker_id:worker.id,
     customer_name:$("customerName").value.trim(),
     phone:$("customerPhone").value.trim(),
     service:worker.service,
     address:$("address").value.trim(),
-    postal_code:$("postalCode").value.trim() || null,
+    postal_code:$("postalCode").value.trim()||null,
     booking_date:bookingDate,
-    notes:$("notes").value.trim() || null,
+    notes:$("notes").value.trim()||null,
     status:"pending"
   };
-  try {
-    const {error} = await client.from("bookings").insert(payload);
-    if(error) throw error;
+  try{
+    const {error}=await client.from("bookings").insert(payload);
+    if(error)throw error;
     showNotice("bookingNotice","Booking request submitted! Its current status is Pending.");
     $("bookingForm").reset();
-    $("bookingDate").min = localDateString();
+    $("bookingDate").min=localDateString();
     renderWorkerSelect();
     updateAccountUI();
     await loadMyBookings();
-  } catch(error) {
+  }catch(error){
     showNotice("bookingNotice","Booking could not be saved: "+error.message,"bad");
-  } finally {
-    button.disabled = false;
-    button.textContent = "Request Booking →";
+  }finally{
+    button.disabled=false;
+    button.textContent="Request booking →";
   }
 });
 
-async function loadMyBookings() {
-  if(!currentUser) return;
-  const {data,error} = await client
-    .from("bookings")
+async function loadMyBookings(){
+  if(!currentUser)return;
+  const {data,error}=await client.from("bookings")
     .select("id, service, address, booking_date, status, created_at, worker_id")
-    .eq("customer_id",currentUser.id)
-    .order("created_at",{ascending:false});
-  if(error) {
+    .eq("customer_id",currentUser.id).order("created_at",{ascending:false});
+  if(error){
     showNotice("myBookingsNotice","Could not load bookings: "+error.message,"bad");
     return;
   }
   hideNotice("myBookingsNotice");
-  if(!data || !data.length) {
-    $("bookingList").innerHTML = `<p class="muted">You have no bookings yet. Choose a service above to get started.</p>`;
+  if(!data||!data.length){
+    $("bookingList").innerHTML=`<div class="empty">You have no bookings yet. Choose a service above to get started.</div>`;
     return;
   }
-  $("bookingList").innerHTML = data.map(b=>{
-    const worker = workers.find(w=>w.id===b.worker_id);
-    const status = String(b.status || "pending");
-    return `<article class="booking-item">
-      <div><strong>${safe(b.service)}</strong><p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
-      <p class="muted">${safe(b.address)}</p><p class="muted">Date: ${safe(b.booking_date)}</p></div>
-      <div><span class="tag">${safe(status.toUpperCase())}</span></div>
-    </article>`;
+  $("bookingList").innerHTML=data.map(b=>{
+    const worker=workers.find(w=>w.id===b.worker_id);
+    const status=String(b.status||"pending");
+    return `<article class="booking-item"><div>
+      <strong>${safe(b.service)}</strong>
+      <p class="muted">Worker: ${safe(worker?.full_name||"Assigned professional")}</p>
+      <p class="muted">${safe(b.address)}</p>
+      <p class="muted">Date: ${safe(b.booking_date)}</p>
+    </div><div><span class="tag">${safe(status.toUpperCase())}</span></div></article>`;
   }).join("");
 }
 
 client.auth.onAuthStateChange((_event,session)=>{
-  currentUser = session?.user || null;
+  currentUser=session?.user||null;
   updateAccountUI();
 });
 
-async function init() {
+async function init(){
   renderServiceSelect();
   renderServices();
-  $("bookingDate").min = localDateString();
+  $("bookingDate").min=localDateString();
   setAuthMode("login");
-  const {data} = await client.auth.getSession();
-  currentUser = data.session?.user || null;
+  const {data}=await client.auth.getSession();
+  currentUser=data.session?.user||null;
   updateAccountUI();
   await loadWorkers();
 }
 init();
+$("searchInput").addEventListener("keydown",event=>{
+  if(event.key==="Enter")searchServices();
+});
 </script>
 </body>
 </html>
