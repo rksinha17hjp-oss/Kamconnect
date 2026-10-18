@@ -600,7 +600,8 @@ $("bookingForm").addEventListener("submit",async event=>{
     .select("id, customer_name, phone, service, address, booking_date, notes, status")
     .eq("worker_id", currentUser.id)
     .order("created_at", { ascending: false });
-
+console.log("Worker ID:", currentUser.id);
+console.log("Bookings:", data);
   if (error) {
     showNotice(
       "workerBookingsNotice",
