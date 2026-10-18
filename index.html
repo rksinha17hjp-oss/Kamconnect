@@ -602,6 +602,12 @@ $("bookingForm").addEventListener("submit",async event=>{
     .order("created_at", { ascending: false });
 console.log("Worker ID:", currentUser.id);
 console.log("Bookings:", data);
+    if (error) {
+  alert("Booking error: " + error.message);
+} else {
+  alert("Worker ID: " + currentUser.id +
+        "\nBookings found: " + (data ? data.length : 0));
+    }
   if (error) {
     showNotice(
       "workerBookingsNotice",
