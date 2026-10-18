@@ -578,7 +578,8 @@ $("bookingForm").addEventListener("submit",async event=>{
     .select("id")
     .eq("id", currentUser.id)
     .maybeSingle();
-
+alert("Login ID: " + currentUser.id +
+      "\nWorker profile: " + (profile ? profile.id : "NOT FOUND"));
   if (profileError) {
     showNotice(
       "workerBookingsNotice",
