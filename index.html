@@ -540,7 +540,7 @@ $("bookingForm").addEventListener("submit",async event=>{
   }catch(error){showNotice("bookingNotice","Booking could not be saved: "+error.message,"bad")}
   finally{button.disabled=false;button.textContent="Request booking →"}
 });
-async function loadMyBookings(){
+ async function loadMyBookings(){
   if(!currentUser)return;
   const {data,error}=await client.from("bookings")
     .select("id, service, address, booking_date, status, created_at, worker_id")
