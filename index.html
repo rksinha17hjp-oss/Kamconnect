@@ -617,7 +617,6 @@ $("bookingForm").addEventListener("submit",async event=>{
     </article>`;
   }).join("");
    }
-
 async function loadWorkerBookings() {
   const panel = $("workerDashboard");
 
@@ -671,30 +670,36 @@ async function loadWorkerBookings() {
     return;
   }
 
-  $("workerBookingList").innerHTML = data.map(b => `
-    <article class="booking-item">
-      <div>
-        <strong>${safe(b.service || "Service")}</strong>
-        <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
-        <p class="muted">Phone: ${safe(b.phone || "Not provided")}</p>
-        <p class="muted">Address: ${safe(b.address || "")}</p>
-        <p class="muted">Date: ${safe(b.booking_date || "")}</p>
-        <p class="muted">Status: ${safe(b.status || "pending")}</p>
-        ${b.notes ? `<p class="muted">Notes: ${safe(b.notes)}</p>` : ""}
-        ${(b.status || "").trim().toLowerCase() === "pending" ? `
-          <button class="btn" onclick="updateWorkerBookingStatus('${b.id}', 'accepted')">Accept</button>
-          <button class="btn secondary" onclick="updateWorkerBookingStatus('${b.id}', 'rejected')">Reject</button>
-        ` : ""}
-      </div>
-    </article>
-  `).join("");
-}
+  $("workerBookingList").innerHTML = data.map(b => {
+    const status = (b.status || "pending").trim().toLowerCase();
 
+    return `
+      <article class="booking-item">
+        <div>
+          <strong>${safe(b.service || "Service")}</strong>
+          <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
+          <p class="muted">Phone: ${safe(b.phone || "Not provided")}</p>
+          <p class="muted">Address: ${safe(b.address || "")}</p>
+          <p class="muted">Date: ${safe(b.booking_date || "")}</p>
+          <p class="muted">Status: ${safe(status.toUpperCase())}</p>
+          ${b.notes ? `<p class="muted">Notes: ${safe(b.notes)}</p>` : ""}
+
+          ${status === "pending" ? `
+            <button class="btn" onclick="updateWorkerBookingStatus('${b.id}', 'accepted')">Accept</button>
+            <button class="btn secondary" onclick="updateWorkerBookingStatus('${b.id}', 'rejected')">Reject</button>
+          ` : ""}
+
+          ${status === "accepted" ? `
+            <button class="btn" onclick="updateWorkerBookingStatus('${b.id}', 'completed')">✓ Mark as Completed</button>
+          ` : ""}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
 async function updateWorkerBookingStatus(id, newStatus) {
   if (!currentUser) return;
-
-  if (!["accepted", "rejected"].includes(newStatus)) return;
-
+if (!["accepted", "rejected", "completed"].includes(newStatus)) return;
   const { data, error } = await client
     .from("bookings")
     .update({ status: newStatus })
