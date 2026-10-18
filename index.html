@@ -564,6 +564,116 @@ $("bookingForm").addEventListener("submit",async event=>{
   if(!data||!data.length){
     $("bookingList").innerHTML='<div class="empty">No bookings yet. Choose a service to get started.</div>';return;
   }
+  async function loadWorkerBookings() {
+  const panel = $("workerDashboard");
+
+  if (!currentUser) {
+    panel.style.display = "none";
+    return;
+  }
+
+  const { data: profile, error: profileError } = await client
+    .from("worker_profiles")
+    .select("id")
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
+  if (profileError) {
+    showNotice(
+      "workerBookingsNotice",
+      "Could not check worker account: " + profileError.message,
+      "bad"
+    );
+    return;
+  }
+
+  if (!profile) {
+    panel.style.display = "none";
+    return;
+  }
+
+  panel.style.display = "block";
+
+  const { data, error } = await client
+    .from("bookings")
+    .select("id, customer_name, phone, service, address, booking_date, notes, status")
+    .eq("worker_id", currentUser.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showNotice(
+      "workerBookingsNotice",
+      "Could not load requests: " + error.message,
+      "bad"
+    );
+    return;
+  }
+
+  hideNotice("workerBookingsNotice");
+
+  if (!data || !data.length) {
+    $("workerBookingList").innerHTML =
+      '<div class="empty">No booking requests assigned to you yet.</div>';
+    return;
+  }
+
+  $("workerBookingList").innerHTML = data.map(b => `
+    <article class="booking-item">
+      <div>
+        <strong>${safe(b.service || "Service")}</strong>
+        <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
+        <p class="muted">Phone: ${safe(b.phone || "Not provided")}</p>
+        <p class="muted">Address: ${safe(b.address || "")}</p>
+        <p class="muted">Date: ${safe(b.booking_date || "")}</p>
+        <p class="muted">Status: ${safe(b.status || "pending")}</p>
+        ${b.notes ? `<p class="muted">Notes: ${safe(b.notes)}</p>` : ""}
+        ${b.status === "pending" ? `
+          <button class="btn" onclick="updateWorkerBookingStatus('${b.id}','accepted')">Accept</button>
+          <button class="btn secondary" onclick="updateWorkerBookingStatus('${b.id}','rejected')">Reject</button>
+        ` : ""}
+      </div>
+    </article>
+  `).join("");
+}
+
+async function updateWorkerBookingStatus(id, newStatus) {
+  if (!currentUser) return;
+
+  if (!["accepted", "rejected"].includes(newStatus)) return;
+
+  const { data, error } = await client
+    .from("bookings")
+    .update({ status: newStatus })
+    .eq("id", id)
+    .eq("worker_id", currentUser.id)
+    .eq("status", "pending")
+    .select("id");
+
+  if (error) {
+    showNotice(
+      "workerBookingsNotice",
+      "Status update failed: " + error.message,
+      "bad"
+    );
+    return;
+  }
+
+  if (!data || !data.length) {
+    showNotice(
+      "workerBookingsNotice",
+      "Booking was not updated. It may no longer be pending, or permission was denied.",
+      "bad"
+    );
+    return;
+  }
+
+  showNotice(
+    "workerBookingsNotice",
+    "Booking " + newStatus + " successfully!"
+  );
+
+  await loadWorkerBookings();
+      } 
   $("bookingList").innerHTML=data.map(b=>{
     const worker=workers.find(w=>w.id===b.worker_id);
     return `<article class="booking-item"><div>
