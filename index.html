@@ -746,6 +746,80 @@ $("searchInput").addEventListener("keydown",event=>{
   if(event.key==="Enter")searchServices();
 });
 init();
+  async function checkAdminAccess() {
+  const { data: sessionData } = await client.auth.getSession();
+  const user = sessionData.session?.user;
+
+  if (!user) return;
+
+  const { data: admin, error } = await client
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error || !admin) return;
+
+  if (document.getElementById("adminDashboard")) return;
+
+  const panel = document.createElement("section");
+  panel.id = "adminDashboard";
+  panel.style.cssText =
+    "margin:24px auto;padding:18px;max-width:1000px;" +
+    "background:#fff;border:2px solid #111827;border-radius:12px;color:#111827";
+
+  panel.innerHTML = `
+    <h2>Admin Dashboard</h2>
+    <p>KaamConnect Management</p>
+    <button id="adminBookingsBtn">View All Bookings</button>
+    <button id="adminWorkersBtn">View All Workers</button>
+    <div id="adminResults" style="overflow-x:auto;margin-top:16px"></div>
+  `;
+
+  document.body.appendChild(panel);
+
+  async function showRows(table, columns) {
+    const output = document.getElementById("adminResults");
+    output.textContent = "Loading...";
+
+    const { data, error } = await client
+      .from(table)
+      .select(columns)
+      .limit(100);
+
+    if (error) {
+      output.textContent = "Error: " + error.message;
+      return;
+    }
+
+    output.replaceChildren();
+
+    if (!data || !data.length) {
+      output.textContent = "No records found.";
+      return;
+    }
+
+    const pre = document.createElement("pre");
+    pre.style.cssText =
+      "white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px";
+    pre.textContent = JSON.stringify(data, null, 2);
+    output.appendChild(pre);
+  }
+
+  document.getElementById("adminBookingsBtn").onclick = () =>
+    showRows(
+      "bookings",
+      "id,customer_name,phone,service,address,booking_date,status,worker_id"
+    );
+
+  document.getElementById("adminWorkersBtn").onclick = () =>
+    showRows(
+      "worker_profiles",
+      "id,full_name,service,phone,area,price,available"
+    );
+}
+
+checkAdminAccess();
 </script>
 </body>
 </html>
