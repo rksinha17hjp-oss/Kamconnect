@@ -777,7 +777,48 @@ init();
   `;
 
   document.body.appendChild(panel);
+const stats = document.createElement("div");
+  stats.style.cssText =
+    "display:grid;grid-template-columns:repeat(2,minmax(0,1fr));" +
+    "gap:12px;margin:16px 0";
 
+  stats.innerHTML = `
+    <div style="padding:14px;background:#e0e7ff;border-radius:10px">
+      <b>Total Bookings</b><h2 id="statTotal">...</h2>
+    </div>
+    <div style="padding:14px;background:#fef3c7;border-radius:10px">
+      <b>Pending</b><h2 id="statPending">...</h2>
+    </div>
+    <div style="padding:14px;background:#d1fae5;border-radius:10px">
+      <b>Completed</b><h2 id="statCompleted">...</h2>
+    </div>
+    <div style="padding:14px;background:#f3e8ff;border-radius:10px">
+      <b>Total Workers</b><h2 id="statWorkers">...</h2>
+    </div>
+  `;
+
+  panel.insertBefore(stats, panel.children[2]);
+
+  async function loadAdminStats() {
+    const [all, pending, completed, workers] = await Promise.all([
+      client.from("bookings").select("id", { count: "exact", head: true }),
+      client.from("bookings").select("id", { count: "exact", head: true }).eq("status", "pending"),
+      client.from("bookings").select("id", { count: "exact", head: true }).eq("status", "completed"),
+      client.from("worker_profiles").select("id", { count: "exact", head: true })
+    ]);
+
+    if (all.error || pending.error || completed.error || workers.error) {
+      stats.insertAdjacentText("beforeend", " Counts load nahi hue. Permissions check karein.");
+      return;
+    }
+
+    document.getElementById("statTotal").textContent = all.count ?? 0;
+    document.getElementById("statPending").textContent = pending.count ?? 0;
+    document.getElementById("statCompleted").textContent = completed.count ?? 0;
+    document.getElementById("statWorkers").textContent = workers.count ?? 0;
+  }
+
+  loadAdminStats();
   async function showRows(table, columns) {
     const output = document.getElementById("adminResults");
     output.textContent = "Loading...";
