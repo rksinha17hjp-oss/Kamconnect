@@ -1221,27 +1221,50 @@ const stats = document.createElement("div");
         ? "Set Unavailable"
         : "Set Available";
 
-      btn.onclick = async () => {
-        btn.disabled = true;
-        const newValue = !worker.available;
+btn.onclick = async () => {
+  btn.disabled = true;
 
-        const { data: updated, error: updateError } = await client.rpc(
-  "admin_set_worker_availability",
-  {
-    worker_uuid: worker.id,
-    new_available: newValue
+  const newValue = !worker.available;
+
+  try {
+    const { data: updated, error } = await client.rpc(
+      "admin_set_worker_availability",
+      {
+        worker_uuid: worker.id,
+        new_available: newValue
+      }
+    );
+
+    if (error) throw error;
+
+    if (updated !== true) {
+      throw new Error("Worker was not updated. Check admin permissions.");
+    }
+
+    worker.available = newValue;
+
+    details.textContent =
+      "Service: " + (worker.service || "-") +
+      " | Area: " + (worker.area || "-") +
+      " | Available: " + (worker.available ? "Yes" : "No");
+
+    btn.textContent = worker.available
+      ? "Set Unavailable"
+      : "Set Available";
+
+    showNotice(
+      "adminResults",
+      "Availability updated successfully.",
+      "ok"
+    );
+  } catch (error) {
+    alert("Update failed: " + error.message);
+  } finally {
+    btn.disabled = false;
   }
-);
+};
 
-if (updateError || updated !== true) {
-  alert(
-    "Update failed: " +
-    (updateError?.message || "Worker was not updated.")
-  );
-  btn.disabled = false;
-  return;
-}
-
+    
 worker.available = newValue;
 
 details.textContent =
