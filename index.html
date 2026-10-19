@@ -850,20 +850,25 @@ if (error) throw error;
 
   $("bookingList").innerHTML = data.map(b => {
     const worker = workerMap[b.worker_id];
-    const phone = worker?.phone || "";
-    const isPending =
-      String(b.status || "pending").toLowerCase() === "pending";
+    
+const isPending =
+  String(b.status || "pending").toLowerCase() === "pending";
 
-    return `<article class="booking-item">
-      <div>
-        <strong>${safe(b.service || "Service")}</strong>
-        <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
-        ${phone ? `
-          <p class="muted">Worker phone: ${safe(phone)}</p>
-          <a class="btn" href="tel:${safe(phone)}">📞 Call Worker</a>
-        ` : `
-          <p class="muted">Worker phone not available</p>
-        `}
+return `<article class="booking-item">
+  <div>
+    <strong>${safe(b.service || "Service")}</strong>
+    <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
+    <p class="muted">${safe(b.address || "")}</p>
+    <p class="muted">Date: ${safe(b.booking_date || "")}</p>
+    ${isPending ? `
+      <button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel Booking</button>
+    ` : ""}
+  </div>
+  <span class="tag">${safe(String(b.status || "pending").toUpperCase())}</span>
+</article>`;
+}).join("");
+}
+
         <p class="muted">${safe(b.address || "")}</p>
         <p class="muted">Date: ${safe(b.booking_date || "")}</p>
         ${isPending ? `
