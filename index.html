@@ -731,7 +731,18 @@ async function loadWorkerBookings() {
 
   $("workerBookingList").innerHTML = data.map(b => {
     const status = (b.status || "pending").trim().toLowerCase();
-
+if (status === "cancelled") {
+  return `
+    <article class="booking-item">
+      <div>
+        <strong>${safe(b.service || "Service")}</strong>
+        <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
+        <p class="muted">This booking was cancelled by the customer.</p>
+      </div>
+      <span class="tag">CANCELLED</span>
+    </article>
+  `;
+}
     return `
       <article class="booking-item">
         <div>
