@@ -915,11 +915,24 @@ async function loadWorkerBookings() {
     return;
   }
 
-  const { data: profile, error: profileError } = await client
-    .from("worker_profiles")
-    .select("id")
-    .eq("id", currentUser.id)
-    .maybeSingle();
+  const { data: isWorker, error: profileError } =
+  await client.rpc("is_my_worker_profile");
+
+if (profileError) {
+  showNotice(
+    "workerBookingsNotice",
+    "Could not check worker account: " + profileError.message,
+    "bad"
+  );
+  return;
+}
+
+if (!isWorker) {
+  panel.style.display = "none";
+  return;
+}
+
+panel.style.display = "block";
 
   if (profileError) {
     showNotice(
