@@ -101,7 +101,46 @@ function localDateString(){const d=new Date();return `${d.getFullYear()}-${Strin
 function money(value){if(value===null||value===undefined||value==='')return 'Price on request';const n=Number(value);return Number.isFinite(n)?'₹'+n.toLocaleString('en-IN'):'Price on request';}
 function showAuth(){if(currentUser){$('myBookings').scrollIntoView({behavior:'smooth'});return;}$('authSection').classList.remove('hidden');$('authSection').scrollIntoView({behavior:'smooth',block:'start'});}
 function setAuthMode(mode){authMode=mode;const signup=mode==='signup';$('authTitle').textContent=signup?'Create your account':'Welcome back';$('authSubmit').textContent=signup?'Create account':'Login';$('nameField').classList.toggle('hidden',!signup);$('phoneField').classList.toggle('hidden',!signup);$('fullName').required=signup;$('password').autocomplete=signup?'new-password':'current-password';$('loginTab').className='btn '+(signup?'':'secondary');$('signupTab').className='btn '+(signup?'secondary':'');hideNotice('authNotice');}
-function renderServices(){const q=$('searchInput').value.trim().toLowerCase();$('serviceChips').innerHTML=['All',...services.map(s=>s.name)].map(name=>`<button class="chip ${selectedService===name?'active':''}" onclick="chooseService('${safe(name)}')">${name==='All'?'✦ All':safe(name)}</button>`).join('');const filtered=services.filter(s=>(selectedService==='All'||s.name===selectedService)&&(!q||(s.name+' '+s.description).toLowerCase().includes(q)));$('serviceGrid').innerHTML=filtered.map(s=>`<article class="card"><div class="service-top"><div class="service-icon">${s.icon}</div><span class="service-badge">HOME SERVICE</span></div><h3>${safe(s.name)}</h3><p class="muted">${safe(s.description)}</p><button class="btn secondary" onclick="chooseService('${safe(s.name)}');$('booking').scrollIntoView({behavior:'smooth'})">Book this service →</button></article>`).join('')||'<div class="empty">No matching services. Try another search.</div>';}
+function renderServices() {
+  const q = $('searchInput').value.trim().toLowerCase();
+
+  $('serviceChips').innerHTML =
+    ['All', ...services.map(s => s.name)]
+      .map(name => `
+        <button class="chip ${selectedService === name ? 'active' : ''}"
+          onclick="chooseService('${safe(name)}')">
+          ${name === 'All' ? '✦ All' : safe(name)}
+        </button>
+      `).join('');
+
+  const filtered = services.filter(s =>
+    (selectedService === 'All' || s.name === selectedService) &&
+    (!q || (s.name + ' ' + s.description).toLowerCase().includes(q))
+  );
+
+  $('serviceGrid').innerHTML = filtered.map(s => `
+    <article class="card service-card">
+      <img
+        class="service-photo"
+        src="${safe(s.photo)}"
+        alt="${safe(s.name)} service"
+        loading="lazy"
+        onerror="this.style.display='none'"
+      >
+      <div class="service-top">
+        <div class="service-icon">${s.icon}</div>
+        <span class="service-badge">HOME SERVICE</span>
+      </div>
+      <h3>${safe(s.name)}</h3>
+      <p class="muted">${safe(s.description)}</p>
+      <button class="btn secondary"
+        onclick="chooseService('${safe(s.name)}'); $('booking').scrollIntoView({behavior:'smooth'})">
+        Book this service →
+      </button>
+    </article>
+  `).join('') ||
+    '<div class="empty">No matching services. Try another search.</div>';
+}
 function chooseService(name){selectedService=name;$('serviceSelect').value=name==='All'?'':name;renderServices();renderWorkerSelect();renderWorkers();}
 function searchServices(){selectedService='All';renderServices();$('services').scrollIntoView({behavior:'smooth'});}
 function renderServiceSelect(){$('serviceSelect').innerHTML='<option value="">Choose service</option>'+services.map(s=>`<option value="${safe(s.name)}">${safe(s.name)}</option>`).join('');}
