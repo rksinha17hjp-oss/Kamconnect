@@ -906,7 +906,8 @@ async function cancelBooking(id) {
   alert("Booking successfully cancelled!");
   await loadMyBookings();
 }
-   
+  
+
 async function loadWorkerBookings() {
   const panel = $("workerDashboard");
 
@@ -916,25 +917,10 @@ async function loadWorkerBookings() {
   }
 
   const { data: isWorker, error: profileError } =
-  await client.rpc("is_my_worker_profile");
-
-if (profileError) {
-  showNotice(
-    "workerBookingsNotice",
-    "Could not check worker account: " + profileError.message,
-    "bad"
-  );
-  return;
-}
-
-if (!isWorker) {
-  panel.style.display = "none";
-  return;
-}
-
-panel.style.display = "block";
+    await client.rpc("is_my_worker_profile");
 
   if (profileError) {
+    panel.style.display = "block";
     showNotice(
       "workerBookingsNotice",
       "Could not check worker account: " + profileError.message,
@@ -943,7 +929,7 @@ panel.style.display = "block";
     return;
   }
 
-  if (!profile) {
+  if (!isWorker) {
     panel.style.display = "none";
     return;
   }
@@ -952,7 +938,9 @@ panel.style.display = "block";
 
   const { data, error } = await client
     .from("bookings")
-    .select("id, customer_name, phone, service, address, booking_date, notes, status, created_at")
+    .select(
+      "id, customer_name, phone, service, address, booking_date, notes, status, created_at"
+    )
     .eq("worker_id", currentUser.id)
     .order("created_at", { ascending: false });
 
@@ -972,32 +960,29 @@ panel.style.display = "block";
       '<div class="empty">No booking requests assigned to you yet.</div>';
     return;
   }
-const activeBookings = data.filter(b =>
-  String(b.status || "").trim().toLowerCase() !== "cancelled"
-);
+
+  const activeBookings = data.filter(
+    b => String(b.status || "").trim().toLowerCase() !== "cancelled"
+  );
+
+  if (!activeBookings.length) {
+    $("workerBookingList").innerHTML =
+      '<div class="empty">No active booking requests assigned to you yet.</div>';
+    return;
+  }
+
   $("workerBookingList").innerHTML = activeBookings.map(b => {
-    const status = (b.status || "pending").trim().toLowerCase();
-if (status === "cancelled") {
-  return `
-    <article class="booking-item">
-      <div>
-        <strong>${safe(b.service || "Service")}</strong>
-        <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
-        <p class="muted">This booking was cancelled by the customer.</p>
-      </div>
-      <span class="tag">CANCELLED</span>
-    </article>
-  `;
-}
+    const status = String(b.status || "pending").trim().toLowerCase();
+
     return `
       <article class="booking-item">
         <div>
           <strong>${safe(b.service || "Service")}</strong>
           <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
           <p class="muted">Phone: ${safe(b.phone || "Not provided")}</p>
-${b.phone ? `
-  <a class="btn" href="tel:${safe(b.phone)}">📞 Call Customer</a>
-` : ""}
+          ${b.phone ? `
+            <a class="btn" href="tel:${safe(b.phone)}">📞 Call Customer</a>
+          ` : ""}
           <p class="muted">Address: ${safe(b.address || "")}</p>
           <p class="muted">Date: ${safe(b.booking_date || "")}</p>
           <p class="muted">Status: ${safe(status.toUpperCase())}</p>
@@ -1016,6 +1001,7 @@ ${b.phone ? `
     `;
   }).join("");
 }
+
 async function updateWorkerBookingStatus(id, newStatus) {
   if (!currentUser) return;
 if (!["accepted", "rejected", "completed"].includes(newStatus)) return;
