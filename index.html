@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -643,40 +642,20 @@ function renderServiceSelect(){
   $("serviceSelect").innerHTML='<option value="">Choose service</option>'+
     services.map(s=>`<option value="${safe(s.name)}">${safe(s.name)}</option>`).join("");
 }
-async function loadWorkers() {
-  showNotice("workerNotice", "Loading available workers…");
-
-  const { data, error } = await client
-    .from("public_worker_directory")
-    .select("id, full_name, service, price, area, photo_url, available")
-    .eq("available", true)
-    .order("full_name");
-
-  if (error) {
-    workers = [];
-    renderWorkers();
-    showNotice(
-      "workerNotice",
-      "Could not load workers: " + error.message,
-      "bad"
-    );
+async function loadWorkers(){
+  showNotice("workerNotice","Loading available workers…");
+  const {data,error}=await client.from("worker_profiles")
+    .select("id, full_name, service, price, area, phone, photo_url, available")
+    .eq("available",true).order("full_name");
+  if(error){
+    workers=[];renderWorkers();
+    showNotice("workerNotice","Could not load workers. Check Supabase access policies. "+error.message,"bad");
     return;
   }
-
-  workers = data || [];
-
-  if (workers.length) {
-    hideNotice("workerNotice");
-  } else {
-    showNotice(
-      "workerNotice",
-      "No available workers have been added yet.",
-      "bad"
-    );
-  }
-
-  renderWorkers();
-  renderWorkerSelect();
+  workers=data||[];
+  if(workers.length)hideNotice("workerNotice");
+  else showNotice("workerNotice","No available workers have been added yet.","bad");
+  renderWorkers();renderWorkerSelect();
 }
 function renderWorkers(){
   const list=workers.filter(w=>selectedService==="All"||
@@ -779,7 +758,7 @@ $("bookingForm").addEventListener("submit",async event=>{
   };
   try{
     const { data: availableWorker, error: workerCheckError } = await client
-  .from("public_worker_directory")
+  .from("worker_profiles")
   .select("id")
   .eq("id", payload.worker_id)
   .eq("available", true)
@@ -799,79 +778,71 @@ if (error) throw error;
   }catch(error){showNotice("bookingNotice","Booking could not be saved: "+error.message,"bad")}
   finally{button.disabled=false;button.textContent="Request booking →"}
 });
-  
-async function loadMyBookings() {
+   async function loadMyBookings() {
   if (!currentUser) {
     $("bookingList").innerHTML =
       '<p class="muted">Log in to view your bookings.</p>';
     return;
   }
 
-  try {
-    const { data, error } = await client
-      .from("bookings")
-      .select("id, service, address, booking_date, status, created_at, worker_id")
-      .eq("customer_id", currentUser.id)
-      .order("created_at", { ascending: false });
+  const { data, error } = await client
+    .from("bookings")
+    .select("id, service, address, booking_date, status, created_at, worker_id")
+    .eq("customer_id", currentUser.id)
+    .order("created_at", { ascending: false });
 
-    if (error) throw error;
-
-    hideNotice("myBookingsNotice");
-
-    if (!data || data.length === 0) {
-      $("bookingList").innerHTML =
-        '<div class="empty">No bookings yet. Choose a service to get started.</div>';
-      return;
-    }
-
-    const workerIds = [
-      ...new Set(data.map(b => b.worker_id).filter(Boolean))
-    ];
-
-    const workerMap = {};
-
-    if (workerIds.length) {
-      const { data: profiles, error: workerError } = await client
-        .from("public_worker_directory")
-        .select("id, full_name")
-        .in("id", workerIds);
-
-      if (workerError) throw workerError;
-
-      (profiles || []).forEach(w => {
-        workerMap[w.id] = w;
-      });
-    }
-
-    $("bookingList").innerHTML = data.map(b => {
-      const worker = workerMap[b.worker_id];
-      const isPending =
-        String(b.status || "pending").toLowerCase() === "pending";
-
-      return `<article class="booking-item">
-        <div>
-          <strong>${safe(b.service || "Service")}</strong>
-          <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
-          <p class="muted">${safe(b.address || "")}</p>
-          <p class="muted">Date: ${safe(b.booking_date || "")}</p>
-          ${isPending ? `
-            <button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel Booking</button>
-          ` : ""}
-        </div>
-        <span class="tag">${safe(String(b.status || "pending").toUpperCase())}</span>
-      </article>`;
-    }).join("");
-
-  } catch (error) {
+  if (error) {
     showNotice(
       "myBookingsNotice",
       "Could not load bookings: " + error.message,
       "bad"
     );
+    return;
   }
-}
 
+  hideNotice("myBookingsNotice");
 
+  if (!data || data.length === 0) {
+    $("bookingList").innerHTML =
+      '<div class="empty">No bookings yet. Choose a service to get started.</div>';
+    return;
+  }
+
+  const workerIds = [...new Set(
+    data.map(b => b.worker_id).filter(Boolean)
+  )];
+
+  let workerMap = {};
+
+  if (workerIds.length) {
+    const { data: profiles, error: workerError } = await client
+      .from("worker_profiles")
+      .select("id, full_name, phone")
+      .in("id", workerIds);
+
+    if (!workerError && profiles) {
+      profiles.forEach(w => {
+        workerMap[w.id] = w;
+      });
+    }
+  }
+
+  $("bookingList").innerHTML = data.map(b => {
+    const worker = workerMap[b.worker_id];
+    const phone = worker?.phone || "";
+    const isPending =
+      String(b.status || "pending").toLowerCase() === "pending";
+
+    return `<article class="booking-item">
+      <div>
+        <strong>${safe(b.service || "Service")}</strong>
+        <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
+        ${phone ? `
+          <p class="muted">Worker phone: ${safe(phone)}</p>
+          <a class="btn" href="tel:${safe(phone)}">📞 Call Worker</a>
+        ` : `
+          <p class="muted">Worker phone not available</p>
+        `}
         <p class="muted">${safe(b.address || "")}</p>
         <p class="muted">Date: ${safe(b.booking_date || "")}</p>
         ${isPending ? `
@@ -914,8 +885,7 @@ async function cancelBooking(id) {
   alert("Booking successfully cancelled!");
   await loadMyBookings();
 }
-  
-
+   
 async function loadWorkerBookings() {
   const panel = $("workerDashboard");
 
@@ -924,11 +894,13 @@ async function loadWorkerBookings() {
     return;
   }
 
-  const { data: isWorker, error: profileError } =
-    await client.rpc("is_my_worker_profile");
+  const { data: profile, error: profileError } = await client
+    .from("worker_profiles")
+    .select("id")
+    .eq("id", currentUser.id)
+    .maybeSingle();
 
   if (profileError) {
-    panel.style.display = "block";
     showNotice(
       "workerBookingsNotice",
       "Could not check worker account: " + profileError.message,
@@ -937,7 +909,7 @@ async function loadWorkerBookings() {
     return;
   }
 
-  if (!isWorker) {
+  if (!profile) {
     panel.style.display = "none";
     return;
   }
@@ -946,9 +918,7 @@ async function loadWorkerBookings() {
 
   const { data, error } = await client
     .from("bookings")
-    .select(
-      "id, customer_name, phone, service, address, booking_date, notes, status, created_at"
-    )
+    .select("id, customer_name, phone, service, address, booking_date, notes, status, created_at")
     .eq("worker_id", currentUser.id)
     .order("created_at", { ascending: false });
 
@@ -968,29 +938,32 @@ async function loadWorkerBookings() {
       '<div class="empty">No booking requests assigned to you yet.</div>';
     return;
   }
-
-  const activeBookings = data.filter(
-    b => String(b.status || "").trim().toLowerCase() !== "cancelled"
-  );
-
-  if (!activeBookings.length) {
-    $("workerBookingList").innerHTML =
-      '<div class="empty">No active booking requests assigned to you yet.</div>';
-    return;
-  }
-
+const activeBookings = data.filter(b =>
+  String(b.status || "").trim().toLowerCase() !== "cancelled"
+);
   $("workerBookingList").innerHTML = activeBookings.map(b => {
-    const status = String(b.status || "pending").trim().toLowerCase();
-
+    const status = (b.status || "pending").trim().toLowerCase();
+if (status === "cancelled") {
+  return `
+    <article class="booking-item">
+      <div>
+        <strong>${safe(b.service || "Service")}</strong>
+        <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
+        <p class="muted">This booking was cancelled by the customer.</p>
+      </div>
+      <span class="tag">CANCELLED</span>
+    </article>
+  `;
+}
     return `
       <article class="booking-item">
         <div>
           <strong>${safe(b.service || "Service")}</strong>
           <p class="muted">Customer: ${safe(b.customer_name || "Customer")}</p>
           <p class="muted">Phone: ${safe(b.phone || "Not provided")}</p>
-          ${b.phone ? `
-            <a class="btn" href="tel:${safe(b.phone)}">📞 Call Customer</a>
-          ` : ""}
+${b.phone ? `
+  <a class="btn" href="tel:${safe(b.phone)}">📞 Call Customer</a>
+` : ""}
           <p class="muted">Address: ${safe(b.address || "")}</p>
           <p class="muted">Date: ${safe(b.booking_date || "")}</p>
           <p class="muted">Status: ${safe(status.toUpperCase())}</p>
@@ -1009,24 +982,15 @@ async function loadWorkerBookings() {
     `;
   }).join("");
 }
-
-
 async function updateWorkerBookingStatus(id, newStatus) {
   if (!currentUser) return;
-
-  if (!["accepted", "rejected", "completed"].includes(newStatus)) {
-    return;
-  }
-
-  const expectedStatus =
-    newStatus === "completed" ? "accepted" : "pending";
-
+if (!["accepted", "rejected", "completed"].includes(newStatus)) return;
   const { data, error } = await client
     .from("bookings")
     .update({ status: newStatus })
     .eq("id", id)
     .eq("worker_id", currentUser.id)
-    .eq("status", expectedStatus)
+.eq("status", newStatus === "completed" ? "accepted" : "pending")
     .select("id");
 
   if (error) {
@@ -1038,24 +1002,18 @@ async function updateWorkerBookingStatus(id, newStatus) {
     return;
   }
 
-  if (!data || data.length === 0) {
+  if (!data || !data.length) {
     showNotice(
       "workerBookingsNotice",
-      "Booking update nahi hui. Booking ownership aur current status check karo.",
+      "Booking was not updated. Check database permissions or whether it is still pending.",
       "bad"
     );
     return;
   }
 
-  showNotice(
-    "workerBookingsNotice",
-    "Booking status updated: " + newStatus,
-    "good"
-  );
-
+  showNotice("workerBookingsNotice", "Booking " + newStatus + " successfully!");
   await loadWorkerBookings();
-}
-
+          }
 client.auth.onAuthStateChange((_event, session) => {
   currentUser = session?.user || null;
   updateAccountUI();
@@ -1136,7 +1094,7 @@ const stats = document.createElement("div");
       client.from("bookings").select("id", { count: "exact", head: true }),
       client.from("bookings").select("id", { count: "exact", head: true }).eq("status", "pending"),
       client.from("bookings").select("id", { count: "exact", head: true }).eq("status", "completed"),
-      client.from("admin_worker_directory").select("id", { count: "exact", head: true })
+      client.from("worker_profiles").select("id", { count: "exact", head: true })
     ]);
 
     if (all.error || pending.error || completed.error || workers.error) {
@@ -1190,9 +1148,9 @@ const stats = document.createElement("div");
     output.textContent = "Loading workers...";
 
     const { data, error } = await client
-  .from("admin_worker_directory")
-  .select("id, full_name, service, area, price, available")
-  .limit(100);
+      .from("worker_profiles")
+      .select("id,full_name,service,phone,area,price,available")
+      .limit(100);
 
     if (error) {
       output.textContent = "Error: " + error.message;
@@ -1229,62 +1187,14 @@ const stats = document.createElement("div");
         ? "Set Unavailable"
         : "Set Available";
 
-btn.onclick = async () => {
-  btn.disabled = true;
+      btn.onclick = async () => {
+        btn.disabled = true;
+        const newValue = !worker.available;
 
-  const newValue = !worker.available;
-
-  try {
-    const { data: updated, error } = await client.rpc(
-      "admin_set_worker_availability",
-      {
-        worker_uuid: worker.id,
-        new_available: newValue
-      }
-    );
-
-    if (error) throw error;
-
-    if (updated !== true) {
-      throw new Error("Worker was not updated. Check admin permissions.");
-    }
-
-    worker.available = newValue;
-
-    details.textContent =
-      "Service: " + (worker.service || "-") +
-      " | Area: " + (worker.area || "-") +
-      " | Available: " + (worker.available ? "Yes" : "No");
-
-    btn.textContent = worker.available
-      ? "Set Unavailable"
-      : "Set Available";
-
-    showNotice(
-      "adminResults",
-      "Availability updated successfully.",
-      "ok"
-    );
-  } catch (error) {
-    alert("Update failed: " + error.message);
-  } finally {
-    btn.disabled = false;
-  }
-};
-
-    
-worker.available = newValue;
-
-details.textContent =
-  "Service: " + (worker.service || "-") +
-  " | Area: " + (worker.area || "-") +
-  " | Available: " + (worker.available ? "Yes" : "No");
-
-btn.textContent = worker.available
-  ? "Set Unavailable"
-  : "Set Available";
-
-btn.disabled = false;
+        const { error: updateError } = await client
+          .from("worker_profiles")
+          .update({ available: newValue })
+          .eq("id", worker.id);
 
         if (updateError) {
           alert("Update failed: " + updateError.message);
@@ -1314,4 +1224,4 @@ btn.disabled = false;
 checkAdminAccess();
 </script>
 </body>
-</html>
+      </html>
