@@ -547,8 +547,21 @@ $("bookingForm").addEventListener("submit",async event=>{
     status:"pending"
   };
   try{
-    const {error}=await client.from("bookings").insert(payload);
-    if(error)throw error;
+    const { data: availableWorker, error: workerCheckError } = await client
+  .from("worker_profiles")
+  .select("id")
+  .eq("id", payload.worker_id)
+  .eq("available", true)
+  .maybeSingle();
+
+if (workerCheckError) throw workerCheckError;
+
+if (!availableWorker) {
+  throw new Error("Ye worker abhi Unavailable hai. Koi doosra worker chunein.");
+}
+
+const { error } = await client.from("bookings").insert(payload);
+if (error) throw error;
     showNotice("bookingNotice","Booking request submitted! Its current status is Pending.");
     $("bookingForm").reset();$("bookingDate").min=localDateString();
     renderWorkerSelect();updateAccountUI();await loadMyBookings();
