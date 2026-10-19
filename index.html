@@ -122,7 +122,31 @@ function localDateString(){const d=new Date();return `${d.getFullYear()}-${Strin
 function money(value){if(value===null||value===undefined||value==='')return 'Price on request';const n=Number(value);return Number.isFinite(n)?'₹'+n.toLocaleString('en-IN'):'Price on request';}
 function showAuth(){if(currentUser){$('myBookings').scrollIntoView({behavior:'smooth'});return;}$('authSection').classList.remove('hidden');$('authSection').scrollIntoView({behavior:'smooth',block:'start'});}
 function setAuthMode(mode){authMode=mode;const signup=mode==='signup';$('authTitle').textContent=signup?'Create your account':'Welcome back';$('authSubmit').textContent=signup?'Create account':'Login';$('nameField').classList.toggle('hidden',!signup);$('phoneField').classList.toggle('hidden',!signup);$('fullName').required=signup;$('password').autocomplete=signup?'new-password':'current-password';$('loginTab').className='btn '+(signup?'':'secondary');$('signupTab').className='btn '+(signup?'secondary':'');hideNotice('authNotice');}
-function renderServices() {
+
+async function loadServices() {
+  const { data, error } = await client
+    .from('service_categories')
+    .select('id, name, image_path')
+    .eq('active', true)
+    .order('id');
+
+  if (error) {
+    console.error('Services load error:', error.message);
+    return;
+  }
+
+  if (data && data.length > 0) {
+    services = data.map(s => ({
+      ...s,
+      photo: s.image_path,
+      icon: serviceInfo[s.name]?.icon || '🧰',
+      description:
+        serviceInfo[s.name]?.description ||
+        'Professional home service'
+    }));
+  }
+}
+  function renderServices() {
   const q = $('searchInput').value.trim().toLowerCase();
 
   $('serviceChips').innerHTML =
