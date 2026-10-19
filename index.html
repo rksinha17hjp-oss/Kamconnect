@@ -55,12 +55,42 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_kt1bWOAe1U3vjTOr-tvYlQ_j0RNNAU7
 if (!window.supabase) { document.body.insertAdjacentHTML('afterbegin','<p style="padding:16px;color:#a12b27">Could not load Supabase client. Please refresh the page.</p>'); throw new Error('Supabase client library did not load.'); }
 const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const services = [
- {name:'Plumber',icon:'🔧',description:'Taps, pipes and plumbing repairs'},
- {name:'Electrician',icon:'⚡',description:'Electrical repairs and fittings'},
- {name:'Home Cleaning',icon:'🧹',description:'A fresher, cleaner home'},
- {name:'Carpenter',icon:'🪚',description:'Furniture and woodwork'},
- {name:'AC Repair',icon:'❄️',description:'Air conditioner service and repair'},
- {name:'Painter',icon:'🖌️',description:'Fresh paint for your home'}
+  {
+    name: 'Plumber',
+    icon: '🔧',
+    description: 'Taps, pipes and plumbing repairs',
+    photo: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Electrician',
+    icon: '⚡',
+    description: 'Electrical repairs and fittings',
+    photo: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Home Cleaning',
+    icon: '🧹',
+    description: 'A fresher, cleaner home',
+    photo: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Carpenter',
+    icon: '🪚',
+    description: 'Furniture and woodwork',
+    photo: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'AC Repair',
+    icon: '❄️',
+    description: 'Air conditioner service and repair',
+    photo: 'https://images.unsplash.com/photo-1631545806609-6e1a4a0b2e?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    name: 'Painter',
+    icon: '🖌️',
+    description: 'Fresh paint for your home',
+    photo: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=800&q=80'
+  }
 ];
 let currentUser=null, authMode='login', workers=[], selectedService='All', adminUserId=null;
 const $=id=>document.getElementById(id);
