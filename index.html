@@ -799,75 +799,78 @@ if (error) throw error;
   }catch(error){showNotice("bookingNotice","Booking could not be saved: "+error.message,"bad")}
   finally{button.disabled=false;button.textContent="Request booking →"}
 });
-   async function loadMyBookings() {
+  
+async function loadMyBookings() {
   if (!currentUser) {
     $("bookingList").innerHTML =
       '<p class="muted">Log in to view your bookings.</p>';
     return;
   }
 
-  const { data, error } = await client
-    .from("bookings")
-    .select("id, service, address, booking_date, status, created_at, worker_id")
-    .eq("customer_id", currentUser.id)
-    .order("created_at", { ascending: false });
+  try {
+    const { data, error } = await client
+      .from("bookings")
+      .select("id, service, address, booking_date, status, created_at, worker_id")
+      .eq("customer_id", currentUser.id)
+      .order("created_at", { ascending: false });
 
-  if (error) {
+    if (error) throw error;
+
+    hideNotice("myBookingsNotice");
+
+    if (!data || data.length === 0) {
+      $("bookingList").innerHTML =
+        '<div class="empty">No bookings yet. Choose a service to get started.</div>';
+      return;
+    }
+
+    const workerIds = [
+      ...new Set(data.map(b => b.worker_id).filter(Boolean))
+    ];
+
+    const workerMap = {};
+
+    if (workerIds.length) {
+      const { data: profiles, error: workerError } = await client
+        .from("public_worker_directory")
+        .select("id, full_name")
+        .in("id", workerIds);
+
+      if (workerError) throw workerError;
+
+      (profiles || []).forEach(w => {
+        workerMap[w.id] = w;
+      });
+    }
+
+    $("bookingList").innerHTML = data.map(b => {
+      const worker = workerMap[b.worker_id];
+      const isPending =
+        String(b.status || "pending").toLowerCase() === "pending";
+
+      return `<article class="booking-item">
+        <div>
+          <strong>${safe(b.service || "Service")}</strong>
+          <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
+          <p class="muted">${safe(b.address || "")}</p>
+          <p class="muted">Date: ${safe(b.booking_date || "")}</p>
+          ${isPending ? `
+            <button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel Booking</button>
+          ` : ""}
+        </div>
+        <span class="tag">${safe(String(b.status || "pending").toUpperCase())}</span>
+      </article>`;
+    }).join("");
+
+  } catch (error) {
     showNotice(
       "myBookingsNotice",
       "Could not load bookings: " + error.message,
       "bad"
     );
-    return;
   }
-
-  hideNotice("myBookingsNotice");
-
-  if (!data || data.length === 0) {
-    $("bookingList").innerHTML =
-      '<div class="empty">No bookings yet. Choose a service to get started.</div>';
-    return;
-  }
-
-  const workerIds = [...new Set(
-    data.map(b => b.worker_id).filter(Boolean)
-  )];
-
-  let workerMap = {};
-
-  if (workerIds.length) {
-    const { data: profiles, error: workerError } = await client
-  .from("public_worker_directory")
-  .select("id, full_name")
-  .in("id", workerIds);
-
-    if (!workerError && profiles) {
-      profiles.forEach(w => {
-        workerMap[w.id] = w;
-      });
-    }
-  }
-
-  $("bookingList").innerHTML = data.map(b => {
-    const worker = workerMap[b.worker_id];
-    
-const isPending =
-  String(b.status || "pending").toLowerCase() === "pending";
-
-return `<article class="booking-item">
-  <div>
-    <strong>${safe(b.service || "Service")}</strong>
-    <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
-    <p class="muted">${safe(b.address || "")}</p>
-    <p class="muted">Date: ${safe(b.booking_date || "")}</p>
-    ${isPending ? `
-      <button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel Booking</button>
-    ` : ""}
-  </div>
-  <span class="tag">${safe(String(b.status || "pending").toUpperCase())}</span>
-</article>`;
-}).join("");
 }
+
 
         <p class="muted">${safe(b.address || "")}</p>
         <p class="muted">Date: ${safe(b.booking_date || "")}</p>
