@@ -837,9 +837,9 @@ if (error) throw error;
 
   if (workerIds.length) {
     const { data: profiles, error: workerError } = await client
-      .from("worker_profiles")
-      .select("id, full_name, phone")
-      .in("id", workerIds);
+  .from("public_worker_directory")
+  .select("id, full_name")
+  .in("id", workerIds);
 
     if (!workerError && profiles) {
       profiles.forEach(w => {
