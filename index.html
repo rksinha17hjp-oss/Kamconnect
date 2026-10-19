@@ -1225,10 +1225,35 @@ const stats = document.createElement("div");
         btn.disabled = true;
         const newValue = !worker.available;
 
-        const { error: updateError } = await client
-          .from("worker_profiles")
-          .update({ available: newValue })
-          .eq("id", worker.id);
+        const { data: updated, error: updateError } = await client.rpc(
+  "admin_set_worker_availability",
+  {
+    worker_uuid: worker.id,
+    new_available: newValue
+  }
+);
+
+if (updateError || updated !== true) {
+  alert(
+    "Update failed: " +
+    (updateError?.message || "Worker was not updated.")
+  );
+  btn.disabled = false;
+  return;
+}
+
+worker.available = newValue;
+
+details.textContent =
+  "Service: " + (worker.service || "-") +
+  " | Area: " + (worker.area || "-") +
+  " | Available: " + (worker.available ? "Yes" : "No");
+
+btn.textContent = worker.available
+  ? "Set Unavailable"
+  : "Set Available";
+
+btn.disabled = false;
 
         if (updateError) {
           alert("Update failed: " + updateError.message);
