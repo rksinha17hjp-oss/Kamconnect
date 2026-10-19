@@ -779,7 +779,7 @@ $("bookingForm").addEventListener("submit",async event=>{
   };
   try{
     const { data: availableWorker, error: workerCheckError } = await client
-  .from("worker_profiles")
+  .from("public_worker_directory")
   .select("id")
   .eq("id", payload.worker_id)
   .eq("available", true)
