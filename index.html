@@ -728,10 +728,10 @@ async function loadWorkerBookings() {
       '<div class="empty">No booking requests assigned to you yet.</div>';
     return;
   }
-data = data.filter(b =>
-  String(b.status || "").toLowerCase() !== "cancelled"
+const activeBookings = data.filter(b =>
+  String(b.status || "").trim().toLowerCase() !== "cancelled"
 );
-  $("workerBookingList").innerHTML = data.map(b => {
+  $("workerBookingList").innerHTML = activeBookings.map(b => {
     const status = (b.status || "pending").trim().toLowerCase();
 if (status === "cancelled") {
   return `
