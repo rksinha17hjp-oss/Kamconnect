@@ -216,6 +216,210 @@ footer a{color:#ffad91;font-size:12px}
  .grid{grid-template-columns:1fr}
  .hero-buttons .btn{width:100%}
 }
+  /* Modern Smart Home UI */
+body {
+  background: #f8f6ef;
+  color: #292536;
+}
+
+header {
+  background: #fffdf8;
+  color: #292536;
+  box-shadow: 0 3px 16px #29253608;
+  border-bottom: 1px solid #eeeaf3;
+}
+
+nav a {
+  color: #635d70;
+}
+
+.logo span {
+  color: #8065d8;
+}
+
+.hero {
+  background: #f0ebdf;
+  color: #292536;
+  border-radius: 28px;
+  box-shadow: none;
+}
+
+.hero p,
+.trust-row {
+  color: #777184;
+}
+
+.eyebrow {
+  background: #e9e2fb;
+  border: 0;
+  color: #6c50c8;
+  letter-spacing: .4px;
+}
+
+.hero-circle {
+  background: linear-gradient(145deg, #e5dcff, #f9ddec);
+  border: 0;
+  box-shadow: none;
+}
+
+.floating-note {
+  border-radius: 18px;
+}
+
+.primary {
+  background: #8065d8;
+  box-shadow: none;
+  color: white;
+}
+
+.secondary {
+  background: #eee8ff;
+  color: #6c50c8;
+}
+
+.dark-btn {
+  background: #29213d;
+}
+
+.search-box {
+  border: 1px solid #eeeaf3;
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.stat,
+.card,
+.panel {
+  background: #fff;
+  border: 1px solid #eeeaf3;
+  border-radius: 22px;
+  box-shadow: 0 5px 20px #29253606;
+}
+
+.stat-icon,
+.service-icon {
+  background: #eee8ff;
+  border-radius: 17px;
+}
+
+.service-badge,
+.chip.active,
+.chip:hover {
+  background: #eee8ff;
+  border-color: #ddd1ff;
+  color: #6c50c8;
+}
+
+.chip {
+  border-radius: 25px;
+}
+
+.card {
+  padding: 18px;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px #2925360d;
+}
+
+.worker-price {
+  color: #29213d;
+}
+
+.worker-status {
+  background: #e5f7eb;
+  color: #168451;
+}
+
+.tag {
+  background: #eee8ff;
+  color: #6c50c8;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #8065d8;
+  box-shadow: 0 0 0 4px #8065d81a;
+}
+
+footer {
+  background: #29213d;
+}
+
+@media (max-width: 560px) {
+  .wrap {
+    width: calc(100% - 24px);
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+  }
+
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .hero {
+    padding: 23px 18px;
+    border-radius: 24px;
+    margin-top: 14px;
+  }
+
+  h1 {
+    font-size: 35px;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-art {
+    display: none;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat:last-child {
+    display: flex;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .service-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .worker-photo {
+    height: 190px;
+  }
+
+  .worker-bottom {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .worker-bottom .btn {
+    width: auto;
+  }
+}
 </style>
 </head>
 <body>
