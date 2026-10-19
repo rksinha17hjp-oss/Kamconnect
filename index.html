@@ -1002,15 +1002,23 @@ async function loadWorkerBookings() {
   }).join("");
 }
 
+
 async function updateWorkerBookingStatus(id, newStatus) {
   if (!currentUser) return;
-if (!["accepted", "rejected", "completed"].includes(newStatus)) return;
+
+  if (!["accepted", "rejected", "completed"].includes(newStatus)) {
+    return;
+  }
+
+  const expectedStatus =
+    newStatus === "completed" ? "accepted" : "pending";
+
   const { data, error } = await client
     .from("bookings")
     .update({ status: newStatus })
     .eq("id", id)
     .eq("worker_id", currentUser.id)
-.eq("status", newStatus === "completed" ? "accepted" : "pending")
+    .eq("status", expectedStatus)
     .select("id");
 
   if (error) {
@@ -1022,18 +1030,24 @@ if (!["accepted", "rejected", "completed"].includes(newStatus)) return;
     return;
   }
 
-  if (!data || !data.length) {
+  if (!data || data.length === 0) {
     showNotice(
       "workerBookingsNotice",
-      "Booking was not updated. Check database permissions or whether it is still pending.",
+      "Booking update nahi hui. Booking ownership aur current status check karo.",
       "bad"
     );
     return;
   }
 
-  showNotice("workerBookingsNotice", "Booking " + newStatus + " successfully!");
+  showNotice(
+    "workerBookingsNotice",
+    "Booking status updated: " + newStatus,
+    "good"
+  );
+
   await loadWorkerBookings();
-          }
+}
+
 client.auth.onAuthStateChange((_event, session) => {
   currentUser = session?.user || null;
   updateAccountUI();
