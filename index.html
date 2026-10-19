@@ -853,11 +853,82 @@ const stats = document.createElement("div");
       "id,customer_name,phone,service,address,booking_date,status,worker_id"
     );
 
-  document.getElementById("adminWorkersBtn").onclick = () =>
-    showRows(
-      "worker_profiles",
-      "id,full_name,service,phone,area,price,available"
-    );
+  document.getElementById("adminWorkersBtn").onclick = async () => {
+    const output = document.getElementById("adminResults");
+    output.textContent = "Loading workers...";
+
+    const { data, error } = await client
+      .from("worker_profiles")
+      .select("id,full_name,service,phone,area,price,available")
+      .limit(100);
+
+    if (error) {
+      output.textContent = "Error: " + error.message;
+      return;
+    }
+
+    output.replaceChildren();
+
+    if (!data || !data.length) {
+      output.textContent = "No workers found.";
+      return;
+    }
+
+    data.forEach((worker) => {
+      const card = document.createElement("div");
+      card.style.cssText =
+        "padding:14px;margin:10px 0;border:1px solid #ddd;" +
+        "border-radius:10px;overflow-wrap:anywhere";
+
+      const name = document.createElement("h3");
+      name.textContent = worker.full_name || "Worker";
+      card.appendChild(name);
+
+      const details = document.createElement("p");
+      details.textContent =
+        "Service: " + (worker.service || "-") +
+        " | Phone: " + (worker.phone || "-") +
+        " | Area: " + (worker.area || "-") +
+        " | Available: " + (worker.available ? "Yes" : "No");
+      card.appendChild(details);
+
+      const btn = document.createElement("button");
+      btn.textContent = worker.available
+        ? "Set Unavailable"
+        : "Set Available";
+
+      btn.onclick = async () => {
+        btn.disabled = true;
+        const newValue = !worker.available;
+
+        const { error: updateError } = await client
+          .from("worker_profiles")
+          .update({ available: newValue })
+          .eq("id", worker.id);
+
+        if (updateError) {
+          alert("Update failed: " + updateError.message);
+          btn.disabled = false;
+          return;
+        }
+
+        worker.available = newValue;
+        details.textContent =
+          "Service: " + (worker.service || "-") +
+          " | Phone: " + (worker.phone || "-") +
+          " | Area: " + (worker.area || "-") +
+          " | Available: " + (worker.available ? "Yes" : "No");
+
+        btn.textContent = worker.available
+          ? "Set Unavailable"
+          : "Set Available";
+        btn.disabled = false;
+      };
+
+      card.appendChild(btn);
+      output.appendChild(card);
+    });
+  };
 }
 
 checkAdminAccess();
