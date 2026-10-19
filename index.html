@@ -728,7 +728,9 @@ async function loadWorkerBookings() {
       '<div class="empty">No booking requests assigned to you yet.</div>';
     return;
   }
-
+data = data.filter(b =>
+  String(b.status || "").toLowerCase() !== "cancelled"
+);
   $("workerBookingList").innerHTML = data.map(b => {
     const status = (b.status || "pending").trim().toLowerCase();
 if (status === "cancelled") {
