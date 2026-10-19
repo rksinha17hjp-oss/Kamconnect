@@ -643,20 +643,40 @@ function renderServiceSelect(){
   $("serviceSelect").innerHTML='<option value="">Choose service</option>'+
     services.map(s=>`<option value="${safe(s.name)}">${safe(s.name)}</option>`).join("");
 }
-async function loadWorkers(){
-  showNotice("workerNotice","Loading available workers…");
-  const {data,error}=await client.from("worker_profiles")
-    .select("id, full_name, service, price, area, phone, photo_url, available")
-    .eq("available",true).order("full_name");
-  if(error){
-    workers=[];renderWorkers();
-    showNotice("workerNotice","Could not load workers. Check Supabase access policies. "+error.message,"bad");
+async function loadWorkers() {
+  showNotice("workerNotice", "Loading available workers…");
+
+  const { data, error } = await client
+    .from("public_worker_directory")
+    .select("id, full_name, service, price, area, photo_url, available")
+    .eq("available", true)
+    .order("full_name");
+
+  if (error) {
+    workers = [];
+    renderWorkers();
+    showNotice(
+      "workerNotice",
+      "Could not load workers: " + error.message,
+      "bad"
+    );
     return;
   }
-  workers=data||[];
-  if(workers.length)hideNotice("workerNotice");
-  else showNotice("workerNotice","No available workers have been added yet.","bad");
-  renderWorkers();renderWorkerSelect();
+
+  workers = data || [];
+
+  if (workers.length) {
+    hideNotice("workerNotice");
+  } else {
+    showNotice(
+      "workerNotice",
+      "No available workers have been added yet.",
+      "bad"
+    );
+  }
+
+  renderWorkers();
+  renderWorkerSelect();
 }
 function renderWorkers(){
   const list=workers.filter(w=>selectedService==="All"||
