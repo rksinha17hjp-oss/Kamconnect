@@ -569,7 +569,11 @@ if (error) throw error;
   finally{button.disabled=false;button.textContent="Request booking →"}
 });
    async function loadMyBookings() {
-  if (!currentUser) return;
+  if (!currentUser) {
+    $("bookingList").innerHTML =
+      '<p class="muted">Log in to view your bookings.</p>';
+    return;
+  }
 
   const { data, error } = await client
     .from("bookings")
@@ -578,13 +582,17 @@ if (error) throw error;
     .order("created_at", { ascending: false });
 
   if (error) {
-    showNotice("myBookingsNotice", "Could not load bookings: " + error.message, "bad");
+    showNotice(
+      "myBookingsNotice",
+      "Could not load bookings: " + error.message,
+      "bad"
+    );
     return;
   }
 
   hideNotice("myBookingsNotice");
 
-  if (!data || !data.length) {
+  if (!data || data.length === 0) {
     $("bookingList").innerHTML =
       '<div class="empty">No bookings yet. Choose a service to get started.</div>';
     return;
@@ -608,6 +616,33 @@ if (error) throw error;
       });
     }
   }
+
+  $("bookingList").innerHTML = data.map(b => {
+    const worker = workerMap[b.worker_id];
+    const phone = worker?.phone || "";
+    const isPending =
+      String(b.status || "pending").toLowerCase() === "pending";
+
+    return `<article class="booking-item">
+      <div>
+        <strong>${safe(b.service || "Service")}</strong>
+        <p class="muted">Worker: ${safe(worker?.full_name || "Assigned professional")}</p>
+        ${phone ? `
+          <p class="muted">Worker phone: ${safe(phone)}</p>
+          <a class="btn" href="tel:${safe(phone)}">📞 Call Worker</a>
+        ` : `
+          <p class="muted">Worker phone not available</p>
+        `}
+        <p class="muted">${safe(b.address || "")}</p>
+        <p class="muted">Date: ${safe(b.booking_date || "")}</p>
+        ${isPending ? `
+          <button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel Booking</button>
+        ` : ""}
+      </div>
+      <span class="tag">${safe(String(b.status || "pending").toUpperCase())}</span>
+    </article>`;
+  }).join("");
+}
 
 async function cancelBooking(id) {
   if (!currentUser) {
