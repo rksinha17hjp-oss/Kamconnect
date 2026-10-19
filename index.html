@@ -1182,8 +1182,8 @@ const stats = document.createElement("div");
     output.textContent = "Loading workers...";
 
     const { data, error } = await client
-      from("public_worker_directory")
-  .select("id,full_name,service,area,price,available")
+  .from("admin_worker_directory")
+  .select("id, full_name, service, area, price, available")
   .limit(100);
 
     if (error) {
