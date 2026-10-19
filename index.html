@@ -1128,7 +1128,7 @@ const stats = document.createElement("div");
       client.from("bookings").select("id", { count: "exact", head: true }),
       client.from("bookings").select("id", { count: "exact", head: true }).eq("status", "pending"),
       client.from("bookings").select("id", { count: "exact", head: true }).eq("status", "completed"),
-      client.from("worker_profiles").select("id", { count: "exact", head: true })
+      client.from("admin_worker_directory").select("id", { count: "exact", head: true })
     ]);
 
     if (all.error || pending.error || completed.error || workers.error) {
