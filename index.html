@@ -60,7 +60,7 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
 .tag,.status-pill{display:inline-block;padding:6px 10px;border-radius:20px;font-size:10px;font-weight:900;background:#fff0c7;color:#785600}
 .status-accepted .status-pill,.status-confirmed .status-pill{background:#dceaff;color:#205ec7}.status-completed .status-pill{background:#dcf5e5;color:#176b3a}.status-cancelled .status-pill,.status-rejected .status-pill{background:#ffe1e1;color:#a52222}
 .progress-track{height:5px;background:#eee;border-radius:8px;overflow:hidden;margin:12px 0}.progress-track span{display:block;height:100%;background:#258451}
-.empty{grid-column:1/-1;border:1px dashed #ddd;border-radius:14px;padding:24px;text-align:center;color:#777;font-size:13px}.auth-box{max-width:600px;margin:20px auto}
+.tracking-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.tracking-actions .btn{width:auto}.empty{grid-column:1/-1;border:1px dashed #ddd;border-radius:14px;padding:24px;text-align:center;color:#777;font-size:13px}.auth-box{max-width:600px;margin:20px auto}
 .auth-tabs{display:flex;gap:8px;margin:15px 0}.auth-tabs button{flex:1}footer{margin-top:40px;padding:30px 0;background:#242424;color:#fff}
 .footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}footer p{font-size:12px;line-height:1.7;color:#ddd}
 .admin-card{padding:13px;border:1px solid #eee;border-radius:12px;margin:10px 0;overflow-wrap:anywhere}.admin-card button{border:0;border-radius:8px;background:#242424;color:#fff;padding:9px;margin:3px;font-size:11px}
@@ -116,6 +116,7 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
 <div class="field full"><button id="bookBtn" class="btn primary" type="submit">Request booking →</button></div>
 </div></form><p class="small">Your request starts as Pending. Confirm the final price and timing with your professional. Time selection is a preference, not a confirmed appointment.</p></section></section>
 <section id="screen-myBookings" class="screen"><section class="panel"><div class="section-head"><div><div class="kicker">Your activity</div><h2>My bookings</h2><p class="sub">Track your booking requests.</p></div><button class="btn secondary" onclick="loadMyBookings()">↻ Refresh</button></div><div id="myBookingsNotice" class="notice"></div><div id="bookingList"><p class="muted">Log in to view bookings.</p></div></section></section>
+<section id="screen-tracking" class="screen"><section class="panel"><div class="section-head"><div><div class="kicker">Live service tracking</div><h2>Track your worker</h2><p id="trackingSummary" class="sub">Waiting for location…</p></div><button class="btn secondary" onclick="stopCustomerTracking()">Close tracking</button></div><div id="trackingNotice" class="notice"></div><div id="trackingMapWrap" class="hidden"><iframe id="trackingMap" title="Worker live location map" width="100%" height="320" style="border:0;border-radius:14px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><p id="trackingUpdated" class="small"></p><a id="openMapLink" class="btn primary" target="_blank" rel="noopener">Open in Google Maps ↗</a></div></section></section>
 <section id="screen-profile" class="screen"><section id="authSection" class="panel auth-box"><div class="kicker">Welcome to KaamConnect</div><h2 id="authTitle">Welcome back</h2><p class="sub">Sign in to manage your bookings.</p><div class="auth-tabs"><button id="loginTab" class="btn primary" onclick="setAuthMode('login')">Login</button><button id="signupTab" class="btn secondary" onclick="setAuthMode('signup')">Create account</button></div><div id="authNotice" class="notice"></div>
 <form id="authForm"><div class="form-grid"><div id="nameField" class="field full hidden"><label for="fullName">Full name</label><input id="fullName" maxlength="100" autocomplete="name"></div><div id="phoneField" class="field full hidden"><label for="signupPhone">Mobile number (optional)</label><input id="signupPhone" maxlength="20" inputmode="tel"></div><div class="field full"><label for="email">Email</label><input id="email" type="email" required maxlength="254" autocomplete="email"></div><div class="field full"><label for="password">Password (minimum 6 characters)</label><input id="password" type="password" required minlength="6" autocomplete="current-password"></div><div class="field full"><button id="authSubmit" class="btn primary" type="submit">Login</button></div></div></form><p class="small">Never share your password or private database keys.</p></section>
 <section id="profileDetails" class="panel hidden"><div class="kicker">Your account</div><h2>My profile</h2><p id="profileInfo" class="sub"></p><button class="btn primary" onclick="navigateTo('myBookings')">View my bookings</button><button class="btn secondary" onclick="logout()">Logout</button></section></section>
@@ -441,7 +442,7 @@ async function loadMyBookings() {
       const labels={pending:'Pending',accepted:'Accepted',confirmed:'Confirmed',completed:'Completed',cancelled:'Cancelled',rejected:'Rejected'};
       const descriptions={pending:'Waiting for professional confirmation.',accepted:'Your request has been accepted.',confirmed:'Your booking is confirmed.',completed:'Service marked as completed.',cancelled:'This booking was cancelled.',rejected:'This request was rejected.'};
       const progress={pending:10,accepted:55,confirmed:65,completed:100,cancelled:0,rejected:0}[status]??10;
-      return `<article class="booking-item status-${safe(status)}"><span class="status-pill">${safe(labels[status]||status)}</span><h3>${safe(b.service||'Service')}</h3><p class="muted">Worker: ${safe(names[b.worker_id]||'Professional')}</p><p class="muted">Address: ${safe(b.address||'')}</p><p class="muted">Date: ${safe(b.booking_date||'')}</p><p class="muted">${safe(descriptions[status]||'Booking status updated.')}</p>${!['cancelled','rejected'].includes(status)?`<div class="progress-track"><span style="width:${progress}%"></span></div>`:''}${status==='pending'?`<button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel booking</button>`:''}</article>`;
+      return `<article class="booking-item status-${safe(status)}"><span class="status-pill">${safe(labels[status]||status)}</span><h3>${safe(b.service||'Service')}</h3><p class="muted">Worker: ${safe(names[b.worker_id]||'Professional')}</p><p class="muted">Address: ${safe(b.address||'')}</p><p class="muted">Date: ${safe(b.booking_date||'')}</p><p class="muted">${safe(descriptions[status]||'Booking status updated.')}</p>${!['cancelled','rejected'].includes(status)?`<div class="progress-track"><span style="width:${progress}%"></span></div>`:''}${status==='pending'?`<button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel booking</button>`:''}${['accepted','confirmed','on_the_way','arrived'].includes(status)?`<div class="tracking-actions"><button class="btn primary" onclick="trackWorker('${safe(b.id)}')">📍 Track worker</button></div>`:''}</article>`;
     }).join('');
     hideNotice('myBookingsNotice');
   } catch(e) { notice('myBookingsNotice','Could not load bookings: '+e.message,'bad'); }
@@ -471,14 +472,14 @@ async function loadWorkerBookings() {
     const list=data||[];
     $('workerBookingList').innerHTML=list.length ? list.map(b=>{
       const s=String(b.status||'pending').toLowerCase();
-      return `<article class="booking-item"><span class="tag">${safe(s.toUpperCase())}</span><h3>${safe(b.service)}</h3><p class="muted">Customer: ${safe(b.customer_name||'Customer')}</p><p class="muted">Phone: ${safe(b.phone||'Not provided')}</p>${b.phone?`<a class="btn secondary" href="tel:${safe(b.phone)}">📞 Call customer</a>`:''}<p class="muted">Address: ${safe(b.address)}</p><p class="muted">Date: ${safe(b.booking_date)}</p><p class="muted">${safe(b.notes||'')}</p>${s==='pending'?`<button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','accepted')">Accept</button><button class="btn secondary" onclick="updateWorkerBookingStatus('${safe(b.id)}','rejected')">Reject</button>`:''}${s==='accepted'?`<button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','completed')">Mark completed</button>`:''}</article>`;
+      return `<article class="booking-item"><span class="tag">${safe(s.toUpperCase())}</span><h3>${safe(b.service)}</h3><p class="muted">Customer: ${safe(b.customer_name||'Customer')}</p><p class="muted">Phone: ${safe(b.phone||'Not provided')}</p>${b.phone?`<a class="btn secondary" href="tel:${safe(b.phone)}">📞 Call customer</a>`:''}<p class="muted">Address: ${safe(b.address)}</p><p class="muted">Date: ${safe(b.booking_date)}</p><p class="muted">${safe(b.notes||'')}</p>${s==='pending'?`<button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','accepted')">Accept</button><button class="btn secondary" onclick="updateWorkerBookingStatus('${safe(b.id)}','rejected')">Reject</button>`:''}${s==='accepted'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">📍 Start trip & share location</button><button class="btn secondary" onclick="updateWorkerBookingStatus('${safe(b.id)}','completed')">Mark completed</button></div>`:''}${s==='on_the_way'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">↻ Resume location sharing</button><button class="btn secondary" onclick="workerArrived('${safe(b.id)}')">I’ve arrived</button></div>`:''}${s==='arrived'?`<span class="worker-status">Worker has arrived</span><button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','completed')">Mark completed</button>`:''}</article>`;
     }).join('') : '<div class="empty">No booking requests yet.</div>';
   } catch(e) { notice('workerBookingsNotice','Could not load worker requests: '+e.message,'bad'); }
 }
 async function updateWorkerBookingStatus(id,status) {
-  if (!currentUser || !['accepted','rejected','completed'].includes(status)) return;
+  if (!currentUser || !['accepted','rejected','completed','on_the_way','arrived'].includes(status)) return;
   try {
-    const expected=status==='completed'?'accepted':'pending';
+    const expected=status==='completed'?'accepted':(status==='on_the_way'||status==='arrived'?'accepted':'pending');
     const {data,error}=await client.from('bookings').update({status})
       .eq('id',id).eq('worker_id',currentUser.id).eq('status',expected).select('id');
     if (error) throw error;
@@ -486,6 +487,87 @@ async function updateWorkerBookingStatus(id,status) {
     notice('workerBookingsNotice','Booking updated: '+status.toUpperCase());
     await loadWorkerBookings();
   } catch(e) { notice('workerBookingsNotice','Update failed: '+e.message,'bad'); }
+}
+
+let activeLocationWatch = null;
+let customerTrackingTimer = null;
+let customerTrackingBookingId = null;
+
+async function startWorkerTrip(bookingId) {
+  if (!currentUser || !client) return alert('Please log in first.');
+  if (!navigator.geolocation) return alert('This phone/browser does not support location.');
+  if (!confirm('Start sharing your live location with this customer for this booking? Keep this page open and allow location permission.')) return;
+  try {
+    const {data:booking,error:be}=await client.from('bookings').select('id,status,worker_id').eq('id',bookingId).eq('worker_id',currentUser.id).maybeSingle();
+    if (be) throw be;
+    if (!booking) throw new Error('Booking not found or not assigned to you.');
+    if (!['accepted','on_the_way'].includes(String(booking.status).toLowerCase())) throw new Error('Only accepted bookings can start tracking.');
+    if (String(booking.status).toLowerCase()==='accepted') {
+      const {error}=await client.from('bookings').update({status:'on_the_way'}).eq('id',bookingId).eq('worker_id',currentUser.id).eq('status','accepted');
+      if (error) throw error;
+    }
+    if (activeLocationWatch !== null) navigator.geolocation.clearWatch(activeLocationWatch);
+    activeLocationWatch = navigator.geolocation.watchPosition(async pos=>{
+      try {
+        const row={booking_id:bookingId,worker_id:currentUser.id,latitude:pos.coords.latitude,longitude:pos.coords.longitude,accuracy_m:Math.round(pos.coords.accuracy||0),updated_at:new Date().toISOString(),sharing:true};
+        const {error}=await client.from('worker_live_locations').upsert(row,{onConflict:'booking_id'});
+        if (error) console.error('Location update failed:',error.message);
+      } catch(err) { console.error(err); }
+    },err=>alert('Location permission/error: '+err.message+' Please allow location access and try again.'),{enableHighAccuracy:true,maximumAge:5000,timeout:20000});
+    notice('workerBookingsNotice','Trip started. Keep KaamConnect open and location permission enabled.','ok');
+    await loadWorkerBookings();
+  } catch(e) { alert('Could not start tracking: '+e.message+'\nMake sure the tracking SQL has been run in Supabase.'); }
+}
+
+async function workerArrived(bookingId) {
+  if (!currentUser || !client) return;
+  try {
+    const {error:le}=await client.from('worker_live_locations').upsert({booking_id:bookingId,worker_id:currentUser.id,sharing:false,updated_at:new Date().toISOString()},{onConflict:'booking_id'});
+    if (le) throw le;
+    const {data,error}=await client.from('bookings').update({status:'arrived'}).eq('id',bookingId).eq('worker_id',currentUser.id).eq('status','on_the_way').select('id');
+    if (error) throw error;
+    if (!data?.length) throw new Error('Booking status could not be updated.');
+    if (activeLocationWatch !== null) { navigator.geolocation.clearWatch(activeLocationWatch); activeLocationWatch=null; }
+    await loadWorkerBookings();
+  } catch(e) { alert('Could not mark arrival: '+e.message); }
+}
+
+async function trackWorker(bookingId) {
+  if (!currentUser || !client) return alert('Please log in to track your booking.');
+  customerTrackingBookingId=bookingId;
+  navigateTo('tracking');
+  $('trackingSummary').textContent='Getting worker location…';
+  $('trackingMapWrap').classList.add('hidden');
+  hideNotice('trackingNotice');
+  if (customerTrackingTimer) clearInterval(customerTrackingTimer);
+  const refresh=async()=>{
+    try {
+      const {data:booking,error:be}=await client.from('bookings').select('id,worker_id,status,service').eq('id',bookingId).eq('customer_id',currentUser.id).maybeSingle();
+      if (be) throw be;
+      if (!booking) throw new Error('Booking not found.');
+      $('trackingSummary').textContent=(booking.service||'Service')+' · Status: '+String(booking.status||'pending').replaceAll('_',' ').toUpperCase();
+      const {data:loc,error:le}=await client.from('worker_live_locations').select('latitude,longitude,updated_at,sharing').eq('booking_id',bookingId).maybeSingle();
+      if (le) throw le;
+      if (!loc || loc.latitude==null || loc.longitude==null) {
+        $('trackingMapWrap').classList.add('hidden');
+        notice('trackingNotice','Worker location abhi share nahi hui hai. Worker se “Start trip & share location” press karne ko kahen.','ok');
+        return;
+      }
+      const lat=Number(loc.latitude),lng=Number(loc.longitude);
+      $('trackingMap').src='https://www.openstreetmap.org/export/embed.html?bbox='+(lng-0.01)+'%2C'+(lat-0.01)+'%2C'+(lng+0.01)+'%2C'+(lat+0.01)+'&layer=mapnik&marker='+lat+'%2C'+lng;
+      $('openMapLink').href='https://www.google.com/maps?q='+lat+','+lng;
+      $('trackingUpdated').textContent='Last update: '+new Date(loc.updated_at).toLocaleString()+(loc.sharing?' · Live sharing on':' · Sharing stopped');
+      $('trackingMapWrap').classList.remove('hidden');
+      hideNotice('trackingNotice');
+      if (!loc.sharing) notice('trackingNotice','Worker location sharing is currently paused/stopped.','ok');
+    } catch(e) { notice('trackingNotice','Tracking error: '+e.message+' Make sure tracking SQL has been run in Supabase.','bad'); }
+  };
+  await refresh();
+  customerTrackingTimer=setInterval(refresh,10000);
+}
+function stopCustomerTracking() {
+  if (customerTrackingTimer) clearInterval(customerTrackingTimer);
+  customerTrackingTimer=null; customerTrackingBookingId=null; navigateTo('myBookings');
 }
 
 async function checkAdminAccess() {
