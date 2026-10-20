@@ -303,15 +303,144 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
 </nav></div></header>
 <main class="wrap">
 <section id="screen-home" class="screen active">
-<div class="hero"><div><span class="eyebrow">✦ HOME SERVICES MADE EASY</span><h1>Good help.<br>Happier home.</h1>
-<p>Book trusted local professionals for cleaning, repairs and everyday home needs — all in one place.</p>
-<div class="hero-buttons"><button class="btn primary" onclick="navigateTo('services')">Explore services →</button><button class="btn dark-btn" onclick="navigateTo('workers')">Find a worker</button></div>
-<div class="search-box"><input id="searchInput" placeholder="🔎 Search plumber, cleaning..." aria-label="Search services"><button class="btn primary" onclick="searchServices()">Search</button></div>
-<div class="trust"><span>✓ Local professionals</span><span>✓ Easy booking</span><span>✓ Track requests</span></div></div><div class="hero-art"><div class="hero-circle">🏡</div></div></div>
-<div class="stats"><div class="stat"><div class="stat-icon">🧹</div><div><strong>6 Services</strong><small>Everyday home needs</small></div></div><div class="stat"><div class="stat-icon">📅</div><div><strong>Easy Booking</strong><small>Choose your date</small></div></div><div class="stat"><div class="stat-icon">🔒</div><div><strong>Your Account</strong><small>Manage bookings</small></div></div></div>
-<section class="section"><div class="section-head"><div><div class="kicker">Simple. Local. Convenient.</div><h2>What do you need today?</h2><p class="sub">Choose a service to get started.</p></div><button class="btn secondary" onclick="navigateTo('services')">View all →</button></div><div id="homeServiceGrid" class="grid"></div></section>
-<section class="section"><div class="section-head"><div><div class="kicker">Ready when you are</div><h2>How it works</h2></div></div><div class="grid"><article class="card"><div class="service-icon">🔎</div><h3>1. Choose a service</h3><p class="muted">Find the home service you need.</p></article><article class="card"><div class="service-icon">📅</div><h3>2. Request a booking</h3><p class="muted">Select an available professional and date.</p></article><article class="card"><div class="service-icon">✓</div><h3>3. Track your request</h3><p class="muted">Check booking status in your account.</p></article></div></section>
-</section> 
+
+  <div class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">✦ KAAMCONNECT • HOME SERVICES</span>
+
+      <h1>Har kaam ka<br><span>trusted partner.</span></h1>
+
+      <p>
+        Ghar ke har kaam ke liye bharosemand local professionals.
+        Service chuno, booking karo aur apna kaam aasaan banao.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn primary" onclick="navigateTo('services')">
+          Explore Services →
+        </button>
+        <button class="btn dark-btn" onclick="navigateTo('workers')">
+          Find a Worker
+        </button>
+      </div>
+
+      <div class="search-box">
+        <input
+          id="searchInput"
+          placeholder="🔎 Plumber, electrician, cleaning..."
+          aria-label="Search services"
+        >
+        <button class="btn primary" onclick="searchServices()">
+          Search
+        </button>
+      </div>
+
+      <div class="trust">
+        <span>✓ Local professionals</span>
+        <span>✓ Simple booking</span>
+        <span>✓ Booking updates</span>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="hero-circle">🏡</div>
+      <div class="hero-floating-card">
+        <span>✨</span>
+        <div>
+          <strong>Home care, made easy</strong>
+          <small>Find the help you need</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-icon">🧹</div>
+      <div>
+        <strong>Home Services</strong>
+        <small>Everyday home needs</small>
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">📅</div>
+      <div>
+        <strong>Easy Booking</strong>
+        <small>Request a service</small>
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🔒</div>
+      <div>
+        <strong>Your Account</strong>
+        <small>Manage your bookings</small>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="kicker">SIMPLE. LOCAL. CONVENIENT.</div>
+        <h2>What do you need today?</h2>
+        <p class="sub">Choose a service to get started.</p>
+      </div>
+
+      <button class="btn secondary" onclick="navigateTo('services')">
+        View all →
+      </button>
+    </div>
+
+    <div id="homeServiceGrid" class="grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="kicker">THREE SIMPLE STEPS</div>
+        <h2>How KaamConnect works</h2>
+        <p class="sub">From finding help to getting the job done.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="service-icon">🔎</div>
+        <h3>01. Choose a service</h3>
+        <p class="muted">Find the service that fits your home needs.</p>
+      </article>
+
+      <article class="card">
+        <div class="service-icon">📅</div>
+        <h3>02. Book a professional</h3>
+        <p class="muted">Choose an available worker and request a booking.</p>
+      </article>
+
+      <article class="card">
+        <div class="service-icon">✓</div>
+        <h3>03. Track your booking</h3>
+        <p class="muted">Check your request and its latest status.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card home-cta">
+      <div>
+        <div class="kicker">YOUR HOME, YOUR WAY</div>
+        <h2>Need a helping hand?</h2>
+        <p class="muted">Explore available services and get started today.</p>
+      </div>
+
+      <button class="btn primary" onclick="navigateTo('services')">
+        Book a Service →
+      </button>
+    </div>
+  </section>
+
+</section>
   
 <section id="screen-dashboard" class="screen">
   <div class="customer-welcome">
