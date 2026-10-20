@@ -145,8 +145,16 @@ const serviceInfo = {
   'Electrician': {icon:'⚡',description:'Electrical repairs and fittings',image:'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80'},
   'Home Cleaning': {icon:'🧹',description:'A fresher, cleaner home',image:'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80'},
   'Carpenter': {icon:'🪚',description:'Furniture and woodwork',image:'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=600&q=80'},
-  'AC Technician': {icon:'❄️',description:'Air conditioner service and repair',image:'https://images.unsplash.com/photo-1631545806609-0d7c4c2e4a8d?auto=format&fit=crop&w=600&q=80'},
-  'Handyman': {icon:'🧰',description:'Everyday home repairs',image:'https://images.unsplash.com/photo-1581147036324-c1c89c2c8a5b?auto=format&fit=crop&w=600&q=80'}
+  'AC Technician': {
+  icon: '❄️',
+  description: 'Air conditioner service and repair',
+  image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80'
+},
+'Handyman': {
+  icon: '🧰',
+  description: 'Everyday home repairs',
+  image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=80'
+}
 };
 services = Object.keys(serviceInfo).map(name => ({name,...serviceInfo[name]}));
 
