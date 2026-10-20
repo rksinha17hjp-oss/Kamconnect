@@ -290,7 +290,7 @@ async function loadServices() {
         const path = String(s.image_path || '').replace(/^\/+/, '');
         let image = serviceInfo[s.name]?.image || '';
         if (path) image = /^https?:\/\//i.test(path) ? path :
-          (path.startsWith('images/') ? path : 'images/' + path);
+          (/^https?:\/\//i.test(path) ? path : (path.startsWith('images/') ? path : 'images/' + path));
         return {name:s.name,icon:serviceInfo[s.name]?.icon||'🧰',
           description:serviceInfo[s.name]?.description||'Professional home service',image};
       });
