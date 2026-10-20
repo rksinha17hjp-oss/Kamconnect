@@ -890,16 +890,36 @@ async function checkAdminAccess() {
     await loadAdminStats(); $('adminDashboard').dataset.loaded='true';
   } catch(e) { console.warn('Admin access unavailable:',e.message); $('adminNavBtn').classList.add('hidden'); }
 }
+
 async function loadAdminStats() {
-  const box=$('adminStats'); if (!box || !client) return;
-  const results=await Promise.all([
-    client.from('bookings').select('id',{count:'exact',head:true}),
-    client.from('bookings').select('id',{count:'exact',head:true}).eq('status','pending'),
-    client.from('bookings').select('id',{count:'exact',head:true}).eq('status','completed'),
-    client.from('admin_worker_directory').select('id',{count:'exact',head:true})
+  const box = $('adminStats');
+  if (!box || !client) return;
+
+  const results = await Promise.all([
+    client.from('bookings').select('id', { count: 'exact', head: true }),
+    client.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
+    client.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'completed'),
+    client.rpc('admin_list_workers')
   ]);
-  if (results.some(r=>r.error)) { box.innerHTML='<div class="empty">Could not load statistics. Check database permissions.</div>'; return; }
-  box.innerHTML=['Total bookings','Pending','Completed','Total workers'].map((label,i)=>`<div class="card"><p class="muted">${label}</p><h2>${results[i].count??0}</h2></div>`).join('');
+
+  if (results.some(r => r.error)) {
+    box.innerHTML = '<div class="empty">Could not load statistics. Check database permissions.</div>';
+    console.error('Admin statistics error:', results.filter(r => r.error));
+    return;
+  }
+
+  const totalWorkers = results[3].data?.length ?? 0;
+  const values = [
+    results[0].count ?? 0,
+    results[1].count ?? 0,
+    results[2].count ?? 0,
+    totalWorkers
+  ];
+
+  box.innerHTML = ['Total bookings', 'Pending', 'Completed', 'Total workers']
+    .map((label, i) =>
+      `<div class="card"><p class="muted">${label}</p><h2>${values[i]}</h2></div>`
+    ).join('');
 }
 async function showAdminRows() {
   const out=$('adminResults'); out.textContent='Loading bookings…';
