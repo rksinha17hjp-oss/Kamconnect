@@ -535,17 +535,31 @@ async function startWorkerTrip(bookingId) {
     if (be) throw be;
     if (!booking) throw new Error('Booking not found or not assigned to you.');
     if (!['accepted','on_the_way'].includes(String(booking.status).toLowerCase())) throw new Error('Only accepted bookings can start tracking.');
-    if (String(booking.status).toLowerCase()==='accepted') {
-      const {error}=await client.from('bookings').update({status:'on_the_way'}).eq('id',bookingId).eq('worker_id',currentUser.id).eq('status','accepted');
-      if (error) {
-  console.error('BOOKING STATUS UPDATE ERROR:', error);
-  alert(
-    'Status update failed:\n' +
-    (error.message || JSON.stringify(error))
-  );
-  return;
-      }
-    }
+    
+if (String(booking.status).toLowerCase() === 'accepted') {
+  const { data: updated, error: updateError } = await client
+    .from('bookings')
+    .update({ status: 'on_the_way' })
+    .eq('id', bookingId)
+    .eq('worker_id', currentUser.id)
+    .eq('status', 'accepted')
+    .select('id');
+
+  if (updateError) {
+    console.error('BOOKING STATUS UPDATE ERROR:', updateError);
+    alert('Status update failed: ' + updateError.message);
+    return;
+  }
+
+  if (!updated || updated.length === 0) {
+    alert(
+      'Booking status change nahi hua. Booking refresh karo aur current status check karo.'
+    );
+    await loadWorkerBookings();
+    return;
+  }
+}
+
     if (activeLocationWatch !== null) navigator.geolocation.clearWatch(activeLocationWatch);
     activeLocationWatch = navigator.geolocation.watchPosition(async pos=>{
       try {
