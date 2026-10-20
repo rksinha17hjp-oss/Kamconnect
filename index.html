@@ -283,6 +283,106 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
   }
 }
 
+/* KaamConnect homepage polish */
+.hero {
+  overflow: hidden;
+  border: 1px solid #f4e5c2;
+  box-shadow: 0 12px 35px rgba(105, 78, 20, 0.06);
+}
+
+.hero h1 span {
+  color: #b98108;
+}
+
+.hero-content {
+  min-width: 0;
+}
+
+.hero-art {
+  position: relative;
+}
+
+.hero-circle {
+  box-shadow: inset -12px -14px 0 rgba(219, 157, 30, 0.10);
+}
+
+.hero-floating-card {
+  position: absolute;
+  right: -4px;
+  bottom: 10%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(230px, 100%);
+  padding: 13px;
+  border: 1px solid #f1e8d6;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(36, 36, 36, 0.10);
+}
+
+.hero-floating-card > span {
+  font-size: 25px;
+}
+
+.hero-floating-card strong,
+.hero-floating-card small {
+  display: block;
+}
+
+.hero-floating-card strong {
+  font-size: 12px;
+}
+
+.hero-floating-card small {
+  margin-top: 4px;
+  color: #737373;
+  font-size: 10px;
+}
+
+.home-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px;
+  background: linear-gradient(120deg, #fff9eb, #ffffff);
+  border-color: #f1e4c9;
+}
+
+.home-cta h2 {
+  margin-top: 8px;
+}
+
+.home-cta .btn {
+  width: auto;
+  flex-shrink: 0;
+}
+
+.btn {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 560px) {
+  .hero-floating-card {
+    display: none;
+  }
+
+  .home-cta {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .home-cta .btn {
+    width: 100%;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -991,7 +1091,14 @@ $('bookingForm').addEventListener('submit', async e => {
     const {error} = await client.from('bookings').insert(payload);
     if (error) throw error;
     notice('bookingNotice','Booking request submitted! Status: Pending.');
-    $('bookingForm').reset(); $('bookingDate').min=today(); renderWorkerSelect(); await loadMyBookings();
+    $('bookingForm').reset();
+$('bookingDate').min = today();
+renderWorkerSelect();
+
+await Promise.all([
+  loadMyBookings(),
+  loadCustomerDashboard()
+]);
   } catch (e) { notice('bookingNotice','Booking failed: '+e.message,'bad'); }
   finally { btn.disabled=false; btn.textContent='Request booking →'; }
 });
@@ -1125,17 +1232,39 @@ async function loadMyBookings() {
     hideNotice('myBookingsNotice');
   } catch(e) { notice('myBookingsNotice','Could not load bookings: '+e.message,'bad'); }
 }
-async function cancelBooking(id) {
-  if (!currentUser || !confirm('Cancel this pending booking?')) return;
-  try {
-    const {data,error}=await client.from('bookings').update({status:'cancelled'})
-      .eq('id',id).eq('customer_id',currentUser.id).eq('status','pending').select('id');
-    if (error) throw error;
-    if (!data?.length) throw new Error('Booking was not cancelled. Its status may have changed.');
-    await loadMyBookings();
-  } catch(e) { alert('Cancellation failed: '+e.message); }
-}
 
+async function cancelBooking(id) {
+  if (!currentUser || !client) return;
+
+  if (!confirm('Cancel this pending booking?')) return;
+
+  try {
+    const { data, error } = await client
+      .from('bookings')
+      .update({ status: 'cancelled' })
+      .eq('id', id)
+      .eq('customer_id', currentUser.id)
+      .eq('status', 'pending')
+      .select('id');
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      throw new Error(
+        'Booking cancel nahi hui. Ho sakta hai status pehle hi change ho gaya ho.'
+      );
+    }
+
+    await Promise.all([
+      loadMyBookings(),
+      loadCustomerDashboard()
+    ]);
+
+    alert('Booking successfully cancelled.');
+  } catch (e) {
+    alert('Cancellation failed: ' + e.message);
+  }
+}
 async function loadWorkerBookings() {
   if (!currentUser || !client) return;
   try {
