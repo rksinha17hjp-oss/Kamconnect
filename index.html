@@ -156,11 +156,70 @@ background: #f5f1e9;
   gap: 5px;
   font-size: 10px;
   color: #777;
+} 
+  
+/* KaamConnect separate screens */
+.app-screen {
+  display: none;
+  animation: screenFadeIn 0.18s ease;
 }
+
+.app-screen.active {
+  display: block;
+}
+
+#mainNav {
+  gap: 6px;
+}
+
+#mainNav .btn {
+  white-space: nowrap;
+}
+
+@keyframes screenFadeIn {
+  from { opacity: 0.65; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  #mainNav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+    width: 100%;
+  }
+
+  #mainNav .btn {
+    flex-shrink: 0;
+    font-size: 11px;
+    padding: 9px 11px;
+  }
+}
+
 </style>
 </head>
 <body>
-<header><div class="wrap navbar"><a href="#top" class="logo">Kaam<span>Connect</span></a><nav><a href="#services">Services</a><a href="#workers">Workers</a><a href="#booking">Booking</a><a href="#myBookings">My bookings</a><button id="accountBtn" class="btn primary" onclick="showAuth()">Login / Sign up</button><button id="logoutBtn" class="btn dark-btn hidden" onclick="logout()">Logout</button></nav></div></header>
+
+<header>
+  <div class="wrap navbar">
+    <a href="#" class="logo" onclick="navigateTo('home');return false;">Kaam<span>Connect</span></a>
+
+    <nav id="mainNav">
+      <button class="btn secondary" onclick="navigateTo('home')">Home</button>
+      <button class="btn secondary" onclick="navigateTo('services')">Services</button>
+      <button class="btn secondary" onclick="navigateTo('workers')">Workers</button>
+      <button class="btn secondary" onclick="navigateTo('booking')">Book</button>
+      <button class="btn secondary" onclick="navigateTo('myBookings')">My Bookings</button>
+      <button class="btn secondary" onclick="navigateTo('profile')">Profile</button>
+      <button id="workerNavBtn" class="btn secondary hidden" onclick="navigateTo('worker')">Worker Dashboard</button>
+      <button id="adminNavBtn" class="btn secondary hidden" onclick="navigateTo('admin')">Admin Dashboard</button>
+      <button id="accountBtn" class="btn primary" onclick="showAuth()">Login / Sign up</button>
+      <button id="logoutBtn" class="btn dark-btn hidden" onclick="logout()">Logout</button>
+    </nav>
+  </div>
+</header>
+
 <main id="top" class="wrap">
 <section class="hero"><div><div class="eyebrow">✦ Reliable help, right at home</div><h1>Good help.<br>Happier home.</h1><p>Find trusted local professionals for repairs, cleaning and everyday home needs. Choose your service and book in minutes.</p><div class="hero-buttons"><a href="#services" class="btn primary">Explore services ↗</a><a href="#workers" class="btn dark-btn">Find a worker</a></div><div class="search-box"><input id="searchInput" placeholder="🔎 Search plumber, electrician..." aria-label="Search services"><button class="btn primary" onclick="searchServices()">Search</button></div><div class="trust-row"><span>✓ Local professionals</span><span>✓ Easy booking</span></div></div><div class="hero-art"><div class="hero-circle">🏡</div><div class="floating-note">✨ Home services made easy<small>Find help for everyday needs</small></div></div></section>
 <section class="stats"><div class="stat"><div class="stat-icon">🛠️</div><div><strong>6 Services</strong><small>Everyday home needs</small></div></div><div class="stat"><div class="stat-icon">⚡</div><div><strong>Easy Booking</strong><small>Simple request process</small></div></div><div class="stat"><div class="stat-icon">🔒</div><div><strong>Your Account</strong><small>Bookings in one place</small></div></div></section>
@@ -244,7 +303,75 @@ function showNotice(id,message,type='ok'){const el=$(id);if(!el)return;el.textCo
 function hideNotice(id){const el=$(id);if(el)el.className='notice';}
 function localDateString(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function money(value){if(value===null||value===undefined||value==='')return 'Price on request';const n=Number(value);return Number.isFinite(n)?'₹'+n.toLocaleString('en-IN'):'Price on request';}
-function showAuth(){if(currentUser){$('myBookings').scrollIntoView({behavior:'smooth'});return;}$('authSection').classList.remove('hidden');$('authSection').scrollIntoView({behavior:'smooth',block:'start'});}
+
+function setupNavigation() {
+  const main = document.getElementById('top');
+
+  if (document.getElementById('screen-home')) return;
+
+  const definitions = [
+    'home',
+    'services',
+    'workers',
+    'booking',
+    'myBookings',
+    'profile',
+    'worker',
+    'admin'
+  ];
+
+  definitions.forEach(id => {
+    const screen = document.createElement('div');
+    screen.id = 'screen-' + id;
+    screen.className = 'app-screen';
+    main.appendChild(screen);
+  });
+
+  function move(selector, screenId) {
+    const element = main.querySelector(selector);
+    const target = document.getElementById('screen-' + screenId);
+
+    if (element && target) {
+      target.appendChild(element);
+    }
+  }
+
+  move('.hero', 'home');
+  move('.stats', 'home');
+  move('#services', 'services');
+  move('#workers', 'workers');
+  move('#booking', 'booking');
+  move('#myBookings', 'myBookings');
+  move('#authSection', 'profile');
+  move('#workerDashboard', 'worker');
+}
+
+function navigateTo(name) {
+  const target = document.getElementById('screen-' + name);
+  if (!target) return;
+
+  document.querySelectorAll('.app-screen').forEach(screen => {
+    screen.classList.remove('active');
+  });
+
+  target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (name === 'workers') loadWorkers();
+  if (name === 'myBookings') loadMyBookings();
+  if (name === 'worker') loadWorkerBookings();
+  if (name === 'admin') checkAdminAccess();
+}
+
+function showAuth() {
+  if (currentUser) {
+    navigateTo('myBookings');
+    return;
+  }
+
+  navigateTo('profile');
+}
+
 function setAuthMode(mode){authMode=mode;const signup=mode==='signup';$('authTitle').textContent=signup?'Create your account':'Welcome back';$('authSubmit').textContent=signup?'Create account':'Login';$('nameField').classList.toggle('hidden',!signup);$('phoneField').classList.toggle('hidden',!signup);$('fullName').required=signup;$('password').autocomplete=signup?'new-password':'current-password';$('loginTab').className='btn '+(signup?'':'secondary');$('signupTab').className='btn '+(signup?'secondary':'');hideNotice('authNotice');}
 
 async function loadServices() {
@@ -581,7 +708,36 @@ client.auth.onAuthStateChange((_event, session) => {
     }
   }, 0);
 });
-async function init(){await loadServices(); renderServiceSelect();renderServices();$('bookingDate').min=localDateString();setAuthMode('login');try{const {data,error}=await client.auth.getSession();if(error)throw error;currentUser=data.session?.user||null;updateAccountUI();}catch(error){showNotice('authNotice','Could not restore login session: '+error.message,'bad');}await loadWorkers();}
+
+async function init() {
+  setupNavigation();
+  navigateTo('home');
+
+  await loadServices();
+  renderServiceSelect();
+  renderServices();
+
+  $('bookingDate').min = localDateString();
+  setAuthMode('login');
+
+  try {
+    const { data, error } = await client.auth.getSession();
+
+    if (error) throw error;
+
+    currentUser = data.session?.user || null;
+    updateAccountUI();
+  } catch (error) {
+    showNotice(
+      'authNotice',
+      'Could not restore login session: ' + error.message,
+      'bad'
+    );
+  }
+
+  await loadWorkers();
+}
+
 $('searchInput').addEventListener('keydown',event=>{if(event.key==='Enter')searchServices();});
 init();
 </script>
