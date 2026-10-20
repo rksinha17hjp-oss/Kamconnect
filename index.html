@@ -472,23 +472,56 @@ async function loadWorkerBookings() {
     const list=data||[];
     $('workerBookingList').innerHTML=list.length ? list.map(b=>{
       const s=String(b.status||'pending').toLowerCase();
-      return `<article class="booking-item"><span class="tag">${safe(s.toUpperCase())}</span><h3>${safe(b.service)}</h3><p class="muted">Customer: ${safe(b.customer_name||'Customer')}</p><p class="muted">Phone: ${safe(b.phone||'Not provided')}</p>${b.phone?`<a class="btn secondary" href="tel:${safe(b.phone)}">📞 Call customer</a>`:''}<p class="muted">Address: ${safe(b.address)}</p><p class="muted">Date: ${safe(b.booking_date)}</p><p class="muted">${safe(b.notes||'')}</p>${s==='pending'?`<button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','accepted')">Accept</button><button class="btn secondary" onclick="updateWorkerBookingStatus('${safe(b.id)}','rejected')">Reject</button>`:''}${s==='accepted'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">📍 Start trip & share location</button><button class="btn secondary" onclick="updateWorkerBookingStatus('${safe(b.id)}','completed')">Mark completed</button></div>`:''}${s==='on_the_way'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">↻ Resume location sharing</button><button class="btn secondary" onclick="workerArrived('${safe(b.id)}')">I’ve arrived</button></div>`:''}${s==='arrived'?`<span class="worker-status">Worker has arrived</span><button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','completed')">Mark completed</button>`:''}</article>`;
+      return `<article class="booking-item"><span class="tag">${safe(s.toUpperCase())}</span><h3>${safe(b.service)}</h3><p class="muted">Customer: ${safe(b.customer_name||'Customer')}</p><p class="muted">Phone: ${safe(b.phone||'Not provided')}</p>${b.phone?`<a class="btn secondary" href="tel:${safe(b.phone)}">📞 Call customer</a>`:''}<p class="muted">Address: ${safe(b.address)}</p><p class="muted">Date: ${safe(b.booking_date)}</p><p class="muted">${safe(b.notes||'')}</p>${s==='pending'?`<button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','accepted')">Accept</button><button class="btn secondary" onclick="updateWorkerBookingStatus('${safe(b.id)}','rejected')">Reject</button>`:''}${s==='accepted'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">📍 Start trip & share location</button></div>`:''}${s==='on_the_way'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">↻ Resume location sharing</button><button class="btn secondary" onclick="workerArrived('${safe(b.id)}')">I’ve arrived</button></div>`:''}${s==='arrived'?`<span class="worker-status">Worker has arrived</span><button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','completed')">Mark completed</button>`:''}</article>`;
     }).join('') : '<div class="empty">No booking requests yet.</div>';
   } catch(e) { notice('workerBookingsNotice','Could not load worker requests: '+e.message,'bad'); }
 }
-async function updateWorkerBookingStatus(id,status) {
-  if (!currentUser || !['accepted','rejected','completed','on_the_way','arrived'].includes(status)) return;
-  try {
-    const expected=status==='completed'?'accepted':(status==='on_the_way'||status==='arrived'?'accepted':'pending');
-    const {data,error}=await client.from('bookings').update({status})
-      .eq('id',id).eq('worker_id',currentUser.id).eq('status',expected).select('id');
-    if (error) throw error;
-    if (!data?.length) throw new Error('Booking status could not be changed.');
-    notice('workerBookingsNotice','Booking updated: '+status.toUpperCase());
-    await loadWorkerBookings();
-  } catch(e) { notice('workerBookingsNotice','Update failed: '+e.message,'bad'); }
-}
 
+async function updateWorkerBookingStatus(id, status) {
+  if (!currentUser ||
+      !['accepted', 'rejected', 'completed', 'on_the_way', 'arrived'].includes(status)) {
+    return;
+  }
+
+  try {
+    let expected;
+
+    if (status === 'accepted' || status === 'rejected') {
+      expected = 'pending';
+    } else if (status === 'on_the_way') {
+      expected = 'accepted';
+    } else if (status === 'arrived') {
+      expected = 'on_the_way';
+    } else if (status === 'completed') {
+      expected = 'arrived';
+    }
+
+    const { data, error } = await client
+      .from('bookings')
+      .update({ status })
+      .eq('id', id)
+      .eq('worker_id', currentUser.id)
+      .eq('status', expected)
+      .select('id');
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      await loadWorkerBookings();
+      throw new Error(
+        'Booking status is not ' + expected +
+        ', or this booking is not assigned to your account. Refresh and check its current status.'
+      );
+    }
+
+    await loadWorkerBookings();
+    alert('Booking updated: ' + status.toUpperCase());
+
+  } catch (e) {
+    console.error('WORKER BOOKING UPDATE ERROR:', e);
+    alert('Update failed: ' + e.message);
+  }
+}
 let activeLocationWatch = null;
 let customerTrackingTimer = null;
 let customerTrackingBookingId = null;
