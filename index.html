@@ -132,6 +132,34 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
  .field.full{grid-column:auto}
  .panel{padding:15px}
  .footer-inner{flex-direction:column}
+} 
+ .worker-avatar {
+  width: 100%;
+  height: 175px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #fff0c7;
+  display: grid;
+  place-items: center;
+  font-size: 58px;
+}
+
+.worker-photo {
+  width: 100%;
+  height: 175px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 12px;
+  background: #fff7e5;
+  margin-bottom: 12px;
+}
+
+@media(max-width:560px) {
+  .worker-avatar {
+    height: 125px;
+    font-size: 45px;
+  }
 }
 </style>
 </head>
@@ -295,16 +323,31 @@ function hideNotice(id){if($(id))$(id).className='notice';}
 function money(v){if(v===null||v===undefined||v==='')return 'Price on request';const n=Number(v);return Number.isFinite(n)?'₹'+n.toLocaleString('en-IN'):'Price on request';}
 function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 
-function navigateTo(name){
- document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
- const target=$('screen-'+name);
- if(target)target.classList.add('active');
- window.scrollTo({top:0,behavior:'smooth'});
- if(name==='workers')loadWorkers();
- if(name==='myBookings')loadMyBookings();
- if(name==='worker')loadWorkerBookings();
- if(name==='admin')checkAdminAccess();
- if(name==='profile')updateProfile();
+function navigateTo(name) {
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.remove('active');
+  });
+
+  const target = $('screen-' + name);
+  if (target) target.classList.add('active');
+
+  document.querySelectorAll('#mainNav button[onclick]').forEach(btn => {
+    const match = btn.getAttribute('onclick') || '';
+    const active =
+      match.includes("navigateTo('" + name + "')") ||
+      (name === 'profile' && match.includes('showAuth()'));
+
+    btn.classList.toggle('primary', active);
+    btn.classList.toggle('secondary', !active);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (name === 'workers') loadWorkers();
+  if (name === 'myBookings') loadMyBookings();
+  if (name === 'worker') loadWorkerBookings();
+  if (name === 'admin') checkAdminAccess();
+  if (name === 'profile') updateProfile();
 }
 function showAuth(){navigateTo('profile');if(currentUser)updateProfile();}
 function updateProfile(){
@@ -347,7 +390,13 @@ async function loadServices(){
   const {data,error}=await client.from('service_categories').select('id,name,image_path').eq('active',true).order('id');
   if(error)throw error;
   if(data?.length){
-   services=data.map(s=>({name:s.name,icon:serviceInfo[s.name]?.icon||'🧰',description:serviceInfo[s.name]?.description||'Professional home service',image:s.image_path?(s.image_path.startsWith('http')?s.image_path:s.image_path.replace(/^/,'images/')):(serviceInfo[s.name]?.image||'')}));
+   services=data.map(s=>({name:s.name,icon:serviceInfo[s.name]?.icon||'🧰',description:serviceInfo[s.name]?.description||'Professional home service',image: s.image_path
+  ? (/^https?:\/\//i.test(s.image_path)
+      ? s.image_path
+      : s.image_path.replace(/^\/+/, '').startsWith('images/')
+        ? s.image_path.replace(/^\/+/, '')
+        : 'images/' + s.image_path.replace(/^\/+/, ''))
+  : (serviceInfo[s.name]?.image || '')
   }
  }catch(e){console.warn('Using built-in services:',e.message);}
 }
@@ -367,12 +416,46 @@ async function loadWorkers(){
  }
 }
 function renderWorkers(){
- const list=workers.filter(w=>selectedService==='All'||String(w.service||'').toLowerCase()===selectedService.toLowerCase());
- $('workerGrid').innerHTML=list.map(w=>{
-  const icon=serviceInfo[w.service]?.icon||'🧰';
-  const photo=w.photo_url?`<img class="worker-photo" src="${safe(w.photo_url)}" alt="Professional photo" onerror="this.style.display='none'">`:`<div class="service-icon">${icon}</div>`;
-  return `<article class="card">${photo}<span class="worker-status">● Available</span><h3>${safe(w.full_name||'Professional')}</h3><p class="muted">${safe(w.service||'Service')}${w.area?' · 📍 '+safe(w.area):''}</p><div class="worker-price">${money(w.price)} <small>/ service</small></div><div class="worker-bottom"><p class="muted">Local professional</p><button class="btn primary" onclick="bookWorker('${safe(w.id)}')">Book now →</button></div></article>`;
- }).join('')||'<div class="empty">No approved workers found for this service.</div>';
+  const list = workers.filter(w =>
+    selectedService === 'All' ||
+    String(w.service || '').toLowerCase() === selectedService.toLowerCase()
+  );
+
+  $('workerGrid').innerHTML = list.map(w => {
+    const icon = serviceInfo[w.service]?.icon || '🧰';
+    const name = safe(w.full_name || 'Professional');
+    const photo = String(w.photo_url || '').trim();
+
+    const avatar = photo
+      ? `<img class="worker-photo"
+           src="${safe(photo)}"
+           alt="${name}"
+           loading="lazy"
+           onerror="this.onerror=null;this.outerHTML='<div class=&quot;worker-avatar&quot;>👤</div>'">`
+      : `<div class="worker-avatar">${icon}</div>`;
+
+    return `
+      <article class="card">
+        ${avatar}
+        <span class="worker-status">● Available</span>
+        <h3>${name}</h3>
+        <p class="muted">
+          ${safe(w.service || 'Service')}
+          ${w.area ? ' · 📍 ' + safe(w.area) : ''}
+        </p>
+        <div class="worker-price">
+          ${money(w.price)} <small>/ service</small>
+        </div>
+        <div class="worker-bottom">
+          <p class="muted">Local professional</p>
+          <button class="btn primary"
+            onclick="bookWorker('${safe(w.id)}')">
+            Book now →
+          </button>
+        </div>
+      </article>`;
+  }).join('') ||
+  '<div class="empty">No approved workers found for this service.</div>';
 }
 function renderWorkerSelect(){
  const service=$('serviceSelect').value;
@@ -381,11 +464,32 @@ function renderWorkerSelect(){
  $('workerSelect').innerHTML='<option value="">Choose available worker</option>'+list.map(w=>`<option value="${safe(w.id)}">${safe(w.full_name)} — ${safe(w.service)} (${money(w.price)})</option>`).join('');
  if(list.some(w=>w.id===old))$('workerSelect').value=old;
 }
-function bookWorker(id){
- const w=workers.find(x=>x.id===id);if(!w)return;
- $('serviceSelect').value=w.service;renderWorkerSelect();$('workerSelect').value=w.id;
- navigateTo('booking');
- if(!currentUser)notice('bookingNotice','Please log in before submitting a booking.','bad');
+async function bookWorker(id) {
+  let worker = workers.find(w => String(w.id) === String(id));
+
+  if (!worker) {
+    await loadWorkers();
+    worker = workers.find(w => String(w.id) === String(id));
+  }
+
+  if (!worker) {
+    alert('Worker abhi available nahi hai. Workers page refresh karke dobara try karo.');
+    return;
+  }
+
+  selectedService = worker.service || 'All';
+  renderServices();
+
+  renderServiceSelect();
+  $('serviceSelect').value = worker.service || '';
+  renderWorkerSelect();
+  $('workerSelect').value = worker.id;
+
+  navigateTo('booking');
+
+  if (!currentUser) {
+    notice('bookingNotice', 'Booking karne ke liye pehle login karo.', 'bad');
+  }
 }
 $('serviceSelect').addEventListener('change',renderWorkerSelect);
 $('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchServices();});
