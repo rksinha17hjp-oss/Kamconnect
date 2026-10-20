@@ -323,19 +323,45 @@ async function loadWorkers() {
 function renderWorkers() {
   const list = workers.filter(w => selectedService === 'All' ||
     String(w.service||'').toLowerCase() === selectedService.toLowerCase());
-  $('workerGrid').innerHTML = list.map(w => {
-    const icon = serviceInfo[w.service]?.icon || '👤';
-    const name = safe(w.full_name || 'Professional');
-    const photo = String(w.photo_url || '').trim();
-    const avatar = photo
-      ? `<img class="worker-photo" src="${safe(photo)}" alt="${name}" loading="lazy" onerror="this.onerror=null;this.outerHTML='<div class=&quot;worker-avatar&quot;>👤</div>'">`
-      : `<div class="worker-avatar">${icon}</div>`;
-    return `<article class="card">${avatar}<span class="worker-status">● Available</span>
-      <h3>${name}</h3><p class="muted">${safe(w.service||'Service')}${w.area?' · 📍 '+safe(w.area):''}</p>
-      <div class="worker-price">${money(w.price)} <small>/ service</small></div>
-      <div class="worker-bottom"><p class="muted">Local professional</p>
-      <button class="btn primary" onclick="bookWorker('${safe(w.id)}')">Book now →</button></div></article>`;
-  }).join('') || '<div class="empty">No approved workers found for this service.</div>';
+  
+$('workerGrid').innerHTML = list.map(w => {
+  const icon = serviceInfo[w.service]?.icon || '👤';
+  const name = safe(w.full_name || 'Professional');
+  const service = String(w.service || 'Service').trim();
+
+  const workerImages = {
+    'Plumber': 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80',
+    'Electrician': 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80',
+    'Home Cleaning': 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80',
+    'Carpenter': 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=600&q=80',
+    'AC Technician': 'https://images.pexels.com/photos/5463575/pexels-photo-5463575.jpeg?auto=compress&cs=tinysrgb&w=600',
+    'Handyman': 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=80'
+  };
+
+  const photo = String(w.photo_url || '').trim();
+  const image = photo || workerImages[service] || '';
+
+  const avatar = image
+    ? `<img class="worker-photo"
+        src="${safe(image)}"
+        alt="${name}"
+        loading="lazy"
+        onerror="this.onerror=null;this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;worker-avatar&quot;>👤</div>')">`
+    : `<div class="worker-avatar">${icon}</div>`;
+
+  return `<article class="card">
+    ${avatar}
+    <span class="worker-status">● Available</span>
+    <h3>${name}</h3>
+    <p class="muted">${safe(service)}${w.area ? ' · 📍 ' + safe(w.area) : ''}</p>
+    <div class="worker-price">${money(w.price)} <small>/ service</small></div>
+    <div class="worker-bottom">
+      <p class="muted">Local professional</p>
+      <button class="btn primary" onclick="bookWorker('${safe(w.id)}')">Book now →</button>
+    </div>
+  </article>`;
+}).join('') || '<div class="empty">No approved workers found for this service.</div>';
+
 }
 function renderWorkerSelect() {
   const select = $('serviceSelect');
