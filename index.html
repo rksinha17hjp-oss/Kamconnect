@@ -192,7 +192,7 @@ async function loadServices() {
   if (data && data.length > 0) {
     services = data.map(s => ({
       ...s,
-      photo: s.image_path,
+      photo: (s.image_path || '').replace(/^images\//, ''),
       icon: serviceInfo[s.name]?.icon || '🧰',
       description:
         serviceInfo[s.name]?.description ||
