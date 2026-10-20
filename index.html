@@ -155,6 +155,74 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
 <div class="stats"><div class="stat"><div class="stat-icon">🧹</div><div><strong>6 Services</strong><small>Everyday home needs</small></div></div><div class="stat"><div class="stat-icon">📅</div><div><strong>Easy Booking</strong><small>Choose your date</small></div></div><div class="stat"><div class="stat-icon">🔒</div><div><strong>Your Account</strong><small>Manage bookings</small></div></div></div>
 <section class="section"><div class="section-head"><div><div class="kicker">Simple. Local. Convenient.</div><h2>What do you need today?</h2><p class="sub">Choose a service to get started.</p></div><button class="btn secondary" onclick="navigateTo('services')">View all →</button></div><div id="homeServiceGrid" class="grid"></div></section>
 <section class="section"><div class="section-head"><div><div class="kicker">Ready when you are</div><h2>How it works</h2></div></div><div class="grid"><article class="card"><div class="service-icon">🔎</div><h3>1. Choose a service</h3><p class="muted">Find the home service you need.</p></article><article class="card"><div class="service-icon">📅</div><h3>2. Request a booking</h3><p class="muted">Select an available professional and date.</p></article><article class="card"><div class="service-icon">✓</div><h3>3. Track your request</h3><p class="muted">Check booking status in your account.</p></article></div></section>
+</section> 
+  
+<section id="screen-dashboard" class="screen">
+  <div class="customer-welcome">
+    <p class="customer-eyebrow">KAAMCONNECT • CUSTOMER</p>
+    <h1>My Dashboard 👋</h1>
+    <p id="dashboardGreeting">Manage your home services in one place.</p>
+    <button class="btn primary" onclick="navigateTo('services')">
+      + Book a service
+    </button>
+  </div>
+
+  <div class="customer-stats">
+    <button class="customer-stat" onclick="navigateTo('myBookings')">
+      <span>📋</span>
+      <strong id="dashTotal">0</strong>
+      <small>Total bookings</small>
+    </button>
+    <button class="customer-stat" onclick="navigateTo('myBookings')">
+      <span>⏳</span>
+      <strong id="dashPending">0</strong>
+      <small>Pending</small>
+    </button>
+    <button class="customer-stat" onclick="navigateTo('myBookings')">
+      <span>🛠️</span>
+      <strong id="dashActive">0</strong>
+      <small>In progress</small>
+    </button>
+    <button class="customer-stat" onclick="showBookingHistory()">
+      <span>✅</span>
+      <strong id="dashCompleted">0</strong>
+      <small>Completed</small>
+    </button>
+  </div>
+
+  <section class="customer-section">
+    <div class="customer-section-head">
+      <div>
+        <h2>Recent bookings</h2>
+        <p class="sub">Check your service request updates.</p>
+      </div>
+      <button class="btn secondary" onclick="navigateTo('myBookings')">
+        View all
+      </button>
+    </div>
+    <div id="customerDashboardNotice" class="notice"></div>
+    <div id="customerDashboardBookings">
+      <div class="empty">Loading your bookings…</div>
+    </div>
+  </section>
+
+  <section class="customer-shortcuts">
+    <button onclick="navigateTo('services')">
+      <span>🔧</span>
+      <strong>Explore services</strong>
+      <small>Choose the help you need</small>
+    </button>
+    <button onclick="navigateTo('workers')">
+      <span>👷</span>
+      <strong>Find professionals</strong>
+      <small>Browse available workers</small>
+    </button>
+    <button onclick="navigateTo('myBookings')">
+      <span>🕘</span>
+      <strong>Booking history</strong>
+      <small>See previous requests</small>
+    </button>
+  </section>
 </section>
 <section id="screen-services" class="screen section"><div class="section-head"><div><div class="kicker">Services for every home</div><h2>Explore services</h2><p class="sub">Choose the help you need.</p></div></div><div id="serviceChips" class="chips"></div><div id="serviceGrid" class="grid"></div></section>
 <section id="screen-workers" class="screen section"><div class="section-head"><div><div class="kicker">Local professionals</div><h2>Available workers</h2><p class="sub">Prices are shown where provided by the professional.</p></div><button class="btn secondary" onclick="loadWorkers()">↻ Refresh</button></div>
