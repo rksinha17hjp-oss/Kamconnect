@@ -407,7 +407,9 @@ async function loadServices() {
     ['All', ...services.map(s => s.name)]
       .map(name => `
         <button class="chip ${selectedService === name ? 'active' : ''}"
-          onclick="chooseService('${safe(name)}')">
+          
+onclick="chooseService('${safe(name)}'); navigateTo('booking')">
+
           ${name === 'All' ? '✦ All' : safe(name)}
         </button>
       `).join('');
