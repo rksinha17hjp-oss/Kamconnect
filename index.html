@@ -391,7 +391,19 @@ async function showAdminWorkers() {
     output.appendChild(card);
   });
 }
-client.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;updateAccountUI();});
+client.auth.onAuthStateChange((_event, session) => {
+  currentUser = session?.user || null;
+  updateAccountUI();
+
+  setTimeout(() => {
+    if (currentUser) {
+      loadMyBookings();
+    } else {
+      $('bookingList').innerHTML =
+        '<p class="muted">Log in to view your bookings.</p>';
+    }
+  }, 0);
+});
 async function init(){await loadServices(); renderServiceSelect();renderServices();$('bookingDate').min=localDateString();setAuthMode('login');try{const {data,error}=await client.auth.getSession();if(error)throw error;currentUser=data.session?.user||null;updateAccountUI();}catch(error){showNotice('authNotice','Could not restore login session: '+error.message,'bad');}await loadWorkers();}
 $('searchInput').addEventListener('keydown',event=>{if(event.key==='Enter')searchServices();});
 init();
