@@ -267,7 +267,131 @@ async function updateWorkerBookingStatus(id,newStatus){if(!currentUser||!['accep
 async function checkAdminAccess(){if(!currentUser)return;try{const {data:admin,error}=await client.from('admin_users').select('user_id').eq('user_id',currentUser.id).maybeSingle();if(error||!admin)return;if(adminUserId===currentUser.id&&$('adminDashboard'))return;adminUserId=currentUser.id;let panel=$('adminDashboard');if(panel)panel.remove();panel=document.createElement('section');panel.id='adminDashboard';panel.innerHTML='<h2>Admin Dashboard</h2><p class="sub">KaamConnect Management</p><button id="adminBookingsBtn">View All Bookings</button><button id="adminWorkersBtn">View All Workers</button><div id="adminStats" class="grid" style="margin:16px 0"></div><div id="adminResults" style="overflow-x:auto;margin-top:16px"></div>';document.querySelector('footer').before(panel);$('adminBookingsBtn').onclick=()=>showAdminRows('bookings','id,customer_name,phone,service,address,booking_date,status,worker_id');$('adminWorkersBtn').onclick=showAdminWorkers;await loadAdminStats();}catch(error){console.warn('Admin dashboard could not be loaded:',error.message);}}
 async function loadAdminStats(){const stats=$('adminStats');if(!stats)return;stats.innerHTML='<p class="muted">Loading summary…</p>';const results=await Promise.all([client.from('bookings').select('id',{count:'exact',head:true}),client.from('bookings').select('id',{count:'exact',head:true}).eq('status','pending'),client.from('bookings').select('id',{count:'exact',head:true}).eq('status','completed'),client.from('admin_worker_directory').select('id',{count:'exact',head:true})]);if(results.some(r=>r.error)){stats.textContent='Counts could not be loaded. Please check admin RLS permissions.';return;}const labels=['Total bookings','Pending','Completed','Total workers'];stats.innerHTML=labels.map((label,i)=>`<div class="card"><p class="muted">${label}</p><h2>${results[i].count??0}</h2></div>`).join('');}
 async function showAdminRows(table,columns){const output=$('adminResults');output.textContent='Loading…';const {data,error}=await client.from(table).select(columns).limit(100);if(error){output.textContent='Error: '+error.message;return;}output.replaceChildren();if(!data||!data.length){output.textContent='No records found.';return;}const pre=document.createElement('pre');pre.textContent=JSON.stringify(data,null,2);output.appendChild(pre);}
-async function showAdminWorkers(){const output=$('adminResults');output.textContent='Loading workers…';const {data,error}=await client.from('admin_worker_directory').select('id, full_name, service, area, price, available').limit(100);if(error){output.textContent='Error: '+error.message;return;}output.replaceChildren();if(!data||!data.length){output.textContent='No workers found.';return;}data.forEach(worker=>{const card=document.createElement('div');card.className='admin-card';const name=document.createElement('h3');name.textContent=worker.full_name||'Worker';card.appendChild(name);const details=document.createElement('p');details.textContent='Service: '+(worker.service||'-')+' | Area: '+(worker.area||'-')+' | Available: '+(worker.available?'Yes':'No');card.appendChild(details);const btn=document.createElement('button');btn.textContent=worker.available?'Set Unavailable':'Set Available';btn.onclick=async()=>{btn.disabled=true;const newValue=!worker.available;try{const {data:updated,error:updateError}=await client.rpc('admin_set_worker_availability',{worker_uuid:worker.id,new_available:newValue});if(updateError)throw updateError;if(updated!==true)throw new Error('Worker update nahi hua. Admin permissions check karein.');worker.available=newValue;details.textContent='Service: '+(worker.service||'-')+' | Area: '+(worker.area||'-')+' | Available: '+(worker.available?'Yes':'No');btn.textContent=worker.available?'Set Unavailable':'Set Available';}catch(error){alert('Update failed: '+error.message);}finally{btn.disabled=false;}};card.appendChild(btn);output.appendChild(card);});}
+
+async function showAdminWorkers() {
+  const output = $('adminResults');
+  output.textContent = 'Loading workers…';
+
+  const { data, error } = await client
+    .from('admin_worker_directory')
+    .select('id, full_name, service, area, price, available, approval_status')
+    .order('created_at', { ascending: false })
+    .limit(100);
+
+  if (error) {
+    output.textContent = 'Error: ' + error.message;
+    return;
+  }
+
+  output.replaceChildren();
+
+  if (!data || !data.length) {
+    output.textContent = 'No workers found.';
+    return;
+  }
+
+  data.forEach(worker => {
+    const card = document.createElement('div');
+    card.className = 'admin-card';
+
+    const title = document.createElement('h3');
+    title.textContent = worker.full_name || 'Worker';
+    card.appendChild(title);
+
+    const details = document.createElement('p');
+    details.textContent =
+      'Service: ' + (worker.service || '-') +
+      ' | Area: ' + (worker.area || '-') +
+      ' | Price: ' + (worker.price ?? '-') +
+      ' | Available: ' + (worker.available ? 'Yes' : 'No') +
+      ' | Approval: ' + (worker.approval_status || 'pending').toUpperCase();
+    card.appendChild(details);
+
+    const status = worker.approval_status || 'pending';
+
+    ['approved', 'rejected', 'pending'].forEach(nextStatus => {
+      const btn = document.createElement('button');
+
+      btn.textContent = {
+        approved: 'Approve',
+        rejected: 'Reject',
+        pending: 'Set Pending'
+      }[nextStatus];
+
+      if (status === nextStatus) {
+        btn.disabled = true;
+        btn.textContent += ' ✓';
+      }
+
+      btn.onclick = async () => {
+        if (!confirm(
+          'Set ' + (worker.full_name || 'this worker') +
+          ' to ' + nextStatus.toUpperCase() + '?'
+        )) return;
+
+        btn.disabled = true;
+
+        try {
+          const { error: rpcError } = await client.rpc(
+            'set_worker_approval',
+            {
+              p_worker_id: worker.id,
+              p_status: nextStatus
+            }
+          );
+
+          if (rpcError) throw rpcError;
+
+          worker.approval_status = nextStatus;
+          showNotice(
+            'workerNotice',
+            'Worker approval updated: ' + nextStatus.toUpperCase()
+          );
+
+          await showAdminWorkers();
+          await loadAdminStats();
+          await loadWorkers();
+        } catch (err) {
+          alert('Approval update failed: ' + err.message);
+          btn.disabled = false;
+        }
+      };
+
+      card.appendChild(btn);
+    });
+
+    const availabilityBtn = document.createElement('button');
+    availabilityBtn.textContent = worker.available
+      ? 'Set Unavailable'
+      : 'Set Available';
+
+    availabilityBtn.onclick = async () => {
+      availabilityBtn.disabled = true;
+
+      try {
+        const { data: updated, error: updateError } =
+          await client.rpc('admin_set_worker_availability', {
+            worker_uuid: worker.id,
+            new_available: !worker.available
+          });
+
+        if (updateError) throw updateError;
+        if (updated !== true) {
+          throw new Error('Availability update was not confirmed.');
+        }
+
+        await showAdminWorkers();
+        await loadWorkers();
+      } catch (err) {
+        alert('Availability update failed: ' + err.message);
+        availabilityBtn.disabled = false;
+      }
+    };
+
+    card.appendChild(availabilityBtn);
+    output.appendChild(card);
+  });
+}
 client.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;updateAccountUI();});
 async function init(){await loadServices(); renderServiceSelect();renderServices();$('bookingDate').min=localDateString();setAuthMode('login');try{const {data,error}=await client.auth.getSession();if(error)throw error;currentUser=data.session?.user||null;updateAccountUI();}catch(error){showNotice('authNotice','Could not restore login session: '+error.message,'bad');}await loadWorkers();}
 $('searchInput').addEventListener('keydown',event=>{if(event.key==='Enter')searchServices();});
