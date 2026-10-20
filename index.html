@@ -567,10 +567,10 @@ async function showAdminWorkers() {
     output.appendChild(card);
   });
 }
+
 client.auth.onAuthStateChange((_event, session) => {
-  currentUser = data.session?.user || null;
-updateAccountUI();
-if (currentUser) await loadMyBookings();
+  currentUser = session?.user || null;
+  updateAccountUI();
 
   setTimeout(() => {
     if (currentUser) {
