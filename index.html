@@ -728,52 +728,179 @@ let activeLocationWatch = null;
 let customerTrackingTimer = null;
 let customerTrackingBookingId = null;
 
+
 async function startWorkerTrip(bookingId) {
-  if (!currentUser || !client) return alert('Please log in first.');
-  if (!navigator.geolocation) return alert('This phone/browser does not support location.');
-  if (!confirm('Start sharing your live location with this customer for this booking? Keep this page open and allow location permission.')) return;
+  if (!currentUser || !client) {
+    alert('Please log in first.');
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    alert('Location is not supported by this browser.');
+    return;
+  }
+
+  if (!confirm(
+    'Start sharing your live location with this customer? Allow location permission and keep this page open.'
+  )) {
+    return;
+  }
+
   try {
-    const {data:booking,error:be}=await client.from('bookings').select('id,status,worker_id').eq('id',bookingId).eq('worker_id',currentUser.id).maybeSingle();
-    if (be) throw be;
-    if (!booking) throw new Error('Booking not found or not assigned to you.');
-    if (!['accepted','on_the_way'].includes(String(booking.status).toLowerCase())) throw new Error('Only accepted bookings can start tracking.');
-    
-if (String(booking.status).toLowerCase() === 'accepted') {
-  const { data: updated, error: updateError } = await client
-    .from('bookings')
-    .update({ status: 'on_the_way' })
-    .eq('id', bookingId)
-    .eq('worker_id', currentUser.id)
-    .eq('status', 'accepted')
-    .select('id');
-
-  if (updateError) {
-    console.error('BOOKING STATUS UPDATE ERROR:', updateError);
-    alert('Status update failed: ' + updateError.message);
-    return;
-  }
-
-  if (!updated || updated.length === 0) {
-    alert(
-      'Booking status change nahi hua. Booking refresh karo aur current status check karo.'
+    notice(
+      'workerBookingsNotice',
+      'Checking booking and getting your GPS location…',
+      'ok'
     );
+
+    // 1. Confirm that this booking belongs to this worker.
+    const { data: booking, error: bookingError } = await client
+      .from('bookings')
+      .select('id,status,worker_id')
+      .eq('id', bookingId)
+      .eq('worker_id', currentUser.id)
+      .maybeSingle();
+
+    if (bookingError) throw bookingError;
+    if (!booking) {
+      throw new Error('This booking is not assigned to your worker account.');
+    }
+
+    const oldStatus = String(booking.status || '').toLowerCase();
+
+    if (!['accepted', 'on_the_way'].includes(oldStatus)) {
+      throw new Error(
+        'Booking status is ' + oldStatus +
+        '. Accept the booking first.'
+      );
+    }
+
+    // 2. Get an actual GPS position BEFORE showing success.
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        resolve,
+        reject,
+        {
+          enableHighAccuracy: true,
+          maximumAge: 0,
+          timeout: 30000
+        }
+      );
+    });
+
+    // 3. Save the first location to Supabase.
+    const saveLocation = async (pos) => {
+      const row = {
+        booking_id: bookingId,
+        worker_id: currentUser.id,
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+        accuracy_m: Math.round(pos.coords.accuracy || 0),
+        updated_at: new Date().toISOString(),
+        sharing: true
+      };
+
+      const { error } = await client
+        .from('worker_live_locations')
+        .upsert(row, { onConflict: 'booking_id' });
+
+      if (error) throw error;
+    };
+
+    await saveLocation(position);
+
+    // 4. Change accepted booking to on_the_way.
+    if (oldStatus === 'accepted') {
+      const { data: updated, error: updateError } = await client
+        .from('bookings')
+        .update({ status: 'on_the_way' })
+        .eq('id', bookingId)
+        .eq('worker_id', currentUser.id)
+        .eq('status', 'accepted')
+        .select('id');
+
+      if (updateError) throw updateError;
+
+      if (!updated || updated.length === 0) {
+        throw new Error(
+          'Location was saved, but booking status did not update. Refresh bookings and check the status.'
+        );
+      }
+    }
+
+    // 5. Stop an older GPS watcher before starting a new one.
+    if (activeLocationWatch !== null) {
+      navigator.geolocation.clearWatch(activeLocationWatch);
+      activeLocationWatch = null;
+    }
+
+    // 6. Keep saving fresh positions while this page stays open.
+    activeLocationWatch = navigator.geolocation.watchPosition(
+      async (pos) => {
+        try {
+          await saveLocation(pos);
+          notice(
+            'workerBookingsNotice',
+            '✅ Live location is being shared. Keep this page open.',
+            'ok'
+          );
+        } catch (err) {
+          console.error('Location save failed:', err);
+          notice(
+            'workerBookingsNotice',
+            'GPS mil raha hai, lekin Supabase mein save nahi hua: ' +
+              err.message,
+            'bad'
+          );
+        }
+      },
+      (err) => {
+        console.error('GPS watcher error:', err);
+        notice(
+          'workerBookingsNotice',
+          'GPS error: ' + err.message +
+            '. Phone location ON karo, browser permission Allow karo, phir Resume location dabao.',
+          'bad'
+        );
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 5000,
+        timeout: 20000
+      }
+    );
+
+    notice(
+      'workerBookingsNotice',
+      '✅ First GPS location saved! Live sharing started. Keep KaamConnect open.',
+      'ok'
+    );
+
     await loadWorkerBookings();
-    return;
+
+  } catch (e) {
+    console.error('START WORKER TRIP ERROR:', e);
+
+    let message = e.message || 'Unknown error';
+
+    if (e.code === 1) {
+      message = 'Location permission denied. Chrome site settings mein Location Allow karo.';
+    } else if (e.code === 2) {
+      message = 'Phone ko GPS location nahi mil rahi. Phone Location ON karke open area mein try karo.';
+    } else if (e.code === 3) {
+      message = 'GPS request timed out. Location ON karke dobara try karo.';
+    }
+
+    notice(
+      'workerBookingsNotice',
+      '❌ Location sharing start nahi hui: ' + message,
+      'bad'
+    );
+
+    alert('Location sharing failed:\n' + message);
   }
 }
 
-    if (activeLocationWatch !== null) navigator.geolocation.clearWatch(activeLocationWatch);
-    activeLocationWatch = navigator.geolocation.watchPosition(async pos=>{
-      try {
-        const row={booking_id:bookingId,worker_id:currentUser.id,latitude:pos.coords.latitude,longitude:pos.coords.longitude,accuracy_m:Math.round(pos.coords.accuracy||0),updated_at:new Date().toISOString(),sharing:true};
-        const {error}=await client.from('worker_live_locations').upsert(row,{onConflict:'booking_id'});
-        if (error) console.error('Location update failed:',error.message);
-      } catch(err) { console.error(err); }
-    },err=>alert('Location permission/error: '+err.message+' Please allow location access and try again.'),{enableHighAccuracy:true,maximumAge:5000,timeout:20000});
-    notice('workerBookingsNotice','Trip started. Keep KaamConnect open and location permission enabled.','ok');
-    await loadWorkerBookings();
-  } catch(e) { alert('Could not start tracking: '+e.message+'\nMake sure the tracking SQL has been run in Supabase.'); }
-}
 
 async function workerArrived(bookingId) {
   if (!currentUser || !client) return;
