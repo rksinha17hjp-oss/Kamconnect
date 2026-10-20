@@ -527,16 +527,52 @@ async function startWorkerTrip(bookingId) {
 }
 
 async function workerArrived(bookingId) {
-  if (!currentUser || !client) return;
-  try {
-    const {error:le}=await client.from('worker_live_locations').upsert({booking_id:bookingId,worker_id:currentUser.id,sharing:false,updated_at:new Date().toISOString()},{onConflict:'booking_id'});
-    if (le) throw le;
-    const {data,error}=await client.from('bookings').update({status:'arrived'}).eq('id',bookingId).eq('worker_id',currentUser.id).eq('status','on_the_way').select('id');
-    if (error) throw error;
-    if (!data?.length) throw new Error('Booking status could not be updated.');
-    if (activeLocationWatch !== null) { navigator.geolocation.clearWatch(activeLocationWatch); activeLocationWatch=null; }
-    await loadWorkerBookings();
-  } catch(e) { alert('Could not mark arrival: '+e.message); }
+if (!currentUser || !client) return;
+
+try {
+const { data, error } = await client
+.from('bookings')
+.update({ status: 'arrived' })
+.eq('id', bookingId)
+.eq('worker_id', currentUser.id)
+.eq('status', 'on_the_way')
+.select('id');
+
+if (error) throw error;
+
+if (!data || data.length === 0) {
+  throw new Error(
+    'Booking status could not be updated. Please check that the booking is on_the_way and assigned to you.'
+  );
+}
+
+const { error: locationError } = await client
+  .from('worker_live_locations')
+  .upsert(
+    {
+      booking_id: bookingId,
+      worker_id: currentUser.id,
+      sharing: false,
+      updated_at: new Date().toISOString()
+    },
+    { onConflict: 'booking_id' }
+  );
+
+if (locationError) {
+  console.error('Location sharing update failed:', locationError);
+}
+
+if (activeLocationWatch !== null) {
+  navigator.geolocation.clearWatch(activeLocationWatch);
+  activeLocationWatch = null;
+}
+
+await loadWorkerBookings();
+alert('Arrival marked successfully!');
+
+} catch (e) {
+alert('Could not mark arrival: ' + e.message);
+}
 }
 
 async function trackWorker(bookingId) {
