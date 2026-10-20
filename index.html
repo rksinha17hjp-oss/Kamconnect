@@ -215,7 +215,28 @@ function setAuthMode(mode) {
 function renderServiceSelect() {
   $('serviceSelect').innerHTML = '<option value="">Choose service</option>' +
     services.map(s => `<option value="${safe(s.name)}">${safe(s.name)}</option>`).join('');
+} 
+  
+function serviceImageError(img, name) {
+  const fallback = img.dataset.fallback || '';
+  const info = serviceInfo[name];
+
+  if (fallback && !img.dataset.fallbackTried && img.src !== fallback) {
+    img.dataset.fallbackTried = 'true';
+    img.src = fallback;
+    return;
+  }
+
+  img.onerror = null;
+
+  const placeholder = document.createElement('div');
+  placeholder.className = 'service-photo service-photo-fallback';
+  placeholder.textContent = info?.icon || '🧰';
+  placeholder.setAttribute('role', 'img');
+  placeholder.setAttribute('aria-label', name);
+  img.replaceWith(placeholder);
 }
+
 function renderServices() {
   const search = $('searchInput').value.trim().toLowerCase();
   const filtered = services.filter(s =>
@@ -226,7 +247,14 @@ function renderServices() {
     `<button class="chip ${selectedService===name?'active':''}" onclick="chooseService('${safe(name)}')">${name==='All'?'✦ All':safe(name)}</button>`
   ).join('');
   const makeCard = (s, home=false) => `<article class="card">
-    <img class="service-photo" src="${safe(s.image)}" alt="${safe(s.name)}" loading="lazy" onerror="this.style.display='none'">
+    
+<img class="service-photo"
+     src="${safe(s.image)}"
+     data-fallback="${safe(serviceInfo[s.name]?.image || '')}"
+     alt="${safe(s.name)}"
+     loading="lazy"
+     onerror="serviceImageError(this,'${safe(s.name)}')">
+
     <div class="service-top"><span class="service-icon">${s.icon}</span><span class="service-badge">${home?'POPULAR':'HOME SERVICE'}</span></div>
     <h3>${safe(s.name)}</h3><p class="muted">${safe(s.description)}</p>
     <button class="btn primary" onclick="chooseService('${safe(s.name)}');navigateTo('booking')">Book ${home?'now':'this service'} →</button>
