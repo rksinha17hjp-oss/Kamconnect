@@ -504,7 +504,14 @@ async function startWorkerTrip(bookingId) {
     if (!['accepted','on_the_way'].includes(String(booking.status).toLowerCase())) throw new Error('Only accepted bookings can start tracking.');
     if (String(booking.status).toLowerCase()==='accepted') {
       const {error}=await client.from('bookings').update({status:'on_the_way'}).eq('id',bookingId).eq('worker_id',currentUser.id).eq('status','accepted');
-      if (error) throw error;
+      if (error) {
+  console.error('BOOKING STATUS UPDATE ERROR:', error);
+  alert(
+    'Status update failed:\n' +
+    (error.message || JSON.stringify(error))
+  );
+  return;
+      }
     }
     if (activeLocationWatch !== null) navigator.geolocation.clearWatch(activeLocationWatch);
     activeLocationWatch = navigator.geolocation.watchPosition(async pos=>{
