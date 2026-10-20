@@ -504,14 +504,26 @@ $('authForm').addEventListener('submit',async e=>{
    const {data,error}=await client.auth.signUp({email,password,options:{emailRedirectTo:'https://rksinha17hjp-oss.github.io/Kamconnect/',data:{full_name,phone}}});
    if(error)throw error;
    notice('authNotice',data.session?'Account created successfully!':'Account created. Check your email confirmation, then log in.');
-  }else{
-   const {error}=await client.auth.signInWithPassword({email,password});
-   if(error)throw error;
-   notice('authNotice','Login successful!');
+} else {
+  const { data, error } = await client.auth.signInWithPassword({
+    email: email.trim(),
+    password: password
+  });
+
+  if (error) {
+    throw new Error('Login failed: ' + error.message);
   }
- }catch(e){notice('authNotice',e.message||'Authentication failed.','bad');}
- finally{button.disabled=false;button.textContent=authMode==='signup'?'Create account':'Login';}
-});
+
+  if (!data.user) {
+    throw new Error('Login nahi hua. Dobara try karo.');
+  }
+
+  currentUser = data.user;
+  updateAccountUI();
+
+  notice('authNotice', 'Login successful! Welcome back.');
+  setTimeout(() => navigateTo('home'), 800);
+  }
 
 async function logout(){
  const {error}=await client.auth.signOut();
