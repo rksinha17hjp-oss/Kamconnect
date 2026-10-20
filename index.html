@@ -916,7 +916,7 @@ async function showAdminRows() {
 }
 async function showAdminWorkers() {
   const out=$('adminResults'); out.textContent='Loading workers…';
-  const {data,error}=await client.from('admin_worker_directory').select('id,full_name,service,area,price,available,approval_status').limit(100);
+  const {data,error}=await client.rpc('admin_list_workers');
   if (error) { out.textContent='Error: '+error.message; return; }
   out.replaceChildren();
   if (!data?.length) { out.textContent='No workers found.'; return; }
