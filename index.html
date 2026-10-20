@@ -392,8 +392,9 @@ async function showAdminWorkers() {
   });
 }
 client.auth.onAuthStateChange((_event, session) => {
-  currentUser = session?.user || null;
-  updateAccountUI();
+  currentUser = data.session?.user || null;
+updateAccountUI();
+if (currentUser) await loadMyBookings();
 
   setTimeout(() => {
     if (currentUser) {
