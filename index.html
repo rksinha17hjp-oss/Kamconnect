@@ -92,6 +92,42 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
 .section{margin:27px 0}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{padding:10px;border-radius:14px}.service-photo{height:120px}
 .service-icon{width:34px;height:34px;font-size:18px}.service-badge{font-size:7px;padding:5px}.card h3{font-size:13px}.card .btn{font-size:10px;padding:9px 5px}
 .worker-photo,.worker-avatar{height:125px}.worker-avatar{font-size:45px}.worker-price{font-size:17px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:15px}.footer-inner{flex-direction:column}}
+
+.worker-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.worker-filters input,
+.worker-filters select {
+  min-width: 0;
+  font-size: 12px;
+}
+.worker-filters button {
+  grid-column: 1 / -1;
+}
+.worker-profile-details {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 380px) {
+  .worker-filters {
+    grid-template-columns: 1fr;
+  }
+  .worker-filters button {
+    grid-column: auto;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -121,7 +157,24 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
 <section class="section"><div class="section-head"><div><div class="kicker">Ready when you are</div><h2>How it works</h2></div></div><div class="grid"><article class="card"><div class="service-icon">🔎</div><h3>1. Choose a service</h3><p class="muted">Find the home service you need.</p></article><article class="card"><div class="service-icon">📅</div><h3>2. Request a booking</h3><p class="muted">Select an available professional and date.</p></article><article class="card"><div class="service-icon">✓</div><h3>3. Track your request</h3><p class="muted">Check booking status in your account.</p></article></div></section>
 </section>
 <section id="screen-services" class="screen section"><div class="section-head"><div><div class="kicker">Services for every home</div><h2>Explore services</h2><p class="sub">Choose the help you need.</p></div></div><div id="serviceChips" class="chips"></div><div id="serviceGrid" class="grid"></div></section>
-<section id="screen-workers" class="screen section"><div class="section-head"><div><div class="kicker">Local professionals</div><h2>Available workers</h2><p class="sub">Prices are shown where provided by the professional.</p></div><button class="btn secondary" onclick="loadWorkers()">↻ Refresh</button></div><div id="workerNotice" class="notice"></div><div id="workerGrid" class="grid"></div></section>
+<section id="screen-workers" class="screen section"><div class="section-head"><div><div class="kicker">Local professionals</div><h2>Available workers</h2><p class="sub">Prices are shown where provided by the professional.</p></div><button class="btn secondary" onclick="loadWorkers()">↻ Refresh</button></div>
+<div class="worker-filters">
+  <input id="workerSearch" type="search"
+    placeholder="🔎 Worker name ya service search karein">
+  <input id="workerAreaSearch" type="search"
+    placeholder="📍 Area search karein">
+  <input id="workerPinSearch" type="search" inputmode="numeric"
+    maxlength="10" placeholder="PIN code">
+  <select id="workerSort">
+    <option value="name">Sort: Name</option>
+    <option value="price-low">Price: Low to high</option>
+    <option value="price-high">Price: High to low</option>
+  </select>
+  <button class="btn secondary" type="button" onclick="resetWorkerFilters()">Reset filters</button>
+</div>
+<div id="workerNotice" class="notice"></div>
+<div id="workerGrid" class="grid"></div>
+<div id="workerGrid" class="grid"></div></section>
 <section id="screen-booking" class="screen"><section class="panel"><div class="kicker">Quick and simple</div><h2>Book a service</h2><p class="sub">Send a booking request to an available professional.</p><div id="bookingNotice" class="notice"></div><div id="bookingLoginHint" class="notice show">Please log in before requesting a booking.</div>
 <form id="bookingForm"><div class="form-grid">
 <div class="field"><label for="customerName">Your name</label><input id="customerName" required maxlength="100" autocomplete="name"></div>
@@ -328,7 +381,7 @@ async function loadWorkers() {
   notice('workerNotice','Loading approved professionals…');
   try {
     const {data,error} = await client.from('public_worker_directory')
-      .select('id,full_name,service,price,area,postal_code,photo_url,available')
+      .select('id,full_name,service,phone,price,area,postal_code,photo_url,available')
       .eq('available',true).order('full_name');
     if (error) throw error;
     workers = data || [];
@@ -342,53 +395,110 @@ async function loadWorkers() {
 }
 
 function renderWorkers() {
-  const list = workers.filter(w =>
-    selectedService === 'All' ||
-    String(w.service || '').trim().toLowerCase() ===
-    selectedService.trim().toLowerCase()
-  );
+  const query = ($('workerSearch')?.value || '').trim().toLowerCase();
+  const areaQuery = ($('workerAreaSearch')?.value || '').trim().toLowerCase();
+  const pinQuery = ($('workerPinSearch')?.value || '').trim();
+  const sort = $('workerSort')?.value || 'name';
 
-  const workerImages = {
-'Plumber': './plumber.jpg',
-'Electrician': './electrician.jpg',
-'Home Cleaning': './home-cleaning.jpg',
-'Carpenter': './carpenter.jpg',
-'AC Technician': './ac-technician.jpg',
-'Handyman': './handyman.jpg'
-  };
+  let list = workers.filter(w => {
+    const service = String(w.service || '');
+    const name = String(w.full_name || '');
+    const area = String(w.area || '');
+    const pin = String(w.postal_code || '');
+
+    const matchesService = selectedService === 'All' ||
+      service.trim().toLowerCase() === selectedService.trim().toLowerCase();
+
+    const matchesQuery = !query ||
+      (name + ' ' + service + ' ' + area + ' ' + pin)
+        .toLowerCase().includes(query);
+
+    const matchesArea = !areaQuery ||
+      area.toLowerCase().includes(areaQuery);
+
+    const matchesPin = !pinQuery || pin.includes(pinQuery);
+
+    return matchesService && matchesQuery && matchesArea && matchesPin &&
+      w.available === true;
+  });
+
+  list.sort((a, b) => {
+    if (sort === 'price-low') {
+      return (Number(a.price) || 0) - (Number(b.price) || 0);
+    }
+    if (sort === 'price-high') {
+      return (Number(b.price) || 0) - (Number(a.price) || 0);
+    }
+    return String(a.full_name || '').localeCompare(String(b.full_name || ''));
+  });
 
   $('workerGrid').innerHTML = list.map(w => {
-    const service = String(w.service || 'Service').trim();
-
-    const imageKey = Object.keys(workerImages).find(
-      key => key.toLowerCase() === service.toLowerCase()
-    );
-
-    const image = imageKey ? workerImages[imageKey] : '';
-    const icon = serviceInfo[imageKey]?.icon || '👤';
     const name = safe(w.full_name || 'Professional');
+    const service = safe(w.service || 'Home service');
+    const area = safe(w.area || 'Area not provided');
+    const pin = safe(w.postal_code || 'Not provided');
+    const phone = safe(w.phone || '');
+    const price = money(w.price);
+    const photo = String(w.photo_url || '').trim();
+    const icon = serviceInfo[w.service]?.icon || '👤';
+    const id = safe(w.id);
 
-    const avatar = image
+    const avatar = photo
       ? `<img class="worker-photo"
-          src="${image}"
-          alt="${name}"
+          src="${safe(photo)}" alt="${name}"
           loading="lazy"
-          onerror="this.onerror=null;this.style.display='none';this.insertAdjacentHTML('afterend','<div class=&quot;worker-avatar&quot;>${icon}</div>')">`
+          onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('div'),{className:'worker-avatar',textContent:'${icon}'}))">`
       : `<div class="worker-avatar">${icon}</div>`;
 
     return `<article class="card">
       ${avatar}
       <span class="worker-status">● Available</span>
       <h3>${name}</h3>
-      <p class="muted">${safe(service)}${w.area ? ' · 📍 ' + safe(w.area) : ''}</p>
-      <div class="worker-price">${money(w.price)} <small>/ service</small></div>
+      <p class="muted">${service} · 📍 ${area}</p>
+      <div class="worker-price">${price} <small>/ service</small></div>
+
+      <button class="btn secondary" type="button"
+        onclick="toggleWorkerProfile('${id}')">View profile ↓</button>
+
+      <div id="worker-profile-${id}" class="worker-profile-details hidden">
+        <strong>Worker details</strong>
+        <div>Service: ${service}</div>
+        <div>Area: ${area}</div>
+        <div>PIN code: ${pin}</div>
+        <div>Price: ${price}</div>
+        <div>Availability: Available</div>
+        ${phone ? `<div>Phone: ${phone}</div>` : '<div>Phone: Contact after booking</div>'}
+      </div>
+
       <div class="worker-bottom">
-        <p class="muted">Local professional</p>
-        <button class="btn primary" onclick="bookWorker('${safe(w.id)}')">Book now →</button>
+        <p class="muted">Approved local professional</p>
+        <button class="btn primary" type="button"
+          onclick="bookWorker('${id}')">Book now →</button>
       </div>
     </article>`;
   }).join('') ||
-  '<div class="empty">No approved workers found for this service.</div>';
+  '<div class="empty">No workers match these filters. Try another service, area or PIN code.</div>';
+}
+
+function toggleWorkerProfile(id) {
+  const details = $('worker-profile-' + id);
+  if (!details) return;
+  const opening = details.classList.contains('hidden');
+  details.classList.toggle('hidden', !opening);
+  const button = details.previousElementSibling;
+  if (button) button.textContent = opening ? 'Hide profile ↑' : 'View profile ↓';
+}
+
+function resetWorkerFilters() {
+  $('workerSearch').value = '';
+  $('workerAreaSearch').value = '';
+  $('workerPinSearch').value = '';
+  $('workerSort').value = 'name';
+  selectedService = 'All';
+  renderServices();
+  renderWorkers();
+  renderWorkerSelect();
+}
 }
 function renderWorkerSelect() {
   const select = $('serviceSelect');
@@ -414,6 +524,11 @@ async function bookWorker(id) {
 
 $('serviceSelect').addEventListener('change', renderWorkerSelect);
 $('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') searchServices(); });
+
+['workerSearch', 'workerAreaSearch', 'workerPinSearch'].forEach(id => {
+  $(id).addEventListener('input', renderWorkers);
+});
+$('workerSort').addEventListener('change', renderWorkers);
 
 $('authForm').addEventListener('submit', async e => {
   e.preventDefault();
