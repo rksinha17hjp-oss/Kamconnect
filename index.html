@@ -406,10 +406,8 @@ async function loadServices() {
   $('serviceChips').innerHTML =
     ['All', ...services.map(s => s.name)]
       .map(name => `
-        <button class="chip ${selectedService === name ? 'active' : ''}"
-          
-onclick="chooseService('${safe(name)}'); navigateTo('booking')">
-
+        <button class="chip ${selectedService === name ? 'active' : ''}"  
+          onclick="chooseService('${safe(name)}')"
           ${name === 'All' ? '✦ All' : safe(name)}
         </button>
       `).join('');
@@ -435,7 +433,7 @@ onclick="chooseService('${safe(name)}'); navigateTo('booking')">
       <h3>${safe(s.name)}</h3>
       <p class="muted">${safe(s.description)}</p>
       <button class="btn secondary"
-        onclick="chooseService('${safe(s.name)}'); $('booking').scrollIntoView({behavior:'smooth'})">
+        onclick="chooseService('${safe(s.name)}'); navigateTo('booking')">
         Book this service →
       </button>
     </article>
