@@ -728,6 +728,44 @@ img {
   #workerGrid {
     grid-template-columns: minmax(0, 1fr);
   }
+} 
+    
+/* Mobile navigation visibility fix */
+@media screen and (max-width: 768px) {
+  header {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .navbar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    visibility: visible !important;
+  }
+
+  #mainNav {
+    display: flex !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: #fff !important;
+    padding: 8px 0 !important;
+    gap: 6px !important;
+  }
+
+  #mainNav button {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    min-height: 40px !important;
+    white-space: nowrap !important;
+  }
 }
 </style>
 </head>
