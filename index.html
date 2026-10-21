@@ -463,6 +463,29 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
  .bottom-nav button{border:0;background:#f4f4f4;border-radius:22px;padding:10px 15px;font-size:18px}
 }
 
+
+/* Modern profile refresh */
+#screen-profile .section{max-width:900px;margin:30px auto 50px}
+#screen-profile .profile-hero{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;padding:25px;border:0;border-radius:24px;background:linear-gradient(130deg,#24213a,#51438a 60%,#9b7fe4);color:#fff;box-shadow:0 18px 42px #33255b20}
+#screen-profile .profile-hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-45px;top:-70px;background:#ffffff12}
+#screen-profile .avatar-ring{position:relative;z-index:1;flex-shrink:0;padding:4px;border-radius:50%;background:linear-gradient(135deg,#ffe18a,#fff)}
+#screen-profile .avatar-image{width:82px;height:82px;border:3px solid #fff;border-radius:50%;background:#f0eaff}
+#screen-profile .profile-hero h2{color:#fff;margin:0 0 5px;font-size:24px;letter-spacing:-.5px}
+#screen-profile .profile-hero .sub{color:#e8e2ff}
+#screen-profile .role-pill{display:inline-flex;margin-top:9px;padding:6px 10px;border-radius:99px;background:#ffffff1f;color:#fff;font-size:10px;font-weight:800;letter-spacing:.5px}
+#screen-profile .profile-section-title{display:flex;align-items:center;gap:10px;margin-bottom:17px}
+#screen-profile .profile-section-title .profile-symbol{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#fff0c7;font-size:18px}
+#screen-profile .profile-form-panel,#screen-profile .profile-settings-panel{border:1px solid #eceaf3;border-radius:21px;box-shadow:0 10px 30px #2b1b4d08}
+#screen-profile .profile-form-panel .btn{min-width:155px}
+#screen-profile .profile-settings-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 0;border-top:1px solid #f0edf5}
+#screen-profile .profile-settings-row:first-of-type{border-top:0}
+#screen-profile .profile-settings-row strong{display:block;font-size:12px}
+#screen-profile .profile-settings-row small{display:block;margin-top:4px;color:#777;font-size:11px;overflow-wrap:anywhere}
+.service-emoji{display:grid;place-items:center;font-size:56px;background:linear-gradient(135deg,#fff6dc,#f4efff)!important}
+#serviceGrid .service-card,#homeServiceGrid .service-card{border-color:#eeeaf4;box-shadow:0 7px 22px #25154b08;transition:transform .18s,box-shadow .18s}
+#serviceGrid .service-card:hover,#homeServiceGrid .service-card:hover{transform:translateY(-3px);box-shadow:0 13px 28px #25154b12}
+@media(max-width:560px){#screen-profile .profile-hero{padding:18px;gap:13px;border-radius:20px}#screen-profile .avatar-image{width:66px;height:66px}#screen-profile .profile-hero h2{font-size:20px}#screen-profile .profile-form-panel,#screen-profile .profile-settings-panel{border-radius:17px}}
+
 </style>
 </head>
 <body>
@@ -629,11 +652,13 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
       </div>
 
       <div id="serviceChips" class="chips">
-        <button class="chip active" onclick="filterServices('all')">All Services</button>
-        <button class="chip" onclick="filterServices('cleaning')">🧹 Cleaning</button>
-        <button class="chip" onclick="filterServices('plumbing')">🔧 Plumbing</button>
-        <button class="chip" onclick="filterServices('electrician')">💡 Electrician</button>
-        <button class="chip" onclick="filterServices('repair')">🛠️ Repairs</button>
+        <button class="chip active" type="button" onclick="filterServices('All')">All Services</button>
+        <button class="chip" type="button" onclick="filterServices('Plumber')">👨‍🔧 Plumber</button>
+        <button class="chip" type="button" onclick="filterServices('AC Technician')">❄️ AC Technician</button>
+        <button class="chip" type="button" onclick="filterServices('Carpenter')">🪚 Carpenter</button>
+        <button class="chip" type="button" onclick="filterServices('Handyman')">🧰 Handyman</button>
+        <button class="chip" type="button" onclick="filterServices('Electrician')">⚡ Electrician</button>
+        <button class="chip" type="button" onclick="filterServices('Home Cleaning')">🧹 Home Cleaning</button>
       </div>
 
       <div id="serviceGrid" class="grid">
@@ -725,16 +750,19 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
     <section class="section">
       <span class="kicker">YOUR ACCOUNT</span>
       <h2>My Profile</h2>
-      <p class="sub">Manage your personal information and account.</p>
+      <p class="sub">Aapki details, bookings aur account settings — sab ek jagah.</p>
 
-      <div class="panel">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-          <img id="profileAvatar" class="avatar-image" alt="Profile photo" src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Crect width=%2760%27 height=%2760%27 rx=%2730%27 fill=%27%23eee6ff%27/%3E%3Ctext x=%2730%27 y=%2739%27 font-size=%2728%27 text-anchor=%27middle%27%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E">
-          <div>
-            <h3 id="profileName" style="margin:0 0 5px">Your profile</h3>
-            <p id="profileEmail" class="sub">Log in to view your account.</p>
-          </div>
+      <div class="profile-hero">
+        <div class="avatar-ring"><img id="profileAvatar" class="avatar-image" alt="Profile photo" src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Crect width=%2760%27 height=%2760%27 rx=%2730%27 fill=%27%23eee6ff%27/%3E%3Ctext x=%2730%27 y=%2739%27 font-size=%2728%27 text-anchor=%27middle%27%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E"></div>
+        <div style="position:relative;z-index:1;min-width:0">
+          <h2 id="profileName">Your profile</h2>
+          <p id="profileEmail" class="sub">Log in to view your account.</p>
+          <span id="profileRoleBadge" class="role-pill">KAAMCONNECT MEMBER</span>
         </div>
+      </div>
+
+      <div class="panel profile-form-panel">
+        <div class="profile-section-title"><span class="profile-symbol">✍️</span><div><h3 style="margin:0">Personal information</h3><p class="sub">Apni profile details update karein.</p></div></div>
 
         <div id="profileNotice" class="notice"></div>
 
@@ -759,12 +787,11 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
         </form>
       </div>
 
-      <div class="panel">
-        <h3>Account settings</h3>
-        <p class="sub">Your sign-in and account status.</p>
+      <div class="panel profile-settings-panel">
+        <div class="profile-section-title"><span class="profile-symbol">⚙️</span><div><h3 style="margin:0">Account settings</h3><p class="sub">Sign-in aur account security.</p></div></div>
         <div id="profileInfo" class="small" style="margin:12px 0">Please log in to view your account information.</div>
-        <button class="btn secondary" onclick="resetPassword()">Reset Password</button>
-        <button class="btn secondary" onclick="logout()">Log Out</button>
+        <div class="profile-settings-row"><div><strong>Password</strong><small>Apne email par password reset link mangwayein.</small></div><button class="btn secondary" onclick="resetPassword()">Reset Password</button></div>
+        <div class="profile-settings-row"><div><strong>Sign out</strong><small>Is device par apne account se log out karein.</small></div><button class="btn secondary" onclick="logout()">Log Out</button></div>
       </div>
     </section 
   <!-- BOOKING PAGE -->
@@ -816,12 +843,12 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
             <label for="serviceSelect">Select Service *</label>
             <select id="serviceSelect" name="service" required>
               <option value="">Choose a service</option>
-              <option value="Cleaning">Home Cleaning</option>
-              <option value="Plumbing">Plumbing</option>
-              <option value="Electrical">Electrical Repair</option>
-              <option value="AC Repair">AC Repair</option>
-              <option value="Painting">Painting</option>
-              <option value="Carpentry">Carpentry</option>
+              <option value="Plumber">Plumber 👨‍🔧</option>
+              <option value="AC Technician">AC Technician ❄️</option>
+              <option value="Carpenter">Carpenter 🪚</option>
+              <option value="Handyman">Handyman 🧰</option>
+              <option value="Electrician">Electrician ⚡</option>
+              <option value="Home Cleaning">Home Cleaning 🧹</option>
             </select>
           </div>
 
@@ -1473,13 +1500,28 @@ function navigateTo(screenName) {
   }
 
   if (screenName === "myBookings") {
+    if (!currentUser) {
+      showToast("Bookings dekhne ke liye pehle login karein.");
+      navigateTo("auth");
+      return;
+    }
     loadMyBookings();
   }
 
   if (screenName === "workerDashboard") {
+    if (!currentUser) {
+      showToast("Worker dashboard ke liye pehle login karein.");
+      navigateTo("auth");
+      return;
+    }
     loadWorkerBookings();
   }
   if (screenName === "adminDashboard") {
+    if (!currentUser) {
+      showToast("Admin dashboard ke liye pehle login karein.");
+      navigateTo("auth");
+      return;
+    }
     loadAdminBookings();
   }
 
@@ -1717,23 +1759,58 @@ async function loadNotifications() {
 async function loadAdminBookings() {
   const list = $("adminBookingsList");
   if (!list) return;
-  if (!currentUser || getUserRole() !== "admin") {
-    list.innerHTML = '<div class="empty">Admin role wale account se login karein. SQL setup ke baad profiles.role ko admin set karein.</div>';
+
+  if (!currentUser || !client) {
+    list.innerHTML = '<div class="empty">Pehle admin account se login karein.</div>';
     return;
   }
-  list.textContent = "Loading bookings...";
+
+  list.textContent = "Admin access aur bookings check ho rahi hain...";
   try {
-    const { data, error } = await client.from("bookings").select("*").order("created_at", { ascending: false }).limit(100);
-    if (error) throw error;
-    list.innerHTML = data?.length ? data.map(b => `
+    // Refresh the role from the database; do not rely on a stale in-memory profile.
+    const { data: profile, error: profileError } = await client
+      .from("profiles")
+      .select("id, full_name, role")
+      .eq("id", currentUser.id)
+      .maybeSingle();
+
+    if (profileError) throw new Error("Profile/role check failed: " + profileError.message);
+    currentProfile = profile || {};
+
+    if (String(currentProfile.role || "").toLowerCase() !== "admin") {
+      updateAccountUI();
+      list.innerHTML = '<div class="empty">Is account ka role admin nahi hai. Supabase profiles table mein apna role verify karein.</div>';
+      return;
+    }
+
+    const { data, error } = await client
+      .from("bookings")
+      .select("id, customer_id, customer_name, customer_phone, service, worker_id, address, booking_date, booking_time, status, created_at")
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    if (error) throw new Error("Bookings query failed: " + error.message);
+
+    if (!data || data.length === 0) {
+      list.innerHTML = '<div class="empty">Abhi bookings nahi hain.</div>';
+      return;
+    }
+
+    list.innerHTML = data.map(b => `
       <article class="booking-item">
-        <div class="row-between"><strong>${escapeHTML(b.service || "Home service")}</strong><span class="status-pill">${escapeHTML(b.status || "pending")}</span></div>
+        <div class="row-between">
+          <strong>${escapeHTML(b.service || "Home service")}</strong>
+          <span class="status-pill">${escapeHTML(b.status || "pending")}</span>
+        </div>
         <p class="small">Customer: ${escapeHTML(b.customer_name || "Customer")} · ${escapeHTML(b.customer_phone || "")}</p>
-        <p class="small">Date: ${escapeHTML(b.booking_date || "Not set")} · Address: ${escapeHTML(b.address || "Not provided")}</p>
-      </article>`).join("") : '<div class="empty">Abhi bookings nahi hain.</div>';
+        <p class="small">Date: ${escapeHTML(b.booking_date || "Not set")} · Time: ${escapeHTML(b.booking_time || "Not set")}</p>
+        <p class="small">Address: ${escapeHTML(b.address || "Not provided")}</p>
+      </article>`).join("");
+
+    updateAccountUI();
   } catch (error) {
-    console.error("Admin bookings failed:", error);
-    list.innerHTML = '<div class="empty">Admin data load nahi hua. SQL policies check karein.</div>';
+    console.error("Admin dashboard error:", error);
+    list.innerHTML = `<div class="empty"><strong>Admin dashboard error</strong><br>${escapeHTML(error.message || "Unknown error")}<br><small>Supabase table/column names aur RLS policies check karein.</small></div>`;
   }
 }
 
@@ -1757,6 +1834,8 @@ function updateAccountUI() {
   if (logoutButton) logoutButton.classList.toggle("hidden", !currentUser);
   if (loginHint) loginHint.classList.toggle("hidden", !!currentUser);
   if ($("profileEmail")) $("profileEmail").textContent = currentUser?.email || "Not logged in";
+  if ($("profileRoleBadge")) $("profileRoleBadge").textContent = currentUser ? role.toUpperCase() + " ACCOUNT" : "KAAMCONNECT MEMBER";
+  if ($("profileInfo")) $("profileInfo").textContent = currentUser ? "Signed in as " + currentUser.email + " · Role: " + role : "Please log in to view your account information.";
   $("customerDashboardBtn")?.classList.toggle("hidden", !currentUser || role !== "customer");
   $("workerDashboardBtn")?.classList.toggle("hidden", !currentUser || role !== "worker");
   $("adminDashboardBtn")?.classList.toggle("hidden", !currentUser || role !== "admin");
@@ -2306,42 +2385,12 @@ let allServices = [];
 let allWorkers = [];
 
 const fallbackServices = [
-  {
-    name: "Home Cleaning",
-    category: "Cleaning",
-    description: "Cleaning services for a fresher, tidier home.",
-    price: null
-  },
-  {
-    name: "Plumbing",
-    category: "Plumbing",
-    description: "Help with taps, pipes and everyday plumbing issues.",
-    price: null
-  },
-  {
-    name: "Electrical Repair",
-    category: "Electrical",
-    description: "Support for common home electrical repairs.",
-    price: null
-  },
-  {
-    name: "AC Repair",
-    category: "AC Repair",
-    description: "Maintenance and repair assistance for your AC.",
-    price: null
-  },
-  {
-    name: "Painting",
-    category: "Painting",
-    description: "Help refreshing your walls and home interiors.",
-    price: null
-  },
-  {
-    name: "Carpentry",
-    category: "Carpentry",
-    description: "Help with furniture and common woodwork.",
-    price: null
-  }
+  { name: "Plumber", category: "Plumber", description: "Tap, pipe, leakage aur bathroom plumbing ke liye trusted help.", price: null, icon: "👨‍🔧" },
+  { name: "AC Technician", category: "AC Technician", description: "AC servicing, cooling checks aur repair assistance.", price: null, icon: "❄️" },
+  { name: "Carpenter", category: "Carpenter", description: "Furniture repair, fitting aur everyday woodwork.", price: null, icon: "🪚" },
+  { name: "Handyman", category: "Handyman", description: "Ghar ke chhote repairs, fittings aur maintenance.", price: null, icon: "🧰" },
+  { name: "Electrician", category: "Electrician", description: "Switch, light aur common electrical repair ke liye help.", price: null, icon: "⚡" },
+  { name: "Home Cleaning", category: "Home Cleaning", description: "Room, kitchen aur ghar ki safai ke liye professional help.", price: null, icon: "🧹" }
 ];
 
 function formatPrice(value) {
@@ -2386,9 +2435,7 @@ function renderServices(services) {
                  src="${escapeHTML(image)}"
                  alt="${escapeHTML(name)}"
                  loading="lazy">`
-            : `<div class="service-photo service-placeholder"
-                 role="img"
-                 aria-label="${escapeHTML(name)}">🏠</div>`
+            : `<div class="service-photo service-placeholder service-emoji" role="img" aria-label="${escapeHTML(name)}">${escapeHTML(service.icon || "🏠")}</div>`
         }
         <div class="card-body">
           <h3>${escapeHTML(name)}</h3>
@@ -2421,7 +2468,7 @@ function renderServices(services) {
                    src="${escapeHTML(image)}"
                    alt="${escapeHTML(name)}"
                    loading="lazy">`
-              : `<div class="service-photo service-placeholder">🏠</div>`
+              : `<div class="service-photo service-placeholder service-emoji">${escapeHTML(service.icon || "🏠")}</div>`
           }
           <div class="card-body">
             <h3>${escapeHTML(name)}</h3>
@@ -2456,30 +2503,45 @@ function renderServiceChips() {
   `).join("");
 }
 
+function serviceKey(value) {
+  const v = String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  if (/plumb/.test(v)) return "Plumber";
+  if (/\bac\b|air condition|cooling/.test(v)) return "AC Technician";
+  if (/carpent|woodwork/.test(v)) return "Carpenter";
+  if (/handyman|general repair|maintenance/.test(v)) return "Handyman";
+  if (/electric|electrical/.test(v)) return "Electrician";
+  if (/clean/.test(v)) return "Home Cleaning";
+  return "";
+}
+
 async function loadServices() {
-  if (!client) {
-    allServices = fallbackServices;
-    renderServices(allServices);
-    renderServiceChips();
-    return;
+  let databaseServices = [];
+  if (client) {
+    try {
+      const { data, error } = await client.from("services").select("*").limit(100);
+      if (error) throw error;
+      databaseServices = Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.error("Services database load failed; showing built-in catalogue:", error);
+    }
   }
 
-  try {
-    const { data, error } = await client
-      .from("services")
-      .select("*")
-      .limit(100);
-
-    if (error) throw error;
-
-    allServices = Array.isArray(data) && data.length
-      ? data
-      : fallbackServices;
-  } catch (error) {
-    console.error("Services load failed:", error);
-    allServices = fallbackServices;
-  }
-
+  // Always show all six requested categories, even if the DB has old names or missing rows.
+  allServices = fallbackServices.map(base => {
+    const db = databaseServices.find(row =>
+      serviceKey(row.name || row.title || row.category) === base.name
+    );
+    return db ? {
+      ...base,
+      ...db,
+      name: base.name,
+      title: base.name,
+      category: base.category,
+      description: db.description || base.description,
+      price: db.price ?? base.price,
+      icon: base.icon
+    } : { ...base };
+  });
   renderServices(allServices);
   renderServiceChips();
 }
@@ -2540,17 +2602,15 @@ function openServiceDetail(index) {
 }
 
 function filterServices(category) {
-  if (category === "All") {
-    renderServices(allServices);
-    return;
-  }
-
-  const filtered = allServices.filter(service =>
-    (service.category || service.name || "").toLowerCase() ===
-    String(category).toLowerCase()
+  const wanted = String(category || "All").toLowerCase();
+  const filtered = wanted === "all" ? allServices : allServices.filter(service =>
+    String(service.name || service.category || "").toLowerCase() === wanted ||
+    String(service.category || "").toLowerCase() === wanted
   );
-
   renderServices(filtered);
+  document.querySelectorAll("#serviceChips .chip").forEach(chip => {
+    chip.classList.toggle("active", String(chip.dataset.serviceCategory || "All").toLowerCase() === wanted);
+  });
 }
 
 function renderWorkers(workers) {
@@ -2753,7 +2813,7 @@ function prepareBookingForm() {
   }
 
   if (selectedService && $("serviceSelect")) {
-    const wanted = selectedService.category || selectedService.name || "";
+    const wanted = selectedService.name || selectedService.category || "";
     const options = Array.from($("serviceSelect").options);
 
     const match = options.find(option =>
@@ -3103,4 +3163,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
-            </html>
+  </html>
