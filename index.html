@@ -1299,6 +1299,7 @@ function navigateTo(name) {
   if (name === 'worker') loadWorkerBookings();
   if (name === 'admin') checkAdminAccess();
   if (name === 'profile') updateProfile(); 
+  if (name === 'profile' && !currentUser) setAuthMode('login');
   if (name === 'dashboard') loadCustomerDashboard();
   if (name === 'notifications') loadNotifications();
 }
