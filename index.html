@@ -1823,7 +1823,7 @@ async function loadNotifications() {
   if (!section || !listBox) return;
 
   if (!currentUser || !client) {
-    section.classList.add('hidden');
+    section.classList.remove('hidden');
     listBox.innerHTML =
       '<p class="muted">Login karke notifications dekhein.</p>';
 
