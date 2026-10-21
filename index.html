@@ -1791,13 +1791,18 @@ async function loadNotifications() {
     const rows = data || [];
     const unreadCount = rows.filter(n => !n.is_read).length;
 
-    if (countBadge) {
-      countBadge.textContent = unreadCount > 99
-        ? '99+'
-        : String(unreadCount);
+if (countBadge) {
+  if (unreadCount > 0) {
+    countBadge.textContent = unreadCount > 99
+      ? '99+'
+      : String(unreadCount);
 
-      countBadge.classList.toggle('hidden', unreadCount === 0);
-    }
+    countBadge.classList.remove('hidden');
+  } else {
+    countBadge.textContent = '';
+    countBadge.classList.add('hidden');
+  }
+}
 
     if (rows.length === 0) {
       listBox.innerHTML =
