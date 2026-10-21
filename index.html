@@ -470,7 +470,65 @@ button,
   }
 }
 
-@media (min-width: 520px) and (max-width: 768px) {
+
+/* Mobile navigation and layout fix */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 0 !important;
+    overflow-x: hidden;
+  }
+
+  #mainNav {
+    position: static;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    padding: 4px 0 8px;
+    background: #fff;
+    border: 0;
+    box-shadow: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #mainNav button {
+    flex: 0 0 auto;
+    min-height: 40px;
+    white-space: nowrap;
+  }
+
+  #workerGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
+  #workerGrid > * {
+    min-width: 0;
+  }
+
+  #workerGrid img {
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  #workerGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+ {
   #workerGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -743,8 +801,8 @@ button,
 </main> 
   
 <nav class="bottom-nav" id="customerBottomNav" aria-label="Customer navigation">
-  <button data-page="dashboard" onclick="navigateTo('dashboard')">
-    <span>⌂</span>Home
+  <button data-page="home" onclick="navigateTo('home')">
+  <span>⌂</span>Home
   </button>
   <button data-page="services" onclick="navigateTo('services')">
     <span>▦</span>Services
