@@ -2383,7 +2383,81 @@ async function init() {
   }
   await loadWorkers();
 }
-init();
+init(); 
+  
+let bookingRealtimeChannel = null;
+
+function startBookingRealtime() {
+  if (!client || bookingRealtimeChannel) return;
+
+  bookingRealtimeChannel = client
+    .channel('kaamconnect-booking-updates')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'bookings'
+      },
+      async (payload) => {
+        if (!currentUser) return;
+
+        // Refresh existing booking screens
+        if (typeof refreshBookingViews === 'function') {
+          await refreshBookingViews();
+        } else {
+          if (typeof loadMyBookings === 'function') {
+            await loadMyBookings();
+          }
+          if (typeof loadCustomerDashboard === 'function') {
+            await loadCustomerDashboard();
+          }
+          if (typeof loadWorkerBookings === 'function') {
+            await loadWorkerBookings();
+          }
+        }
+
+        // Show a small live-update message
+        let toast = document.getElementById(
+          'bookingRealtimeToast'
+        );
+
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'bookingRealtimeToast';
+
+          Object.assign(toast.style, {
+            position: 'fixed',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: '#101827',
+            color: '#ffffff',
+            padding: '12px 18px',
+            borderRadius: '10px',
+            zIndex: '99999',
+            maxWidth: '90%',
+            textAlign: 'center',
+            boxShadow: '0 4px 18px #0003'
+          });
+
+          document.body.appendChild(toast);
+        }
+
+        toast.textContent =
+          'Booking update received. Your booking details are refreshed.';
+        toast.style.display = 'block';
+
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 3500);
+      }
+    )
+    .subscribe((status) => {
+      console.log('Booking Realtime:', status);
+    });
+}
+startBookingRealtime();
 </script>
 </body>
 </html>
