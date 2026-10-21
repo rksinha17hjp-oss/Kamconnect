@@ -838,7 +838,27 @@ img {
 <button id="adminNavBtn" class="btn secondary hidden" onclick="navigateTo('admin')">Admin</button>
 <button id="accountBtn" class="btn primary" onclick="showAuth()">Login / Sign up</button>
 <button id="logoutBtn" class="btn dark-btn hidden" onclick="logout()">Logout</button>
-</nav></div></header>
+</nav></div></header> 
+  
+<section id="notificationsSection" class="section hidden">
+  <div class="card">
+    <div class="worker-bottom">
+      <h2>🔔 Notifications</h2>
+      <button
+        class="btn secondary"
+        type="button"
+        onclick="loadNotifications()">
+        Refresh
+      </button>
+    </div>
+
+    <p id="notificationsNotice" class="notice"></p>
+
+    <div id="notificationsList">
+      <p class="muted">Login karke notifications dekhein.</p>
+    </div>
+  </div>
+</section>
 <main class="wrap">
 <section id="screen-home" class="screen active">
 
@@ -1718,6 +1738,57 @@ function showBookingHistory() {
   navigateTo('myBookings');
 }
 
+async function loadNotifications() {
+  const section = $('notificationsSection');
+  const listBox = $('notificationsList');
+
+  if (!section || !listBox) return;
+
+  if (!currentUser || !client) {
+    section.classList.add('hidden');
+    listBox.innerHTML =
+      '<p class="muted">Login karke notifications dekhein.</p>';
+    return;
+  }
+
+  section.classList.remove('hidden');
+
+  try {
+    const { data, error } = await client
+      .from('notifications')
+      .select('id,title,message,is_read,created_at,booking_id')
+      .eq('recipient_id', currentUser.id)
+      .order('created_at', { ascending: false })
+      .limit(20);
+
+    if (error) throw error;
+
+    const rows = data || [];
+
+    if (rows.length === 0) {
+      listBox.innerHTML =
+        '<p class="muted">Abhi koi notification nahi hai.</p>';
+    } else {
+      listBox.innerHTML = rows.map(n => `
+        <article class="customer-booking-card">
+          <strong>${safe(n.title)}</strong>
+          <p>${safe(n.message)}</p>
+          <p class="muted">
+            ${safe(new Date(n.created_at).toLocaleString())}
+          </p>
+        </article>
+      `).join('');
+    }
+
+    hideNotice('notificationsNotice');
+  } catch (e) {
+    notice(
+      'notificationsNotice',
+      'Notifications load nahi hui: ' + e.message,
+      'bad'
+    );
+  }
+}
 async function loadMyBookings() {
   if (!currentUser) {
     $('bookingList').innerHTML =
@@ -2468,11 +2539,13 @@ async function init() {
     const {data,error}=await client.auth.getSession();
     if (error) throw error;
     currentUser=data.session?.user||null;
-    updateAccountUI();
+updateAccountUI();
+await loadNotifications();
     client.auth.onAuthStateChange((_event,session)=>{
-      currentUser=session?.user||null;
-      updateAccountUI();
-    });
+  currentUser=session?.user||null;
+  updateAccountUI();
+  loadNotifications();
+});
   } catch(e) {
     notice('authNotice','Could not restore session: '+e.message,'bad');
   }
