@@ -1727,6 +1727,21 @@ async function loadMyBookings() {
       .eq('customer_id',currentUser.id).order('created_at',{ascending:false});
     if (error) throw error;
     if (!data?.length) { $('bookingList').innerHTML='<div class="empty">No bookings yet. Choose a service to get started.</div>'; return; }
+   // Load reviews already submitted for these bookings.
+const bookingIds = data.map(b => b.id);
+const existingReviews = {};
+
+const { data: savedReviews, error: savedReviewError } = await client
+  .from('worker_reviews')
+  .select('booking_id,rating,review')
+  .in('booking_id', bookingIds)
+  .eq('customer_id', currentUser.id);
+
+if (savedReviewError) throw savedReviewError;
+
+(savedReviews || []).forEach(review => {
+  existingReviews[String(review.booking_id)] = review;
+});
     const ids=[...new Set(data.map(b=>b.worker_id).filter(Boolean))], names={};
     if (ids.length) {
       const {data:profiles,error:pe}=await client.from('public_worker_directory').select('id,full_name').in('id',ids);
