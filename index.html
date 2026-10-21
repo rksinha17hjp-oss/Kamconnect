@@ -450,53 +450,71 @@ button,
   #workerGrid > * {
     min-width: 0;
     border-radius: 18px;
-    overflow: hidden;
-  }
 
-  #workerGrid img {
-    max-width: 100%;
-    object-fit: cover;
-  }
-
-  input,
-  select,
-  textarea {
-    max-width: 100%;
-    min-height: 46px;
-  }
-
-  .grid {
-    gap: 14px;
-  }
+/* KaamConnect: mobile-first improvements */
+* {
+  box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+}
 
-/* Mobile navigation and layout fix */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+#mainNav a,
+#mainNav button {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* Header navigation: desktop and mobile */
+#mainNav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+}
+
+#mainNav .btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Mobile layout */
 @media (max-width: 768px) {
   body {
-    padding-bottom: 0 !important;
     overflow-x: hidden;
   }
 
   #mainNav {
     position: static;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 6px;
     width: 100%;
     max-width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 6px;
     padding: 4px 0 8px;
-    background: #fff;
-    border: 0;
-    box-shadow: none;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    background: #fff;
+    border: 0;
+    box-shadow: none;
   }
 
-  #mainNav button {
+  #mainNav .btn {
     flex: 0 0 auto;
     min-height: 40px;
+    padding: 9px 12px;
+    font-size: 11px;
     white-space: nowrap;
   }
 
@@ -512,6 +530,7 @@ button,
   }
 
   #workerGrid img {
+    width: 100%;
     max-width: 100%;
     object-fit: cover;
   }
@@ -523,17 +542,12 @@ button,
   }
 }
 
+/* Very small phones */
 @media (max-width: 380px) {
   #workerGrid {
     grid-template-columns: minmax(0, 1fr);
   }
 }
- {
-  #workerGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 </style>
 </head>
 <body>
@@ -541,7 +555,7 @@ button,
 <a class="logo" href="#" onclick="navigateTo('home');return false">Kaam<span>Connect</span></a>
 <nav id="mainNav">
 <button class="btn secondary" onclick="navigateTo('home')">Home</button>
-<button class="btn secondary" onclick="navigateTo('dashboard')">Dashboard</button>
+<button class="btn secondary" onclick="navigateTo('dashboard')">My Dashboard</button>
 <button class="btn secondary" onclick="navigateTo('services')">Services</button>
 <button class="btn secondary" onclick="navigateTo('workers')">Workers</button>
 <button class="btn secondary" onclick="navigateTo('booking')">Book</button>
