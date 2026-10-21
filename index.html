@@ -1823,7 +1823,11 @@ async function loadNotifications() {
   if (!section || !listBox) return;
 
   if (!currentUser || !client) {
-    section.classList.remove('hidden');
+if (!currentUser || !client) {
+  section.classList.toggle(
+    'hidden',
+    !document.querySelector('#mainNav button.primary')?.getAttribute('onclick')?.includes("navigateTo('notifications')")
+  );
     listBox.innerHTML =
       '<p class="muted">Login karke notifications dekhein.</p>';
 
@@ -1832,10 +1836,7 @@ async function loadNotifications() {
       countBadge.classList.add('hidden');
     }
     return;
-  }
-
-  section.classList.remove('hidden');
-
+  }  
   try {
     const { data, error } = await client
       .from('notifications')
