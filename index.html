@@ -596,6 +596,52 @@ button,
     overflow-x: hidden;
     padding-bottom: 86px !important;
   }
+} 
+    
+/* KaamConnect mobile navigation fix */
+@media screen and (max-width: 768px) {
+  #mainNav {
+    display: flex !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    background: #fff !important;
+    z-index: 1000 !important;
+  }
+
+  #mainNav button,
+  #mainNav a {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    min-height: 42px !important;
+    width: auto !important;
+    white-space: nowrap !important;
+    visibility: visible !important;
+  }
+
+  #mainNav button[hidden],
+  #mainNav a[hidden] {
+    display: none !important;
+  }
+
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .screen {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 </style>
 </head>
