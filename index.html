@@ -1409,8 +1409,8 @@ async function loadWorkers() {
   }
   notice('workerNotice','Loading approved professionals…');
   try {
-    const {data,error} = await client.from('public_worker_directory')
-      .select('id,full_name,service,phone,price,area,postal_code,photo_url,available')
+    const {data,error} = await client.from('public_worker_directory_safe')
+      .select('id,full_name,service,price,area,postal_code,photo_url,available')
       .eq('available',true).order('full_name');
     if (error) throw error;
     workers = data || [];
@@ -1546,7 +1546,7 @@ ${ratingHTML}
         <div>PIN code: ${pin}</div>
         <div>Price: ${price}</div>
         <div>Availability: Available</div>
-        ${phone ? `<div>Phone: ${phone}</div>` : '<div>Phone: Contact after booking</div>'}
+        <div>Phone: Contact after booking</div>
       </div>
 
       <div class="worker-bottom">
