@@ -547,6 +547,55 @@ button,
   #workerGrid {
     grid-template-columns: minmax(0, 1fr);
   }
+} 
+    
+/* FIX: Restore top navigation without removing any sections */
+#mainNav {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  inset: auto !important;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  background: #fff;
+  z-index: 100;
+  -webkit-overflow-scrolling: touch;
+}
+
+#mainNav button,
+#mainNav a {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-height: 40px;
+}
+
+@media (max-width: 768px) {
+  #mainNav {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    margin-bottom: 8px;
+  }
+
+  body {
+    overflow-x: hidden;
+    padding-bottom: 86px !important;
+  }
 }
 </style>
 </head>
