@@ -1686,7 +1686,7 @@ $('bookingForm').addEventListener('submit', async e => {
   if (!date || date < today()) { notice('bookingNotice','Choose today or a future date.','bad'); return; }
   const btn = $('bookBtn'); btn.disabled=true; btn.textContent='Submitting…';
   try {
-    const {data:available,error:checkError} = await client.from('public_worker_directory')
+    const {data:available,error:checkError} = await client.from('public_worker_directory_safe')
       .select('id').eq('id',worker.id).eq('available',true).maybeSingle();
     if (checkError) throw checkError;
     if (!available) throw new Error('This worker is no longer available.');
