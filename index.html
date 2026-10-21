@@ -1719,78 +1719,173 @@ function showBookingHistory() {
 }
 
 async function loadMyBookings() {
-  if (!currentUser) { $('bookingList').innerHTML='<p class="muted">Log in to view bookings.</p>'; return; }
+  if (!currentUser) {
+    $('bookingList').innerHTML =
+      '<p class="muted">Log in to view bookings.</p>';
+    return;
+  }
+
   if (!client) return;
+
   try {
-    const {data,error} = await client.from('bookings')
+    const { data, error } = await client
+      .from('bookings')
       .select('id,service,address,booking_date,status,created_at,worker_id')
-      .eq('customer_id',currentUser.id).order('created_at',{ascending:false});
+      .eq('customer_id', currentUser.id)
+      .order('created_at', { ascending: false });
+
     if (error) throw error;
-    if (!data?.length) { $('bookingList').innerHTML='<div class="empty">No bookings yet. Choose a service to get started.</div>'; return; }
-   // Load reviews already submitted for these bookings.
-const bookingIds = data.map(b => b.id);
-const existingReviews = {};
 
-const { data: savedReviews, error: savedReviewError } = await client
-  .from('worker_reviews')
-  .select('booking_id,rating,review')
-  .in('booking_id', bookingIds)
-  .eq('customer_id', currentUser.id);
-
-if (savedReviewError) throw savedReviewError;
-
-(savedReviews || []).forEach(review => {
-  existingReviews[String(review.booking_id)] = review;
-});
-    const ids=[...new Set(data.map(b=>b.worker_id).filter(Boolean))], names={};
-    if (ids.length) {
-      const {data:profiles,error:pe}=await client.from('public_worker_directory').select('id,full_name').in('id',ids);
-      if (pe) throw pe;
-      (profiles||[]).forEach(w=>names[w.id]=w.full_name);
+    if (!data?.length) {
+      $('bookingList').innerHTML =
+        '<div class="empty">No bookings yet. Choose a service to get started.</div>';
+      return;
     }
-    $('bookingList').innerHTML=data.map(b=>{
-      const status=String(b.status||'pending').toLowerCase();
-      const labels={pending:'Pending',accepted:'Accepted',confirmed:'Confirmed',completed:'Completed',cancelled:'Cancelled',rejected:'Rejected'};
-      const descriptions={pending:'Waiting for professional confirmation.',accepted:'Your request has been accepted.',confirmed:'Your booking is confirmed.',completed:'Service marked as completed.',cancelled:'This booking was cancelled.',rejected:'This request was rejected.'};
-      const progress={pending:10,accepted:55,confirmed:65,completed:100,cancelled:0,rejected:0}[status]??10;
+
+    const bookingIds = data.map(b => b.id);
+    const existingReviews = {};
+
+    const { data: savedReviews, error: reviewError } = await client
+      .from('worker_reviews')
+      .select('booking_id,rating,review')
+      .in('booking_id', bookingIds)
+      .eq('customer_id', currentUser.id);
+
+    if (reviewError) throw reviewError;
+
+    (savedReviews || []).forEach(review => {
+      existingReviews[String(review.booking_id)] = review;
+    });
+
+    const ids = [...new Set(data.map(b => b.worker_id).filter(Boolean))];
+    const names = {};
+
+    if (ids.length) {
+      const { data: profiles, error: profileError } = await client
+        .from('public_worker_directory')
+        .select('id,full_name')
+        .in('id', ids);
+
+      if (profileError) throw profileError;
+
+      (profiles || []).forEach(w => {
+        names[String(w.id)] = w.full_name;
+      });
+    }
+
+    $('bookingList').innerHTML = data.map(b => {
+      const status = String(b.status || 'pending').toLowerCase();
+
+      const labels = {
+        pending: 'Pending',
+        accepted: 'Accepted',
+        confirmed: 'Confirmed',
+        on_the_way: 'Worker on the way',
+        arrived: 'Worker arrived',
+        completed: 'Completed',
+        cancelled: 'Cancelled',
+        rejected: 'Rejected'
+      };
+
+      const descriptions = {
+        pending: 'Waiting for professional confirmation.',
+        accepted: 'Your request has been accepted.',
+        confirmed: 'Your booking is confirmed.',
+        on_the_way: 'Your worker is on the way.',
+        arrived: 'Your worker has arrived.',
+        completed: 'Service marked as completed.',
+        cancelled: 'This booking was cancelled.',
+        rejected: 'This request was rejected.'
+      };
+
+      const progress = {
+        pending: 10,
+        accepted: 55,
+        confirmed: 65,
+        on_the_way: 80,
+        arrived: 90,
+        completed: 100,
+        cancelled: 0,
+        rejected: 0
+      }[status] ?? 10;
+
       const savedReview = existingReviews[String(b.id)];
 
-const reviewHTML = status === 'completed'
-  ? (savedReview
-      ? `<div class="review-result">
-           <strong>✓ Your review submitted</strong>
-           <p>${'⭐'.repeat(Number(savedReview.rating))} 
-             (${Number(savedReview.rating)}/5)</p>
-           <p>${safe(savedReview.review || 'No written comment.')}</p>
-         </div>`
-      : `<div class="review-form">
-           <h4>Rate your experience</h4>
-           <label for="review-rating-${safe(b.id)}">Your rating</label>
-           <select id="review-rating-${safe(b.id)}" required>
-             <option value="">Choose stars</option>
-             <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-             <option value="4">⭐⭐⭐⭐ Good</option>
-             <option value="3">⭐⭐⭐ Average</option>
-             <option value="2">⭐⭐ Poor</option>
-             <option value="1">⭐ Very poor</option>
-           </select>
-           <label for="review-text-${safe(b.id)}">Comment (optional)</label>
-           <textarea id="review-text-${safe(b.id)}"
-             maxlength="1000"
-             placeholder="Apna experience share karein..."></textarea>
-           <button class="btn primary"
-             type="button"
-             onclick="submitWorkerReview('${safe(b.id)}')">
-             Submit review
-           </button>
-         </div>`)
-  : '';
-      return `<article class="booking-item status-${safe(status)}"><span class="status-pill">${safe(labels[status]||status)}</span><h3>${safe(b.service||'Service')}</h3><p class="muted">Worker: ${safe(names[b.worker_id]||'Professional')}</p><p class="muted">Address: ${safe(b.address||'')}</p><p class="muted">Date: ${safe(b.booking_date||'')}</p><p class="muted">${safe(descriptions[status]||'Booking status updated.')}</p>${!['cancelled','rejected'].includes(status)?`<div class="progress-track"><span style="width:${progress}%"></span></div>`:''}${reviewHTML}${status==='pending'?`<button class="btn secondary" onclick="cancelBooking('${safe(b.id)}')">Cancel booking</button>`:''}${['accepted','confirmed','on_the_way','arrived'].includes(status)?`<div class="tracking-actions"><button class="btn primary" onclick="trackWorker('${safe(b.id)}')">📍 Track worker</button></div>`:''}</article>`;
-    }).join('');
-    hideNotice('myBookingsNotice');
-  } catch(e) { notice('myBookingsNotice','Could not load bookings: '+e.message,'bad'); }
-}
+      const reviewHTML = status === 'completed'
+        ? (savedReview
+          ? `<div class="review-result">
+               <strong>✓ Your review submitted</strong>
+               <p>${'⭐'.repeat(Number(savedReview.rating))}
+                 (${Number(savedReview.rating)}/5)</p>
+               <p>${safe(savedReview.review || 'No written comment.')}</p>
+             </div>`
+          : `<div class="review-form">
+               <h4>Rate your experience</h4>
+               <label for="review-rating-${safe(b.id)}">Your rating</label>
+               <select id="review-rating-${safe(b.id)}" required>
+                 <option value="">Choose stars</option>
+                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                 <option value="4">⭐⭐⭐⭐ Good</option>
+                 <option value="3">⭐⭐⭐ Average</option>
+                 <option value="2">⭐⭐ Poor</option>
+                 <option value="1">⭐ Very poor</option>
+               </select>
 
+               <label for="review-text-${safe(b.id)}">Comment (optional)</label>
+               <textarea id="review-text-${safe(b.id)}"
+                 maxlength="1000"
+                 placeholder="Apna experience share karein..."></textarea>
+
+               <button class="btn primary" type="button"
+                 onclick="submitWorkerReview('${safe(b.id)}')">
+                 Submit review
+               </button>
+             </div>`)
+        : '';
+
+      const progressHTML = !['cancelled', 'rejected'].includes(status)
+        ? `<div class="progress-track">
+             <span style="width:${progress}%"></span>
+           </div>`
+        : '';
+
+      const cancelHTML = status === 'pending'
+        ? `<button class="btn secondary"
+             onclick="cancelBooking('${safe(b.id)}')">
+             Cancel booking
+           </button>`
+        : '';
+
+      const trackingHTML = [
+        'accepted', 'confirmed', 'on_the_way', 'arrived'
+      ].includes(status)
+        ? `<div class="tracking-actions">
+             <button class="btn primary"
+               onclick="trackWorker('${safe(b.id)}')">
+               📍 Track worker
+             </button>
+           </div>`
+        : '';
+
+      return `<article class="booking-item status-${safe(status)}">
+        <span class="status-pill">${safe(labels[status] || status)}</span>
+        <h3>${safe(b.service || 'Service')}</h3>
+        <p class="muted">Worker: ${safe(names[String(b.worker_id)] || 'Professional')}</p>
+        <p class="muted">Address: ${safe(b.address || '')}</p>
+        <p class="muted">Date: ${safe(b.booking_date || '')}</p>
+        <p class="muted">${safe(descriptions[status] || 'Booking status updated.')}</p>
+        ${progressHTML}
+        ${reviewHTML}
+        ${cancelHTML}
+        ${trackingHTML}
+      </article>`;
+    }).join('');
+
+    hideNotice('myBookingsNotice');
+  } catch (e) {
+    notice('myBookingsNotice', 'Could not load bookings: ' + e.message, 'bad');
+  }
+}
 async function submitWorkerReview(bookingId) {
   if (!currentUser || !client) {
     alert('Review dene ke liye pehle login karein.');
@@ -2381,7 +2476,8 @@ async function init() {
   } catch(e) {
     notice('authNotice','Could not restore session: '+e.message,'bad');
   }
-  await loadWorkers();
+  await loadWorkers(); 
+  startBookingRealtime();
 }
 init(); 
   
@@ -2457,7 +2553,6 @@ function startBookingRealtime() {
       console.log('Booking Realtime:', status);
     });
 }
-startBookingRealtime();
 </script>
 </body>
 </html>
