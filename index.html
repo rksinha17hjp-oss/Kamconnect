@@ -1988,10 +1988,10 @@ async function loadMyBookings() {
 
     const ids = [...new Set(data.map(b => b.worker_id).filter(Boolean))];
     const names = {};
-
+const workerPhones = {};
     if (ids.length) {
       const { data: profiles, error: profileError } = await client
-        .from('public_worker_directory')
+        .from('public_worker_directory_safe')
         .select('id,full_name')
         .in('id', ids);
 
@@ -2001,7 +2001,22 @@ async function loadMyBookings() {
         names[String(w.id)] = w.full_name;
       });
     }
+for (const b of data) {
+  const status = String(b.status || '').toLowerCase();
 
+  if (['accepted', 'on_the_way', 'arrived'].includes(status)) {
+    const { data: phoneData, error: phoneError } = await client
+      .rpc('get_accepted_worker_phone', {
+        booking_uuid: b.id
+      });
+
+    if (phoneError) {
+      console.warn('Could not load worker phone:', phoneError.message);
+    } else if (phoneData?.length && phoneData[0].worker_phone) {
+      workerPhones[String(b.id)] = phoneData[0].worker_phone;
+    }
+  }
+}
     $('bookingList').innerHTML = data.map(b => {
       const status = String(b.status || 'pending').toLowerCase();
 
@@ -2099,7 +2114,16 @@ async function loadMyBookings() {
       return `<article class="booking-item status-${safe(status)}">
         <span class="status-pill">${safe(labels[status] || status)}</span>
         <h3>${safe(b.service || 'Service')}</h3>
-        <p class="muted">Worker: ${safe(names[String(b.worker_id)] || 'Professional')}</p>
+        <p class="muted">Worker: ${safe(names[String(b.worker_id)] || 'Professional')}</p> 
+        ${workerPhones[String(b.id)]
+  ? `<p class="muted">📞 Worker phone:
+       <a href="tel:${safe(workerPhones[String(b.id)])}">
+         ${safe(workerPhones[String(b.id)])}
+       </a>
+     </p>`
+  : (['accepted', 'on_the_way', 'arrived'].includes(status)
+      ? '<p class="muted">📞 Worker phone unavailable.</p>'
+      : '<p class="muted">📞 Phone available after booking acceptance.</p>')}
         <p class="muted">Address: ${safe(b.address || '')}</p>
         <p class="muted">Date: ${safe(b.booking_date || '')}</p>
         <p class="muted">${safe(descriptions[status] || 'Booking status updated.')}</p>
