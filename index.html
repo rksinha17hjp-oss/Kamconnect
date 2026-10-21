@@ -170,7 +170,7 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
   .field.full{grid-column:auto}
   .panel{padding:15px}
   .footer-inner{flex-direction:column}
-}
+} 
   .worker-filters {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -435,8 +435,35 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
 .location-current .pin {
   width: 42px;
   height: 42px;
-  border
-  </style>
+  border 
+  
+/* KaamConnect mobile-first enhancements */
+.notification-wrap{position:relative;flex-shrink:0}
+#notificationCount{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:#ffc83d;font-size:10px}
+.notification-menu{position:absolute;right:0;top:46px;width:min(310px,85vw);z-index:100;background:#fff;border:1px solid #eee;border-radius:16px;padding:14px;box-shadow:0 12px 35px #0002;display:none;white-space:normal}
+.notification-menu.open{display:block}
+.notification-item{padding:10px 0;border-bottom:1px solid #eee;font-size:12px;line-height:1.5}
+.avatar-image{width:60px;height:60px;object-fit:cover;border-radius:50%;background:#eee6ff}
+.home-service-banner{position:relative;overflow:hidden;min-height:330px;border-radius:24px;padding:24px;background:linear-gradient(135deg,#e7f6df,#f3ffe9);display:flex;align-items:center;margin:18px 0}
+.home-service-banner .banner-copy{position:relative;z-index:2;max-width:58%}
+.home-service-banner img{position:absolute;right:0;bottom:0;height:100%;width:54%;object-fit:cover;object-position:center top;mask-image:linear-gradient(90deg,transparent 0%,#000 30%)}
+.home-service-banner h2{font-size:clamp(25px,5vw,42px);line-height:1.12}
+.service-card{overflow:hidden;padding:10px}
+.service-card .service-photo{height:150px;margin-bottom:10px}
+.service-card .card-body{padding:3px 5px 5px}
+.service-card .card-body p{color:#737373;font-size:12px;line-height:1.6}
+.detail-image{width:100%;max-height:300px;object-fit:cover;border-radius:18px}
+.bottom-nav{display:none}
+@media(max-width:560px){
+ .home-service-banner{min-height:300px;padding:18px;align-items:flex-start}
+ .home-service-banner .banner-copy{max-width:68%}
+ .home-service-banner img{width:62%;height:75%}
+ .service-card .service-photo{height:120px}
+ .bottom-nav{display:flex;position:sticky;bottom:0;z-index:25;justify-content:space-around;gap:4px;margin:18px -11px 0;padding:9px 4px calc(9px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #eee;box-shadow:0 -5px 18px #0000000a}
+ .bottom-nav button{border:0;background:#f4f4f4;border-radius:22px;padding:10px 15px;font-size:18px}
+}
+
+</style>
 </head>
 <body>
 
@@ -451,7 +478,17 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
       <button class="btn secondary" onclick="navigateTo('services')">Services</button>
       <button class="btn secondary" onclick="navigateTo('workers')">Workers</button>
       <button class="btn secondary" onclick="navigateTo('location')">📍 Location</button>
-      <button class="btn primary" id="accountBtn" onclick="navigateTo('auth')">Login / Sign up</button>
+      <div class="notification-wrap">
+        <button class="btn secondary" id="notificationBtn" type="button" aria-label="Notifications" onclick="toggleNotifications()">🔔 <span id="notificationCount">0</span></button>
+        <div class="notification-menu" id="notificationMenu">
+          <strong>Notifications</strong>
+          <div id="notificationList" class="small">Login karke booking updates dekhein.</div>
+        </div>
+      </div>
+      <button class="btn secondary hidden" id="customerDashboardBtn" onclick="navigateTo('myBookings')">My Bookings</button>
+      <button class="btn secondary hidden" id="workerDashboardBtn" onclick="navigateTo('workerDashboard')">Worker Dashboard</button>
+      <button class="btn secondary hidden" id="adminDashboardBtn" onclick="navigateTo('adminDashboard')">Admin Dashboard</button>
+      <button class="btn primary" id="accountBtn" onclick="navigateTo(currentUser ? 'profile' : 'auth')">Login / Sign up</button>
       <button class="btn secondary hidden" id="logoutBtn" onclick="logout()">Logout</button>
     </nav>
   </div>
@@ -634,7 +671,7 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
         <div class="empty">Loading professionals...</div>
       </div>
     </section>
-  </section>
+  </section> 
     <!-- LOGIN / SIGNUP PAGE -->
   <section id="screen-auth" class="screen">
     <div class="auth-box panel">
@@ -692,7 +729,7 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
 
       <div class="panel">
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-          <div style="width:60px;height:60px;display:grid;place-items:center;background:#eee6ff;border-radius:50%;font-size:30px">👤</div>
+          <img id="profileAvatar" class="avatar-image" alt="Profile photo" src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Crect width=%2760%27 height=%2760%27 rx=%2730%27 fill=%27%23eee6ff%27/%3E%3Ctext x=%2730%27 y=%2739%27 font-size=%2728%27 text-anchor=%27middle%27%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E">
           <div>
             <h3 id="profileName" style="margin:0 0 5px">Your profile</h3>
             <p id="profileEmail" class="sub">Log in to view your account.</p>
@@ -729,8 +766,8 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
         <button class="btn secondary" onclick="resetPassword()">Reset Password</button>
         <button class="btn secondary" onclick="logout()">Log Out</button>
       </div>
-    </section
-      <!-- BOOKING PAGE -->
+    </section 
+  <!-- BOOKING PAGE -->
 <section id="screen-booking" class="screen">
   <div class="section">
     <span class="eyebrow">QUICK & SIMPLE</span>
@@ -970,6 +1007,24 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
 </section>
 
 
+<!-- ADMIN DASHBOARD -->
+<section id="screen-adminDashboard" class="screen">
+  <section class="section">
+    <span class="kicker">KAAMCONNECT CONTROL ROOM</span>
+    <h1>Admin Dashboard</h1>
+    <p class="sub">Review service requests and platform activity.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-icon">📋</div><div><strong>Bookings</strong><small>Recent requests</small></div></div>
+      <div class="stat"><div class="stat-icon">🧰</div><div><strong>Workers</strong><small>Registered professionals</small></div></div>
+      <div class="stat"><div class="stat-icon">🔔</div><div><strong>Updates</strong><small>Booking activity</small></div></div>
+    </div>
+    <div class="panel">
+      <div class="row-between"><h2>Recent bookings</h2><button class="btn secondary" type="button" onclick="loadAdminBookings()">↻ Refresh</button></div>
+      <div id="adminBookingsList"><div class="empty">Admin access required.</div></div>
+    </div>
+  </section>
+</section>
+
 <!-- SERVICE / WORKER DETAILS PAGE -->
 <section id="screen-detail" class="screen">
   <div class="section">
@@ -1116,6 +1171,12 @@ footer p{font-size:12px;line-height:1.7;color:#ddd}
   </div>
 </section> 
     <!-- GLOBAL FOOTER -->
+  <div class="bottom-nav" aria-label="Quick navigation">
+    <button type="button" onclick="navigateTo('home')" aria-label="Home">⌂</button>
+    <button type="button" onclick="navigateTo('services')" aria-label="Services">▦</button>
+    <button type="button" onclick="navigateTo('myBookings')" aria-label="Bookings">▣</button>
+    <button type="button" onclick="navigateTo('profile')" aria-label="Profile">♙</button>
+  </div>
 </main>
 
 <footer class="site-footer">
@@ -1356,6 +1417,7 @@ const validScreens = [
   "booking",
   "myBookings",
   "workerDashboard",
+  "adminDashboard",
   "detail"
 ];
 
@@ -1416,6 +1478,9 @@ function navigateTo(screenName) {
 
   if (screenName === "workerDashboard") {
     loadWorkerBookings();
+  }
+  if (screenName === "adminDashboard") {
+    loadAdminBookings();
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1578,6 +1643,101 @@ async function resetPassword() {
   }
 }
 
+
+function getUserRole() {
+  const role = String(
+    currentProfile?.role ||
+    currentUser?.user_metadata?.role ||
+    currentUser?.app_metadata?.role ||
+    "customer"
+  ).toLowerCase();
+  if (role.includes("admin")) return "admin";
+  if (role.includes("worker") || role.includes("professional")) return "worker";
+  return "customer";
+}
+
+function updateProfileAvatar() {
+  const avatar = $("profileAvatar");
+  if (!avatar || !currentUser) return;
+  const meta = currentUser.user_metadata || {};
+  const photo = meta.avatar_url || meta.picture || meta.photo_url || "";
+  if (photo && /^https:\/\//i.test(photo)) {
+    avatar.src = photo;
+  } else {
+    const initial = (meta.full_name || currentProfile?.full_name || currentUser.email || "U").trim().charAt(0).toUpperCase();
+    avatar.src = "data:image/svg+xml," + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><rect width="60" height="60" rx="30" fill="#eee6ff"/><text x="30" y="39" font-size="28" text-anchor="middle" fill="#5d49a6" font-family="Arial">${initial}</text></svg>`
+    );
+  }
+}
+
+function toggleNotifications() {
+  const menu = $("notificationMenu");
+  if (!menu) return;
+  menu.classList.toggle("open");
+  if (menu.classList.contains("open")) loadNotifications();
+}
+
+async function loadNotifications() {
+  const list = $("notificationList");
+  const count = $("notificationCount");
+  if (!list) return;
+  if (!currentUser || !client) {
+    list.textContent = "Login karke booking updates dekhein.";
+    if (count) count.textContent = "0";
+    return;
+  }
+  try {
+    let query = client.from("bookings").select("id, service, status, created_at").order("created_at", { ascending: false }).limit(10);
+    const role = getUserRole();
+    if (role === "customer") query = query.eq("customer_id", currentUser.id);
+    if (role === "worker") {
+      const { data: worker } = await client.from("workers").select("id").eq("user_id", currentUser.id).maybeSingle();
+      if (worker?.id) query = query.eq("worker_id", worker.id);
+      else {
+        list.textContent = "Worker profile abhi account se linked nahi hai.";
+        if (count) count.textContent = "0";
+        return;
+      }
+    }
+    const { data, error } = await query;
+    if (error) throw error;
+    const items = (data || []).filter(b => !["completed", "cancelled"].includes(String(b.status || "").toLowerCase()));
+    if (count) count.textContent = String(items.length);
+    list.innerHTML = items.length
+      ? items.map(b => `<div class="notification-item"><strong>${escapeHTML(b.service || "Service booking")}</strong><br>${escapeHTML(b.status || "pending")} · ${b.created_at ? escapeHTML(new Date(b.created_at).toLocaleDateString()) : ""}</div>`).join("")
+      : "Koi naya booking update nahi hai.";
+  } catch (error) {
+    console.error("Notifications load failed:", error);
+    list.textContent = "Notifications load nahi hui. SQL setup aur RLS policies check karein.";
+    if (count) count.textContent = "!";
+  }
+}
+
+async function loadAdminBookings() {
+  const list = $("adminBookingsList");
+  if (!list) return;
+  if (!currentUser || getUserRole() !== "admin") {
+    list.innerHTML = '<div class="empty">Admin role wale account se login karein. SQL setup ke baad profiles.role ko admin set karein.</div>';
+    return;
+  }
+  list.textContent = "Loading bookings...";
+  try {
+    const { data, error } = await client.from("bookings").select("*").order("created_at", { ascending: false }).limit(100);
+    if (error) throw error;
+    list.innerHTML = data?.length ? data.map(b => `
+      <article class="booking-item">
+        <div class="row-between"><strong>${escapeHTML(b.service || "Home service")}</strong><span class="status-pill">${escapeHTML(b.status || "pending")}</span></div>
+        <p class="small">Customer: ${escapeHTML(b.customer_name || "Customer")} · ${escapeHTML(b.customer_phone || "")}</p>
+        <p class="small">Date: ${escapeHTML(b.booking_date || "Not set")} · Address: ${escapeHTML(b.address || "Not provided")}</p>
+      </article>`).join("") : '<div class="empty">Abhi bookings nahi hain.</div>';
+  } catch (error) {
+    console.error("Admin bookings failed:", error);
+    list.innerHTML = '<div class="empty">Admin data load nahi hua. SQL policies check karein.</div>';
+  }
+}
+
+
 /* =========================================
    5. ACCOUNT UI AND LOGOUT
    ========================================= */
@@ -1586,28 +1746,21 @@ function updateAccountUI() {
   const accountButton = $("accountBtn");
   const logoutButton = $("logoutBtn");
   const loginHint = $("bookingLoginHint");
+  const role = getUserRole();
 
   if (accountButton) {
     accountButton.textContent = currentUser
-      ? "My Profile"
+      ? (currentProfile?.full_name || currentUser.user_metadata?.full_name || currentUser.email || "My Profile")
       : "Login / Sign up";
-
-    accountButton.onclick = () => {
-      navigateTo(currentUser ? "profile" : "auth");
-    };
+    accountButton.onclick = () => navigateTo(currentUser ? "profile" : "auth");
   }
-
-  if (logoutButton) {
-    logoutButton.classList.toggle("hidden", !currentUser);
-  }
-
-  if (loginHint) {
-    loginHint.classList.toggle("hidden", !!currentUser);
-  }
-
-  if ($("profileEmail")) {
-    $("profileEmail").textContent = currentUser?.email || "Not logged in";
-  }
+  if (logoutButton) logoutButton.classList.toggle("hidden", !currentUser);
+  if (loginHint) loginHint.classList.toggle("hidden", !!currentUser);
+  if ($("profileEmail")) $("profileEmail").textContent = currentUser?.email || "Not logged in";
+  $("customerDashboardBtn")?.classList.toggle("hidden", !currentUser || role !== "customer");
+  $("workerDashboardBtn")?.classList.toggle("hidden", !currentUser || role !== "worker");
+  $("adminDashboardBtn")?.classList.toggle("hidden", !currentUser || role !== "admin");
+  updateProfileAvatar();
 }
 
 async function logout() {
@@ -1646,13 +1799,14 @@ async function loadProfile() {
   try {
     const { data, error } = await client
       .from("profiles")
-      .select("id, full_name, phone, address")
+      .select("id, full_name, phone, address, role")
       .eq("id", currentUser.id)
       .maybeSingle();
 
     if (error) throw error;
 
     currentProfile = data || {};
+    updateAccountUI();
 
     const fullName =
       currentProfile.full_name ||
@@ -1715,6 +1869,7 @@ async function saveProfile(event) {
     };
 
     if ($("profileName")) $("profileName").textContent = fullName;
+    updateAccountUI();
 
     setNotice("profileNotice", "Profile successfully save ho gayi.", "success");
     showToast("Profile saved.");
@@ -1838,6 +1993,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     client.auth.onAuthStateChange((_event, session) => {
       currentUser = session?.user || null;
       updateAccountUI();
+      if (currentUser) {
+        loadProfile();
+        loadNotifications();
+      } else {
+        currentProfile = null;
+        loadNotifications();
+      }
     });
 
     if (currentUser) {
@@ -2438,7 +2600,6 @@ function renderWorkers(workers) {
   }).join("");
 }
 
-
 async function loadWorkers() {
   const notice = $("workerNotice");
 
@@ -2452,28 +2613,19 @@ async function loadWorkers() {
 
   try {
     const { data, error } = await client
-      .from("worker_profiles")
+      .from("workers")
       .select("*")
-      .eq("available", true)
-      .eq("approval_status", "approved")
       .limit(100);
 
     if (error) throw error;
 
-    allWorkers = (data || []).map((worker) => ({
-      ...worker,
-      name: worker.full_name,
-      image_url: worker.photo_url,
-      bio: worker.area || "",
-      experience: "",
-    }));
-
+    allWorkers = data || [];
     renderWorkers(allWorkers);
 
     if (notice) {
       notice.textContent = allWorkers.length
         ? ""
-        : "Abhi koi approved professional available nahi hai.";
+        : "Abhi koi professional available nahi hai.";
     }
 
     populateWorkerFilter();
@@ -2482,12 +2634,13 @@ async function loadWorkers() {
 
     if (notice) {
       notice.textContent =
-        "Professionals load nahi hue: " + error.message;
+        "Professionals load nahi hue. Workers table aur RLS policies check karo.";
     }
 
     renderWorkers([]);
   }
-} 
+}
+
 function populateWorkerFilter() {
   const filter = $("workerServiceFilter");
   if (!filter) return;
@@ -2835,10 +2988,17 @@ async function loadWorkerBookings() {
       The worker_id filter limits requests to the signed-in worker.
       RLS on the server must independently enforce this restriction.
     */
+    const { data: worker, error: workerError } = await client
+      .from("workers").select("id").eq("user_id", currentUser.id).maybeSingle();
+    if (workerError) throw workerError;
+    if (!worker?.id) {
+      container.textContent = "Aapka login abhi workers table ke user_id se linked nahi hai.";
+      return;
+    }
     const { data, error } = await client
       .from("bookings")
       .select("*")
-      .eq("worker_id", currentUser.id)
+      .eq("worker_id", worker.id)
       .order("created_at", { ascending: false })
       .limit(100);
 
@@ -2943,4 +3103,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
-</html>
+            </html>
