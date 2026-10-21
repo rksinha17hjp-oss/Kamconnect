@@ -820,7 +820,30 @@ img {
 .review-result p {
   font-size: 12px;
   line-height: 1.7;
+} 
+  
+.verified-badge {
+  display: inline-block;
+  background: #e6f8ee;
+  color: #087443;
+  border: 1px solid #a8e5c1;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
 }
+
+.verified-badge {
+  display: inline-block;
+  background: #e6f8ee;
+  color: #087443;
+  border: 1px solid #a8e5c1;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 </style>
 </head>
 <body>
@@ -1495,7 +1518,9 @@ ${ratingHTML}
       </div>
 
       <div class="worker-bottom">
-        <p class="muted">Approved local professional</p>
+        <p class="muted">
+  <span class="verified-badge">✓ Verified professional</span>
+</p>
         <button class="btn primary" type="button"
           onclick="bookWorker('${id}')">Book now →</button>
       </div>
