@@ -22,84 +22,162 @@
   font-display:swap;
 }
 :root{--yellow:#ffc83d;--dark:#242424;--muted:#737373;--line:#eee;--green:#168451;--soft:#fff7e5}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:'Impressum',Arial,sans-serif;color:var(--dark);background:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Impressum',Arial,sans-serif;color:var(--dark);background:#fff}
 #screen-home{font-family:'Improbable','Impressum',Arial,sans-serif}
-button,input,select,textarea{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer}a{color:inherit;text-decoration:none}
-.hidden{display:none!important}.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
+button,input,select,textarea{font:inherit}
+button,a{touch-action:manipulation}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.hidden{display:none!important}
+.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
 header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
 .navbar{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 0}
-.logo{font-size:24px;font-weight:950;letter-spacing:-1px;white-space:nowrap}.logo span{color:#d99b14}
+.logo{font-size:24px;font-weight:950;letter-spacing:-1px;white-space:nowrap}
+.logo span{color:#d99b14}
 nav{display:flex;gap:6px;align-items:center;overflow-x:auto;max-width:100%}
 .btn{border:0;border-radius:11px;padding:11px 15px;min-height:42px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-.primary{background:var(--yellow);color:#242424}.secondary{background:#f4f4f4;color:#333}.dark-btn{background:#242424;color:#fff}.btn:disabled{opacity:.5;cursor:wait}
-.screen{display:none}.screen.active{display:block;animation:fade .2s ease}@keyframes fade{from{opacity:.6}to{opacity:1}}
+.primary{background:var(--yellow);color:#242424}
+.secondary{background:#f4f4f4;color:#333}
+.dark-btn{background:#242424;color:#fff}
+.btn:disabled{opacity:.5;cursor:wait}
+.screen{display:none}
+.screen.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:.6}to{opacity:1}}
 .hero{margin-top:18px;padding:clamp(22px,5vw,48px);background:linear-gradient(120deg,#fff6df,#fffaf1);border-radius:23px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:20px}
 .eyebrow{display:inline-block;background:#ffebba;color:#795600;border-radius:7px;padding:8px 11px;font-size:11px;font-weight:900}
-h1{font-size:clamp(36px,5vw,58px);line-height:1.06;letter-spacing:-2px;margin:17px 0 12px}.hero p{font-size:14px;line-height:1.8;color:#696969;max-width:490px}
-.hero-buttons{display:flex;gap:9px;flex-wrap:wrap;margin:19px 0}.hero-art{min-height:220px;display:grid;place-items:center}.hero-circle{width:min(245px,100%);aspect-ratio:1;background:#ffe6a4;border-radius:50%;display:grid;place-items:center;font-size:100px}
-.search-box{display:flex;gap:7px;background:#fff;padding:6px;border:1px solid #e8e8e8;border-radius:13px;max-width:500px}.search-box input{flex:1;min-width:0;border:0;outline:0;padding:10px;background:transparent}
-.trust{display:flex;flex-wrap:wrap;gap:13px;margin-top:14px;font-size:11px;color:#666}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 32px}
-.stat{border:1px solid var(--line);border-radius:15px;padding:15px;display:flex;align-items:center;gap:10px}.stat-icon{width:42px;height:42px;border-radius:13px;background:#fff0c7;display:grid;place-items:center;font-size:21px;flex-shrink:0}
-.stat strong{font-size:14px;display:block}.stat small{font-size:10px;color:var(--muted);display:block;margin-top:4px}
-.section{margin:34px 0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.kicker{font-size:10px;font-weight:900;letter-spacing:1.5px;color:#ae7808;text-transform:uppercase}h2{font-size:clamp(23px,4vw,31px);letter-spacing:-.8px;margin:6px 0}
-.sub,.muted{color:var(--muted);font-size:12px;line-height:1.7}.sub{margin:0}.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px}
-.chip{white-space:nowrap;border:1px solid #eee;background:white;border-radius:9px;padding:10px 13px;font-size:11px;font-weight:800}.chip.active{background:#fff0c7;border-color:#f0d58f}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card,.panel{background:white;border:1px solid #eee;border-radius:17px;padding:16px;min-width:0}
-.card h3{font-size:16px;margin:12px 0 5px}.card .btn{width:100%;margin-top:12px}.service-photo{width:100%;height:160px;object-fit:cover;display:block;border-radius:12px;background:#fff7e5;margin-bottom:12px}
-.service-top{display:flex;align-items:center;justify-content:space-between;gap:5px}.service-icon{width:43px;height:43px;border-radius:13px;background:#fff0c7;display:grid;place-items:center;font-size:23px}
+h1{font-size:clamp(36px,5vw,58px);line-height:1.06;letter-spacing:-2px;margin:17px 0 12px}
+.hero p{font-size:14px;line-height:1.8;color:#696969;max-width:490px}
+.hero-buttons{display:flex;gap:9px;flex-wrap:wrap;margin:19px 0}
+.hero-art{min-height:220px;display:grid;place-items:center}
+.hero-circle{width:min(245px,100%);aspect-ratio:1;background:#ffe6a4;border-radius:50%;display:grid;place-items:center;font-size:100px}
+.search-box{display:flex;gap:7px;background:#fff;padding:6px;border:1px solid #e8e8e8;border-radius:13px;max-width:500px}
+.search-box input{flex:1;min-width:0;border:0;outline:0;padding:10px;background:transparent}
+.trust{display:flex;flex-wrap:wrap;gap:13px;margin-top:14px;font-size:11px;color:#666}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 32px}
+.stat{border:1px solid var(--line);border-radius:15px;padding:15px;display:flex;align-items:center;gap:10px}
+.stat-icon{width:42px;height:42px;border-radius:13px;background:#fff0c7;display:grid;place-items:center;font-size:21px;flex-shrink:0}
+.stat strong{font-size:14px;display:block}
+.stat small{font-size:10px;color:var(--muted);display:block;margin-top:4px}
+.section{margin:34px 0}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.kicker{font-size:10px;font-weight:900;letter-spacing:1.5px;color:#ae7808;text-transform:uppercase}
+h2{font-size:clamp(23px,4vw,31px);letter-spacing:-.8px;margin:6px 0}
+.sub,.muted{color:var(--muted);font-size:12px;line-height:1.7}
+.sub{margin:0}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px}
+.chip{white-space:nowrap;border:1px solid #eee;background:white;border-radius:9px;padding:10px 13px;font-size:11px;font-weight:800}
+.chip.active{background:#fff0c7;border-color:#f0d58f}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card,.panel{background:white;border:1px solid #eee;border-radius:17px;padding:16px;min-width:0}
+.card h3{font-size:16px;margin:12px 0 5px}
+.card .btn{width:100%;margin-top:12px}
+.service-photo{width:100%;height:160px;object-fit:cover;display:block;border-radius:12px;background:#fff7e5;margin-bottom:12px}
+.service-top{display:flex;align-items:center;justify-content:space-between;gap:5px}
+.service-icon{width:43px;height:43px;border-radius:13px;background:#fff0c7;display:grid;place-items:center;font-size:23px}
 .service-badge{font-size:9px;font-weight:900;color:#8a640c;background:#fff3d4;border-radius:6px;padding:7px}
-.worker-photo {
-  width: 100%;
-  height: 175px;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  border-radius: 12px;
-  background: #fff0c7;
-  margin-bottom: 12px;
+.worker-photo{
+  width:100%;
+  height:175px;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  border-radius:12px;
+  background:#fff0c7;
+  margin-bottom:12px;
 }
-
-.worker-avatar {
-  width: 100%;
-  height: 175px;
-  display: grid;
-  place-items: center;
-  font-size: 48px;
-  border-radius: 12px;
-  background: #fff0c7;
-  margin-bottom: 12px;
+.worker-avatar{
+  width:100%;
+  height:175px;
+  display:grid;
+  place-items:center;
+  font-size:48px;
+  border-radius:12px;
+  background:#fff0c7;
+  margin-bottom:12px;
 }
-.worker-avatar{font-size:58px}.worker-status{display:inline-flex;background:#e5f7eb;color:#168451;padding:6px 9px;border-radius:20px;font-size:10px;font-weight:800}
-.worker-price{font-size:22px;font-weight:900;margin:10px 0}.worker-price small{font-size:11px;color:var(--muted);font-weight:500}.worker-bottom{border-top:1px solid #eee;margin-top:12px;padding-top:12px}
-.panel{padding:clamp(16px,4vw,26px);margin:22px 0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field.full{grid-column:1/-1}
-label{font-size:12px;font-weight:800}input,select,textarea{width:100%;min-height:44px;border:1px solid #ddd;border-radius:10px;padding:12px;background:#fff;color:#242424;outline:none}
-input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3px #ffc83d25}textarea{min-height:85px;resize:vertical}
-.notice{display:none;padding:12px;border-radius:10px;margin:12px 0;font-size:12px;line-height:1.6}.notice.show{display:block}.notice.ok{background:#e6f7ed;color:#12653d}.notice.bad{background:#fff0ef;color:#a12b27}
-.small{font-size:11px;line-height:1.7;color:var(--muted)}.booking-item{border:1px solid #eee;border-radius:13px;padding:14px;margin:10px 0;overflow-wrap:anywhere}
+.worker-avatar{font-size:58px}
+.worker-status{display:inline-flex;background:#e5f7eb;color:#168451;padding:6px 9px;border-radius:20px;font-size:10px;font-weight:800}
+.worker-price{font-size:22px;font-weight:900;margin:10px 0}
+.worker-price small{font-size:11px;color:var(--muted);font-weight:500}
+.worker-bottom{border-top:1px solid #eee;margin-top:12px;padding-top:12px}
+.panel{padding:clamp(16px,4vw,26px);margin:22px 0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.field.full{grid-column:1/-1}
+label{font-size:12px;font-weight:800}
+input,select,textarea{width:100%;min-height:44px;border:1px solid #ddd;border-radius:10px;padding:12px;background:#fff;color:#242424;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3px #ffc83d25}
+textarea{min-height:85px;resize:vertical}
+.notice{display:none;padding:12px;border-radius:10px;margin:12px 0;font-size:12px;line-height:1.6}
+.notice.show{display:block}
+.notice.ok{background:#e6f7ed;color:#12653d}
+.notice.bad{background:#fff0ef;color:#a12b27}
+.small{font-size:11px;line-height:1.7;color:var(--muted)}
+.booking-item{border:1px solid #eee;border-radius:13px;padding:14px;margin:10px 0;overflow-wrap:anywhere}
 .tag,.status-pill{display:inline-block;padding:6px 10px;border-radius:20px;font-size:10px;font-weight:900;background:#fff0c7;color:#785600}
-.status-accepted .status-pill,.status-confirmed .status-pill{background:#dceaff;color:#205ec7}.status-completed .status-pill{background:#dcf5e5;color:#176b3a}.status-cancelled .status-pill,.status-rejected .status-pill{background:#ffe1e1;color:#a52222}
-.progress-track{height:5px;background:#eee;border-radius:8px;overflow:hidden;margin:12px 0}.progress-track span{display:block;height:100%;background:#258451}
-.tracking-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.tracking-actions .btn{width:auto}.empty{grid-column:1/-1;border:1px dashed #ddd;border-radius:14px;padding:24px;text-align:center;color:#777;font-size:13px}.auth-box{max-width:600px;margin:20px auto}
-.auth-tabs{display:flex;gap:8px;margin:15px 0}.auth-tabs button{flex:1}footer{margin-top:40px;padding:30px 0;background:#242424;color:#fff}
-.footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}footer p{font-size:12px;line-height:1.7;color:#ddd}
-.admin-card{padding:13px;border:1px solid #eee;border-radius:12px;margin:10px 0;overflow-wrap:anywhere}.admin-card button{border:0;border-radius:8px;background:#242424;color:#fff;padding:9px;margin:3px;font-size:11px}
-@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:1fr 150px}.hero-circle{font-size:80px}}
-@media(max-width:560px){.wrap{width:calc(100% - 22px)}.navbar{align-items:center}.logo{font-size:22px}nav{width:100%;padding-bottom:4px}nav .btn{flex-shrink:0;font-size:10px;padding:9px 10px;min-height:36px}
-.hero{grid-template-columns:1fr;padding:23px 16px;margin-top:12px}h1{font-size:36px;letter-spacing:-1.3px}.hero-art{display:none}.hero p{font-size:13px}
-.search-box input{font-size:12px;padding:8px 5px}.search-box .btn{padding:9px;font-size:11px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:25px}
-.stat{padding:10px;gap:7px}.stat-icon{width:33px;height:33px;font-size:16px}.stat strong{font-size:11px}.stat small{font-size:9px}
-.section{margin:27px 0}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{padding:10px;border-radius:14px}.service-photo{height:120px}
-.service-icon{width:34px;height:34px;font-size:18px}.service-badge{font-size:7px;padding:5px}.card h3{font-size:13px}.card .btn{font-size:10px;padding:9px 5px}
-.worker-photo,.worker-avatar{height:125px}.worker-avatar{font-size:45px}.worker-price{font-size:17px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:15px}.footer-inner{flex-direction:column}}
-
-.worker-filters {
+.status-accepted .status-pill,.status-confirmed .status-pill{background:#dceaff;color:#205ec7}
+.status-completed .status-pill{background:#dcf5e5;color:#176b3a}
+.status-cancelled .status-pill,.status-rejected .status-pill{background:#ffe1e1;color:#a52222}
+.progress-track{height:5px;background:#eee;border-radius:8px;overflow:hidden;margin:12px 0}
+.progress-track span{display:block;height:100%;background:#258451}
+.tracking-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tracking-actions .btn{width:auto}
+.empty{grid-column:1/-1;border:1px dashed #ddd;border-radius:14px;padding:24px;text-align:center;color:#777;font-size:13px}
+.auth-box{max-width:600px;margin:20px auto}
+.auth-tabs{display:flex;gap:8px;margin:15px 0}
+.auth-tabs button{flex:1}
+footer{margin-top:40px;padding:30px 0;background:#242424;color:#fff}
+.footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+footer p{font-size:12px;line-height:1.7;color:#ddd}
+.admin-card{padding:13px;border:1px solid #eee;border-radius:12px;margin:10px 0;overflow-wrap:anywhere}
+.admin-card button{border:0;border-radius:8px;background:#242424;color:#fff;padding:9px;margin:3px;font-size:11px}
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero{grid-template-columns:1fr 150px}
+  .hero-circle{font-size:80px}
+}
+@media(max-width:560px){
+  .wrap{width:calc(100% - 22px)}
+  .navbar{align-items:center}
+  .logo{font-size:22px}
+  nav{width:100%;padding-bottom:4px}
+  nav .btn{flex-shrink:0;font-size:10px;padding:9px 10px;min-height:36px}
+  .hero{grid-template-columns:1fr;padding:23px 16px;margin-top:12px}
+  h1{font-size:36px;letter-spacing:-1.3px}
+  .hero-art{display:none}
+  .hero p{font-size:13px}
+  .search-box input{font-size:12px;padding:8px 5px}
+  .search-box .btn{padding:9px;font-size:11px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:25px}
+  .stat{padding:10px;gap:7px}
+  .stat-icon{width:33px;height:33px;font-size:16px}
+  .stat strong{font-size:11px}
+  .stat small{font-size:9px}
+  .section{margin:27px 0}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .card{padding:10px;border-radius:14px}
+  .service-photo{height:120px}
+  .service-icon{width:34px;height:34px;font-size:18px}
+  .service-badge{font-size:7px;padding:5px}
+  .card h3{font-size:13px}
+  .card .btn{font-size:10px;padding:9px 5px}
+  .worker-photo,.worker-avatar{height:125px}
+  .worker-avatar{font-size:45px}
+  .worker-price{font-size:17px}
+  .form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .panel{padding:15px}
+  .footer-inner{flex-direction:column}
+}
+  .worker-filters {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 16px 0;
   padding: 14px;
-  border: 1px solid #eee;
+  border: 1px solid #eeeaf3;
   border-radius: 16px;
   background: #fffaf1;
 }
@@ -119,193 +197,25 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
   line-height: 1.8;
   overflow-wrap: anywhere;
 }
-@media (max-width: 380px) {
-  .worker-filters {
-    grid-template-columns: 1fr;
-  }
-  .worker-filters button {
-    grid-column: auto;
-  }
-}
 
-/* Customer dashboard */
-.customer-welcome {
-  padding: 25px 22px;
-  border-radius: 23px;
-  background: linear-gradient(135deg, #29213d, #554184);
-  color: white;
-  margin: 18px 0;
-}
-.customer-welcome h1 {
-  font-size: 30px;
-  margin: 10px 0;
-  letter-spacing: -1px;
-}
-.customer-welcome p {
-  line-height: 1.6;
-}
-.customer-welcome #dashboardGreeting {
-  color: #e8e0fa;
-  font-size: 13px;
-}
-.customer-eyebrow {
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 1.4px;
-  color: #d8caff;
-}
-.customer-stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px;
-  margin: 16px 0 26px;
-}
-.customer-stat {
-  text-align: left;
-  border: 1px solid #eeeaf3;
-  background: white;
-  border-radius: 18px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  color: #292536;
-}
-.customer-stat span,
-.customer-shortcuts span {
-  font-size: 25px;
-}
-.customer-stat strong {
-  font-size: 25px;
-}
-.customer-stat small,
-.customer-shortcuts small {
-  color: #777184;
-  font-size: 11px;
-}
-.customer-section {
-  margin: 28px 0;
-}
-.customer-section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.customer-section-head h2 {
-  font-size: 21px;
-}
-.customer-shortcuts {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin: 22px 0;
-}
-.customer-shortcuts button {
-  border: 1px solid #eeeaf3;
-  background: white;
-  border-radius: 16px;
-  padding: 15px;
-  display: grid;
-  grid-template-columns: 42px 1fr;
-  text-align: left;
-  align-items: center;
-  column-gap: 10px;
-  color: #292536;
-}
-.customer-shortcuts span {
-  grid-row: span 2;
-}
-.customer-shortcuts strong {
-  font-size: 13px;
-}
-.customer-shortcuts small {
-  margin-top: 4px;
-}
-.customer-booking-card {
-  background: white;
-  border: 1px solid #eeeaf3;
-  border-radius: 17px;
-  padding: 16px;
-  margin: 11px 0;
-  overflow-wrap: anywhere;
-}
-.customer-booking-card h3 {
-  margin: 10px 0 6px;
-}
-.customer-booking-card .btn {
-  margin: 5px 5px 0 0;
-}
-.bottom-nav {
-  display: none;
-}
-@media(max-width:560px) {
-  body {
-    padding-bottom: calc(78px + env(safe-area-inset-bottom));
-  }
-  .bottom-nav {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: #fff;
-    border-top: 1px solid #eeeaf3;
-    padding: 8px 5px calc(8px + env(safe-area-inset-bottom));
-    box-shadow: 0 -5px 20px #2925360c;
-  }
-  .bottom-nav button {
-    border: 0;
-    background: transparent;
-    color: #777184;
-    font-size: 10px;
-    font-weight: 750;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 4px;
-    padding: 5px 1px;
-  }
-  .bottom-nav button span {
-    font-size: 21px;
-  }
-  .bottom-nav button.active {
-    color: #8065d8;
-  }
-  .customer-welcome h1 {
-    font-size: 27px;
-  }
-  .customer-stat {
-    padding: 13px;
-  }
-}
-
-/* KaamConnect homepage polish */
+/* Homepage */
 .hero {
   overflow: hidden;
   border: 1px solid #f4e5c2;
   box-shadow: 0 12px 35px rgba(105, 78, 20, 0.06);
 }
-
 .hero h1 span {
   color: #b98108;
 }
-
 .hero-content {
   min-width: 0;
 }
-
 .hero-art {
   position: relative;
 }
-
 .hero-circle {
   box-shadow: inset -12px -14px 0 rgba(219, 157, 30, 0.10);
 }
-
 .hero-floating-card {
   position: absolute;
   right: -4px;
@@ -320,2498 +230,2708 @@ input:focus,select:focus,textarea:focus{border-color:#e4a51a;box-shadow:0 0 0 3p
   background: #fff;
   box-shadow: 0 10px 28px rgba(36, 36, 36, 0.10);
 }
-
 .hero-floating-card > span {
   font-size: 25px;
 }
-
 .hero-floating-card strong,
 .hero-floating-card small {
   display: block;
 }
-
 .hero-floating-card strong {
   font-size: 12px;
 }
-
 .hero-floating-card small {
   margin-top: 4px;
   color: #737373;
   font-size: 10px;
 }
 
-.home-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 24px;
-  background: linear-gradient(120deg, #fff9eb, #ffffff);
-  border-color: #f1e4c9;
+/* Service detail page */
+.detail-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #f3c5e8;
+  min-height: 250px;
+  margin: 18px 0 20px;
 }
-
-.home-cta h2 {
-  margin-top: 8px;
-}
-
-.home-cta .btn {
-  width: auto;
-  flex-shrink: 0;
-}
-
-.btn {
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.btn:active {
-  transform: scale(0.97);
-}
-
-@media (max-width: 560px) {
-  .hero-floating-card {
-    display: none;
-  }
-
-  .home-cta {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 18px;
-  }
-
-  .home-cta .btn {
-    width: 100%;
-  }
-}
-
-/* KaamConnect: mobile-first improvements */
-* {
-  box-sizing: border-box;
-}
-
-img {
-  max-width: 100%;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button,
-#mainNav a,
-#mainNav button {
-  min-height: 46px;
-  touch-action: manipulation;
-}
-
-@media (max-width: 768px) {
-  body {
-    padding-bottom: 86px !important;
-    overflow-x: hidden;
-  }
-
-  #mainNav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-    width: 100%;
-    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-    background: #ffffff;
-    border-top: 1px solid #e5e7eb;
-    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  #mainNav button,
-  #mainNav a {
-    flex: 0 0 auto;
-    min-height: 46px;
-    padding: 10px 14px;
-    border-radius: 14px;
-    white-space: nowrap;
-  }
-
-  #workerGrid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-    width: 100%;
-  }
-
-  #workerGrid > * {
-    min-width: 0;
-    border-radius: 18px;
-  }
-}
-/* KaamConnect: mobile-first improvements */
-* {
-  box-sizing: border-box;
-}
-
-img {
-  max-width: 100%;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button,
-#mainNav a,
-#mainNav button {
-  min-height: 44px;
-  touch-action: manipulation;
-}
-
-/* Header navigation: desktop and mobile */
-#mainNav {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  max-width: 100%;
-}
-
-#mainNav .btn {
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-/* Mobile layout */
-@media (max-width: 768px) {
-  body {
-    overflow-x: hidden;
-  }
-
-  #mainNav {
-    position: static;
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 6px;
-    padding: 4px 0 8px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    background: #fff;
-    border: 0;
-    box-shadow: none;
-  }
-
-  #mainNav .btn {
-    flex: 0 0 auto;
-    min-height: 40px;
-    padding: 9px 12px;
-    font-size: 11px;
-    white-space: nowrap;
-  }
-
-  #workerGrid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    width: 100%;
-  }
-
-  #workerGrid > * {
-    min-width: 0;
-  }
-
-  #workerGrid img {
-    width: 100%;
-    max-width: 100%;
-    object-fit: cover;
-  }
-
-  input,
-  select,
-  textarea {
-    max-width: 100%;
-  }
-}
-
-/* Very small phones */
-@media (max-width: 380px) {
-  #workerGrid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-} 
-    
-/* FIX: Restore top navigation without removing any sections */
-#mainNav {
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  position: relative !important;
-  inset: auto !important;
+.detail-hero img {
   width: 100%;
-  max-width: 100%;
-  height: auto;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 8px 0;
-  background: #fff;
-  z-index: 100;
-  -webkit-overflow-scrolling: touch;
+  height: 300px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
-
-#mainNav button,
-#mainNav a {
-  display: inline-flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  min-height: 40px;
+.detail-main {
+  padding: 4px 4px 105px;
 }
-
-@media (max-width: 768px) {
-  #mainNav {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    left: auto !important;
-    margin-bottom: 8px;
-  }
-
-  body {
-    overflow-x: hidden;
-    padding-bottom: 86px !important;
-  }
-} 
-    
-/* KaamConnect mobile layout fix */
-* {
-  box-sizing: border-box;
+.detail-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
 }
-
-img {
-  max-width: 100%;
+.detail-title-row h1 {
+  font-size: clamp(25px,5vw,34px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin: 5px 0 8px;
 }
-
-@media (max-width: 768px) {
-  body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    padding-bottom: 90px !important;
-  }
-
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .navbar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 100%;
-    gap: 8px;
-  }
-
-  .logo {
-    flex-shrink: 0;
-  }
-
-  #mainNav {
-    display: flex !important;
-    position: static !important;
-    inset: auto !important;
-    transform: none !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    flex: 0 0 100%;
-    flex-wrap: nowrap !important;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 6px;
-    margin: 0;
-    padding: 8px 0;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    background: #fff;
-    border: 0;
-    box-shadow: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  #mainNav button {
-    display: inline-flex !important;
-    position: static !important;
-    flex: 0 0 auto !important;
-    width: auto !important;
-    min-width: max-content;
-    min-height: 40px;
-    padding: 9px 12px;
-    font-size: 11px;
-    white-space: nowrap;
-  }
-
-  .screen,
-  .screen.active {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .wrap {
-    width: calc(100% - 22px);
-    max-width: 100%;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  #workerGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .bottom-nav {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 200;
-    width: 100%;
-    background: #fff;
-    padding-bottom: calc(8px + env(safe-area-inset-bottom));
-  }
-
-  input,
-  select,
-  textarea {
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-art {
-    display: none;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 380px) {
-  .grid,
-  #workerGrid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-} 
-    
-/* Mobile navigation visibility fix */
-@media screen and (max-width: 768px) {
-  header {
-    display: block !important;
-    visibility: visible !important;
-  }
-
-  .navbar {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    visibility: visible !important;
-  }
-
-  #mainNav {
-    display: flex !important;
-    position: static !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    background: #fff !important;
-    padding: 8px 0 !important;
-    gap: 6px !important;
-  }
-
-  #mainNav button {
-    display: inline-flex !important;
-    flex: 0 0 auto !important;
-    min-height: 40px !important;
-    white-space: nowrap !important;
-  }
-} 
-  
-.worker-rating {
+.detail-price {
   display: flex;
   align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  font-size: 30px;
+  font-weight: 900;
+}
+.detail-price del {
+  color: #888;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Service plans */
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 9px;
+  margin: 20px 0;
+}
+.plan-card {
+  text-align: left;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 13px 10px;
+  background: #f4edff;
+  min-width: 0;
+}
+.plan-card:nth-child(1) {
+  background: #29213d;
+  color: #fff;
+}
+.plan-card:nth-child(2) {
+  background: #e9dcff;
+  color: #29213d;
+}
+.plan-card:nth-child(3) {
+  background: #d5edff;
+  color: #29213d;
+}
+.plan-card.active {
+  outline: 3px solid #8a70df;
+  outline-offset: 2px;
+}
+.plan-card small {
+  display: block;
+  font-size: 11px;
+  opacity: .8;
+  margin-bottom: 7px;
+}
+.plan-card strong {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+.plan-card del {
+  display: block;
+  font-size: 10px;
+  margin-top: 5px;
+  opacity: .7;
+}
+
+/* Worker contact card */
+.worker-contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 20px #00000008;
+}
+.worker-contact img {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.worker-contact-info {
+  flex: 1;
+  min-width: 0;
+}
+.worker-contact-info strong,
+.worker-contact-info small {
+  display: block;
+}
+.worker-contact-info small {
+  color: #777;
+  margin-top: 5px;
+}
+.contact-actions {
+  display: flex;
   gap: 6px;
-  margin: 8px 0;
+}
+.contact-actions .btn {
+  border-radius: 50%;
+  width: 43px;
+  height: 43px;
+  padding: 0;
+}
+.detail-description {
+  line-height: 1.8;
+  color: #6b6b6b;
   font-size: 13px;
 }
-
-.worker-rating strong {
-  font-size: 14px;
-}
-
-.review-form,
-.review-result {
-  margin-top: 14px;
-  padding: 14px;
-  border: 1px solid #eee4cc;
-  border-radius: 12px;
-  background: #fffaf0;
-}
-
-.review-form h4 {
-  margin: 0 0 12px;
-  font-size: 15px;
-}
-
-.review-form label {
-  display: block;
-  margin: 10px 0 6px;
-}
-
-.review-form select,
-.review-form textarea {
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-.review-form .btn {
-  width: 100%;
-  margin-top: 8px;
-}
-
-.review-result {
-  overflow-wrap: anywhere;
-  background: #f0faf3;
-  border-color: #d7efdf;
-}
-
-.review-result p {
-  font-size: 12px;
-  line-height: 1.7;
-} 
-  
-.verified-badge {
-  display: inline-block;
-  background: #e6f8ee;
-  color: #087443;
-  border: 1px solid #a8e5c1;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.verified-badge {
-  display: inline-block;
-  background: #e6f8ee;
-  color: #087443;
-  border: 1px solid #a8e5c1;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-/* Professional worker rating badge */
-.worker-rating {
-  display: inline-flex;
+.detail-booking-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  width: fit-content;
-  margin: 10px 0;
-  padding: 7px 12px;
-  background: #fff7df;
-  border: 1px solid #f1d58a;
-  border-radius: 999px;
-  color: #755000;
+  gap: 12px;
+  padding: 12px 14px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1px solid #eee;
+  box-shadow: 0 -8px 24px #0000000a;
+}
+.detail-booking-bar .price-mini {
+  min-width: 95px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  padding: 13px;
+  text-align: center;
+  font-weight: 900;
+}
+.detail-booking-bar .btn {
+  flex: 1;
+  min-height: 52px;
+  border-radius: 30px;
+  background: #8065d8;
+  color: white;
   font-size: 14px;
-  line-height: 1.3;
 }
 
-.worker-rating strong {
-  font-size: 15px;
-  font-weight: 800;
-  color: #684600;
+/* Location and saved addresses */
+.location-panel {
+  border: 1px solid #eeeaf3;
+  border-radius: 18px;
+  background: #fff;
+  padding: 16px;
+  margin: 15px 0;
 }
-
-.worker-rating .muted {
-  color: #786b4c;
-  font-size: 12px;
+.location-current {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #f5f0ff;
 }
-
-.worker-rating:not(:has(strong)) {
-  background: #f3f4f6;
-  border-color: #e5e7eb;
-  color: #6b7280;
-}
-</style>
+.location-current .pin {
+  width: 42px;
+  height: 42px;
+  border
+  </style>
 </head>
 <body>
-<header><div class="wrap navbar">
-<a class="logo" href="#" onclick="navigateTo('home');return false">Kaam<span>Connect</span></a>
-<nav id="mainNav">
-<button class="btn secondary" onclick="navigateTo('home')">Home</button>
-<button class="btn secondary" onclick="navigateTo('dashboard')">My Dashboard</button>
-<button class="btn secondary" onclick="navigateTo('services')">Services</button>
-<button class="btn secondary" onclick="navigateTo('workers')">Workers</button>
-<button class="btn secondary" onclick="navigateTo('booking')">Book</button>
-<button class="btn secondary" onclick="navigateTo('myBookings')">Bookings</button> 
-  
-<button
-  id="notificationBell"
-  class="btn secondary"
-  type="button"
-  onclick="navigateTo('notifications')"
-  aria-label="Notifications">
-  🔔 Notifications
-  <span
-    id="notificationCount"
-    class="hidden"
-    style="display:inline-block;min-width:18px;padding:2px 5px;border-radius:10px;background:#dc2626;color:white;font-size:12px;font-weight:bold">
-  </span>
-</button> 
-<button class="btn secondary" onclick="navigateTo('profile')">Profile</button>
-<button id="workerNavBtn" class="btn secondary hidden" onclick="navigateTo('worker')">Worker</button>
-<button id="adminNavBtn" class="btn secondary hidden" onclick="navigateTo('admin')">Admin</button>
-<button id="accountBtn" class="btn primary" onclick="showAuth()">Login / Sign up</button>
-<button id="logoutBtn" class="btn dark-btn hidden" onclick="logout()">Logout</button>
-</nav></div></header> 
-  
-<section id="notificationsSection" class="section hidden">
-  <div class="card">
-    <div class="worker-bottom">
-      <h2>🔔 Notifications</h2>
-      <button
-        class="btn secondary"
-        type="button"
-        onclick="loadNotifications()">
-        Refresh
-      </button>
+
+<header>
+  <div class="wrap navbar">
+    <a class="logo" href="#" onclick="navigateTo('home');return false;">
+      Kaam<span>Connect</span>
+    </a>
+
+    <nav id="mainNav">
+      <button class="btn secondary" onclick="navigateTo('home')">Home</button>
+      <button class="btn secondary" onclick="navigateTo('services')">Services</button>
+      <button class="btn secondary" onclick="navigateTo('workers')">Workers</button>
+      <button class="btn secondary" onclick="navigateTo('location')">📍 Location</button>
+      <button class="btn primary" id="accountBtn" onclick="navigateTo('auth')">Login / Sign up</button>
+      <button class="btn secondary hidden" id="logoutBtn" onclick="logout()">Logout</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HOME PAGE -->
+  <section id="screen-home" class="screen active">
+    <div class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">✦ RELIABLE HELP, RIGHT AT HOME</span>
+        <h1>Smart Home,<br><span>Smooth Services.</span></h1>
+        <p>
+          Find trusted local professionals for cleaning, repairs and everyday
+          home needs. Book your service with confidence.
+        </p>
+
+        <div class="hero-buttons">
+          <button class="btn primary" onclick="navigateTo('services')">
+            Explore Services ↗
+          </button>
+          <button class="btn secondary" onclick="navigateTo('workers')">
+            Find a Worker
+          </button>
+        </div>
+
+        <div class="search-box">
+          <input id="searchInput" type="search"
+            placeholder="🔎 Search plumber, electrician..."
+            aria-label="Search services">
+          <button class="btn primary" onclick="searchServices()">Search</button>
+        </div>
+
+        <div class="trust">
+          <span>✓ Local professionals</span>
+          <span>✓ Easy booking</span>
+          <span>✓ Convenient service</span>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="hero-circle">🏡</div>
+        <div class="hero-floating-card">
+          <span>✨</span>
+          <div>
+            <strong>Home services made easy</strong>
+            <small>Find help for everyday needs</small>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <p id="notificationsNotice" class="notice"></p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-icon">🛠️</div>
+        <div><strong>6 Services</strong><small>Everyday home needs</small></div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">📅</div>
+        <div><strong>Easy Booking</strong><small>Simple request process</small></div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">👤</div>
+        <div><strong>Your Account</strong><small>Bookings in one place</small></div>
+      </div>
+    </div>
 
-    <div id="notificationsList">
-      <p class="muted">Login karke notifications dekhein.</p>
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <span class="kicker">MADE FOR YOUR HOME</span>
+          <h2>What do you need today?</h2>
+          <p class="sub">Choose a service to find the right professional.</p>
+        </div>
+        <button class="btn secondary" onclick="navigateTo('services')">
+          View All ↗
+        </button>
+      </div>
+
+      <div id="homeServiceGrid" class="grid">
+        <div class="card">
+          <div class="service-icon">🧹</div>
+          <h3>Home Cleaning</h3>
+          <p class="muted">Keep your home fresh and tidy.</p>
+          <button class="btn primary" onclick="navigateTo('services')">Explore</button>
+        </div>
+        <div class="card">
+          <div class="service-icon">🔧</div>
+          <h3>Plumbing</h3>
+          <p class="muted">Help with taps, pipes and leaks.</p>
+          <button class="btn primary" onclick="navigateTo('services')">Explore</button>
+        </div>
+        <div class="card">
+          <div class="service-icon">💡</div>
+          <h3>Electrician</h3>
+          <p class="muted">Electrical repairs and installation.</p>
+          <button class="btn primary" onclick="navigateTo('services')">Explore</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel home-cta">
+      <div>
+        <span class="kicker">YOUR HOME, YOUR WAY</span>
+        <h2>Need a helping hand?</h2>
+        <p class="sub">Find a professional and request your service today.</p>
+      </div>
+      <button class="btn primary" onclick="navigateTo('workers')">
+        Find a Worker →
+      </button>
+    </section>
+  </section>
+
+  <!-- SERVICES PAGE -->
+  <section id="screen-services" class="screen">
+    <div class="hero" style="background:#e9f4df;border-color:#dbe9d0">
+      <div class="hero-content">
+        <span class="eyebrow" style="background:#d4e9c5;color:#35572b">
+          YOUR HOME, OUR CARE
+        </span>
+        <h1>Services that make life <span style="color:#547b42">easier.</span></h1>
+        <p>Browse home services and find the right professional for the job.</p>
+        <button class="btn dark-btn" onclick="navigateTo('workers')">
+          Find a Professional ↗
+        </button>
+      </div>
+      <div class="hero-art"><div class="hero-circle" style="background:#d7e9c8">🧹</div></div>
+    </div>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <span class="kicker">EXPLORE OUR SERVICES</span>
+          <h2>What can we help with?</h2>
+          <p class="sub">Select a category to find available professionals.</p>
+        </div>
+      </div>
+
+      <div id="serviceChips" class="chips">
+        <button class="chip active" onclick="filterServices('all')">All Services</button>
+        <button class="chip" onclick="filterServices('cleaning')">🧹 Cleaning</button>
+        <button class="chip" onclick="filterServices('plumbing')">🔧 Plumbing</button>
+        <button class="chip" onclick="filterServices('electrician')">💡 Electrician</button>
+        <button class="chip" onclick="filterServices('repair')">🛠️ Repairs</button>
+      </div>
+
+      <div id="serviceGrid" class="grid">
+        <div class="empty">Services will appear here when loaded.</div>
+      </div>
+    </section>
+  </section>
+
+  <!-- WORKERS PAGE -->
+  <section id="screen-workers" class="screen">
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <span class="kicker">PEOPLE YOU CAN BOOK</span>
+          <h2>Meet your home professionals</h2>
+          <p class="sub">Explore workers and compare their services and prices.</p>
+        </div>
+        <button class="btn secondary" onclick="loadWorkers()">↻ Refresh</button>
+      </div>
+
+      <div class="worker-filters">
+        <input id="workerSearch" type="search" placeholder="Search worker or service...">
+        <select id="workerServiceFilter">
+          <option value="">All services</option>
+          <option value="cleaning">Cleaning</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="electrician">Electrician</option>
+          <option value="repair">Repairs</option>
+        </select>
+        <button class="btn primary" onclick="loadWorkers()">Find Workers</button>
+      </div>
+
+      <div id="workerNotice" class="notice"></div>
+      <div id="workerGrid" class="grid">
+        <div class="empty">Loading professionals...</div>
+      </div>
+    </section>
+  </section>
+    <!-- LOGIN / SIGNUP PAGE -->
+  <section id="screen-auth" class="screen">
+    <div class="auth-box panel">
+      <div style="text-align:center">
+        <div style="font-size:42px">🏡</div>
+        <span class="kicker">WELCOME TO KAAMCONNECT</span>
+        <h2 id="authHeading">Welcome back!</h2>
+        <p class="sub">Log in or create an account to manage your bookings.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="loginTab" class="btn primary" onclick="showAuth('login')">Login</button>
+        <button id="signupTab" class="btn secondary" onclick="showAuth('signup')">Create Account</button>
+      </div>
+
+      <div id="authNotice" class="notice"></div>
+
+      <form id="authForm">
+        <div id="signupFields" class="field hidden">
+          <label for="authName">Full name</label>
+          <input id="authName" type="text" autocomplete="name" placeholder="Enter your full name">
+        </div>
+
+        <div class="field" style="margin-top:14px">
+          <label for="authEmail">Email address</label>
+          <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="field" style="margin-top:14px">
+          <label for="authPassword">Password</label>
+          <input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters">
+        </div>
+
+        <button id="authSubmit" type="submit" class="btn primary" style="width:100%;margin-top:18px">
+          Login →
+        </button>
+      </form>
+
+      <button class="btn secondary" style="width:100%;margin-top:10px" onclick="resetPassword()">
+        Forgot password?
+      </button>
+
+      <p class="small" style="margin-top:15px">
+        By continuing, you agree to use KaamConnect responsibly. Email verification may be required before booking.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROFILE PAGE -->
+  <section id="screen-profile" class="screen">
+    <section class="section">
+      <span class="kicker">YOUR ACCOUNT</span>
+      <h2>My Profile</h2>
+      <p class="sub">Manage your personal information and account.</p>
+
+      <div class="panel">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+          <div style="width:60px;height:60px;display:grid;place-items:center;background:#eee6ff;border-radius:50%;font-size:30px">👤</div>
+          <div>
+            <h3 id="profileName" style="margin:0 0 5px">Your profile</h3>
+            <p id="profileEmail" class="sub">Log in to view your account.</p>
+          </div>
+        </div>
+
+        <div id="profileNotice" class="notice"></div>
+
+        <form id="profileForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="profileFullName">Full name</label>
+              <input id="profileFullName" type="text" autocomplete="name" placeholder="Your full name">
+            </div>
+            <div class="field">
+              <label for="profilePhone">Phone number</label>
+              <input id="profilePhone" type="tel" autocomplete="tel" placeholder="Your phone number">
+            </div>
+            <div class="field full">
+              <label for="profileAddress">Default address</label>
+              <textarea id="profileAddress" autocomplete="street-address" placeholder="House number, street, area, city"></textarea>
+            </div>
+          </div>
+          <button class="btn primary" type="submit" style="margin-top:15px">
+            Save Profile
+          </button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h3>Account settings</h3>
+        <p class="sub">Your sign-in and account status.</p>
+        <div id="profileInfo" class="small" style="margin:12px 0">Please log in to view your account information.</div>
+        <button class="btn secondary" onclick="resetPassword()">Reset Password</button>
+        <button class="btn secondary" onclick="logout()">Log Out</button>
+      </div>
+    </section
+      <!-- BOOKING PAGE -->
+<section id="screen-booking" class="screen">
+  <div class="section">
+    <span class="eyebrow">QUICK & SIMPLE</span>
+    <h1>Book a Service</h1>
+    <p class="muted">
+      Apni details bharo aur apne ghar ke liye professional book karo.
+    </p>
+
+    <div class="panel">
+      <div id="bookingNotice" class="notice" role="status"></div>
+
+      <p id="bookingLoginHint" class="muted">
+        Booking karne ke liye pehle login ya account create karein.
+      </p>
+
+      <form id="bookingForm">
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="customerName">Full Name *</label>
+            <input
+              id="customerName"
+              name="customerName"
+              type="text"
+              placeholder="Apna poora naam"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="customerPhone">Mobile Number *</label>
+            <input
+              id="customerPhone"
+              name="customerPhone"
+              type="tel"
+              placeholder="10-digit mobile number"
+              autocomplete="tel"
+              pattern="[6-9][0-9]{9}"
+              maxlength="10"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="serviceSelect">Select Service *</label>
+            <select id="serviceSelect" name="service" required>
+              <option value="">Choose a service</option>
+              <option value="Cleaning">Home Cleaning</option>
+              <option value="Plumbing">Plumbing</option>
+              <option value="Electrical">Electrical Repair</option>
+              <option value="AC Repair">AC Repair</option>
+              <option value="Painting">Painting</option>
+              <option value="Carpentry">Carpentry</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="workerSelect">Choose Professional</label>
+            <select id="workerSelect" name="worker">
+              <option value="">Any available professional</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="address">Complete Address *</label>
+            <textarea
+              id="address"
+              name="address"
+              rows="3"
+              placeholder="House no., street, area, landmark"
+              autocomplete="street-address"
+              required
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label for="postalCode">PIN Code *</label>
+            <input
+              id="postalCode"
+              name="postalCode"
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]{6}"
+              maxlength="6"
+              placeholder="6-digit PIN code"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="bookingDate">Preferred Date *</label>
+            <input
+              id="bookingDate"
+              name="bookingDate"
+              type="date"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="bookingTime">Preferred Time *</label>
+            <select id="bookingTime" name="bookingTime" required>
+              <option value="">Choose a time</option>
+              <option value="09:00">9:00 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="15:00">3:00 PM</option>
+              <option value="17:00">5:00 PM</option>
+            </select>
+          </div>
+
+          <div class="field full-width">
+            <label for="notes">Describe Your Problem</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="4"
+              placeholder="Kaam ke baare mein kuch aur batana ho toh likhein..."
+            ></textarea>
+          </div>
+
+        </div>
+
+        <button id="bookBtn" class="btn btn-primary" type="submit">
+          Request Booking →
+        </button>
+
+        <p class="muted small">
+          Booking request submit hone ke baad professional se timing aur
+          final price confirm karein.
+        </p>
+      </form>
     </div>
   </div>
 </section>
-<main class="wrap">
-<section id="screen-home" class="screen active">
 
-  <div class="hero">
-    <div class="hero-content">
-      <span class="eyebrow">✦ KAAMCONNECT • HOME SERVICES</span>
 
-      <h1>Har kaam ka<br><span>trusted partner.</span></h1>
+<!-- MY BOOKINGS PAGE -->
+<section id="screen-myBookings" class="screen">
+  <div class="section">
+    <span class="eyebrow">YOUR BOOKINGS</span>
+    <h1>My Bookings</h1>
+    <p class="muted">
+      Apni service requests aur unka current status yahan dekhein.
+    </p>
 
-      <p>
-        Ghar ke har kaam ke liye bharosemand local professionals.
-        Service chuno, booking karo aur apna kaam aasaan banao.
-      </p>
-
-      <div class="hero-buttons">
-        <button class="btn primary" onclick="navigateTo('services')">
-          Explore Services →
-        </button>
-        <button class="btn dark-btn" onclick="navigateTo('workers')">
-          Find a Worker
-        </button>
-      </div>
-
-      <div class="search-box">
-        <input
-          id="searchInput"
-          placeholder="🔎 Plumber, electrician, cleaning..."
-          aria-label="Search services"
+    <div class="panel">
+      <div class="row-between">
+        <h2>Booking History</h2>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          onclick="loadMyBookings()"
         >
-        <button class="btn primary" onclick="searchServices()">
-          Search
+          ↻ Refresh
         </button>
       </div>
 
-      <div class="trust">
-        <span>✓ Local professionals</span>
-        <span>✓ Simple booking</span>
-        <span>✓ Booking updates</span>
-      </div>
-    </div>
+      <div id="myBookingsNotice" class="notice" role="status"></div>
 
-    <div class="hero-art">
-      <div class="hero-circle">🏡</div>
-      <div class="hero-floating-card">
-        <span>✨</span>
-        <div>
-          <strong>Home care, made easy</strong>
-          <small>Find the help you need</small>
+      <div id="bookingList">
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <h3>Your bookings will appear here</h3>
+          <p class="muted">
+            Login karne ke baad apni booking requests dekh sakte hain.
+          </p>
+          <button
+            class="btn btn-primary"
+            type="button"
+            onclick="navigateTo('services')"
+          >
+            Explore Services →
+          </button>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-icon">🧹</div>
-      <div>
-        <strong>Home Services</strong>
-        <small>Everyday home needs</small>
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">📅</div>
-      <div>
-        <strong>Easy Booking</strong>
-        <small>Request a service</small>
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">🔒</div>
-      <div>
-        <strong>Your Account</strong>
-        <small>Manage your bookings</small>
-      </div>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <div class="kicker">SIMPLE. LOCAL. CONVENIENT.</div>
-        <h2>What do you need today?</h2>
-        <p class="sub">Choose a service to get started.</p>
-      </div>
-
-      <button class="btn secondary" onclick="navigateTo('services')">
-        View all →
-      </button>
-    </div>
-
-    <div id="homeServiceGrid" class="grid"></div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <div class="kicker">THREE SIMPLE STEPS</div>
-        <h2>How KaamConnect works</h2>
-        <p class="sub">From finding help to getting the job done.</p>
-      </div>
-    </div>
-
-    <div class="grid">
-      <article class="card">
-        <div class="service-icon">🔎</div>
-        <h3>01. Choose a service</h3>
-        <p class="muted">Find the service that fits your home needs.</p>
-      </article>
-
-      <article class="card">
-        <div class="service-icon">📅</div>
-        <h3>02. Book a professional</h3>
-        <p class="muted">Choose an available worker and request a booking.</p>
-      </article>
-
-      <article class="card">
-        <div class="service-icon">✓</div>
-        <h3>03. Track your booking</h3>
-        <p class="muted">Check your request and its latest status.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="card home-cta">
-      <div>
-        <div class="kicker">YOUR HOME, YOUR WAY</div>
-        <h2>Need a helping hand?</h2>
-        <p class="muted">Explore available services and get started today.</p>
-      </div>
-
-      <button class="btn primary" onclick="navigateTo('services')">
-        Book a Service →
-      </button>
-    </div>
-  </section>
-
 </section>
-  
-<section id="screen-dashboard" class="screen">
-  <div class="customer-welcome">
-    <p class="customer-eyebrow">KAAMCONNECT • CUSTOMER</p>
-    <h1>My Dashboard 👋</h1>
-    <p id="dashboardGreeting">Manage your home services in one place.</p>
-    <button class="btn primary" onclick="navigateTo('services')">
-      + Book a service
-    </button>
-  </div>
 
-  <div class="customer-stats">
-    <button class="customer-stat" onclick="navigateTo('myBookings')">
-      <span>📋</span>
-      <strong id="dashTotal">0</strong>
-      <small>Total bookings</small>
-    </button>
-    <button class="customer-stat" onclick="navigateTo('myBookings')">
-      <span>⏳</span>
-      <strong id="dashPending">0</strong>
-      <small>Pending</small>
-    </button>
-    <button class="customer-stat" onclick="navigateTo('myBookings')">
-      <span>🛠️</span>
-      <strong id="dashActive">0</strong>
-      <small>In progress</small>
-    </button>
-    <button class="customer-stat" onclick="showBookingHistory()">
-      <span>✅</span>
-      <strong id="dashCompleted">0</strong>
-      <small>Completed</small>
-    </button>
-  </div>
 
-  <section class="customer-section">
-    <div class="customer-section-head">
-      <div>
-        <h2>Recent bookings</h2>
-        <p class="sub">Check your service request updates.</p>
+<!-- WORKER DASHBOARD -->
+<section id="screen-workerDashboard" class="screen">
+  <div class="section">
+    <span class="eyebrow">PROFESSIONAL AREA</span>
+    <h1>Worker Dashboard</h1>
+    <p class="muted">
+      Aapko assign ki gayi booking requests aur unke status manage karein.
+    </p>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-icon">📥</div>
+        <h3>Booking Requests</h3>
+        <p class="muted">Nayi requests dekhein</p>
       </div>
-      <button class="btn secondary" onclick="navigateTo('myBookings')">
-        View all
+
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <h3>Manage Work</h3>
+        <p class="muted">Request status update karein</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">👤</div>
+        <h3>Your Account</h3>
+        <p class="muted">Apni profile check karein</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row-between">
+        <h2>Assigned Requests</h2>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          onclick="loadWorkerBookings()"
+        >
+          ↻ Refresh
+        </button>
+      </div>
+
+      <div id="workerBookingsNotice" class="notice" role="status"></div>
+
+      <div id="workerBookingList">
+        <div class="empty-state">
+          <div class="empty-icon">🧰</div>
+          <h3>No requests loaded</h3>
+          <p class="muted">
+            Worker account se login karne par assigned requests yahan dikhengi.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SERVICE / WORKER DETAILS PAGE -->
+<section id="screen-detail" class="screen">
+  <div class="section">
+    <button
+      class="btn btn-secondary"
+      type="button"
+      onclick="navigateTo('services')"
+    >
+      ← Back to Services
+    </button>
+
+    <div class="detail-layout">
+      <div class="detail-main">
+        <div class="panel">
+          <img
+            id="detailImage"
+            class="detail-image"
+            src=""
+            alt="Selected home service"
+            loading="lazy"
+          >
+
+          <span id="detailCategory" class="eyebrow">HOME SERVICE</span>
+          <h1 id="detailTitle">Service Details</h1>
+          <p id="detailDescription" class="muted">
+            Is service ke baare mein details yahan dikhengi.
+          </p>
+
+          <div class="price-line">
+            <strong id="detailPrice">Price on request</strong>
+            <span id="detailOldPrice" class="muted"></span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Choose Your Plan</h2>
+          <p class="muted">
+            Apni requirement ke hisaab se service option select karein.
+          </p>
+
+          <div class="plan-list">
+            <label class="plan-option">
+              <input
+                type="radio"
+                name="servicePlan"
+                id="planClassic"
+                value="Classic"
+                checked
+              >
+              <span>
+                <strong>Classic</strong>
+                <small>Basic service requirement</small>
+              </span>
+            </label>
+
+            <label class="plan-option">
+              <input
+                type="radio"
+                name="servicePlan"
+                id="planPremium"
+                value="Premium"
+              >
+              <span>
+                <strong>Premium</strong>
+                <small>Extra attention to your requirements</small>
+              </span>
+            </label>
+
+            <label class="plan-option">
+              <input
+                type="radio"
+                name="servicePlan"
+                id="planPlatinum"
+                value="Platinum"
+              >
+              <span>
+                <strong>Platinum</strong>
+                <small>For more extensive service needs</small>
+              </span>
+            </label>
+          </div>
+
+          <button
+            id="detailBookBtn"
+            class="btn btn-primary"
+            type="button"
+            onclick="bookSelectedService()"
+          >
+            Book This Service →
+          </button>
+        </div>
+      </div>
+
+      <aside class="detail-sidebar">
+        <div class="panel">
+          <h2>Professional</h2>
+
+          <img
+            id="detailWorkerImage"
+            class="detail-worker-image"
+            src=""
+            alt="Selected professional"
+            loading="lazy"
+          >
+
+          <h3 id="detailWorkerName">Available Professional</h3>
+          <p id="detailWorkerMeta" class="muted">
+            Service professional
+          </p>
+
+          <p id="detailWorker" class="muted">
+            Professional details will appear here.
+          </p>
+
+          <button
+            id="detailCallBtn"
+            class="btn btn-secondary"
+            type="button"
+            onclick="contactSelectedWorker('call')"
+          >
+            📞 Contact Professional
+          </button>
+
+          <button
+            id="detailMessageBtn"
+            class="btn btn-secondary"
+            type="button"
+            onclick="contactSelectedWorker('message')"
+          >
+            💬 Message
+          </button>
+        </div>
+
+        <div class="panel">
+          <h3>Booking Summary</h3>
+          <p class="muted">Selected plan</p>
+          <strong id="selectedPlan">Classic</strong>
+          <div class="divider"></div>
+          <p class="muted">Estimated price</p>
+          <strong id="detailBottomPrice">Price on request</strong>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section> 
+    <!-- GLOBAL FOOTER -->
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+
+    <div class="footer-brand">
+      <a
+        class="logo footer-logo"
+        href="#"
+        onclick="navigateTo('home'); return false;"
+      >
+        Kaam<span>Connect</span>
+      </a>
+
+      <p>
+        Reliable home services, trusted professionals aur easy booking —
+        sab ek hi jagah.
+      </p>
+
+      <div class="footer-trust">
+        <span>✓ Easy Booking</span>
+        <span>✓ Local Professionals</span>
+        <span>✓ Simple Process</span>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <h3>Explore</h3>
+      <button type="button" onclick="navigateTo('home')">Home</button>
+      <button type="button" onclick="navigateTo('services')">Services</button>
+      <button type="button" onclick="navigateTo('workers')">Professionals</button>
+      <button type="button" onclick="navigateTo('location')">My Location</button>
+    </div>
+
+    <div class="footer-links">
+      <h3>Your Account</h3>
+      <button type="button" onclick="navigateTo('auth')">Login / Sign up</button>
+      <button type="button" onclick="navigateTo('profile')">My Profile</button>
+      <button type="button" onclick="navigateTo('booking')">Book a Service</button>
+      <button type="button" onclick="navigateTo('myBookings')">My Bookings</button>
+    </div>
+
+    <div class="footer-contact">
+      <h3>Need Help?</h3>
+      <p>Choose a service and submit your booking request.</p>
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="navigateTo('services')"
+      >
+        Find a Service →
       </button>
     </div>
-    <div id="customerDashboardNotice" class="notice"></div>
-    <div id="customerDashboardBookings">
-      <div class="empty">Loading your bookings…</div>
-    </div>
-  </section>
 
-  <section class="customer-shortcuts">
-    <button onclick="navigateTo('services')">
-      <span>🔧</span>
-      <strong>Explore services</strong>
-      <small>Choose the help you need</small>
-    </button>
-    <button onclick="navigateTo('workers')">
-      <span>👷</span>
-      <strong>Find professionals</strong>
-      <small>Browse available workers</small>
-    </button>
-    <button onclick="navigateTo('myBookings')">
-      <span>🕘</span>
-      <strong>Booking history</strong>
-      <small>See previous requests</small>
-    </button>
-  </section>
-</section>
-<section id="screen-services" class="screen section"><div class="section-head"><div><div class="kicker">Services for every home</div><h2>Explore services</h2><p class="sub">Choose the help you need.</p></div></div><div id="serviceChips" class="chips"></div><div id="serviceGrid" class="grid"></div></section>
-<section id="screen-workers" class="screen section"><div class="section-head"><div><div class="kicker">Local professionals</div><h2>Available workers</h2><p class="sub">Prices are shown where provided by the professional.</p></div><button class="btn secondary" onclick="loadWorkers()">↻ Refresh</button></div>
-<div class="worker-filters">
-  <input id="workerSearch" type="search"
-    placeholder="🔎 Worker name ya service search karein">
-  <input id="workerAreaSearch" type="search"
-    placeholder="📍 Area search karein">
-  <input id="workerPinSearch" type="search" inputmode="numeric"
-    maxlength="10" placeholder="PIN code">
-  <select id="workerSort">
-    <option value="name">Sort: Name</option>
-    <option value="price-low">Price: Low to high</option>
-    <option value="price-high">Price: High to low</option>
-  </select>
-  <button class="btn secondary" type="button" onclick="resetWorkerFilters()">Reset filters</button>
+  </div>
+
+  <div class="wrap footer-bottom">
+    <p>
+      © <span id="footerYear">2026</span> KaamConnect.
+      All rights reserved.
+    </p>
+    <p>Made for happier homes.</p>
+  </div>
+</footer>
+
+
+<!-- GLOBAL STATUS MESSAGE -->
+<div
+  id="globalToast"
+  class="global-toast"
+  role="status"
+  aria-live="polite"
+></div>
+
+
+<!-- LOADING OVERLAY -->
+<div id="appLoading" class="app-loading hidden" aria-live="polite">
+  <div class="loading-card">
+    <div class="loading-spinner"></div>
+    <p id="loadingText">Please wait...</p>
+  </div>
 </div>
-<div id="workerNotice" class="notice"></div>
-<div id="workerGrid" class="grid"></div></section>
-<section id="screen-booking" class="screen"><section class="panel"><div class="kicker">Quick and simple</div><h2>Book a service</h2><p class="sub">Send a booking request to an available professional.</p><div id="bookingNotice" class="notice"></div><div id="bookingLoginHint" class="notice show">Please log in before requesting a booking.</div>
-<form id="bookingForm"><div class="form-grid">
-<div class="field"><label for="customerName">Your name</label><input id="customerName" required maxlength="100" autocomplete="name"></div>
-<div class="field"><label for="customerPhone">Mobile number</label><input id="customerPhone" required maxlength="20" inputmode="tel" autocomplete="tel"></div>
-<div class="field"><label for="serviceSelect">Service</label><select id="serviceSelect" required></select></div>
-<div class="field"><label for="workerSelect">Available worker</label><select id="workerSelect" required><option value="">Choose a service first</option></select></div>
-<div class="field"><label for="bookingDate">Preferred date</label><input id="bookingDate" type="date" required></div>
-<div class="field"><label for="bookingTime">Preferred time</label><select id="bookingTime" required><option value="">Choose a time</option><option>8 AM - 10 AM</option><option>10 AM - 12 PM</option><option>12 PM - 2 PM</option><option>2 PM - 4 PM</option><option>4 PM - 6 PM</option><option>6 PM - 8 PM</option></select></div>
-<div class="field full"><label for="address">Full address</label><textarea id="address" required maxlength="500" placeholder="House number, street, area, city"></textarea></div>
-<div class="field"><label for="postalCode">PIN code</label><input id="postalCode" inputmode="numeric" maxlength="10" placeholder="e.g. 854105"></div>
-<div class="field full"><label for="notes">Work details (optional)</label><textarea id="notes" maxlength="1000" placeholder="Describe the work you need"></textarea></div>
-<div class="field full"><button id="bookBtn" class="btn primary" type="submit">Request booking →</button></div>
-</div></form><p class="small">Your request starts as Pending. Confirm the final price and timing with your professional. Time selection is a preference, not a confirmed appointment.</p></section></section>
-<section id="screen-myBookings" class="screen"><section class="panel"><div class="section-head"><div><div class="kicker">Your activity</div><h2>My bookings</h2><p class="sub">Track your booking requests.</p></div><button class="btn secondary" onclick="loadMyBookings()">↻ Refresh</button></div><div id="myBookingsNotice" class="notice"></div><div id="bookingList"><p class="muted">Log in to view bookings.</p></div></section></section>
-<section id="screen-tracking" class="screen"><section class="panel"><div class="section-head"><div><div class="kicker">Live service tracking</div><h2>Track your worker</h2><p id="trackingSummary" class="sub">Waiting for location…</p></div><button class="btn secondary" onclick="stopCustomerTracking()">Close tracking</button></div><div id="trackingNotice" class="notice"></div><div id="trackingMapWrap" class="hidden"><iframe id="trackingMap" title="Worker live location map" width="100%" height="320" style="border:0;border-radius:14px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><p id="trackingUpdated" class="small"></p><a id="openMapLink" class="btn primary" target="_blank" rel="noopener">Open in Google Maps ↗</a></div></section></section>
-<section id="screen-profile" class="screen"><section id="authSection" class="panel auth-box"><div class="kicker">Welcome to KaamConnect</div><h2 id="authTitle">Welcome back</h2><p class="sub">Sign in to manage your bookings.</p><div class="auth-tabs"><button id="loginTab" class="btn primary" onclick="setAuthMode('login')">Login</button><button id="signupTab" class="btn secondary" onclick="setAuthMode('signup')">Create account</button></div><div id="authNotice" class="notice"></div>
-<form id="authForm"><div class="form-grid"><div id="nameField" class="field full hidden"><label for="fullName">Full name</label><input id="fullName" maxlength="100" autocomplete="name"></div><div id="phoneField" class="field full hidden"><label for="signupPhone">Mobile number (optional)</label><input id="signupPhone" maxlength="20" inputmode="tel"></div><div class="field full"><label for="email">Email</label><input id="email" type="email" required maxlength="254" autocomplete="email"></div><div class="field full"><label for="password">Password (minimum 6 characters)</label><input id="password" type="password" required minlength="6" autocomplete="current-password"></div><div class="field full"><button id="authSubmit" class="btn primary" type="submit">Login</button></div></div></form><p class="small">Never share your password or private database keys.</p></section>
-<section id="profileDetails" class="panel hidden"><div class="kicker">Your account</div><h2>My profile</h2><p id="profileInfo" class="sub"></p><button class="btn primary" onclick="navigateTo('myBookings')">View my bookings</button><button class="btn secondary" onclick="logout()">Logout</button></section></section>
-<section id="screen-worker" class="screen"><section id="workerDashboard" class="panel"><div class="section-head"><div><div class="kicker">Worker area</div><h2>Booking requests</h2></div><button class="btn secondary" onclick="loadWorkerBookings()">↻ Refresh</button></div><div id="workerBookingsNotice" class="notice"></div><div id="workerBookingList"></div></section></section>
-<section id="screen-admin" class="screen"><section class="panel"><div class="kicker">Management</div><h2>Admin dashboard</h2><p class="sub">Manage booking requests and worker approvals.</p><div id="adminDashboard"></div></section></section>
-</main> 
-  
-<nav class="bottom-nav" id="customerBottomNav" aria-label="Customer navigation">
-  <button data-page="home" onclick="navigateTo('home')">
-  <span>⌂</span>Home
-  </button>
-  <button data-page="services" onclick="navigateTo('services')">
-    <span>▦</span>Services
-  </button>
-  <button data-page="myBookings" onclick="navigateTo('myBookings')">
-    <span>▤</span>Bookings
-  </button>
-  <button data-page="profile" onclick="navigateTo('profile')">
-    <span>♙</span>Profile
-  </button>
-</nav>
 
-<footer><div class="wrap footer-inner"><div><a href="#" class="logo" onclick="navigateTo('home');return false">Kaam<span>Connect</span></a><p>Helping you take care of home, one service at a time.</p></div><div><p>Simple. Local. Convenient.</p><button class="btn primary" onclick="navigateTo('services')">Explore services</button></div></div></footer>
 
+<!-- ACCESSIBILITY: BACK TO TOP -->
+<button
+  id="backToTop"
+  class="back-to-top"
+  type="button"
+  aria-label="Back to top"
+  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+>
+  ↑
+</button> 
+  <!-- SUPABASE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-'use strict';
+"use strict";
 
-async function refreshBookingViews() {
-  const tasks = [];
+/* =========================================
+   1. SUPABASE CONNECTION
+   ========================================= */
 
-  if (typeof loadMyBookings === 'function') {
-    tasks.push(loadMyBookings());
-  }
+const SUPABASE_URL = "https://unbxdvoqjbefnsnrsmck.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_kt1bWOAe1U3vjTOr-tvYlQ_j0RNNAU7";
 
-  if (typeof loadCustomerDashboard === 'function') {
-    tasks.push(loadCustomerDashboard());
-  }
-
-  if (typeof loadWorkerBookings === 'function') {
-    tasks.push(loadWorkerBookings());
-  }
-
-  const results = await Promise.allSettled(tasks);
-  const failed = results.filter(
-    result => result.status === 'rejected'
-  );
-
-  if (failed.length) {
-    console.error('Some booking views failed to refresh:', failed);
-  }
-}
-
-const SUPABASE_URL = 'https://unbxdvoqjbefnsnrsmck.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_kt1bWOAe1U3vjTOr-tvYlQ_j0RNNAU7';
-const $ = id => document.getElementById(id);
 let client = null;
-let services = [];
-let workers = [];
-let workerRatings = {};
 let currentUser = null;
-let authMode = 'login';
-let selectedService = 'All';
-let adminUserId = null;
+let currentProfile = null;
+let authMode = "login";
+let selectedWorker = null;
+let selectedService = null;
 
-const serviceInfo = {
-  'Plumber': {icon:'🔧',description:'Taps, pipes and plumbing repairs',image:'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=600&q=80'},
-  'Electrician': {icon:'⚡',description:'Electrical repairs and fittings',image:'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80'},
-  'Home Cleaning': {icon:'🧹',description:'A fresher, cleaner home',image:'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80'},
-  'Carpenter': {icon:'🪚',description:'Furniture and woodwork',image:'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=600&q=80'},
-'AC Technician': {
-  icon: '❄️',
-  description: 'Air conditioner service and repair',
-  image: 'https://images.pexels.com/photos/5463575/pexels-photo-5463575.jpeg?auto=compress&cs=tinysrgb&w=600'
-},
-'Handyman': {
-  icon: '🧰',
-  description: 'Everyday home repairs',
-  image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=80'
-}
-};
-services = Object.keys(serviceInfo).map(name => ({name,...serviceInfo[name]}));
-
-function safe(value) {
-  return String(value ?? '').replace(/[&<>"']/g, ch => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  })[ch]);
-}
-function notice(id, message, type='ok') {
-  const el = $(id);
-  if (!el) return;
-  el.textContent = message;
-  el.className = 'notice show ' + (type === 'bad' ? 'bad' : 'ok');
-}
-function hideNotice(id) { if ($(id)) $(id).className = 'notice'; }
-function money(value) {
-  if (value === null || value === undefined || value === '') return 'Price on request';
-  const n = Number(value);
-  return Number.isFinite(n) ? '₹' + n.toLocaleString('en-IN') : 'Price on request';
-}
-function today() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+if (window.supabase && SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
+  client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    }
+  );
 }
 
-function navigateTo(name) {
-  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-  const target = $('screen-' + name); 
-    const notificationsSection = $('notificationsSection');
-  if (notificationsSection) {
-    notificationsSection.classList.toggle('hidden', name !== 'notifications');
+/* =========================================
+   2. COMMON HELPERS
+   ========================================= */
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, function (char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char];
+  });
+}
+
+function setNotice(id, message, type = "info") {
+  const element = $(id);
+  if (!element) return;
+
+  element.textContent = message || "";
+  element.className = "notice";
+
+  if (message) {
+    element.classList.add("notice-" + type);
   }
-  if (target) target.classList.add('active');
+}
 
-  document.querySelectorAll('#mainNav button[onclick]').forEach(btn => {
-    const handler = btn.getAttribute('onclick') || '';
-    const active = handler.includes("navigateTo('" + name + "')") ||
-      (name === 'profile' && handler.includes('showAuth()'));
-    btn.classList.toggle('primary', active);
-    btn.classList.toggle('secondary', !active);
-  });
-  document.querySelectorAll('#customerBottomNav button').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.page === name);
-  });
-  window.scrollTo({top:0,behavior:'smooth'});
-  if (name === 'workers') loadWorkers();
-  if (name === 'myBookings') loadMyBookings();
-  if (name === 'worker') loadWorkerBookings();
-  if (name === 'admin') checkAdminAccess();
-  if (name === 'profile') updateProfile(); 
-  if (name === 'profile' && !currentUser) setAuthMode('login');
-  if (name === 'dashboard') loadCustomerDashboard();
-  if (name === 'notifications') loadNotifications();
-}
-function showAuth() { navigateTo('profile'); if (currentUser) updateProfile(); }
-function updateProfile() {
-  $('authSection').classList.toggle('hidden', !!currentUser);
-  $('profileDetails').classList.toggle('hidden', !currentUser);
-  if (currentUser) $('profileInfo').textContent =
-    (currentUser.user_metadata?.full_name || 'Customer') + ' · ' + currentUser.email;
-}
-function setAuthMode(mode) {
-  authMode = mode;
-  const signup = mode === 'signup';
-  $('authTitle').textContent = signup ? 'Create your account' : 'Welcome back';
-  $('authSubmit').textContent = signup ? 'Create account' : 'Login';
-  $('nameField').classList.toggle('hidden', !signup);
-  $('phoneField').classList.toggle('hidden', !signup);
-  $('fullName').required = signup;
-  $('password').autocomplete = signup ? 'new-password' : 'current-password';
-  $('loginTab').className = 'btn ' + (!signup ? 'primary' : 'secondary');
-  $('signupTab').className = 'btn ' + (signup ? 'primary' : 'secondary');
-  hideNotice('authNotice');
-}
-function renderServiceSelect() {
-  $('serviceSelect').innerHTML = '<option value="">Choose service</option>' +
-    services.map(s => `<option value="${safe(s.name)}">${safe(s.name)}</option>`).join('');
-} 
-  
-function serviceImageError(img, name) {
-  const fallback = img.dataset.fallback || '';
-  const info = serviceInfo[name];
+function setButtonLoading(buttonId, loading, loadingText = "Please wait...") {
+  const button = $(buttonId);
+  if (!button) return;
 
-  if (fallback && !img.dataset.fallbackTried && img.src !== fallback) {
-    img.dataset.fallbackTried = 'true';
-    img.src = fallback;
+  if (loading) {
+    button.dataset.originalText = button.textContent;
+    button.textContent = loadingText;
+    button.disabled = true;
+  } else {
+    button.textContent = button.dataset.originalText || button.textContent;
+    button.disabled = false;
+  }
+}
+
+function showToast(message) {
+  const toast = $("globalToast");
+  if (!toast) {
+    alert(message);
     return;
   }
 
-  img.onerror = null;
+  toast.textContent = message;
+  toast.classList.add("show");
 
-  const placeholder = document.createElement('div');
-  placeholder.className = 'service-photo service-photo-fallback';
-  placeholder.textContent = info?.icon || '🧰';
-  placeholder.setAttribute('role', 'img');
-  placeholder.setAttribute('aria-label', name);
-  img.replaceWith(placeholder);
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3500);
 }
 
-function renderServices() {
-  const search = $('searchInput').value.trim().toLowerCase();
-  const filtered = services.filter(s =>
-    (selectedService === 'All' || s.name === selectedService) &&
-    (!search || (s.name + ' ' + s.description).toLowerCase().includes(search))
+function showLoading(message = "Please wait...") {
+  const overlay = $("appLoading");
+  if (overlay) overlay.classList.remove("hidden");
+
+  const text = $("loadingText");
+  if (text) text.textContent = message;
+}
+
+function hideLoading() {
+  const overlay = $("appLoading");
+  if (overlay) overlay.classList.add("hidden");
+}
+
+function friendlyError(error) {
+  const message = error?.message || "Something went wrong.";
+
+  if (/invalid login credentials/i.test(message)) {
+    return "Email ya password sahi nahi hai.";
+  }
+
+  if (/email not confirmed/i.test(message)) {
+    return "Pehle apna email verify karo.";
+  }
+
+  if (/already registered/i.test(message)) {
+    return "Yeh email pehle se registered hai. Login karo.";
+  }
+
+  if (/row-level security|permission denied|not allowed/i.test(message)) {
+    return "Permission nahi mili. Supabase RLS policies check karo.";
+  }
+
+  return message;
+}
+
+/* =========================================
+   3. PAGE NAVIGATION
+   ========================================= */
+
+const validScreens = [
+  "home",
+  "services",
+  "workers",
+  "auth",
+  "profile",
+  "location",
+  "booking",
+  "myBookings",
+  "workerDashboard",
+  "detail"
+];
+
+function navigateTo(screenName) {
+  if (!validScreens.includes(screenName)) {
+    screenName = "home";
+  }
+
+  document.querySelectorAll(".screen").forEach(section => {
+    section.classList.remove("active");
+  });
+
+  const target = $("screen-" + screenName);
+
+  if (target) {
+    target.classList.add("active");
+  } else {
+    const home = $("screen-home");
+    if (home) home.classList.add("active");
+  }
+
+  document.querySelectorAll("#mainNav button").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  const navMap = {
+    home: 0,
+    services: 1,
+    workers: 2
+  };
+
+  if (navMap[screenName] !== undefined) {
+    const buttons = document.querySelectorAll("#mainNav button");
+    if (buttons[navMap[screenName]]) {
+      buttons[navMap[screenName]].classList.add("active");
+    }
+  }
+
+  if (screenName === "auth" && !currentUser) {
+    showAuth(authMode);
+  }
+
+  if (screenName === "profile") {
+    loadProfile();
+  }
+
+  if (screenName === "location") {
+    loadSavedLocation();
+  }
+
+  if (screenName === "booking") {
+    prepareBookingForm();
+  }
+
+  if (screenName === "myBookings") {
+    loadMyBookings();
+  }
+
+  if (screenName === "workerDashboard") {
+    loadWorkerBookings();
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showAuth(mode = "login") {
+  authMode = mode === "signup" ? "signup" : "login";
+
+  const heading = $("authHeading");
+  const signupFields = $("signupFields");
+  const submit = $("authSubmit");
+  const loginTab = $("loginTab");
+  const signupTab = $("signupTab");
+  const password = $("authPassword");
+
+  if (heading) {
+    heading.textContent =
+      authMode === "signup" ? "Create your account" : "Welcome back!";
+  }
+
+  if (signupFields) {
+    signupFields.classList.toggle("hidden", authMode !== "signup");
+  }
+
+  if (submit) {
+    submit.textContent =
+      authMode === "signup" ? "Create Account →" : "Login →";
+  }
+
+  if (loginTab) loginTab.classList.toggle("active", authMode === "login");
+  if (signupTab) signupTab.classList.toggle("active", authMode === "signup");
+
+  if (password) {
+    password.autocomplete =
+      authMode === "signup" ? "new-password" : "current-password";
+  }
+
+  setNotice("authNotice", "");
+}
+
+/* =========================================
+   4. LOGIN AND SIGNUP
+   ========================================= */
+
+async function handleAuthSubmit(event) {
+  event.preventDefault();
+
+  if (!client) {
+    setNotice("authNotice", "Supabase connection configure nahi hai.", "error");
+    return;
+  }
+
+  const email = $("authEmail")?.value.trim().toLowerCase();
+  const password = $("authPassword")?.value || "";
+  const fullName = $("authName")?.value.trim() || "";
+
+  if (!email || !password) {
+    setNotice("authNotice", "Email aur password fill karo.", "error");
+    return;
+  }
+
+  if (password.length < 8) {
+    setNotice("authNotice", "Password kam se kam 8 characters ka rakho.", "error");
+    return;
+  }
+
+  if (authMode === "signup" && !fullName) {
+    setNotice("authNotice", "Apna full name enter karo.", "error");
+    return;
+  }
+
+  setButtonLoading(
+    "authSubmit",
+    true,
+    authMode === "signup" ? "Creating account..." : "Logging in..."
   );
-  $('serviceChips').innerHTML = ['All', ...services.map(s=>s.name)].map(name =>
-    `<button class="chip ${selectedService===name?'active':''}" onclick="chooseService('${safe(name)}')">${name==='All'?'✦ All':safe(name)}</button>`
-  ).join('');
-  const makeCard = (s, home=false) => `<article class="card">
-    
-<img class="service-photo"
-     src="${safe(s.image)}"
-     data-fallback="${safe(serviceInfo[s.name]?.image || '')}"
-     alt="${safe(s.name)}"
-     loading="lazy"
-     onerror="serviceImageError(this,'${safe(s.name)}')">
 
-    <div class="service-top"><span class="service-icon">${s.icon}</span><span class="service-badge">${home?'POPULAR':'HOME SERVICE'}</span></div>
-    <h3>${safe(s.name)}</h3><p class="muted">${safe(s.description)}</p>
-    <button class="btn primary" onclick="chooseService('${safe(s.name)}');navigateTo('booking')">Book ${home?'now':'this service'} →</button>
-  </article>`;
-  $('serviceGrid').innerHTML = filtered.map(s=>makeCard(s)).join('') || '<div class="empty">No matching services found.</div>';
-  $('homeServiceGrid').innerHTML = filtered.slice(0,6).map(s=>makeCard(s,true)).join('');
+  try {
+    if (authMode === "signup") {
+      const { data, error } = await client.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        currentUser = data.user;
+        await loadProfile();
+        updateAccountUI();
+        setNotice(
+          "authNotice",
+          "Account ban gaya hai. Aap login ho gaye hain.",
+          "success"
+        );
+        navigateTo("profile");
+      } else {
+        setNotice(
+          "authNotice",
+          "Account create ho gaya! Apne email inbox mein verification link check karo. Verify karne ke baad login karo.",
+          "success"
+        );
+      }
+    } else {
+      const { data, error } = await client.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) throw error;
+
+      currentUser = data.user;
+      await loadProfile();
+      updateAccountUI();
+
+      setNotice("authNotice", "Login successful!", "success");
+      navigateTo("profile");
+    }
+  } catch (error) {
+    setNotice("authNotice", friendlyError(error), "error");
+  } finally {
+    setButtonLoading("authSubmit", false);
+  }
 }
-function chooseService(name) {
-  selectedService = name;
-  $('serviceSelect').value = name === 'All' ? '' : name;
-  renderServices();
-  renderWorkers();
-  renderWorkerSelect();
+
+async function resetPassword() {
+  if (!client) {
+    showToast("Supabase connection configure nahi hai.");
+    return;
+  }
+
+  const email = $("authEmail")?.value.trim().toLowerCase();
+
+  if (!email) {
+    setNotice("authNotice", "Pehle email address enter karo.", "error");
+    navigateTo("auth");
+    $("authEmail")?.focus();
+    return;
+  }
+
+  try {
+    const { error } = await client.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + window.location.pathname
+    });
+
+    if (error) throw error;
+
+    setNotice(
+      "authNotice",
+      "Agar is email ka account hai, password reset link email par bhej diya gaya hai.",
+      "success"
+    );
+  } catch (error) {
+    setNotice("authNotice", friendlyError(error), "error");
+  }
 }
-function searchServices() { selectedService = 'All'; renderServices(); navigateTo('services'); }
+
+/* =========================================
+   5. ACCOUNT UI AND LOGOUT
+   ========================================= */
+
+function updateAccountUI() {
+  const accountButton = $("accountBtn");
+  const logoutButton = $("logoutBtn");
+  const loginHint = $("bookingLoginHint");
+
+  if (accountButton) {
+    accountButton.textContent = currentUser
+      ? "My Profile"
+      : "Login / Sign up";
+
+    accountButton.onclick = () => {
+      navigateTo(currentUser ? "profile" : "auth");
+    };
+  }
+
+  if (logoutButton) {
+    logoutButton.classList.toggle("hidden", !currentUser);
+  }
+
+  if (loginHint) {
+    loginHint.classList.toggle("hidden", !!currentUser);
+  }
+
+  if ($("profileEmail")) {
+    $("profileEmail").textContent = currentUser?.email || "Not logged in";
+  }
+}
+
+async function logout() {
+  if (!client) return;
+
+  try {
+    const { error } = await client.auth.signOut();
+    if (error) throw error;
+
+    currentUser = null;
+    currentProfile = null;
+
+    updateAccountUI();
+    showToast("You have been logged out.");
+    navigateTo("home");
+  } catch (error) {
+    showToast(friendlyError(error));
+  }
+}
+
+/* =========================================
+   6. PROFILE PAGE
+   ========================================= */
+
+async function loadProfile() {
+  if (!currentUser || !client) {
+    if ($("profileName")) $("profileName").textContent = "Your profile";
+    if ($("profileEmail")) $("profileEmail").textContent = "Please log in first.";
+    return;
+  }
+
+  if ($("profileEmail")) {
+    $("profileEmail").textContent = currentUser.email || "";
+  }
+
+  try {
+    const { data, error } = await client
+      .from("profiles")
+      .select("id, full_name, phone, address")
+      .eq("id", currentUser.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    currentProfile = data || {};
+
+    const fullName =
+      currentProfile.full_name ||
+      currentUser.user_metadata?.full_name ||
+      "";
+
+    if ($("profileName")) {
+      $("profileName").textContent = fullName || "Your profile";
+    }
+
+    if ($("profileFullName")) $("profileFullName").value = fullName;
+    if ($("profilePhone")) $("profilePhone").value = currentProfile.phone || "";
+    if ($("profileAddress")) {
+      $("profileAddress").value = currentProfile.address || "";
+    }
+  } catch (error) {
+    setNotice(
+      "profileNotice",
+      "Profile load nahi ho saka. Supabase profiles table aur RLS policy check karo.",
+      "error"
+    );
+  }
+}
+
+async function saveProfile(event) {
+  event.preventDefault();
+
+  if (!currentUser || !client) {
+    showToast("Profile save karne ke liye login karo.");
+    navigateTo("auth");
+    return;
+  }
+
+  const fullName = $("profileFullName")?.value.trim() || "";
+  const phone = $("profilePhone")?.value.trim() || "";
+  const address = $("profileAddress")?.value.trim() || "";
+
+  if (!fullName) {
+    setNotice("profileNotice", "Full name required hai.", "error");
+    return;
+  }
+
+  try {
+    const { error } = await client
+      .from("profiles")
+      .upsert({
+        id: currentUser.id,
+        full_name: fullName,
+        phone: phone,
+        address: address
+      }, { onConflict: "id" });
+
+    if (error) throw error;
+
+    currentProfile = {
+      ...(currentProfile || {}),
+      full_name: fullName,
+      phone,
+      address
+    };
+
+    if ($("profileName")) $("profileName").textContent = fullName;
+
+    setNotice("profileNotice", "Profile successfully save ho gayi.", "success");
+    showToast("Profile saved.");
+  } catch (error) {
+    setNotice(
+      "profileNotice",
+      "Profile save nahi hui. Profiles table ke columns aur RLS policy check karo. " +
+        friendlyError(error),
+      "error"
+    );
+  }
+}
+
+/* =========================================
+   7. SAVED SERVICE LOCATION
+   ========================================= */
+
+function loadSavedLocation() {
+  if (!currentProfile) return;
+
+  if ($("locationAddress") && currentProfile.address) {
+    $("locationAddress").value = currentProfile.address;
+  }
+
+  if ($("currentLocationLabel")) {
+    $("currentLocationLabel").textContent =
+      currentProfile.address || "Abhi address save nahi hai.";
+  }
+}
+
+async function saveLocation(event) {
+  event.preventDefault();
+
+  if (!currentUser || !client) {
+    showToast("Address save karne ke liye login karo.");
+    navigateTo("auth");
+    return;
+  }
+
+  const address = $("locationAddress")?.value.trim() || "";
+  const city = $("locationCity")?.value.trim() || "";
+  const postal = $("locationPostal")?.value.trim() || "";
+
+  if (!address || !city) {
+    showToast("Address aur city fill karo.");
+    return;
+  }
+
+  const fullAddress = [address, city, postal].filter(Boolean).join(", ");
+
+  try {
+    const { error } = await client
+      .from("profiles")
+      .upsert({
+        id: currentUser.id,
+        address: fullAddress
+      }, { onConflict: "id" });
+
+    if (error) throw error;
+
+    currentProfile = {
+      ...(currentProfile || {}),
+      address: fullAddress
+    };
+
+    if ($("currentLocationLabel")) {
+      $("currentLocationLabel").textContent = fullAddress;
+    }
+
+    showToast("Service address saved.");
+    setNotice("profileNotice", "");
+  } catch (error) {
+    showToast(
+      "Address save nahi hua. Profiles table mein address column aur RLS policy check karo."
+    );
+  }
+}
+
+/* =========================================
+   8. STARTUP AND EVENT LISTENERS
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", async function () {
+  const year = $("footerYear");
+  if (year) year.textContent = new Date().getFullYear();
+
+  const bookingDate = $("bookingDate");
+  if (bookingDate) {
+    const today = new Date();
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0")
+    ].join("-");
+
+    bookingDate.min = localToday;
+  }
+
+  $("authForm")?.addEventListener("submit", handleAuthSubmit);
+  $("profileForm")?.addEventListener("submit", saveProfile);
+  $("locationForm")?.addEventListener("submit", saveLocation);
+
+  $("serviceSelect")?.addEventListener("change", function () {
+    loadWorkersForBooking(this.value);
+  });
+
+  document.querySelectorAll('input[name="servicePlan"]').forEach(input => {
+    input.addEventListener("change", function () {
+      if ($("selectedPlan")) {
+        $("selectedPlan").textContent = this.value;
+      }
+    });
+  });
+
+  if (client) {
+    const { data } = await client.auth.getSession();
+    currentUser = data?.session?.user || null;
+
+    updateAccountUI();
+
+    client.auth.onAuthStateChange((_event, session) => {
+      currentUser = session?.user || null;
+      updateAccountUI();
+    });
+
+    if (currentUser) {
+      await loadProfile();
+    }
+  } else {
+    setNotice(
+      "authNotice",
+      "Supabase load nahi hua. Internet connection aur project key check karo.",
+      "error"
+    );
+  }
+
+  updateAccountUI();
+});
+</script> 
+  <style>
+/* FINAL RESPONSIVE STYLES */
+.hidden { display: none !important; }
+.muted { color: var(--muted, #737373); }
+.small { font-size: 13px; }
+.full-width { grid-column: 1 / -1; }
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.empty-state {
+  padding: 28px 16px;
+  text-align: center;
+  border: 1px dashed var(--line, #eee);
+  border-radius: 16px;
+  margin-top: 14px;
+}
+
+.empty-icon { font-size: 34px; margin-bottom: 10px; }
+
+.notice {
+  display: none;
+  padding: 12px 14px;
+  margin: 12px 0;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.notice:not(:empty) { display: block; }
+.notice-info { background: #f0f4ff; color: #254b88; }
+.notice-success { background: #eaf8ef; color: #17663a; }
+.notice-error { background: #fff0ef; color: #a52a2a; }
+
+.global-toast {
+  position: fixed;
+  z-index: 10000;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  background: #242424;
+  color: white;
+  padding: 13px 20px;
+  border-radius: 12px;
+  max-width: calc(100% - 32px);
+  transition: .25s ease;
+  box-shadow: 0 8px 30px #0002;
+}
+
+.global-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.app-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #ffffffbb;
+  display: grid;
+  place-items: center;
+}
+
+.loading-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 32px #0002;
+}
+
+.loading-spinner {
+  width: 34px;
+  height: 34px;
+  border: 4px solid #eee;
+  border-top-color: var(--yellow, #ffc83d);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 18px;
+  z-index: 100;
+  border: 0;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  background: var(--yellow, #ffc83d);
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.site-footer {
+  margin-top: 60px;
+  padding: 42px 0 18px;
+  background: #242424;
+  color: #fff;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.3fr;
+  gap: 28px;
+}
+
+.footer-brand p, .footer-contact p {
+  color: #d0d0d0;
+  line-height: 1.7;
+}
+
+.footer-logo { color: #fff; }
+
+.footer-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footer-links h3, .footer-contact h3 { margin-top: 0; }
+
+.footer-links button {
+  color: #ddd;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.footer-links button:hover { color: var(--yellow, #ffc83d); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid #ffffff24;
+  color: #ccc;
+  font-size: 13px;
+}
+
+.service-photo, .worker-photo {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+.service-photo { height: 180px; }
+.worker-photo { height: 210px; }
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.detail-main, .detail-sidebar {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-width: 0;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+
+.detail-worker-image {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.price-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.plan-list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.plan-option {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--line, #eee);
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.plan-option span { display: grid; gap: 4px; }
+.plan-option small { color: var(--muted, #737373); }
+
+.divider {
+  height: 1px;
+  background: var(--line, #eee);
+  margin: 14px 0;
+}
+
+.booking-card, .worker-card, .service-card {
+  min-width: 0;
+}
+
+.booking-card {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line, #eee);
+}
+
+.status-pill {
+  display: inline-block;
+  border-radius: 30px;
+  background: #fff3d1;
+  color: #785600;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.worker-filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+@media (max-width: 760px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .detail-layout { grid-template-columns: 1fr; }
+  .worker-filters { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; }
+}
+</style>
+
+<script>
+/* =========================================
+   SERVICES AND WORKERS
+   ========================================= */
+
+/*
+  Expected database tables:
+  services: id, name, description, price, image_url, category
+  workers: id, name, service, price, image_url, available,
+           phone, bio, experience
+
+  If your database uses different names, adjust the queries
+  to match your actual Supabase schema.
+*/
+
+let allServices = [];
+let allWorkers = [];
+
+const fallbackServices = [
+  {
+    name: "Home Cleaning",
+    category: "Cleaning",
+    description: "Cleaning services for a fresher, tidier home.",
+    price: null
+  },
+  {
+    name: "Plumbing",
+    category: "Plumbing",
+    description: "Help with taps, pipes and everyday plumbing issues.",
+    price: null
+  },
+  {
+    name: "Electrical Repair",
+    category: "Electrical",
+    description: "Support for common home electrical repairs.",
+    price: null
+  },
+  {
+    name: "AC Repair",
+    category: "AC Repair",
+    description: "Maintenance and repair assistance for your AC.",
+    price: null
+  },
+  {
+    name: "Painting",
+    category: "Painting",
+    description: "Help refreshing your walls and home interiors.",
+    price: null
+  },
+  {
+    name: "Carpentry",
+    category: "Carpentry",
+    description: "Help with furniture and common woodwork.",
+    price: null
+  }
+];
+
+function formatPrice(value) {
+  if (value === null || value === undefined || value === "") {
+    return "Price on request";
+  }
+
+  const amount = Number(value);
+
+  if (!Number.isFinite(amount)) return escapeHTML(value);
+
+  return "₹" + amount.toLocaleString("en-IN");
+}
+
+function imageOrFallback(url) {
+  const value = String(url || "").trim();
+
+  // Only allow normal web image URLs.
+  if (/^https?:\/\/[^\s"'<>]+$/i.test(value)) {
+    return value;
+  }
+
+  return "";
+}
+
+function renderServices(services) {
+  const grid = $("serviceGrid");
+  const homeGrid = $("homeServiceGrid");
+
+  const html = services.map((service, index) => {
+    const name = service.name || service.title || "Home Service";
+    const description = service.description || "Professional home service.";
+    const price = formatPrice(service.price);
+    const image = imageOrFallback(service.image_url || service.image);
+    const key = escapeHTML(String(service.id ?? index));
+
+    return `
+      <article class="card service-card">
+        ${
+          image
+            ? `<img class="service-photo"
+                 src="${escapeHTML(image)}"
+                 alt="${escapeHTML(name)}"
+                 loading="lazy">`
+            : `<div class="service-photo service-placeholder"
+                 role="img"
+                 aria-label="${escapeHTML(name)}">🏠</div>`
+        }
+        <div class="card-body">
+          <h3>${escapeHTML(name)}</h3>
+          <p>${escapeHTML(description)}</p>
+          <strong>${price}</strong>
+          <button class="btn btn-primary"
+            type="button"
+            data-service-index="${key}">
+            View Service →
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  if (grid) {
+    grid.innerHTML = html || "<p>No services found.</p>";
+  }
+
+  if (homeGrid) {
+    homeGrid.innerHTML = services.slice(0, 3).map((service, index) => {
+      const name = service.name || service.title || "Home Service";
+      const image = imageOrFallback(service.image_url || service.image);
+
+      return `
+        <article class="card service-card">
+          ${
+            image
+              ? `<img class="service-photo"
+                   src="${escapeHTML(image)}"
+                   alt="${escapeHTML(name)}"
+                   loading="lazy">`
+              : `<div class="service-photo service-placeholder">🏠</div>`
+          }
+          <div class="card-body">
+            <h3>${escapeHTML(name)}</h3>
+            <p>${escapeHTML(service.description || "Book a local professional.")}</p>
+            <button class="btn btn-primary"
+              type="button"
+              data-home-service-index="${index}">
+              Explore →
+            </button>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+}
+
+function renderServiceChips() {
+  const container = $("serviceChips");
+  if (!container) return;
+
+  const categories = [
+    "All",
+    ...new Set(allServices.map(s => s.category || s.name).filter(Boolean))
+  ];
+
+  container.innerHTML = categories.map(category => `
+    <button class="chip"
+      type="button"
+      data-service-category="${escapeHTML(category)}">
+      ${escapeHTML(category)}
+    </button>
+  `).join("");
+}
 
 async function loadServices() {
-  if (!client) return;
+  if (!client) {
+    allServices = fallbackServices;
+    renderServices(allServices);
+    renderServiceChips();
+    return;
+  }
+
   try {
-    const {data,error} = await client.from('service_categories')
-      .select('id,name,image_path').eq('active',true).order('id');
+    const { data, error } = await client
+      .from("services")
+      .select("*")
+      .limit(100);
+
     if (error) throw error;
-    if (data?.length) {
-      services = data.map(s => {
-        const path = String(s.image_path || '').replace(/^\/+/, '');
-        let image = serviceInfo[s.name]?.image || '';
-        if (path) image = /^https?:\/\//i.test(path) ? path :
-          (/^https?:\/\//i.test(path) ? path : (path.startsWith('images/') ? path : 'images/' + path));
-        return {name:s.name,icon:serviceInfo[s.name]?.icon||'🧰',
-          description:serviceInfo[s.name]?.description||'Professional home service',image};
-      });
-    }
-  } catch (e) { console.warn('Using built-in services:', e.message); }
+
+    allServices = Array.isArray(data) && data.length
+      ? data
+      : fallbackServices;
+  } catch (error) {
+    console.error("Services load failed:", error);
+    allServices = fallbackServices;
+  }
+
+  renderServices(allServices);
+  renderServiceChips();
+}
+
+function openServiceDetail(index) {
+  const service = allServices[Number(index)];
+  if (!service) return;
+
+  selectedService = service;
+  selectedWorker = null;
+
+  if ($("detailTitle")) {
+    $("detailTitle").textContent = service.name || service.title || "Home Service";
+  }
+
+  if ($("detailCategory")) {
+    $("detailCategory").textContent = service.category || "HOME SERVICE";
+  }
+
+  if ($("detailDescription")) {
+    $("detailDescription").textContent =
+      service.description || "Professional home service.";
+  }
+
+  if ($("detailPrice")) {
+    $("detailPrice").textContent = formatPrice(service.price);
+  }
+
+  if ($("detailBottomPrice")) {
+    $("detailBottomPrice").textContent = formatPrice(service.price);
+  }
+
+  const image = imageOrFallback(service.image_url || service.image);
+
+  if ($("detailImage")) {
+    $("detailImage").src = image;
+    $("detailImage").classList.toggle("hidden", !image);
+  }
+
+  if ($("detailWorkerName")) {
+    $("detailWorkerName").textContent = "Available Professional";
+  }
+
+  if ($("detailWorkerMeta")) {
+    $("detailWorkerMeta").textContent = "Choose a professional when booking.";
+  }
+
+  if ($("detailWorker")) {
+    $("detailWorker").textContent = "Professional details will appear here.";
+  }
+
+  if ($("detailWorkerImage")) {
+    $("detailWorkerImage").src = "";
+    $("detailWorkerImage").classList.add("hidden");
+  }
+
+  navigateTo("detail");
+}
+
+function filterServices(category) {
+  if (category === "All") {
+    renderServices(allServices);
+    return;
+  }
+
+  const filtered = allServices.filter(service =>
+    (service.category || service.name || "").toLowerCase() ===
+    String(category).toLowerCase()
+  );
+
+  renderServices(filtered);
+}
+
+function renderWorkers(workers) {
+  const grid = $("workerGrid");
+  if (!grid) return;
+
+  if (!workers.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🧰</div>
+        <h3>No professionals found</h3>
+        <p>Try another service or search term.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = workers.map((worker, index) => {
+    const name = worker.name || worker.full_name || "Professional";
+    const service = worker.service || worker.service_name || "Home Services";
+    const image = imageOrFallback(worker.image_url || worker.photo_url || worker.image);
+    const price = formatPrice(worker.price);
+
+    return `
+      <article class="card worker-card">
+        ${
+          image
+            ? `<img class="worker-photo"
+                 src="${escapeHTML(image)}"
+                 alt="${escapeHTML(name)}"
+                 loading="lazy">`
+            : `<div class="worker-photo worker-placeholder">👨‍🔧</div>`
+        }
+        <div class="card-body">
+          <h3>${escapeHTML(name)}</h3>
+          <p>${escapeHTML(service)}</p>
+          <p>${escapeHTML(worker.experience || "Experienced professional")}</p>
+          <strong>${price}</strong>
+          <button class="btn btn-primary"
+            type="button"
+            data-worker-index="${index}">
+            View & Book →
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
 async function loadWorkers() {
+  const notice = $("workerNotice");
+
   if (!client) {
-    workers = [];
-    renderWorkers(); renderWorkerSelect();
-    notice('workerNotice','Could not connect to Supabase. Check your internet connection and try again.','bad');
+    if (notice) {
+      notice.textContent = "Supabase connection available nahi hai.";
+    }
+    renderWorkers([]);
     return;
   }
-  notice('workerNotice','Loading approved professionals…');
-  try {
-    const {data,error} = await client.from('public_worker_directory_safe')
-      .select('id,full_name,service,price,area,postal_code,photo_url,available')
-      .eq('available',true).order('full_name');
-    if (error) throw error;
-    workers = data || [];
-
-// Load public ratings for the available workers.
-workerRatings = {};
-
-if (workers.length) {
-  const workerIds = workers.map(w => w.id);
-
-  const { data: reviews, error: reviewError } = await client
-    .from('worker_reviews')
-    .select('worker_id,rating')
-    .in('worker_id', workerIds);
-
-  if (reviewError) {
-    console.warn('Could not load worker ratings:', reviewError.message);
-  } else {
-    (reviews || []).forEach(review => {
-      const id = String(review.worker_id);
-
-      if (!workerRatings[id]) {
-        workerRatings[id] = {
-          total: 0,
-          count: 0
-        };
-      }
-
-      workerRatings[id].total += Number(review.rating);
-      workerRatings[id].count += 1;
-    });
-  }
-}
-
-hideNotice('workerNotice');
-    if (!workers.length) notice('workerNotice','No approved workers are available yet. Admin approval is required.','bad');
-    renderWorkers(); renderWorkerSelect();
-  } catch (e) {
-    workers = []; renderWorkers(); renderWorkerSelect();
-    notice('workerNotice','Could not load workers: ' + e.message,'bad');
-  }
-}
-
-function renderWorkers() {
-  const query = ($('workerSearch')?.value || '').trim().toLowerCase();
-  const areaQuery = ($('workerAreaSearch')?.value || '').trim().toLowerCase();
-  const pinQuery = ($('workerPinSearch')?.value || '').trim();
-  const sort = $('workerSort')?.value || 'name';
-
-  let list = workers.filter(w => {
-    const service = String(w.service || '');
-    const name = String(w.full_name || '');
-    const area = String(w.area || '');
-    const pin = String(w.postal_code || '');
-
-    const matchesService = selectedService === 'All' ||
-      service.trim().toLowerCase() === selectedService.trim().toLowerCase();
-
-    const matchesQuery = !query ||
-      (name + ' ' + service + ' ' + area + ' ' + pin)
-        .toLowerCase().includes(query);
-
-    const matchesArea = !areaQuery ||
-      area.toLowerCase().includes(areaQuery);
-
-    const matchesPin = !pinQuery || pin.includes(pinQuery);
-
-    return matchesService && matchesQuery && matchesArea && matchesPin &&
-      w.available === true;
-  });
-
-  list.sort((a, b) => {
-    if (sort === 'price-low') {
-      return (Number(a.price) || 0) - (Number(b.price) || 0);
-    }
-    if (sort === 'price-high') {
-      return (Number(b.price) || 0) - (Number(a.price) || 0);
-    }
-    return String(a.full_name || '').localeCompare(String(b.full_name || ''));
-  });
-
-  $('workerGrid').innerHTML = list.map(w => {
-    const name = safe(w.full_name || 'Professional');
-    const service = safe(w.service || 'Home service');
-    const area = safe(w.area || 'Area not provided');
-    const pin = safe(w.postal_code || 'Not provided');
-    const phone = safe(w.phone || '');
-    const price = money(w.price);
-   const ratingData = workerRatings[String(w.id)] || {
-  total: 0,
-  count: 0
-};
-
-const averageRating = ratingData.count
-  ? (ratingData.total / ratingData.count).toFixed(1)
-  : null;
-
-const ratingHTML = averageRating
-  ? `<p class="worker-rating" aria-label="Rated ${averageRating} out of 5">
-       <span>⭐</span>
-       <strong>${averageRating}</strong>
-       <span class="muted">(${ratingData.count} ${
-         ratingData.count === 1 ? 'review' : 'reviews'
-       })</span>
-     </p>`
-  : `<p class="worker-rating muted">☆ No reviews yet</p>`;
-    const photo = String(w.photo_url || '').trim();
-    const icon = serviceInfo[w.service]?.icon || '👤';
-    const id = safe(w.id);
-
-    const avatar = photo
-      ? `<img class="worker-photo"
-          src="${safe(photo)}" alt="${name}"
-          loading="lazy"
-          onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('div'),{className:'worker-avatar',textContent:'${icon}'}))">`
-      : `<div class="worker-avatar">${icon}</div>`;
-
-    return `<article class="card">
-      ${avatar}
-      <span class="worker-status">● Available</span>
-<h3>${name}</h3>
-${ratingHTML}
-      <p class="muted">${service} · 📍 ${area}</p>
-      <div class="worker-price">${price} <small>/ service</small></div>
-
-      <button class="btn secondary" type="button"
-        onclick="toggleWorkerProfile('${id}')">View profile ↓</button>
-
-      <div id="worker-profile-${id}" class="worker-profile-details hidden">
-        <strong>Worker details</strong>
-        <div>Service: ${service}</div>
-        <div>Area: ${area}</div>
-        <div>PIN code: ${pin}</div>
-        <div>Price: ${price}</div>
-        <div>Availability: Available</div>
-        <div>Phone: Contact after booking</div>
-      </div>
-
-      <div class="worker-bottom">
-        <p class="muted">
-  <span class="verified-badge">✓ Verified professional</span>
-</p>
-        <button class="btn primary" type="button"
-          onclick="bookWorker('${id}')">Book now →</button>
-      </div>
-    </article>`;
-  }).join('') ||
-  '<div class="empty">No workers match these filters. Try another service, area or PIN code.</div>';
-}
-
-function toggleWorkerProfile(id) {
-  const details = $('worker-profile-' + id);
-  if (!details) return;
-  const opening = details.classList.contains('hidden');
-  details.classList.toggle('hidden', !opening);
-  const button = details.previousElementSibling;
-  if (button) button.textContent = opening ? 'Hide profile ↑' : 'View profile ↓';
-}
-
-function resetWorkerFilters() {
-  $('workerSearch').value = '';
-  $('workerAreaSearch').value = '';
-  $('workerPinSearch').value = '';
-  $('workerSort').value = 'name';
-  selectedService = 'All';
-  renderServices();
-  renderWorkers();
-  renderWorkerSelect();
-}
-function renderWorkerSelect() {
-  const select = $('serviceSelect');
-  if (!select) return;
-  const service = select.value;
-  const old = $('workerSelect').value;
-  const list = workers.filter(w => !service || String(w.service||'').toLowerCase() === service.toLowerCase());
-  $('workerSelect').innerHTML = '<option value="">Choose available worker</option>' +
-    list.map(w=>`<option value="${safe(w.id)}">${safe(w.full_name||'Worker')} — ${safe(w.service)} (${money(w.price)})</option>`).join('');
-  if (list.some(w=>String(w.id)===String(old))) $('workerSelect').value = old;
-}
-async function bookWorker(id) {
-  let worker = workers.find(w => String(w.id) === String(id));
-  if (!worker) { await loadWorkers(); worker = workers.find(w => String(w.id) === String(id)); }
-  if (!worker) { alert('Worker abhi available nahi hai. Workers page refresh karke dobara try karo.'); return; }
-  selectedService = worker.service || 'All';
-  renderServices(); renderServiceSelect();
-  $('serviceSelect').value = worker.service || '';
-  renderWorkerSelect(); $('workerSelect').value = String(worker.id);
-  navigateTo('booking');
-  if (!currentUser) notice('bookingNotice','Booking karne ke liye pehle login karo.','bad');
-}
-
-$('serviceSelect').addEventListener('change', renderWorkerSelect);
-$('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') searchServices(); });
-
-['workerSearch', 'workerAreaSearch', 'workerPinSearch'].forEach(id => {
-  $(id).addEventListener('input', renderWorkers);
-});
-$('workerSort').addEventListener('change', renderWorkers);
-
-$('authForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  if (!client) { notice('authNotice','Supabase library could not load. Refresh the page or try another connection.','bad'); return; }
-  const button = $('authSubmit');
-  button.disabled = true; button.textContent = 'Please wait…'; hideNotice('authNotice');
-  try {
-    const email = $('email').value.trim();
-    const password = $('password').value;
-    if (authMode === 'signup') {
-      const full_name = $('fullName').value.trim();
-      const phone = $('signupPhone').value.trim();
-      if (!full_name) throw new Error('Please enter your name.');
-      const {data,error} = await client.auth.signUp({
-        email,password,
-        options:{emailRedirectTo:'https://rksinha17hjp-oss.github.io/Kamconnect/',
-          data:{full_name,phone}}
-      });
-      if (error) throw error;
-      notice('authNotice',data.session?'Account created successfully!':'Account created. Check your email confirmation, then log in.');
-    } else {
-      const {data,error} = await client.auth.signInWithPassword({email,password});
-      if (error) throw error;
-      if (!data.user) throw new Error('Login failed. Please try again.');
-      currentUser = data.user; updateAccountUI();
-      notice('authNotice','Login successful! Welcome back.');
-      setTimeout(()=>navigateTo('dashboard'),800);
-    }
-  } catch (e) {
-    notice('authNotice',e.message || 'Something went wrong.','bad');
-  } finally {
-    button.disabled = false;
-    button.textContent = authMode === 'signup' ? 'Create account' : 'Login';
-  }
-});
-
-async function logout() {
-  try {
-    if (client) {
-      const {error} = await client.auth.signOut();
-      if (error) throw error;
-    }
-    currentUser = null; updateAccountUI(); navigateTo('home');
-  } catch (e) { alert('Logout failed: ' + e.message); }
-}
-function updateAccountUI() {
-  const logged = !!currentUser;
-  $('accountBtn').classList.toggle('hidden',logged);
-  $('logoutBtn').classList.toggle('hidden',!logged);
-  $('bookingLoginHint').classList.toggle('hidden',logged);
-  updateProfile();
-  if (logged) {
-    $('customerName').value = currentUser.user_metadata?.full_name || $('customerName').value;
-    $('customerPhone').value = currentUser.user_metadata?.phone || $('customerPhone').value;
-    loadMyBookings(); loadWorkerBookings(); checkAdminAccess();
-  } else {
-    $('bookingList').innerHTML = '<p class="muted">Log in to view bookings.</p>';
-    $('workerBookingList').innerHTML = '<p class="muted">Log in to view assigned requests.</p>';
-    $('workerNavBtn').classList.add('hidden'); $('adminNavBtn').classList.add('hidden');
-    $('workerDashboard').classList.add('hidden'); $('adminDashboard').innerHTML=''; adminUserId=null;
-  }
-}
-
-$('bookingForm').addEventListener('submit', async e => {
-  e.preventDefault(); hideNotice('bookingNotice');
-  if (!client) { notice('bookingNotice','Cannot connect to Supabase. Please refresh and try again.','bad'); return; }
-  if (!currentUser) { notice('bookingNotice','Please log in before booking.','bad'); showAuth(); return; }
-  const worker = workers.find(w => String(w.id) === String($('workerSelect').value));
-  if (!worker) { notice('bookingNotice','Choose an available worker.','bad'); return; }
-  if (String(worker.id) === String(currentUser.id)) { notice('bookingNotice','Use a separate customer account to book a service.','bad'); return; }
-  if (String(worker.service).toLowerCase() !== $('serviceSelect').value.toLowerCase()) {
-    notice('bookingNotice','Choose a worker for the selected service.','bad'); return;
-  }
-  const date = $('bookingDate').value;
-  if (!date || date < today()) { notice('bookingNotice','Choose today or a future date.','bad'); return; }
-  const btn = $('bookBtn'); btn.disabled=true; btn.textContent='Submitting…';
-  try {
-    const {data:available,error:checkError} = await client.from('public_worker_directory_safe')
-      .select('id').eq('id',worker.id).eq('available',true).maybeSingle();
-    if (checkError) throw checkError;
-    if (!available) throw new Error('This worker is no longer available.');
-    const payload = {
-      customer_id:currentUser.id,worker_id:worker.id,
-      customer_name:$('customerName').value.trim(),phone:$('customerPhone').value.trim(),
-      service:worker.service,address:$('address').value.trim(),
-      postal_code:$('postalCode').value.trim()||null,booking_date:date,
-      notes:[$('bookingTime').value?'Preferred time: '+$('bookingTime').value:'',
-        $('notes').value.trim()].filter(Boolean).join('\n')||null,status:'pending'
-    };
-    const {error} = await client.from('bookings').insert(payload);
-    if (error) throw error;
-    notice('bookingNotice','Booking request submitted! Status: Pending.');
-    $('bookingForm').reset();
-$('bookingDate').min = today();
-renderWorkerSelect();
-
-await refreshBookingViews();
-  } catch (e) { notice('bookingNotice','Booking failed: '+e.message,'bad'); }
-  finally { btn.disabled=false; btn.textContent='Request booking →'; }
-});
-
-async function loadCustomerDashboard() {
-  const box = $('customerDashboardBookings');
-
-  if (!currentUser || !client) {
-    $('dashboardGreeting').textContent =
-      'Login to view your bookings and service updates.';
-    $('dashTotal').textContent = '0';
-    $('dashPending').textContent = '0';
-    $('dashActive').textContent = '0';
-    $('dashCompleted').textContent = '0';
-
-    box.innerHTML =
-      '<div class="empty">Please login to see your dashboard. ' +
-      '<br><br><button class="btn primary" onclick="showAuth()">Login / Sign up</button></div>';
-    return;
-  }
-
-  $('dashboardGreeting').textContent =
-    'Welcome, ' +
-    (currentUser.user_metadata?.full_name || 'Customer') +
-    '! Here are your service updates.';
-
-  box.innerHTML = '<div class="empty">Loading your bookings…</div>';
-  hideNotice('customerDashboardNotice');
 
   try {
     const { data, error } = await client
-      .from('bookings')
-      .select('id,service,address,booking_date,status,created_at,worker_id')
-      .eq('customer_id', currentUser.id)
-      .order('created_at', { ascending: false });
+      .from("workers")
+      .select("*")
+      .limit(100);
 
     if (error) throw error;
 
-    const bookings = data || [];
-    const statusOf = b => String(b.status || 'pending').toLowerCase();
+    allWorkers = data || [];
+    renderWorkers(allWorkers);
 
-    $('dashTotal').textContent = bookings.length;
-    $('dashPending').textContent =
-      bookings.filter(b => statusOf(b) === 'pending').length;
-    $('dashActive').textContent =
-      bookings.filter(b =>
-        ['accepted', 'confirmed', 'on_the_way', 'arrived'].includes(statusOf(b))
-      ).length;
-    $('dashCompleted').textContent =
-      bookings.filter(b => statusOf(b) === 'completed').length;
-
-    if (!bookings.length) {
-      box.innerHTML =
-        '<div class="empty">No bookings yet. Choose a service to get started.' +
-        '<br><br><button class="btn primary" onclick="navigateTo(\'services\')">Explore services</button></div>';
-      return;
+    if (notice) {
+      notice.textContent = allWorkers.length
+        ? ""
+        : "Abhi koi professional available nahi hai.";
     }
 
-    const labels = {
-      pending: 'Pending',
-      accepted: 'Accepted',
-      confirmed: 'Confirmed',
-      on_the_way: 'Worker on the way',
-      arrived: 'Worker arrived',
-      completed: 'Completed',
-      cancelled: 'Cancelled',
-      rejected: 'Rejected'
-    };
-
-    box.innerHTML = bookings.slice(0, 3).map(b => {
-      const status = statusOf(b);
-      const canCancel = status === 'pending';
-      const canTrack = ['accepted', 'confirmed', 'on_the_way', 'arrived']
-        .includes(status);
-
-      return `
-        <article class="customer-booking-card">
-          <span class="status-pill">${safe(labels[status] || status)}</span>
-          <h3>${safe(b.service || 'Home service')}</h3>
-          <p class="muted">📅 ${safe(b.booking_date || 'Date not set')}</p>
-          <p class="muted">📍 ${safe(b.address || 'Address not available')}</p>
-          ${canCancel ? `
-            <button class="btn secondary"
-              onclick="cancelBooking('${safe(b.id)}')">
-              Cancel booking
-            </button>` : ''}
-          ${canTrack ? `
-            <button class="btn primary"
-              onclick="trackWorker('${safe(b.id)}')">
-              📍 Track worker
-            </button>` : ''}
-        </article>`;
-    }).join('');
-
-  } catch (e) {
-    notice(
-      'customerDashboardNotice',
-      'Could not load dashboard: ' + e.message,
-      'bad'
-    );
-    box.innerHTML = '<div class="empty">Please refresh and try again.</div>';
-  }
-}
-
-function showBookingHistory() {
-  navigateTo('myBookings');
-}
-
-async function loadNotifications() {
-  const section = $('notificationsSection');
-  const listBox = $('notificationsList');
-  const countBadge = $('notificationCount');
-
-  if (!section || !listBox) return;
-
-  if (!currentUser || !client) {
-if (!currentUser || !client) {
-  section.classList.toggle(
-    'hidden',
-    !document.querySelector('#mainNav button.primary')?.getAttribute('onclick')?.includes("navigateTo('notifications')")
-  );
-    listBox.innerHTML =
-      '<p class="muted">Login karke notifications dekhein.</p>';
-
-    if (countBadge) {
-      countBadge.textContent = '';
-      countBadge.classList.add('hidden');
-    }
-    return;
-  }  
-  try {
-    const { data, error } = await client
-      .from('notifications')
-      .select('id,title,message,is_read,created_at,booking_id')
-      .eq('recipient_id', currentUser.id)
-      .order('created_at', { ascending: false })
-      .limit(20);
-
-    if (error) throw error;
-
-    const rows = data || [];
-    const unreadCount = rows.filter(n => !n.is_read).length;
-
-if (countBadge) {
-  if (unreadCount > 0) {
-    countBadge.textContent = unreadCount > 99
-      ? '99+'
-      : String(unreadCount);
-
-    countBadge.classList.remove('hidden');
-  } else {
-    countBadge.textContent = '';
-    countBadge.classList.add('hidden');
-  }
-}
-
-    if (rows.length === 0) {
-      listBox.innerHTML =
-        '<p class="muted">Abhi koi notification nahi hai.</p>';
-    } else {
-      listBox.innerHTML = rows.map(n => `
-        <article class="customer-booking-card">
-          <strong>${safe(n.title)}</strong>
-          <p>${safe(n.message)}</p>
-          <p class="muted">
-            ${safe(new Date(n.created_at).toLocaleString())}
-          </p>
-          <p class="muted">
-            Status: ${n.is_read ? 'Read' : 'Unread'}
-          </p>
-          <button
-            class="btn secondary"
-            type="button"
-            onclick="markNotificationRead('${n.id}', ${!n.is_read})">
-            ${n.is_read ? 'Mark as Unread' : 'Mark as Read'}
-          </button>
-        </article>
-      `).join('');
-    }
-
-    hideNotice('notificationsNotice');
-  } catch (e) {
-    notice(
-      'notificationsNotice',
-      'Notifications load nahi hui: ' + e.message,
-      'bad'
-    );
-  }
-}
-
-async function markNotificationRead(notificationId, isRead) {
-  if (!currentUser || !client) return;
-
-  try {
-    const { error } = await client
-      .from('notifications')
-      .update({ is_read: isRead })
-      .eq('id', notificationId)
-      .eq('recipient_id', currentUser.id);
-
-    if (error) throw error;
-
-    await loadNotifications();
-  } catch (e) {
-    notice(
-      'notificationsNotice',
-      'Notification update nahi hui: ' + e.message,
-      'bad'
-    );
-  }
-}
-
-let notificationsRealtimeChannel = null;
-function startNotificationsRealtime() {
-  if (!client || !currentUser) {
-    if (notificationsRealtimeChannel && client) {
-      client.removeChannel(notificationsRealtimeChannel);
-    }
-    notificationsRealtimeChannel = null;
-    return;
-  }
-
-  if (notificationsRealtimeChannel) {
-    client.removeChannel(notificationsRealtimeChannel);
-  }
-
-  notificationsRealtimeChannel = client
-    .channel('kaamconnect-notifications-' + currentUser.id)
-    .on(
-      'postgres_changes',
-      {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'notifications',
-        filter: 'recipient_id=eq.' + currentUser.id
-      },
-      () => {
-        loadNotifications();
-      }
-    )
-    .subscribe();
-} 
-async function loadMyBookings() {
-  if (!currentUser) {
-    $('bookingList').innerHTML =
-      '<p class="muted">Log in to view bookings.</p>';
-    return;
-  }
-
-  if (!client) return;
-
-  try {
-    const { data, error } = await client
-      .from('bookings')
-      .select('id,service,address,booking_date,status,created_at,worker_id')
-      .eq('customer_id', currentUser.id)
-      .order('created_at', { ascending: false });
-
-    if (error) throw error;
-
-    if (!data?.length) {
-      $('bookingList').innerHTML =
-        '<div class="empty">No bookings yet. Choose a service to get started.</div>';
-      return;
-    }
-
-    const bookingIds = data.map(b => b.id);
-    const existingReviews = {};
-
-    const { data: savedReviews, error: reviewError } = await client
-      .from('worker_reviews')
-      .select('booking_id,rating,review')
-      .in('booking_id', bookingIds)
-      .eq('customer_id', currentUser.id);
-
-    if (reviewError) throw reviewError;
-
-    (savedReviews || []).forEach(review => {
-      existingReviews[String(review.booking_id)] = review;
-    });
-
-    const ids = [...new Set(data.map(b => b.worker_id).filter(Boolean))];
-    const names = {};
-const workerPhones = {};
-    if (ids.length) {
-      const { data: profiles, error: profileError } = await client
-        .from('public_worker_directory_safe')
-        .select('id,full_name')
-        .in('id', ids);
-
-      if (profileError) throw profileError;
-
-      (profiles || []).forEach(w => {
-        names[String(w.id)] = w.full_name;
-      });
-    }
-for (const b of data) {
-  const status = String(b.status || '').toLowerCase();
-
-  if (['accepted', 'on_the_way', 'arrived'].includes(status)) {
-    const { data: phoneData, error: phoneError } = await client
-      .rpc('get_accepted_worker_phone', {
-        booking_uuid: b.id
-      });
-
-    if (phoneError) {
-      console.warn('Could not load worker phone:', phoneError.message);
-    } else if (phoneData?.length && phoneData[0].worker_phone) {
-      workerPhones[String(b.id)] = phoneData[0].worker_phone;
-    }
-  }
-}
-    $('bookingList').innerHTML = data.map(b => {
-      const status = String(b.status || 'pending').toLowerCase();
-
-      const labels = {
-        pending: 'Pending',
-        accepted: 'Accepted',
-        confirmed: 'Confirmed',
-        on_the_way: 'Worker on the way',
-        arrived: 'Worker arrived',
-        completed: 'Completed',
-        cancelled: 'Cancelled',
-        rejected: 'Rejected'
-      };
-
-      const descriptions = {
-        pending: 'Waiting for professional confirmation.',
-        accepted: 'Your request has been accepted.',
-        confirmed: 'Your booking is confirmed.',
-        on_the_way: 'Your worker is on the way.',
-        arrived: 'Your worker has arrived.',
-        completed: 'Service marked as completed.',
-        cancelled: 'This booking was cancelled.',
-        rejected: 'This request was rejected.'
-      };
-
-      const progress = {
-        pending: 10,
-        accepted: 55,
-        confirmed: 65,
-        on_the_way: 80,
-        arrived: 90,
-        completed: 100,
-        cancelled: 0,
-        rejected: 0
-      }[status] ?? 10;
-
-      const savedReview = existingReviews[String(b.id)];
-
-      const reviewHTML = status === 'completed'
-        ? (savedReview
-          ? `<div class="review-result">
-               <strong>✓ Your review submitted</strong>
-               <p>${'⭐'.repeat(Number(savedReview.rating))}
-                 (${Number(savedReview.rating)}/5)</p>
-               <p>${safe(savedReview.review || 'No written comment.')}</p>
-             </div>`
-          : `<div class="review-form">
-               <h4>Rate your experience</h4>
-               <label for="review-rating-${safe(b.id)}">Your rating</label>
-               <select id="review-rating-${safe(b.id)}" required>
-                 <option value="">Choose stars</option>
-                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                 <option value="4">⭐⭐⭐⭐ Good</option>
-                 <option value="3">⭐⭐⭐ Average</option>
-                 <option value="2">⭐⭐ Poor</option>
-                 <option value="1">⭐ Very poor</option>
-               </select>
-
-               <label for="review-text-${safe(b.id)}">Comment (optional)</label>
-               <textarea id="review-text-${safe(b.id)}"
-                 maxlength="1000"
-                 placeholder="Apna experience share karein..."></textarea>
-
-               <button class="btn primary" type="button"
-                 onclick="submitWorkerReview('${safe(b.id)}')">
-                 Submit review
-               </button>
-             </div>`)
-        : '';
-
-      const progressHTML = !['cancelled', 'rejected'].includes(status)
-        ? `<div class="progress-track">
-             <span style="width:${progress}%"></span>
-           </div>`
-        : '';
-
-      const cancelHTML = status === 'pending'
-        ? `<button class="btn secondary"
-             onclick="cancelBooking('${safe(b.id)}')">
-             Cancel booking
-           </button>`
-        : '';
-
-      const trackingHTML = [
-        'accepted', 'confirmed', 'on_the_way', 'arrived'
-      ].includes(status)
-        ? `<div class="tracking-actions">
-             <button class="btn primary"
-               onclick="trackWorker('${safe(b.id)}')">
-               📍 Track worker
-             </button>
-           </div>`
-        : '';
-
-      return `<article class="booking-item status-${safe(status)}">
-        <span class="status-pill">${safe(labels[status] || status)}</span>
-        <h3>${safe(b.service || 'Service')}</h3>
-        <p class="muted">Worker: ${safe(names[String(b.worker_id)] || 'Professional')}</p> 
-        ${workerPhones[String(b.id)]
-  ? `<p class="muted">📞 Worker phone:
-       <a href="tel:${safe(workerPhones[String(b.id)])}">
-         ${safe(workerPhones[String(b.id)])}
-       </a>
-     </p>`
-  : (['accepted', 'on_the_way', 'arrived'].includes(status)
-      ? '<p class="muted">📞 Worker phone unavailable.</p>'
-      : '<p class="muted">📞 Phone available after booking acceptance.</p>')}
-        <p class="muted">Address: ${safe(b.address || '')}</p>
-        <p class="muted">Date: ${safe(b.booking_date || '')}</p>
-        <p class="muted">${safe(descriptions[status] || 'Booking status updated.')}</p>
-        ${progressHTML}
-        ${reviewHTML}
-        ${cancelHTML}
-        ${trackingHTML}
-      </article>`;
-    }).join('');
-
-    hideNotice('myBookingsNotice');
-  } catch (e) {
-    notice('myBookingsNotice', 'Could not load bookings: ' + e.message, 'bad');
-  }
-}
-async function submitWorkerReview(bookingId) {
-  if (!currentUser || !client) {
-    alert('Review dene ke liye pehle login karein.');
-    return;
-  }
-
-  const ratingInput = $('review-rating-' + bookingId);
-  const reviewInput = $('review-text-' + bookingId);
-
-  if (!ratingInput || !reviewInput) {
-    alert('Review form nahi mila. Page refresh karke try karein.');
-    return;
-  }
-
-  const rating = Number(ratingInput.value);
-  const reviewText = reviewInput.value.trim();
-
-  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    alert('Please 1 se 5 stars ke beech rating select karein.');
-    return;
-  }
-
-  if (reviewText.length > 1000) {
-    alert('Review maximum 1000 characters ka ho sakta hai.');
-    return;
-  }
-
-  const button = ratingInput.parentElement.querySelector('button');
-  if (button) {
-    button.disabled = true;
-    button.textContent = 'Submitting...';
-  }
-
-  try {
-    // Verify the booking belongs to this customer and is completed.
-    const { data: booking, error: bookingError } = await client
-      .from('bookings')
-      .select('id, customer_id, worker_id, status')
-      .eq('id', bookingId)
-      .eq('customer_id', currentUser.id)
-      .eq('status', 'completed')
-      .maybeSingle();
-
-    if (bookingError) throw bookingError;
-
-    if (!booking) {
-      throw new Error(
-        'Sirf apni completed booking ke liye review de sakte hain.'
-      );
-    }
-
-    const { error } = await client
-      .from('worker_reviews')
-      .insert({
-        booking_id: booking.id,
-        customer_id: currentUser.id,
-        worker_id: booking.worker_id,
-        rating: rating,
-        review: reviewText || null
-      });
-
-    if (error) {
-      if (error.code === '23505') {
-        throw new Error('Is booking ka review pehle hi submit ho chuka hai.');
-      }
-      throw error;
-    }
-
-    alert('Thank you! Aapka review successfully submit ho gaya.');
-
-    await loadMyBookings();
-    await loadWorkers();
-
+    populateWorkerFilter();
   } catch (error) {
-    console.error('WORKER REVIEW ERROR:', error);
-    alert('Review submit nahi hua: ' + error.message);
-  } finally {
-    if (button && button.isConnected) {
-      button.disabled = false;
-      button.textContent = 'Submit review';
-    }
-  }
-}
-async function cancelBooking(id) {
-  if (!currentUser || !client) return;
+    console.error("Workers load failed:", error);
 
-  if (!confirm('Cancel this pending booking?')) return;
-
-  try {
-    const { data, error } = await client
-      .from('bookings')
-      .update({ status: 'cancelled' })
-      .eq('id', id)
-      .eq('customer_id', currentUser.id)
-      .eq('status', 'pending')
-      .select('id');
-
-    if (error) throw error;
-
-    if (!data || data.length === 0) {
-      throw new Error(
-        'Booking cancel nahi hui. Ho sakta hai status pehle hi change ho gaya ho.'
-      );
+    if (notice) {
+      notice.textContent =
+        "Professionals load nahi hue. Workers table aur RLS policies check karo.";
     }
 
-    await refreshBookingViews();
-    alert('Booking successfully cancelled.');
-  } catch (e) {
-    alert('Cancellation failed: ' + e.message);
-  }
-}
-async function loadWorkerBookings() {
-  if (!currentUser || !client) return;
-  try {
-    const {data:isWorker,error:pe}=await client.rpc('is_my_worker_profile');
-    if (pe) throw pe;
-    if (!isWorker) { $('workerNavBtn').classList.add('hidden'); $('workerDashboard').classList.add('hidden'); return; }
-    $('workerNavBtn').classList.remove('hidden'); $('workerDashboard').classList.remove('hidden');
-    const {data,error}=await client.from('bookings')
-      .select('id,customer_name,phone,service,address,booking_date,notes,status,created_at')
-      .eq('worker_id',currentUser.id).order('created_at',{ascending:false});
-    if (error) throw error;
-    const list=data||[];
-    $('workerBookingList').innerHTML=list.length ? list.map(b=>{
-      const s=String(b.status||'pending').toLowerCase();
-      return `<article class="booking-item"><span class="tag">${safe(s.toUpperCase())}</span><h3>${safe(b.service)}</h3><p class="muted">Customer: ${safe(b.customer_name||'Customer')}</p><p class="muted">Phone: ${safe(b.phone||'Not provided')}</p>${b.phone?`<a class="btn secondary" href="tel:${safe(b.phone)}">📞 Call customer</a>`:''}<p class="muted">Address: ${safe(b.address)}</p><p class="muted">Date: ${safe(b.booking_date)}</p><p class="muted">${safe(b.notes||'')}</p>${s==='pending'?`<button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','accepted')">Accept</button><button class="btn secondary" onclick="updateWorkerBookingStatus('${safe(b.id)}','rejected')">Reject</button>`:''}${s==='accepted'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">📍 Start trip & share location</button></div>`:''}${s==='on_the_way'?`<div class="tracking-actions"><button class="btn primary" onclick="startWorkerTrip('${safe(b.id)}')">↻ Resume location sharing</button><button class="btn secondary" onclick="workerArrived('${safe(b.id)}')">I’ve arrived</button></div>`:''}${s==='arrived'?`<span class="worker-status">Worker has arrived</span><button class="btn primary" onclick="updateWorkerBookingStatus('${safe(b.id)}','completed')">Mark completed</button>`:''}</article>`;
-    }).join('') : '<div class="empty">No booking requests yet.</div>';
-  } catch(e) { notice('workerBookingsNotice','Could not load worker requests: '+e.message,'bad'); }
-}
-
-async function updateWorkerBookingStatus(id, status) {
-  if (!currentUser ||
-      !['accepted', 'rejected', 'completed', 'on_the_way', 'arrived'].includes(status)) {
-    return;
-  }
-
-  try {
-    let expected;
-
-    if (status === 'accepted' || status === 'rejected') {
-      expected = 'pending';
-    } else if (status === 'on_the_way') {
-      expected = 'accepted';
-    } else if (status === 'arrived') {
-      expected = 'on_the_way';
-    } else if (status === 'completed') {
-      expected = 'arrived';
-    }
-
-    const { data, error } = await client
-      .from('bookings')
-      .update({ status })
-      .eq('id', id)
-      .eq('worker_id', currentUser.id)
-      .eq('status', expected)
-      .select('id');
-
-    if (error) throw error;
-
-    if (!data || data.length === 0) {
-      await loadWorkerBookings();
-      throw new Error(
-        'Booking status is not ' + expected +
-        ', or this booking is not assigned to your account. Refresh and check its current status.'
-      );
-    }
-
-    await refreshBookingViews();
-    alert('Booking updated: ' + status.toUpperCase());
-
-  } catch (e) {
-    console.error('WORKER BOOKING UPDATE ERROR:', e);
-    alert('Update failed: ' + e.message);
-  }
-}
-let activeLocationWatch = null;
-let customerTrackingTimer = null;
-let customerTrackingBookingId = null;
-
-
-async function startWorkerTrip(bookingId) {
-  if (!currentUser || !client) {
-    alert('Please log in first.');
-    return;
-  }
-
-  if (!navigator.geolocation) {
-    alert('Location is not supported by this browser.');
-    return;
-  }
-
-  if (!confirm(
-    'Start sharing your live location with this customer? Allow location permission and keep this page open.'
-  )) {
-    return;
-  }
-
-  try {
-    notice(
-      'workerBookingsNotice',
-      'Checking booking and getting your GPS location…',
-      'ok'
-    );
-
-    // 1. Confirm that this booking belongs to this worker.
-    const { data: booking, error: bookingError } = await client
-      .from('bookings')
-      .select('id,status,worker_id')
-      .eq('id', bookingId)
-      .eq('worker_id', currentUser.id)
-      .maybeSingle();
-
-    if (bookingError) throw bookingError;
-    if (!booking) {
-      throw new Error('This booking is not assigned to your worker account.');
-    }
-
-    const oldStatus = String(booking.status || '').toLowerCase();
-
-    if (!['accepted', 'on_the_way'].includes(oldStatus)) {
-      throw new Error(
-        'Booking status is ' + oldStatus +
-        '. Accept the booking first.'
-      );
-    }
-
-    // 2. Get an actual GPS position BEFORE showing success.
-    const position = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        resolve,
-        reject,
-        {
-          enableHighAccuracy: true,
-          maximumAge: 0,
-          timeout: 30000
-        }
-      );
-    });
-
-    // 3. Save the first location to Supabase.
-    const saveLocation = async (pos) => {
-      const row = {
-        booking_id: bookingId,
-        worker_id: currentUser.id,
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-        accuracy_m: Math.round(pos.coords.accuracy || 0),
-        updated_at: new Date().toISOString(),
-        sharing: true
-      };
-
-      const { error } = await client
-        .from('worker_live_locations')
-        .upsert(row, { onConflict: 'booking_id' });
-
-      if (error) throw error;
-    };
-
-    await saveLocation(position);
-
-    // 4. Change accepted booking to on_the_way.
-    if (oldStatus === 'accepted') {
-      const { data: updated, error: updateError } = await client
-        .from('bookings')
-        .update({ status: 'on_the_way' })
-        .eq('id', bookingId)
-        .eq('worker_id', currentUser.id)
-        .eq('status', 'accepted')
-        .select('id');
-
-      if (updateError) throw updateError;
-
-      if (!updated || updated.length === 0) {
-        throw new Error(
-          'Location was saved, but booking status did not update. Refresh bookings and check the status.'
-        );
-      }
-    }
-
-    // 5. Stop an older GPS watcher before starting a new one.
-    if (activeLocationWatch !== null) {
-      navigator.geolocation.clearWatch(activeLocationWatch);
-      activeLocationWatch = null;
-    }
-
-    // 6. Keep saving fresh positions while this page stays open.
-    activeLocationWatch = navigator.geolocation.watchPosition(
-      async (pos) => {
-        try {
-          await saveLocation(pos);
-          notice(
-            'workerBookingsNotice',
-            '✅ Live location is being shared. Keep this page open.',
-            'ok'
-          );
-        } catch (err) {
-          console.error('Location save failed:', err);
-          notice(
-            'workerBookingsNotice',
-            'GPS mil raha hai, lekin Supabase mein save nahi hua: ' +
-              err.message,
-            'bad'
-          );
-        }
-      },
-      (err) => {
-        console.error('GPS watcher error:', err);
-        notice(
-          'workerBookingsNotice',
-          'GPS error: ' + err.message +
-            '. Phone location ON karo, browser permission Allow karo, phir Resume location dabao.',
-          'bad'
-        );
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 5000,
-        timeout: 20000
-      }
-    );
-
-    notice(
-      'workerBookingsNotice',
-      '✅ First GPS location saved! Live sharing started. Keep KaamConnect open.',
-      'ok'
-    );
-
-    await loadWorkerBookings();
-
-  } catch (e) {
-    console.error('START WORKER TRIP ERROR:', e);
-
-    let message = e.message || 'Unknown error';
-
-    if (e.code === 1) {
-      message = 'Location permission denied. Chrome site settings mein Location Allow karo.';
-    } else if (e.code === 2) {
-      message = 'Phone ko GPS location nahi mil rahi. Phone Location ON karke open area mein try karo.';
-    } else if (e.code === 3) {
-      message = 'GPS request timed out. Location ON karke dobara try karo.';
-    }
-
-    notice(
-      'workerBookingsNotice',
-      '❌ Location sharing start nahi hui: ' + message,
-      'bad'
-    );
-
-    alert('Location sharing failed:\n' + message);
+    renderWorkers([]);
   }
 }
 
+function populateWorkerFilter() {
+  const filter = $("workerServiceFilter");
+  if (!filter) return;
 
-async function workerArrived(bookingId) {
-  if (!currentUser || !client) return;
+  const previous = filter.value;
 
-  try {
-    // Check that this booking belongs to the logged-in worker.
-    const { data: booking, error: checkError } = await client
-      .from('bookings')
-      .select('id, status, worker_id')
-      .eq('id', bookingId)
-      .eq('worker_id', currentUser.id)
-      .maybeSingle();
-
-    if (checkError) throw checkError;
-
-    if (!booking) {
-      throw new Error(
-        'Booking not found or it is not assigned to your account.'
-      );
-    }
-
-    // Already arrived: no need to update the status again.
-    if (booking.status === 'arrived') {
-      await loadWorkerBookings();
-      alert('You have already marked your arrival.');
-      return;
-    }
-
-    if (booking.status !== 'on_the_way') {
-      throw new Error(
-        'Current booking status is "' + booking.status +
-        '". Start the trip before marking arrival.'
-      );
-    }
-
-    const { data, error } = await client
-      .from('bookings')
-      .update({ status: 'arrived' })
-      .eq('id', bookingId)
-      .eq('worker_id', currentUser.id)
-      .eq('status', 'on_the_way')
-      .select('id');
-
-    if (error) throw error;
-
-    if (!data || data.length === 0) {
-      throw new Error(
-        'Booking was not updated. Refresh your bookings and try again.'
-      );
-    }
-
-    if (activeLocationWatch !== null) {
-      navigator.geolocation.clearWatch(activeLocationWatch);
-      activeLocationWatch = null;
-    }
-
-    await loadWorkerBookings();
-    alert('Arrival marked successfully!');
-
-  } catch (e) {
-    console.error('WORKER ARRIVAL ERROR:', e);
-    alert('Could not mark arrival: ' + e.message);
-  }
-}
-async function trackWorker(bookingId) {
-  if (!currentUser || !client) return alert('Please log in to track your booking.');
-  customerTrackingBookingId=bookingId;
-  navigateTo('tracking');
-  $('trackingSummary').textContent='Getting worker location…';
-  $('trackingMapWrap').classList.add('hidden');
-  hideNotice('trackingNotice');
-  if (customerTrackingTimer) clearInterval(customerTrackingTimer);
-  const refresh=async()=>{
-    try {
-      const {data:booking,error:be}=await client.from('bookings').select('id,worker_id,status,service').eq('id',bookingId).eq('customer_id',currentUser.id).maybeSingle();
-      if (be) throw be;
-      if (!booking) throw new Error('Booking not found.');
-      $('trackingSummary').textContent=(booking.service||'Service')+' · Status: '+String(booking.status||'pending').replaceAll('_',' ').toUpperCase();
-      const {data:loc,error:le}=await client.from('worker_live_locations').select('latitude,longitude,updated_at,sharing').eq('booking_id',bookingId).maybeSingle();
-      if (le) throw le;
-      if (!loc || loc.latitude==null || loc.longitude==null) {
-        $('trackingMapWrap').classList.add('hidden');
-        notice('trackingNotice','Worker location abhi share nahi hui hai. Worker se “Start trip & share location” press karne ko kahen.','ok');
-        return;
-      }
-      const lat=Number(loc.latitude),lng=Number(loc.longitude);
-      $('trackingMap').src='https://www.openstreetmap.org/export/embed.html?bbox='+(lng-0.01)+'%2C'+(lat-0.01)+'%2C'+(lng+0.01)+'%2C'+(lat+0.01)+'&layer=mapnik&marker='+lat+'%2C'+lng;
-      $('openMapLink').href='https://www.google.com/maps?q='+lat+','+lng;
-      $('trackingUpdated').textContent='Last update: '+new Date(loc.updated_at).toLocaleString()+(loc.sharing?' · Live sharing on':' · Sharing stopped');
-      $('trackingMapWrap').classList.remove('hidden');
-      hideNotice('trackingNotice');
-      if (!loc.sharing) notice('trackingNotice','Worker location sharing is currently paused/stopped.','ok');
-    } catch(e) { notice('trackingNotice','Tracking error: '+e.message+' Make sure tracking SQL has been run in Supabase.','bad'); }
-  };
-  await refresh();
-  customerTrackingTimer=setInterval(refresh,10000);
-}
-function stopCustomerTracking() {
-  if (customerTrackingTimer) clearInterval(customerTrackingTimer);
-  customerTrackingTimer=null; customerTrackingBookingId=null; navigateTo('myBookings');
-}
-
-async function checkAdminAccess() {
-  if (!currentUser || !client) return;
-  try {
-    const {data:admin,error}=await client.from('admin_users').select('user_id')
-      .eq('user_id',currentUser.id).maybeSingle();
-    if (error) throw error;
-    if (!admin) { $('adminNavBtn').classList.add('hidden'); $('adminDashboard').innerHTML=''; adminUserId=null; return; }
-    $('adminNavBtn').classList.remove('hidden');
-    if (adminUserId===currentUser.id && $('adminDashboard').dataset.loaded==='true') return;
-    adminUserId=currentUser.id;
-    $('adminDashboard').innerHTML='<div class="grid" id="adminStats"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0"><button class="btn primary" onclick="showAdminWorkers()">Manage workers</button><button class="btn secondary" onclick="showAdminRows()">View bookings</button></div><div id="adminResults"></div>';
-    await loadAdminStats(); $('adminDashboard').dataset.loaded='true';
-  } catch(e) { console.warn('Admin access unavailable:',e.message); $('adminNavBtn').classList.add('hidden'); }
-}
-
-async function loadAdminStats() {
-  const box = $('adminStats');
-  if (!box || !client) return;
-
-  const results = await Promise.all([
-    client.from('bookings').select('id', { count: 'exact', head: true }),
-    client.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
-    client.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'completed'),
-    client.rpc('admin_list_workers')
-  ]);
-
-  if (results.some(r => r.error)) {
-    box.innerHTML = '<div class="empty">Could not load statistics. Check database permissions.</div>';
-    console.error('Admin statistics error:', results.filter(r => r.error));
-    return;
-  }
-
-  const totalWorkers = results[3].data?.length ?? 0;
-  const values = [
-    results[0].count ?? 0,
-    results[1].count ?? 0,
-    results[2].count ?? 0,
-    totalWorkers
+  const categories = [
+    ...new Set(
+      allWorkers.map(worker => worker.service || worker.service_name).filter(Boolean)
+    )
   ];
 
-  box.innerHTML = ['Total bookings', 'Pending', 'Completed', 'Total workers']
-    .map((label, i) =>
-      `<div class="card"><p class="muted">${label}</p><h2>${values[i]}</h2></div>`
-    ).join('');
+  filter.innerHTML =
+    '<option value="">All services</option>' +
+    categories.map(category =>
+      `<option value="${escapeHTML(category)}">${escapeHTML(category)}</option>`
+    ).join("");
+
+  filter.value = previous;
 }
-async function showAdminRows() {
-  const out=$('adminResults'); out.textContent='Loading bookings…';
-  const {data,error}=await client.from('bookings').select('id,customer_name,phone,service,address,booking_date,status,worker_id').order('created_at',{ascending:false}).limit(100);
-  if (error) { out.textContent='Error: '+error.message; return; }
-  out.replaceChildren();
-  if (!data?.length) { out.textContent='No bookings found.'; return; }
-  data.forEach(b=>{
-    const card=document.createElement('div'); card.className='admin-card';
-    const title=document.createElement('h3'); title.textContent=b.service||'Booking'; card.appendChild(title);
-    const details=document.createElement('p'); details.textContent=`${b.customer_name||'Customer'} · ${b.phone||''} · ${b.booking_date||''} · ${b.status||'pending'} · ${b.address||''}`; card.appendChild(details);
-    out.appendChild(card);
+
+function applyWorkerFilters() {
+  const search = ($("workerSearch")?.value || "").trim().toLowerCase();
+  const category = $("workerServiceFilter")?.value || "";
+
+  const filtered = allWorkers.filter(worker => {
+    const name = String(worker.name || worker.full_name || "").toLowerCase();
+    const service = String(worker.service || worker.service_name || "").toLowerCase();
+
+    return (!search || name.includes(search) || service.includes(search)) &&
+      (!category || service === category.toLowerCase());
   });
+
+  renderWorkers(filtered);
 }
-async function showAdminWorkers() {
-  const out=$('adminResults'); out.textContent='Loading workers…';
-  const {data,error}=await client.rpc('admin_list_workers');
-  if (error) { out.textContent='Error: '+error.message; return; }
-  out.replaceChildren();
-  if (!data?.length) { out.textContent='No workers found.'; return; }
-  data.forEach(w=>{
-    const card=document.createElement('div'); card.className='admin-card';
-    const title=document.createElement('h3'); title.textContent=w.full_name||'Worker'; card.appendChild(title);
-    const info=document.createElement('p'); info.textContent=`${w.service||'-'} · ${w.area||'-'} · ${money(w.price)} · ${w.available?'Available':'Unavailable'} · Approval: ${(w.approval_status||'pending').toUpperCase()}`; card.appendChild(info);
-    ['approved','rejected','pending'].forEach(status=>{
-      const btn=document.createElement('button'); btn.textContent=status==='approved'?'Approve':status==='rejected'?'Reject':'Set Pending';
-      btn.disabled=(w.approval_status||'pending')===status;
-      btn.onclick=async()=>{
-        if (!confirm(`Set ${w.full_name} to ${status}?`)) return;
-        btn.disabled=true;
-        try {
-          const {error}=await client.rpc('set_worker_approval',{p_worker_id:w.id,p_status:status});
-          if (error) throw error;
-          await showAdminWorkers(); await loadAdminStats(); await loadWorkers();
-        } catch(e) { alert('Approval update failed: '+e.message); btn.disabled=false; }
-      };
-      card.appendChild(btn);
-    });
-    const av=document.createElement('button'); av.textContent=w.available?'Set unavailable':'Set available';
-    av.onclick=async()=>{
-      av.disabled=true;
-      try {
-        const {data:updated,error}=await client.rpc('admin_set_worker_availability',{worker_uuid:w.id,new_available:!w.available});
-        if (error) throw error;
-        if (updated!==true) throw new Error('Availability change was not confirmed.');
-        await showAdminWorkers(); await loadWorkers();
-      } catch(e) { alert(e.message); av.disabled=false; }
+
+function openWorkerDetail(index) {
+  const worker = allWorkers[Number(index)];
+  if (!worker) return;
+
+  selectedWorker = worker;
+
+  if ($("detailWorkerName")) {
+    $("detailWorkerName").textContent =
+      worker.name || worker.full_name || "Professional";
+  }
+
+  if ($("detailWorkerMeta")) {
+    $("detailWorkerMeta").textContent =
+      [worker.service || worker.service_name, worker.experience]
+        .filter(Boolean).join(" · ");
+  }
+
+  if ($("detailWorker")) {
+    $("detailWorker").textContent = worker.bio || "Home service professional.";
+  }
+
+  const image = imageOrFallback(worker.image_url || worker.photo_url || worker.image);
+
+  if ($("detailWorkerImage")) {
+    $("detailWorkerImage").src = image;
+    $("detailWorkerImage").classList.toggle("hidden", !image);
+  }
+
+  if (worker.service || worker.service_name) {
+    const match = allServices.find(service =>
+      String(service.name || service.category).toLowerCase() ===
+      String(worker.service || worker.service_name).toLowerCase()
+    );
+
+    if (match) selectedService = match;
+  }
+
+  navigateTo("detail");
+}
+
+function loadWorkersForBooking(serviceName) {
+  const select = $("workerSelect");
+  if (!select) return;
+
+  const filtered = allWorkers.filter(worker => {
+    if (!serviceName) return true;
+
+    const workerService = String(worker.service || worker.service_name || "").toLowerCase();
+    return workerService === serviceName.toLowerCase();
+  });
+
+  select.innerHTML =
+    '<option value="">Any available professional</option>' +
+    filtered.map(worker => `
+      <option value="${escapeHTML(worker.id)}">
+        ${escapeHTML(worker.name || worker.full_name || "Professional")}
+      </option>
+    `).join("");
+}
+
+/* =========================================
+   BOOKING FORM
+   ========================================= */
+
+function prepareBookingForm() {
+  if (!currentUser) {
+    setNotice(
+      "bookingNotice",
+      "Booking request submit karne ke liye login karna zaroori hai.",
+      "info"
+    );
+  } else {
+    setNotice("bookingNotice", "");
+  }
+
+  if (selectedService && $("serviceSelect")) {
+    const wanted = selectedService.category || selectedService.name || "";
+    const options = Array.from($("serviceSelect").options);
+
+    const match = options.find(option =>
+      option.value.toLowerCase() === wanted.toLowerCase() ||
+      option.textContent.toLowerCase() === wanted.toLowerCase()
+    );
+
+    if (match) {
+      $("serviceSelect").value = match.value;
+      loadWorkersForBooking(match.value);
+    }
+  }
+
+  if (currentProfile) {
+    if ($("customerName")) {
+      $("customerName").value =
+        currentProfile.full_name || currentUser?.user_metadata?.full_name || "";
+    }
+
+    if ($("customerPhone")) {
+      $("customerPhone").value = currentProfile.phone || "";
+    }
+
+    if ($("address") && currentProfile.address) {
+      $("address").value = currentProfile.address;
+    }
+  }
+}
+
+async function submitBooking(event) {
+  event.preventDefault();
+
+  if (!client || !currentUser) {
+    setNotice("bookingNotice", "Pehle login karo, phir booking request bhejo.", "error");
+    navigateTo("auth");
+    return;
+  }
+
+  const customerName = $("customerName")?.value.trim() || "";
+  const customerPhone = $("customerPhone")?.value.trim() || "";
+  const service = $("serviceSelect")?.value || "";
+  const workerId = $("workerSelect")?.value || null;
+  const address = $("address")?.value.trim() || "";
+  const postalCode = $("postalCode")?.value.trim() || "";
+  const bookingDate = $("bookingDate")?.value || "";
+  const bookingTime = $("bookingTime")?.value || "";
+  const notes = $("notes")?.value.trim() || "";
+
+  if (
+    !customerName || !customerPhone || !service ||
+    !address || !postalCode || !bookingDate || !bookingTime
+  ) {
+    setNotice("bookingNotice", "Saare required fields fill karo.", "error");
+    return;
+  }
+
+  if (!/^[6-9][0-9]{9}$/.test(customerPhone)) {
+    setNotice("bookingNotice", "Valid 10-digit mobile number enter karo.", "error");
+    return;
+  }
+
+  if (!/^[0-9]{6}$/.test(postalCode)) {
+    setNotice("bookingNotice", "Valid 6-digit PIN code enter karo.", "error");
+    return;
+  }
+
+  if (bookingDate < new Date().toLocaleDateString("en-CA")) {
+    setNotice("bookingNotice", "Past date ke liye booking nahi kar sakte.", "error");
+    return;
+  }
+
+  setButtonLoading("bookBtn", true, "Submitting request...");
+
+  try {
+    /*
+      This insert assumes the bookings table contains these columns.
+      Change field names to match your real schema if necessary.
+    */
+    const bookingData = {
+      customer_id: currentUser.id,
+      customer_name: customerName,
+      customer_phone: customerPhone,
+      service: service,
+      worker_id: workerId || null,
+      address: address,
+      postal_code: postalCode,
+      booking_date: bookingDate,
+      booking_time: bookingTime,
+      notes: notes,
+      status: "pending"
     };
-    card.appendChild(av); out.appendChild(card);
-  });
-}
 
-function showFatalMessage(message) {
-  let box=$('appError');
-  if (!box) {
-    box=document.createElement('div'); box.id='appError';
-    box.style.cssText='margin:12px auto;padding:12px;width:calc(100% - 24px);max-width:1120px;background:#fff0ef;color:#a12b27;border-radius:10px;font-size:13px';
-    document.body.insertBefore(box,document.body.firstChild);
-  }
-  box.textContent=message;
-}
-window.addEventListener('error', e => {
-  console.error('KaamConnect JavaScript error:',e.message);
-});
+    const { error } = await client
+      .from("bookings")
+      .insert(bookingData);
 
-async function init() {
-  $('bookingDate').min=today();
-  setAuthMode('login');
-  renderServiceSelect(); renderServices();
-  if (!window.supabase) {
-    showFatalMessage('Supabase library could not load. Basic page navigation should still work, but login and bookings need internet access. Refresh the page or try another network.');
-    return;
-  }
-  try {
-    client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-  } catch(e) {
-    showFatalMessage('Could not initialize Supabase: '+e.message);
-    return;
-  }
-  await loadServices(); renderServiceSelect(); renderServices();
-  try {
-    const {data,error}=await client.auth.getSession();
     if (error) throw error;
-    currentUser=data.session?.user||null;
-updateAccountUI();
-await loadNotifications(); 
-startNotificationsRealtime();
-    client.auth.onAuthStateChange((_event,session)=>{
-  currentUser=session?.user||null;
-  updateAccountUI();
-  loadNotifications();
-  startNotificationsRealtime();
-});
-  } catch(e) {
-    notice('authNotice','Could not restore session: '+e.message,'bad');
+
+    setNotice(
+      "bookingNotice",
+      "Booking request submit ho gayi! My Bookings page par status check kar sakte ho.",
+      "success"
+    );
+
+    $("bookingForm")?.reset();
+    selectedService = null;
+    selectedWorker = null;
+
+    showToast("Booking request submitted.");
+  } catch (error) {
+    console.error("Booking submission failed:", error);
+
+    setNotice(
+      "bookingNotice",
+      "Booking submit nahi hui. Bookings table ke columns aur INSERT RLS policy check karo. " +
+      friendlyError(error),
+      "error"
+    );
+  } finally {
+    setButtonLoading("bookBtn", false);
   }
-  await loadWorkers(); 
-  startBookingRealtime();
 }
-init(); 
-  
-let bookingRealtimeChannel = null;
 
-function startBookingRealtime() {
-  if (!client || bookingRealtimeChannel) return;
+function bookSelectedService() {
+  if (!selectedService) {
+    showToast("Pehle service select karo.");
+    navigateTo("services");
+    return;
+  }
 
-  bookingRealtimeChannel = client
-    .channel('kaamconnect-booking-updates')
-    .on(
-      'postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-        table: 'bookings'
-      },
-      async (payload) => {
-        if (!currentUser) return;
+  navigateTo("booking");
+}
 
-        // Refresh existing booking screens
-        if (typeof refreshBookingViews === 'function') {
-          await refreshBookingViews();
-        } else {
-          if (typeof loadMyBookings === 'function') {
-            await loadMyBookings();
-          }
-          if (typeof loadCustomerDashboard === 'function') {
-            await loadCustomerDashboard();
-          }
-          if (typeof loadWorkerBookings === 'function') {
-            await loadWorkerBookings();
-          }
-        }
+function contactSelectedWorker(method) {
+  const phone = String(selectedWorker?.phone || "").replace(/[^\d+]/g, "");
 
-        // Show a small live-update message
-        let toast = document.getElementById(
-          'bookingRealtimeToast'
-        );
+  if (!phone) {
+    showToast("Is professional ka contact number available nahi hai.");
+    return;
+  }
 
-        if (!toast) {
-          toast = document.createElement('div');
-          toast.id = 'bookingRealtimeToast';
+  if (method === "call") {
+    window.location.href = "tel:" + phone;
+  } else {
+    const digits = phone.replace(/\D/g, "");
+    window.open("https://wa.me/" + digits, "_blank", "noopener,noreferrer");
+  }
+}
 
-          Object.assign(toast.style, {
-            position: 'fixed',
-            bottom: '20px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            background: '#101827',
-            color: '#ffffff',
-            padding: '12px 18px',
-            borderRadius: '10px',
-            zIndex: '99999',
-            maxWidth: '90%',
-            textAlign: 'center',
-            boxShadow: '0 4px 18px #0003'
-          });
+/* =========================================
+   MY BOOKINGS
+   ========================================= */
 
-          document.body.appendChild(toast);
-        }
+async function loadMyBookings() {
+  const container = $("bookingList");
+  if (!container) return;
 
-        toast.textContent =
-          'Booking update received. Your booking details are refreshed.';
-        toast.style.display = 'block';
+  if (!currentUser || !client) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Login required</h3>
+        <p>Please log in to view your bookings.</p>
+        <button class="btn btn-primary" type="button"
+          onclick="navigateTo('auth')">Login →</button>
+      </div>
+    `;
+    return;
+  }
 
-        setTimeout(() => {
-          toast.style.display = 'none';
-        }, 3500);
-      }
-    )
-    .subscribe((status) => {
-      console.log('Booking Realtime:', status);
+  container.textContent = "Loading bookings...";
+
+  try {
+    const { data, error } = await client
+      .from("bookings")
+      .select("*")
+      .eq("customer_id", currentUser.id)
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <h3>No bookings yet</h3>
+          <p class="muted">Choose a service to make your first booking.</p>
+          <button class="btn btn-primary" type="button"
+            onclick="navigateTo('services')">Explore Services →</button>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = data.map(booking => `
+      <article class="booking-card">
+        <div class="row-between">
+          <h3>${escapeHTML(booking.service || "Home Service")}</h3>
+          <span class="status-pill">${escapeHTML(booking.status || "pending")}</span>
+        </div>
+        <p><strong>Date:</strong> ${escapeHTML(booking.booking_date || "Not set")}</p>
+        <p><strong>Time:</strong> ${escapeHTML(booking.booking_time || "Not set")}</p>
+        <p><strong>Address:</strong> ${escapeHTML(booking.address || "Not provided")}</p>
+        ${booking.notes ? `<p><strong>Notes:</strong> ${escapeHTML(booking.notes)}</p>` : ""}
+      </article>
+    `).join("");
+  } catch (error) {
+    console.error("Bookings load failed:", error);
+
+    container.textContent =
+      "Bookings load nahi hui. Table columns aur SELECT RLS policy check karo.";
+  }
+}
+
+/* =========================================
+   WORKER DASHBOARD
+   ========================================= */
+
+async function loadWorkerBookings() {
+  const container = $("workerBookingList");
+  if (!container) return;
+
+  if (!currentUser || !client) {
+    container.textContent = "Worker account se login karo.";
+    return;
+  }
+
+  container.textContent = "Loading assigned requests...";
+
+  try {
+    /*
+      The worker_id filter limits requests to the signed-in worker.
+      RLS on the server must independently enforce this restriction.
+    */
+    const { data, error } = await client
+      .from("bookings")
+      .select("*")
+      .eq("worker_id", currentUser.id)
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">🧰</div>
+          <h3>No assigned requests</h3>
+          <p>Abhi aapke account ko koi booking assign nahi hui.</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = data.map(booking => `
+      <article class="booking-card">
+        <div class="row-between">
+          <h3>${escapeHTML(booking.service || "Home Service")}</h3>
+          <span class="status-pill">${escapeHTML(booking.status || "pending")}</span>
+        </div>
+        <p><strong>Customer:</strong> ${escapeHTML(booking.customer_name || "Customer")}</p>
+        <p><strong>Phone:</strong> ${escapeHTML(booking.customer_phone || "Not provided")}</p>
+        <p><strong>Date:</strong> ${escapeHTML(booking.booking_date || "Not set")}</p>
+        <p><strong>Address:</strong> ${escapeHTML(booking.address || "Not provided")}</p>
+        <p><strong>Notes:</strong> ${escapeHTML(booking.notes || "None")}</p>
+        <p class="muted">Status updates must be implemented with a server-enforced worker policy.</p>
+      </article>
+    `).join("");
+  } catch (error) {
+    console.error("Worker dashboard load failed:", error);
+
+    container.textContent =
+      "Requests load nahi hui. Worker account mapping aur RLS policies check karo.";
+  }
+}
+
+/* =========================================
+   EVENT DELEGATION
+   ========================================= */
+
+document.addEventListener("click", function (event) {
+  const serviceButton = event.target.closest("[data-service-index]");
+  if (serviceButton) {
+    openServiceDetail(serviceButton.dataset.serviceIndex);
+    return;
+  }
+
+  const homeServiceButton = event.target.closest("[data-home-service-index]");
+  if (homeServiceButton) {
+    openServiceDetail(homeServiceButton.dataset.homeServiceIndex);
+    return;
+  }
+
+  const workerButton = event.target.closest("[data-worker-index]");
+  if (workerButton) {
+    openWorkerDetail(workerButton.dataset.workerIndex);
+    return;
+  }
+
+  const categoryButton = event.target.closest("[data-service-category]");
+  if (categoryButton) {
+    filterServices(categoryButton.dataset.serviceCategory);
+  }
+});
+
+document.addEventListener("input", function (event) {
+  if (event.target.id === "workerSearch") {
+    applyWorkerFilters();
+  }
+});
+
+document.addEventListener("change", function (event) {
+  if (event.target.id === "workerServiceFilter") {
+    applyWorkerFilters();
+  }
+});
+
+document.addEventListener("submit", function (event) {
+  if (event.target.id === "bookingForm") {
+    submitBooking(event);
+  }
+});
+
+/* =========================================
+   FINAL INITIALIZATION
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+  loadServices();
+  loadWorkers();
+
+  const backToTop = $("backToTop");
+
+  if (backToTop) {
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-}
+  }
+});
 </script>
+
 </body>
 </html>
