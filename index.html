@@ -2438,6 +2438,7 @@ function renderWorkers(workers) {
   }).join("");
 }
 
+
 async function loadWorkers() {
   const notice = $("workerNotice");
 
@@ -2451,19 +2452,28 @@ async function loadWorkers() {
 
   try {
     const { data, error } = await client
-      .from("workers")
+      .from("worker_profiles")
       .select("*")
+      .eq("available", true)
+      .eq("approval_status", "approved")
       .limit(100);
 
     if (error) throw error;
 
-    allWorkers = data || [];
+    allWorkers = (data || []).map((worker) => ({
+      ...worker,
+      name: worker.full_name,
+      image_url: worker.photo_url,
+      bio: worker.area || "",
+      experience: "",
+    }));
+
     renderWorkers(allWorkers);
 
     if (notice) {
       notice.textContent = allWorkers.length
         ? ""
-        : "Abhi koi professional available nahi hai.";
+        : "Abhi koi approved professional available nahi hai.";
     }
 
     populateWorkerFilter();
@@ -2472,13 +2482,12 @@ async function loadWorkers() {
 
     if (notice) {
       notice.textContent =
-        "Professionals load nahi hue. Workers table aur RLS policies check karo.";
+        "Professionals load nahi hue: " + error.message;
     }
 
     renderWorkers([]);
   }
-}
-
+} 
 function populateWorkerFilter() {
   const filter = $("workerServiceFilter");
   if (!filter) return;
