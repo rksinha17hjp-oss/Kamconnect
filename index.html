@@ -832,7 +832,21 @@ img {
 <button class="btn secondary" onclick="navigateTo('services')">Services</button>
 <button class="btn secondary" onclick="navigateTo('workers')">Workers</button>
 <button class="btn secondary" onclick="navigateTo('booking')">Book</button>
-<button class="btn secondary" onclick="navigateTo('myBookings')">Bookings</button>
+<button class="btn secondary" onclick="navigateTo('myBookings')">Bookings</button> 
+  
+<button
+  id="notificationBell"
+  class="btn secondary"
+  type="button"
+  onclick="navigateTo('notifications')"
+  aria-label="Notifications">
+  🔔 Notifications
+  <span
+    id="notificationCount"
+    class="hidden"
+    style="display:inline-block;min-width:18px;padding:2px 5px;border-radius:10px;background:#dc2626;color:white;font-size:12px;font-weight:bold">
+  </span>
+</button> 
 <button class="btn secondary" onclick="navigateTo('profile')">Profile</button>
 <button id="workerNavBtn" class="btn secondary hidden" onclick="navigateTo('worker')">Worker</button>
 <button id="adminNavBtn" class="btn secondary hidden" onclick="navigateTo('admin')">Admin</button>
@@ -1207,7 +1221,11 @@ function today() {
 
 function navigateTo(name) {
   document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-  const target = $('screen-' + name);
+  const target = $('screen-' + name); 
+    const notificationsSection = $('notificationsSection');
+  if (notificationsSection) {
+    notificationsSection.classList.toggle('hidden', name !== 'notifications');
+  }
   if (target) target.classList.add('active');
 
   document.querySelectorAll('#mainNav button[onclick]').forEach(btn => {
@@ -1227,6 +1245,7 @@ function navigateTo(name) {
   if (name === 'admin') checkAdminAccess();
   if (name === 'profile') updateProfile(); 
   if (name === 'dashboard') loadCustomerDashboard();
+  if (name === 'notifications') loadNotifications();
 }
 function showAuth() { navigateTo('profile'); if (currentUser) updateProfile(); }
 function updateProfile() {
@@ -1741,6 +1760,7 @@ function showBookingHistory() {
 async function loadNotifications() {
   const section = $('notificationsSection');
   const listBox = $('notificationsList');
+  const countBadge = $('notificationCount');
 
   if (!section || !listBox) return;
 
@@ -1748,6 +1768,11 @@ async function loadNotifications() {
     section.classList.add('hidden');
     listBox.innerHTML =
       '<p class="muted">Login karke notifications dekhein.</p>';
+
+    if (countBadge) {
+      countBadge.textContent = '';
+      countBadge.classList.add('hidden');
+    }
     return;
   }
 
@@ -1764,6 +1789,15 @@ async function loadNotifications() {
     if (error) throw error;
 
     const rows = data || [];
+    const unreadCount = rows.filter(n => !n.is_read).length;
+
+    if (countBadge) {
+      countBadge.textContent = unreadCount > 99
+        ? '99+'
+        : String(unreadCount);
+
+      countBadge.classList.toggle('hidden', unreadCount === 0);
+    }
 
     if (rows.length === 0) {
       listBox.innerHTML =
@@ -1776,6 +1810,15 @@ async function loadNotifications() {
           <p class="muted">
             ${safe(new Date(n.created_at).toLocaleString())}
           </p>
+          <p class="muted">
+            Status: ${n.is_read ? 'Read' : 'Unread'}
+          </p>
+          <button
+            class="btn secondary"
+            type="button"
+            onclick="markNotificationRead('${n.id}', ${!n.is_read})">
+            ${n.is_read ? 'Mark as Unread' : 'Mark as Read'}
+          </button>
         </article>
       `).join('');
     }
@@ -1789,6 +1832,59 @@ async function loadNotifications() {
     );
   }
 }
+
+async function markNotificationRead(notificationId, isRead) {
+  if (!currentUser || !client) return;
+
+  try {
+    const { error } = await client
+      .from('notifications')
+      .update({ is_read: isRead })
+      .eq('id', notificationId)
+      .eq('recipient_id', currentUser.id);
+
+    if (error) throw error;
+
+    await loadNotifications();
+  } catch (e) {
+    notice(
+      'notificationsNotice',
+      'Notification update nahi hui: ' + e.message,
+      'bad'
+    );
+  }
+}
+
+let notificationsRealtimeChannel = null;
+function startNotificationsRealtime() {
+  if (!client || !currentUser) {
+    if (notificationsRealtimeChannel && client) {
+      client.removeChannel(notificationsRealtimeChannel);
+    }
+    notificationsRealtimeChannel = null;
+    return;
+  }
+
+  if (notificationsRealtimeChannel) {
+    client.removeChannel(notificationsRealtimeChannel);
+  }
+
+  notificationsRealtimeChannel = client
+    .channel('kaamconnect-notifications-' + currentUser.id)
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'notifications',
+        filter: 'recipient_id=eq.' + currentUser.id
+      },
+      () => {
+        loadNotifications();
+      }
+    )
+    .subscribe();
+} 
 async function loadMyBookings() {
   if (!currentUser) {
     $('bookingList').innerHTML =
@@ -2540,11 +2636,13 @@ async function init() {
     if (error) throw error;
     currentUser=data.session?.user||null;
 updateAccountUI();
-await loadNotifications();
+await loadNotifications(); 
+startNotificationsRealtime();
     client.auth.onAuthStateChange((_event,session)=>{
   currentUser=session?.user||null;
   updateAccountUI();
   loadNotifications();
+  startNotificationsRealtime();
 });
   } catch(e) {
     notice('authNotice','Could not restore session: '+e.message,'bad');
