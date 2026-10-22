@@ -353,14 +353,25 @@ async function useMyLocation() {
         }
 
         toast("Address found! Open booking to check it.");
+ 
+} catch (error) {
+  console.error("Location lookup error:", error);
 
-      } catch (error) {
-        console.error("Location lookup error:", error);
+  const fallbackAddress =
+    "GPS coordinates: " +
+    latitude.toFixed(6) +
+    ", " +
+    longitude.toFixed(6);
 
-        toast(
-          "Could not find your address. Please enter it manually."
-        );
-      }
+  sessionStorage.setItem("kc_detected_address", fallbackAddress);
+
+  const addressInput = $("address");
+  if (addressInput && !addressInput.value.trim()) {
+    addressInput.value = fallbackAddress;
+  }
+
+  toast("GPS saved. Please add your house and street address.");
+}   
     },
 
     (err) => {
