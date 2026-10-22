@@ -118,7 +118,36 @@ function go(name){const target=$("screen-"+name);if(!target){if(name==="support"
 function support(){toast("Support: add your customer support email/phone in the project settings.");}
 function imgFor(s){return s.image_url||("./"+(s.image_file||"home-cleaning.jpg"))}
 function normalizeService(row){return {id:row.id,name:row.name,category:row.category||"Other",description:row.description||"",icon:row.icon||"✧",image_url:row.image_url||null,image_file:row.image_file||null,starting_price:Number(row.starting_price||0),duration_minutes:Number(row.duration_minutes||60),active:row.active!==false}}
-async function loadData(){services=serviceSeed.map((s,i)=>({id:"local-"+i,name:s[0],category:s[1],description:s[2],icon:s[3],image_file:s[4],starting_price:s[5],duration_minutes:60,active:true}));if(sb){try{const {data,error}=await sb.from("kc_services").select("*").eq("active",true).order("sort_order");if(error)throw error;if(data&&data.length)services=data.map(normalizeService)}catch(e){console.warn("Services query:",e.message)}try{const {data,error}=await sb.from("kc_worker_profiles").select("id,user_id,full_name,profession,bio,avatar_url,experience_years,service_area,verified,available,rating,review_count,starting_price").eq("available",true).limit(30);if(error)throw error;workers=data||[]}catch(e){console.warn("Worker query:",e.message)}}renderHome();renderServices();renderWorkers();renderChips();refreshAuth();$("year").textContent=new Date().getFullYear()}
+async function loadData(){services=serviceSeed.map((s,i)=>({id:"local-"+i,name:s[0],category:s[1],description:s[2],icon:s[3],image_file:s[4],starting_price:s[5],duration_minutes:60,active:true}));if(sb){try{const {data,error}=await sb.from("kc_services").select("*").eq("active",true).order("sort_order");if(error)throw error;if(data&&data.length)services=data.map(normalizeService)}catch(e){console.warn("Services query:",e.message)}
+try{
+  const {data,error}=await sb
+    .from("public_worker_directory")
+    .select("id,full_name,service,price,area,postal_code,photo_url,available")
+    .eq("available",true)
+    .limit(30);
+
+  if(error)throw error;
+
+  workers=(data||[]).map(w=>({
+    id:w.id,
+    full_name:w.full_name,
+    profession:w.service,
+    bio:"Local home-service professional",
+    avatar_url:w.photo_url,
+    experience_years:null,
+    service_area:w.area,
+    verified:true,
+    available:w.available,
+    rating:null,
+    review_count:0,
+    starting_price:w.price,
+    postal_code:w.postal_code
+  }));
+
+}catch(e){
+  console.warn("Worker query:",e.message);
+}}
+renderHome();renderServices();renderWorkers();renderChips();refreshAuth();$("year").textContent=new Date().getFullYear()}
 function renderChips(){const html=categories.map(c=>`<button class="chip ${c===activeCategory?"active":""}" onclick="setCategory('${esc(c)}')">${esc(c)}</button>`).join("");$("homeChips").innerHTML=html;$("serviceChips").innerHTML=html}
 function setCategory(c){activeCategory=c;renderChips();renderServices();go("services")}
 function serviceCard(s,i){return `<article class="service-row" style="--card-bg:${palette[i%palette.length]}" onclick="openService('${esc(s.id)}')"><img src="${esc(imgFor(s))}" alt="${esc(s.name)}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=500&q=80'"><div><h3>${esc(s.name)}</h3><p>${esc(s.description)}</p><div class="service-meta"><span>From ${money(s.starting_price)}</span><span>↗ ${esc(s.category)}</span></div></div><button class="arrow" aria-label="Open ${esc(s.name)}" onclick="event.stopPropagation();openService('${esc(s.id)}')">›</button></article>`}
