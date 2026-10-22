@@ -234,7 +234,45 @@ function viewWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(!w
 function bookWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w)currentWorker=w;const s=services.find(s=>(w?.profession||"").toLowerCase().includes(s.category.toLowerCase()))||services[0];if(s){currentService=s;currentPlan="Classic";renderDetail();go("detail");toast("Worker selected where compatible")}}
 function callWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w?.phone)location.href="tel:"+w.phone;else toast("Worker contact is not published.")}
 function messageWorker(id){toast("Messaging is not configured yet. Use your support channel or call if contact is available.")}
-async function useMyLocation(){if(!navigator.geolocation){toast("Location is not supported by this browser");return}navigator.geolocation.getCurrentPosition(pos=>{const {latitude,longitude}=pos.coords;toast("Location received: "+latitude.toFixed(3)+", "+longitude.toFixed(3));const q=$("address");if(q&&!q.value.trim())q.value="Location coordinates: "+latitude.toFixed(6)+", "+longitude.toFixed(6)+" (please add house/street details)";},err=>toast(err.code===1?"Location permission denied. You can type your address instead.":"Unable to get location. Please enter your address manually."),{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
+
+async function useMyLocation() {
+  if (!navigator.geolocation) {
+    toast("Location is not supported by this browser");
+    return;
+  }
+
+  toast("Getting your location...");
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const latitude = pos.coords.latitude;
+      const longitude = pos.coords.longitude;
+
+      const addressInput = $("address");
+
+      if (addressInput) {
+        addressInput.value =
+          "Latitude: " + latitude.toFixed(6) +
+          ", Longitude: " + longitude.toFixed(6) +
+          " (Please add house, street and area details)";
+      }
+
+      toast("Location added! Please complete your address.");
+    },
+    (err) => {
+      toast(
+        err.code === 1
+          ? "Location permission denied. Please allow location access."
+          : "Unable to get location. Please enter your address manually."
+      );
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 60000
+    }
+  );
+}
 async function trackBooking(id){trackingBookingId=id;go("tracking");const otp=window.sessionStorage?sessionStorage.getItem("kc_otp_"+id):null;$("trackingOtpValue").textContent=otp||"••••••";if(sb){try{const {data,error}=await sb.from("kc_bookings").select("*").eq("id",id).single();if(error)throw error;$("trackingBooking").innerHTML=`<strong>${esc(data.service_name||"Service booking")}</strong><p>${esc(data.service_date||"")} · ${esc((data.start_time||"").slice(0,5))}</p><p>${esc(data.address||"")}</p><p>Status: ${esc(data.status||"")}</p>`;$("arrivalText").textContent=data.worker_id?"Waiting for worker GPS update…":"A professional has not been assigned yet."}catch(e){$("trackingBooking").textContent="Booking details unavailable: "+e.message}}}
 function initTrackingMap(){if(!window.L||mapInstance)return;const el=$("trackingMap");if(!el||!el.isConnected)return;mapInstance=L.map(el,{zoomControl:false}).setView([25.5941,85.1376],13);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(mapInstance);setTimeout(()=>mapInstance?.invalidateSize(),250);if(sb&&trackingBookingId)subscribeTracking(trackingBookingId)}
 async function subscribeTracking(id){if(!sb||!id)return;if(locationChannel)sb.removeChannel(locationChannel);try{const {data,error}=await sb.from("kc_worker_locations").select("latitude,longitude,updated_at,worker_id").eq("booking_id",id).order("updated_at",{ascending:false}).limit(1);if(!error&&data?.[0])updateWorkerMarker(data[0]);locationChannel=sb.channel("tracking-"+id).on("postgres_changes",{event:"*",schema:"public",table:"kc_worker_locations",filter:"booking_id=eq."+id},payload=>{if(payload.new)updateWorkerMarker(payload.new)}).subscribe()}catch(e){console.warn(e.message)}}
