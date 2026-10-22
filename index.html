@@ -417,11 +417,38 @@ function refreshAuth(){if(sb)sb.auth.getUser().then(({data})=>{user=data.user||n
 async function renderProfile(){
  const e=$("profileContent"),links=$("roleDashboardLinks");
  if(!user){e.innerHTML='<div class="profile-hero"><div class="profile-avatar">🌸</div><div><h2 style="color:#fff;margin:0 0 5px">Welcome to KaamConnect</h2><div class="tiny" style="color:#eee5ff">Your home-care companion ✨</div></div></div><div class="empty" style="margin-top:15px">Sign in to manage your bookings and preferences.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(&quot;auth&quot;)">Sign in / Create account</button></div>';if(links){links.classList.add("hidden");links.innerHTML=""}return}
- let role="customer";
- try{if(sb){const {data}=await sb.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();if(data)role="admin";else{let {data:wp}=await sb.from("kc_worker_profiles").select("id,profession,verified,available").eq("user_id",user.id).maybeSingle();if(!wp){const fallback=await sb.from("worker_profiles").select("id,service,available,approval_status").eq("id",user.id).maybeSingle();wp=fallback.data;if(!wp){const byOwner=await sb.from("worker_profiles").select("id,service,available,approval_status").eq("user_id",user.id).maybeSingle();wp=byOwner.data}}if(wp)role="worker"}}}catch(err){
-  console.warn("Role lookup:",err.message);
-  alert("Role lookup failed: " + err.message);
- }
+ 
+let role = "customer";
+
+try {
+  if (sb) {
+    const { data: adminData, error: adminError } = await sb
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (adminError) {
+      console.warn("Admin role lookup:", adminError.message);
+    } else if (adminData) {
+      role = "admin";
+    } else {
+      const { data: workerData, error: workerError } = await sb
+        .from("kc_worker_profiles")
+        .select("id, user_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (workerError) {
+        console.warn("Worker role lookup:", workerError.message);
+      } else if (workerData) {
+        role = "worker";
+      }
+    }
+  }
+} catch (err) {
+  console.warn("Role lookup:", err.message);
+}
  const name=user.user_metadata?.full_name||user.email?.split("@")[0]||"KaamConnect Member";
  e.innerHTML=`<div class="profile-hero"><div class="profile-avatar">${esc(name.trim().charAt(0).toUpperCase()||"K")}</div><div style="min-width:0"><h2 style="color:#fff;margin:0 0 5px">${esc(name)} 🌸</h2><div class="tiny" style="color:#eee5ff;overflow-wrap:anywhere">${esc(user.email||"")}</div><span class="verified" style="margin-top:9px">${esc(role.toUpperCase())} ACCOUNT</span></div></div><div class="summary-band"><div>✦ <small>Account status</small><strong>Signed in</strong></div><div>♡ <small>Member since</small><strong>${user.created_at?new Date(user.created_at).toLocaleDateString():"KaamConnect member"}</strong></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn btn-light" onclick="go('bookings')">📋 My bookings</button><button class="btn btn-outline" onclick="signOut()">Sign out</button></div>`;
 if (links) {
