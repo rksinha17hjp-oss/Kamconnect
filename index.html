@@ -146,7 +146,51 @@ function money(n){return new Intl.NumberFormat("en-IN",{style:"currency",currenc
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3000)}
 function notice(id,msg,type="info"){const e=$(id);if(!e)return;e.className="notice show "+type;e.textContent=msg}
 function hideNotice(id){if($(id))$(id).className="notice"}
-function go(name){const target=$("screen-"+name);if(!target){if(name==="support"){support();return}return}document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));target.classList.add("active");document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.toggle("active",b.dataset.go===name));window.scrollTo({top:0,behavior:"smooth"});if(name==="bookings")loadBookings();if(name==="profile")renderProfile();if(name==="workers")renderWorkers();if(name==="tracking")setTimeout(initTrackingMap,150);if(name==="admin"){loadAdminWorkers();loadAdminBookings()}if(name==="worker")loadWorkerDashboard()}
+
+function go(name) {
+  const target = $("screen-" + name);
+
+  if (!target) {
+    if (name === "support") {
+      support();
+      return;
+    }
+    return;
+  }
+
+  document.querySelectorAll(".screen").forEach(s =>
+    s.classList.remove("active")
+  );
+
+  target.classList.add("active");
+
+  document.querySelectorAll(".bottom-nav button").forEach(b =>
+    b.classList.toggle("active", b.dataset.go === name)
+  );
+
+  if (name === "checkout") {
+    const savedAddress = sessionStorage.getItem("kc_detected_address");
+    const addressInput = $("address");
+
+    if (savedAddress && addressInput && !addressInput.value.trim()) {
+      addressInput.value = savedAddress;
+    }
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (name === "bookings") loadBookings();
+  if (name === "profile") renderProfile();
+  if (name === "workers") renderWorkers();
+  if (name === "tracking") setTimeout(initTrackingMap, 150);
+
+  if (name === "admin") {
+    loadAdminWorkers();
+    loadAdminBookings();
+  }
+
+  if (name === "worker") loadWorkerDashboard();
+}
 function support(){toast("Support: add your customer support email/phone in the project settings.");}
 function imgFor(s){return s.image_url||("./"+(s.image_file||"home-cleaning.jpg"))}
 function normalizeService(row){return {id:row.id,name:row.name,category:row.category||"Other",description:row.description||"",icon:row.icon||"✧",image_url:row.image_url||null,image_file:row.image_file||null,starting_price:Number(row.starting_price||0),duration_minutes:Number(row.duration_minutes||60),active:row.active!==false}}
@@ -281,7 +325,6 @@ async function useMyLocation() {
       const latitude = pos.coords.latitude;
       const longitude = pos.coords.longitude;
       const addressInput = $("address");     
-sessionStorage.setItem("kc_detected_address", "");
       try {
         const url =
           "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
