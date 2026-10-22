@@ -443,6 +443,7 @@ if (links) {
     links.classList.add("hidden");
     links.innerHTML = "";
   }
+} 
 }
 async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHTML='<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';return}if(!sb){el.innerHTML='<div class="empty">Supabase is not configured.</div>';return}el.innerHTML='<div class="empty">Loading your bookings…</div>';try{const {data,error}=await sb.from("kc_bookings")
   .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
