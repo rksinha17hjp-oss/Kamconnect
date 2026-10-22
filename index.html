@@ -217,7 +217,19 @@ async function loadData(){
         .order("sort_order");
 
       if(error)throw error;
-      if(data&&data.length)services=data.map(normalizeService);
+      if (data && data.length) {
+  services = data.map((row, i) => {
+    const normalized = normalizeService(row);
+    const local = serviceSeed.find(
+      s => s[0].toLowerCase() === normalized.name.toLowerCase()
+    );
+
+    return {
+      ...normalized,
+      image_file: local ? local[4] : normalized.image_file
+    };
+  });
+      }
 
     }catch(e){
       console.warn("Services query:",e.message);
