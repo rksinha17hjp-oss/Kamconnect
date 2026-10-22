@@ -418,6 +418,73 @@ h1, h2, h3 {
     height: 53%;
   }
 }
+
+
+/* FINAL FIX — preserve the original custom fonts and reference homepage */
+@font-face {
+  font-family: "Improbable";
+  src: url("./Improbable.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: "Impressum";
+  src: url("./Impressum.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+/* The later DM Sans rule was overriding these custom font settings. */
+body { font-family: "Impressum", "DM Sans", sans-serif !important; }
+#screen-home,
+#screen-home h1,
+#screen-home h2,
+#screen-home h3,
+#screen-home .eyebrow,
+#screen-home .tiny,
+#screen-home .welcome-profile,
+#screen-home .cleaning-badge,
+#screen-home .cleaning-discount {
+  font-family: "Improbable", "DM Sans", sans-serif !important;
+}
+#screen-home input,
+#screen-home button,
+#screen-home select,
+#screen-home textarea,
+#screen-home .chip,
+#screen-home .search input,
+#screen-home .btn {
+  font-family: "Impressum", "DM Sans", sans-serif !important;
+}
+.brand { font-family: "Improbable", "Manrope", sans-serif !important; }
+
+/* Reference-like spacing on small screens */
+#screen-home { background: #faf9f3; }
+#screen-home .home-welcome { margin: 5px 0 25px; }
+#screen-home .home-heading { margin-bottom: 0; }
+#screen-home .home-heading h1 {
+  font-size: clamp(35px, 8.4vw, 48px) !important;
+  line-height: 1.08;
+  letter-spacing: -1.2px;
+  margin: 0 0 22px;
+}
+#screen-home .home-heading h1 em { font-style: italic; font-weight: 600; }
+#screen-home .search-row { margin: 0 0 16px; }
+#screen-home .search { min-height: 58px; border-radius: 999px; }
+#screen-home .chips { margin-bottom: 10px; }
+#screen-home .cleaning-banner {
+  min-height: 420px;
+  border-radius: 30px;
+  background: linear-gradient(140deg, #dff4e7, #eaf4dc);
+}
+#screen-home .cleaning-copy .btn { position: relative; z-index: 3; }
+#screen-home .cleaning-image { overflow: hidden; }
+#screen-home .cleaning-image img { object-fit: contain; object-position: bottom right; }
+@media (max-width: 420px) {
+  #screen-home .home-heading h1 { font-size: clamp(34px, 8.5vw, 40px) !important; }
+  #screen-home .cleaning-banner { min-height: 390px; }
+}
+
 </style>
 </head>
 <body>
