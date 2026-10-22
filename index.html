@@ -332,9 +332,27 @@ async function useMyLocation() {
           "&lon=" +
           encodeURIComponent(longitude);
 
-        const response = await fetch(url, {
-          headers: { Accept: "application/json" }
-        });
+      const response = await fetch(url);
+
+if (!response.ok) {
+  throw new Error("Address service unavailable");
+}
+
+const result = await response.json();
+
+if (!result || !result.display_name) {
+  throw new Error("Address not found");
+}
+
+const address = result.display_name;
+sessionStorage.setItem("kc_detected_address", address);
+
+const addressInput = $("address");
+if (addressInput) {
+  addressInput.value = address;
+}
+
+toast("Address added! Please check it.");
 
         if (!response.ok) {
           throw new Error("Address lookup failed");
