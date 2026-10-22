@@ -311,20 +311,19 @@ function bookWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w)
 function callWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w?.phone)location.href="tel:"+w.phone;else toast("Worker contact is not published.")}
 function messageWorker(id){toast("Messaging is not configured yet. Use your support channel or call if contact is available.")}
 
-
 async function useMyLocation() {
   if (!navigator.geolocation) {
     toast("Location is not supported by this browser");
     return;
   }
 
-  toast("Getting your address...");
+  toast("Getting your location...");
 
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       const latitude = pos.coords.latitude;
       const longitude = pos.coords.longitude;
-      const addressInput = $("address");     
+
       try {
         const url =
           "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
@@ -332,51 +331,38 @@ async function useMyLocation() {
           "&lon=" +
           encodeURIComponent(longitude);
 
-      const response = await fetch(url);
-
-if (!response.ok) {
-  throw new Error("Address service unavailable");
-}
-
-const result = await response.json();
-
-if (!result || !result.display_name) {
-  throw new Error("Address not found");
-}
-
-const address = result.display_name;
-sessionStorage.setItem("kc_detected_address", address);
-
-const addressInput = $("address");
-if (addressInput) {
-  addressInput.value = address;
-}
-
-toast("Address added! Please check it.");
+        const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error("Address lookup failed");
+          throw new Error("Address service unavailable");
         }
 
         const result = await response.json();
-        const address = result.display_name;
-sessionStorage.setItem("kc_detected_address", address);
-      if (addressInput && address) {
-          addressInput.value = address;
-          toast("Address added! Please check it.");
-        } else {
-          toast("Address not found. Please enter it manually.");
-        }
-      } catch (error) {
-        if (addressInput) {
-          addressInput.value =
-            "Latitude: " + latitude.toFixed(6) +
-            ", Longitude: " + longitude.toFixed(6);
+
+        if (!result || !result.display_name) {
+          throw new Error("Address not found");
         }
 
-        toast("Address lookup failed. Please enter your full address.");
+        const address = result.display_name;
+
+        sessionStorage.setItem("kc_detected_address", address);
+
+        const addressInput = $("address");
+        if (addressInput) {
+          addressInput.value = address;
+        }
+
+        toast("Address found! Open booking to check it.");
+
+      } catch (error) {
+        console.error("Location lookup error:", error);
+
+        toast(
+          "Could not find your address. Please enter it manually."
+        );
       }
     },
+
     (err) => {
       toast(
         err.code === 1
@@ -384,6 +370,7 @@ sessionStorage.setItem("kc_detected_address", address);
           : "Unable to get location. Please enter your address manually."
       );
     },
+
     {
       enableHighAccuracy: true,
       timeout: 15000,
