@@ -706,7 +706,9 @@ function go(name) {
   if (name === "worker") loadWorkerDashboard();
 }
 function support(){toast("Support: add your customer support email/phone in the project settings.");}
-function imgFor(s){return s.image_url||("./"+(s.image_file||"home-cleaning.jpg"))}
+function imgFor(s){
+  return s.image_url || (s.image_file ? "./" + s.image_file : "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=85");
+}
 function normalizeService(row){return {id:row.id,name:row.name,category:row.category||"Other",description:row.description||"",icon:row.icon||"✧",image_url:row.image_url||null,image_file:row.image_file||null,starting_price:Number(row.starting_price||0),duration_minutes:Number(row.duration_minutes||60),active:row.active!==false}}
 
 async function loadNotifications() {
