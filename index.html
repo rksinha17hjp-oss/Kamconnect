@@ -319,7 +319,62 @@ async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHT
 function renderWorkersInto(id,list){const el=$(id);if(!el)return;if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">No worker profiles are available yet. Add real worker profiles after enabling the worker registration workflow.</div>';return}el.innerHTML=list.map(w=>`<article class="worker-card"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><span class="verified">${w.verified?"✓ Verified":"Professional"}</span><h3>${esc(w.full_name||"Worker")}</h3><div class="tiny">${esc(w.profession||"Service professional")}</div><div class="tiny">★ ${w.rating||"—"} · ${w.review_count||0} reviews</div><div class="tiny">${w.experience_years?esc(w.experience_years)+" years experience":"Experience not listed"}</div><div class="price" style="margin-top:8px">${w.starting_price?money(w.starting_price):"Quote on request"}</div><button class="btn btn-light" onclick="viewWorker('${esc(w.id)}')">View profile</button><button class="btn btn-primary" onclick="bookWorker('${esc(w.id)}')">Book worker</button></article>`).join("")}
 function renderWorkers(){const q=($("workerSearch")?.value||"").toLowerCase();renderWorkersInto("workerList",workers.filter(w=>((w.full_name||"")+" "+(w.profession||"")+" "+(w.service_area||"")).toLowerCase().includes(q)))}
 function viewWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(!w){toast("Worker not found");return}currentWorker=w;const s=services.find(s=>(w.profession||"").toLowerCase().includes(s.category.toLowerCase()))||services[0];if(s)currentService=s;renderDetail();$("workerInlineArea").innerHTML=workerInline(w);go("detail")}
-function bookWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w)currentWorker=w;const s=services.find(s=>(w?.profession||"").toLowerCase().includes(s.category.toLowerCase()))||services[0];if(s){currentService=s;currentPlan="Classic";renderDetail();go("detail");toast("Worker selected where compatible")}}
+
+function bookWorker(id) {
+  const w = workers.find(x => String(x.id) === String(id));
+
+  if (!w) {
+    toast("Worker not found. Please refresh and try again.");
+    return;
+  }
+
+  currentWorker = w;
+
+  const profession = String(w.profession || "").trim().toLowerCase();
+
+  const serviceKeywords = {
+    "cleaning": ["cleaning"],
+    "plumbing": ["plumb", "plumber"],
+    "electrical": ["electric", "electrician"],
+    "ac & appliances": ["ac", "appliance", "refrigerator", "washing machine", "geyser", "water purifier"],
+    "handyman": ["handyman"],
+    "carpentry": ["carpent", "carpenter"],
+    "painting": ["paint", "painter"],
+    "it support": ["it support", "computer", "technical support"],
+    "pest control": ["pest"]
+  };
+
+  let s = services.find(service => {
+    const category = String(service.category || "").toLowerCase();
+    const name = String(service.name || "").toLowerCase();
+
+    return (
+      name === profession ||
+      category === profession ||
+      (serviceKeywords[category] || []).some(keyword =>
+        profession.includes(keyword) || keyword.includes(profession)
+      )
+    );
+  });
+
+  if (!s) {
+    s = services.find(service =>
+      String(service.name || "").toLowerCase() === profession
+    );
+  }
+
+  if (!s) {
+    toast("Worker selected, but matching service was not found. Please choose the service manually.");
+    go("services");
+    return;
+  }
+
+  currentService = s;
+  currentPlan = "Classic";
+  renderDetail();
+  go("detail");
+  toast("Worker and matching service selected!");
+}
 function callWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w?.phone)location.href="tel:"+w.phone;else toast("Worker contact is not published.")}
 function messageWorker(id){toast("Messaging is not configured yet. Use your support channel or call if contact is available.")}
 
