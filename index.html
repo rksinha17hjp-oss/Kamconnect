@@ -267,34 +267,59 @@ function bookWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w)
 function callWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(w?.phone)location.href="tel:"+w.phone;else toast("Worker contact is not published.")}
 function messageWorker(id){toast("Messaging is not configured yet. Use your support channel or call if contact is available.")}
 
+
 async function useMyLocation() {
   if (!navigator.geolocation) {
     toast("Location is not supported by this browser");
     return;
   }
 
-  toast("Getting your location...");
+  toast("Getting your address...");
 
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       const latitude = pos.coords.latitude;
       const longitude = pos.coords.longitude;
-
       const addressInput = $("address");
 
-      if (addressInput) {
-        addressInput.value =
-          "Latitude: " + latitude.toFixed(6) +
-          ", Longitude: " + longitude.toFixed(6) +
-          " (Please add house, street and area details)";
-      }
+      try {
+        const url =
+          "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
+          encodeURIComponent(latitude) +
+          "&lon=" +
+          encodeURIComponent(longitude);
 
-      toast("GPS received: " + latitude.toFixed(4) + ", " + longitude.toFixed(4));
+        const response = await fetch(url, {
+          headers: { Accept: "application/json" }
+        });
+
+        if (!response.ok) {
+          throw new Error("Address lookup failed");
+        }
+
+        const result = await response.json();
+        const address = result.display_name;
+
+        if (addressInput && address) {
+          addressInput.value = address;
+          toast("Address added! Please check it.");
+        } else {
+          toast("Address not found. Please enter it manually.");
+        }
+      } catch (error) {
+        if (addressInput) {
+          addressInput.value =
+            "Latitude: " + latitude.toFixed(6) +
+            ", Longitude: " + longitude.toFixed(6);
+        }
+
+        toast("Address lookup failed. Please enter your full address.");
+      }
     },
     (err) => {
       toast(
         err.code === 1
-          ? "Location permission denied. Please allow location access."
+          ? "Location permission denied. Allow location access."
           : "Unable to get location. Please enter your address manually."
       );
     },
@@ -311,7 +336,7 @@ async function subscribeTracking(id){if(!sb||!id)return;if(locationChannel)sb.re
 function updateWorkerMarker(row){if(!mapInstance||!row.latitude||!row.longitude)return;const p=[Number(row.latitude),Number(row.longitude)];if(workerMarker)workerMarker.setLatLng(p);else workerMarker=L.marker(p).addTo(mapInstance).bindPopup("Assigned professional");mapInstance.setView(p,15);$("arrivalText").textContent="Worker location updated "+new Date(row.updated_at).toLocaleTimeString();$("etaValue").textContent="—"}
 async function startWorkerLocationSharing(bookingId){if(!sb||!user){toast("Worker must sign in first");return}if(!navigator.geolocation){toast("GPS is not supported");return}if(locWatch!==null)navigator.geolocation.clearWatch(locWatch);locWatch=navigator.geolocation.watchPosition(async pos=>{try{const {error}=await sb.rpc("kc_update_worker_location",{p_booking_id:bookingId,p_latitude:pos.coords.latitude,p_longitude:pos.coords.longitude,p_accuracy:pos.coords.accuracy});if(error)console.error(error.message)}catch(e){console.error(e.message)}},err=>toast("GPS error: "+err.message),{enableHighAccuracy:true,maximumAge:10000,timeout:20000});toast("Location sharing started for this active booking. Keep this page open.");}
 function stopWorkerLocationSharing(){if(locWatch!==null){navigator.geolocation.clearWatch(locWatch);locWatch=null}if(locationChannel&&sb){sb.removeChannel(locationChannel);locationChannel=null}toast("Location sharing stopped on this device.")}
-
+  
 async function isAdminUser(){if(!sb||!user)return false;try{const {data,error}=await sb.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();return !error&&!!data}catch(e){return false}}
 async function loadAdminWorkers(){const list=$("adminWorkersList"),stats=$("adminStats");if(!list)return;if(!user||!sb){list.innerHTML='<div class="empty">Please sign in first.</div>';return}list.innerHTML='<div class="empty">Checking admin access…</div>';if(!(await isAdminUser())){list.innerHTML='<div class="empty">Access denied. This account is not listed in admin_users. Verify admin setup and RLS policies.</div>';return}
 try{const {data,error}=await sb.from("worker_profiles").select("id,full_name,service,phone,price,area,postal_code,photo_url,available,approval_status").order("full_name");if(error)throw error;const rows=data||[],pending=rows.filter(w=>(w.approval_status||"pending").toLowerCase()==="pending").length,approved=rows.filter(w=>(w.approval_status||"").toLowerCase()==="approved").length;if(stats)stats.innerHTML=`<div class="admin-stat"><small>Worker profiles</small><strong>${rows.length}</strong></div><div class="admin-stat"><small>Pending review</small><strong>${pending}</strong></div><div class="admin-stat"><small>Approved</small><strong>${approved}</strong></div>`;if(!rows.length){list.innerHTML='<div class="empty">No worker profiles found.</div>';return}list.innerHTML=rows.map(w=>{const st=(w.approval_status||"pending").toLowerCase(),em=st==="approved"?"✅":st==="rejected"?"⛔":"🕒";return `<article class="admin-worker-card"><div class="worker-avatar-small">${em}</div><div class="grow"><strong>${esc(w.full_name||"Unnamed professional")}</strong><div class="tiny">${esc(w.service||"Service not set")} · ${esc(w.area||"Area not set")}</div><div class="tiny">PIN: ${esc(w.postal_code||"—")} · Price: ${money(w.price||0)} · ${w.available?"Available":"Unavailable"}</div><span class="status" style="margin-top:6px">${esc(st)}</span></div><div class="admin-actions">${st!=="approved"?`<button class="btn btn-primary" onclick="setWorkerApproval('${esc(w.id)}','approved')">✓ Approve</button>`:""}${st!=="rejected"?`<button class="btn btn-light" onclick="setWorkerApproval('${esc(w.id)}','rejected')">Reject</button>`:""}${st!=="pending"?`<button class="btn btn-outline" onclick="setWorkerApproval('${esc(w.id)}','pending')">Reset</button>`:""}</div></article>`}).join("")}catch(e){list.innerHTML=`<div class="empty">Could not load worker profiles: ${esc(e.message)}. Check table columns, admin permissions and RLS.</div>`}}
