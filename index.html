@@ -72,6 +72,18 @@ body{font-family:'Impressum','DM Sans',sans-serif}#screen-home{font-family:'Impr
     <path d="M2 12h2"></path>
     <path d="M20 12h2"></path>
   </svg>
+</button> 
+  
+<button class="icon-btn" aria-label="Notifications"
+        title="Notifications" onclick="go('notifications')">
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="23" height="23" viewBox="0 0 24 24"
+       fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round"
+       aria-hidden="true">
+    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+    <path d="M10 21h4"></path>
+  </svg>
 </button>
 <button class="icon-btn" aria-label="Account" onclick="go('auth')">♙</button></div></div></header>
 <main class="wrap">
@@ -94,6 +106,22 @@ body{font-family:'Impressum','DM Sans',sans-serif}#screen-home{font-family:'Impr
 <section id="screen-admin" class="screen page"><div class="eyebrow">Control centre</div><h1 style="font-size:38px">Admin Dashboard 🛠️</h1><p class="tiny">Review professional profiles and manage worker approvals.</p><div id="adminStats" class="admin-stat-grid"><div class="admin-stat"><small>Worker profiles</small><strong>—</strong></div><div class="admin-stat"><small>Pending review</small><strong>—</strong></div><div class="admin-stat"><small>Approved</small><strong>—</strong></div></div><div class="panel"><div class="section-head"><div><h2>Worker approvals</h2><p class="tiny">Approve only profiles you have verified.</p></div><button class="btn btn-light" onclick="loadAdminWorkers()">↻ Refresh</button></div><div id="adminWorkersList"><div class="empty">Sign in with your admin account to load worker profiles.</div></div></div><div class="panel"><h2>Recent bookings</h2><div id="adminBookingsList"><div class="empty">Press refresh to load bookings.</div></div><button class="btn btn-light" onclick="loadAdminBookings()">Refresh bookings</button></div></section>
 <section id="screen-worker" class="screen page"><div class="eyebrow">Professional space</div><h1 style="font-size:38px">Worker Dashboard 🧰</h1><p class="tiny">View assigned work and your profile status.</p><div class="panel"><div class="section-head"><div><h2>My professional profile</h2><p class="tiny">Approval and availability come from your database record.</p></div><button class="btn btn-light" onclick="loadWorkerDashboard()">↻ Refresh</button></div><div id="workerDashboardContent"><div class="empty">Sign in with your worker account to view details.</div></div></div><div class="panel"><h2>Assigned bookings</h2><div id="workerDashboardBookings"><div class="empty">Booking information will appear here when your worker account is linked.</div></div></div></section>
 <section id="screen-tracking" class="screen page"><div class="tracking-page"><button class="icon-btn" onclick="go('bookings')">←</button><h1 style="text-align:center;margin:22px 0 6px">Real-time<br>tracking</h1><p style="text-align:center;color:#f6c6df">Your professional, on the way</p><div class="tracking-phone"><div id="trackingMap" class="map"></div><div class="arrival"><strong>Expert on the way</strong><span id="arrivalText">Waiting for worker location…</span><div class="eta"><small>ARRIVING IN</small><b id="etaValue">—</b><small>MINS</small></div></div><div class="tracking-info"><strong>Check-in OTP</strong><p class="tiny">Share this one-time code only with your assigned professional. The professional must verify it to start the service.</p><div id="trackingOtpValue" style="font-size:24px;letter-spacing:5px;font-weight:800;margin:10px 0">••••••</div><button class="btn btn-light" onclick="shareBookingOtp()">Share OTP securely</button><p id="otpNotice" class="tiny"></p></div><div id="trackingBooking" class="tracking-info"></div><p class="tiny">Map accuracy depends on the worker sharing live GPS during an active tracking session. Background tracking may be limited by mobile browsers.</p></div></div></section>
+   
+<section id="screen-notifications" class="screen page">
+  <div class="wrap">
+    <h2>Notifications 🔔</h2>
+    <p class="muted">Your KaamConnect updates will appear here.</p>
+
+    <div class="panel" style="padding:18px;margin-top:16px">
+      <div style="font-size:32px">🔔</div>
+      <h3>No notifications yet</h3>
+      <p>Booking updates and important messages will appear here.</p>
+      <button class="btn btn-primary" onclick="go('bookings')">
+        View My Bookings
+      </button>
+    </div>
+  </div>
+</section>
 </main>
 <footer class="footer"><div class="wrap">© <span id="year"></span> KaamConnect · Local help, made simple. <span style="float:right">Privacy-first location sharing</span></div></footer>
 <nav class="bottom-nav" aria-label="Main navigation"><button class="active" data-go="home" onclick="go('home')"><span>⌂</span>Home</button><button data-go="bookings" onclick="go('bookings')"><span>▦</span>Bookings</button><button data-go="services" onclick="go('services')"><span>✧</span>Services</button><button data-go="support" onclick="support()"><span>☏</span>Support</button><button data-go="profile" onclick="go('profile')"><span>♙</span>Profile</button></nav>
