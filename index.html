@@ -289,7 +289,7 @@ async function useMyLocation() {
           " (Please add house, street and area details)";
       }
 
-      toast("Location added! Please complete your address.");
+      toast("GPS received: " + latitude.toFixed(4) + ", " + longitude.toFixed(4));
     },
     (err) => {
       toast(
