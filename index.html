@@ -38,10 +38,42 @@ body{font-family:'Impressum','DM Sans',sans-serif}#screen-home{font-family:'Impr
 .admin-actions{display:flex;gap:6px;flex-wrap:wrap}
 @media(max-width:560px){.profile-hero{padding:17px}.profile-avatar{width:62px;height:62px}.profile-actions{grid-template-columns:1fr}.admin-stat-grid{grid-template-columns:1fr 1fr}.admin-stat:last-child{grid-column:1/-1}.admin-actions{width:100%}.admin-actions .btn{flex:1}}
 
+.location-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  padding: 0;
+  color: #242424;
+  background: #fff7e5;
+  border: 1px solid #ffc83d;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.location-btn svg {
+  display: block;
+  width: 23px;
+  height: 23px;
+}
 </style>
 </head>
 <body>
-<header class="topbar"><div class="wrap nav"><a class="brand" href="#" onclick="go('home');return false">Kaam<span>Connect</span></a><div class="nav-actions"><button class="nav-link" onclick="go('services')">Services</button><button class="nav-link" onclick="go('bookings')">My bookings</button><button class="icon-btn" aria-label="Location" onclick="useMyLocation()">⌖</button><button class="icon-btn" aria-label="Account" onclick="go('auth')">♙</button></div></div></header>
+<header class="topbar"><div class="wrap nav"><a class="brand" href="#" onclick="go('home');return false">Kaam<span>Connect</span></a><div class="nav-actions"><button class="nav-link" onclick="go('services')">Services</button><button class="nav-link" onclick="go('bookings')">My bookings</button>
+<button class="icon-btn location-btn" aria-label="Use my location" title="Use my location" onclick="useMyLocation()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="8"></circle>
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+  </svg>
+</button>
+<button class="icon-btn" aria-label="Account" onclick="go('auth')">♙</button></div></div></header>
 <main class="wrap">
 <section id="screen-home" class="screen active page">
 <div class="hero"><div><div class="promo-tags"><span class="pill">◷ 24/7 Support</span><span class="pill">Trusted local experts</span></div><div class="eyebrow">Your neighbourhood, taken care of</div><h1>Your Home,<br><em>Smooth Services</em></h1><p>Book trusted professionals for cleaning, repairs and everyday home needs — right at your doorstep.</p><div class="hero-buttons"><button class="btn btn-primary" onclick="go('services')">Explore services ↗</button><button class="btn btn-light" onclick="go('bookings')">My bookings</button></div><div class="tiny">✓ Verified professionals &nbsp; ✓ Clear pricing &nbsp; ✓ Easy scheduling</div></div><div class="hero-art"><img src="./home-cleaning.jpg" alt="Home service professional" onerror="this.style.display='none'"></div></div>
