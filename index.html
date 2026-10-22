@@ -431,6 +431,28 @@ body { font-family: 'Impressum', 'DM Sans', sans-serif !important; }
   font-family: 'Impressum', 'DM Sans', sans-serif !important;
 }
 .brand { font-family: 'Improbable', 'Manrope', sans-serif !important; }
+
+
+/* FINAL FONT RULES — preserve existing layout and component styling */
+/* Default font on every page, including headings that otherwise specify Manrope. */
+body, body * {
+  font-family: 'Impressum', 'DM Sans', sans-serif !important;
+}
+/* Home page typography uses Improbable. */
+#screen-home, #screen-home * {
+  font-family: 'Improbable', 'Impressum', sans-serif !important;
+}
+/* Keep form controls readable and consistent with the original font setup. */
+#screen-home input,
+#screen-home button,
+#screen-home select,
+#screen-home textarea {
+  font-family: 'Impressum', 'DM Sans', sans-serif !important;
+}
+/* The KaamConnect wordmark keeps its script-style brand font. */
+.brand {
+  font-family: 'Improbable', 'Manrope', sans-serif !important;
+}
 </style>
 </head>
 <body>
