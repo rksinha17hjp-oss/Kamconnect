@@ -234,22 +234,30 @@ async function loadNotifications() {
 
   list.innerHTML = '<p class="muted">Loading notifications...</p>';
 
-  if (!sb || !currentUser) {
-    list.innerHTML = `
-      <div style="text-align:center;padding:20px">
-        <div style="font-size:32px">🔐</div>
-        <h3>Login required</h3>
-        <p class="muted">Please log in to view your booking updates.</p>
-        <button class="btn btn-primary" onclick="go('auth')">Login</button>
-      </div>`;
-    return;
-  }
+  
+if (!sb) {
+  list.innerHTML = "<p>Database connection is not available. Please refresh the page.</p>";
+  return;
+}
 
+const { data: authData, error: authError } = await sb.auth.getUser();
+
+if (authError || !authData?.user) {
+  list.innerHTML = `
+    <div style="text-align:center;padding:20px">
+      <div style="font-size:32px">🔐</div>
+      <h3>Login required</h3>
+      <p class="muted">Please log in to view your booking updates.</p>
+      <button class="btn btn-primary" onclick="go('auth')">Login</button>
+    </div>`;
+  return;
+}
+const loggedInUser = authData.user;
   try {
     const { data, error } = await sb
       .from("kc_bookings")
       .select("id,service_name,status,service_date,created_at")
-      .eq("customer_id", currentUser.id)
+      .eq("customer_id", loggedInUser.id)
       .order("created_at", { ascending: false })
       .limit(20);
 
