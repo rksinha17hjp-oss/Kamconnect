@@ -1155,7 +1155,20 @@ async function setWorkerApproval(id,status){if(!(await isAdminUser())){toast("Ad
 async function loadAdminBookings(){const list=$("adminBookingsList");if(!list)return;if(!(await isAdminUser())){list.innerHTML='<div class="empty">Admin access required.</div>';return}list.innerHTML='<div class="empty">Loading bookings…</div>';try{const {data,error}=await sb.from("bookings").select("id,service,status,booking_date,booking_time,created_at,address,postal_code,customer_name,customer_phone").order("created_at",{ascending:false}).limit(50);if(error)throw error;if(!data?.length){list.innerHTML='<div class="empty">No bookings found, or your bookings table uses another schema.</div>';return}list.innerHTML=data.map(b=>`<article class="booking-card"><strong>${esc(b.service||"Home service")}</strong> <span class="status">${esc(b.status||"pending")}</span><p class="tiny">${esc(b.booking_date||"Date not set")} · ${esc(b.booking_time||"Time not set")}</p><p class="tiny">${esc(b.address||"Address not available")}</p><p class="tiny">ID: ${esc(b.id)}</p></article>`).join("")}catch(e){list.innerHTML=`<div class="empty">Could not load bookings: ${esc(e.message)}. Check schema and admin SELECT policy.</div>`}}
 async function loadWorkerDashboard(){const content=$("workerDashboardContent"),bookings=$("workerDashboardBookings");if(!user||!sb){content.innerHTML='<div class="empty">Please sign in first.</div>';return}content.innerHTML='<div class="empty">Loading worker profile…</div>';try{let w=null;const modern=await sb.from("kc_worker_profiles").select("id,user_id,full_name,profession,service_area,available,verified,starting_price").eq("user_id",user.id).maybeSingle();if(modern.error)throw modern.error;if(modern.data){w={id:modern.data.id,full_name:modern.data.full_name,service:modern.data.profession,area:modern.data.service_area,available:modern.data.available,approval_status:modern.data.verified?"approved":"pending",price:modern.data.starting_price}}else{const legacy=await sb.from("worker_profiles").select("id,full_name,service,phone,price,area,postal_code,available,approval_status").eq("id",user.id).maybeSingle();if(legacy.error)throw legacy.error;w=legacy.data}if(!w){content.innerHTML='<div class="empty">No worker profile is linked to this login yet. Ask admin to connect your auth user to worker_profiles.</div>';return}content.innerHTML=`<div class="worker-inline"><div class="icon-btn">🧰</div><div class="grow"><strong>${esc(w.full_name||user.email)}</strong><div class="tiny">${esc(w.service||"Professional")} · ${esc(w.area||"Area not set")}</div></div><span class="status">${esc(w.approval_status||"pending")}</span></div><div class="summary-band"><div><small>Service price</small><strong>${money(w.price||0)}</strong></div><div><small>Availability</small><strong>${w.available?"Available":"Unavailable"}</strong></div></div>`;try{const {data:rows,error:be}=await sb.from("bookings").select("id,service,status,booking_date,booking_time,address,created_at").eq("worker_id",w.id).order("created_at",{ascending:false}).limit(50);if(be)throw be;if(!rows?.length){bookings.innerHTML='<div class="empty">No assigned bookings yet.</div>';return}bookings.innerHTML=rows.map(b=>`<article class="booking-card"><strong>${esc(b.service||"Home service")}</strong> <span class="status">${esc(b.status||"pending")}</span><p class="tiny">${esc(b.booking_date||"")} · ${esc(b.booking_time||"")}</p><p class="tiny">${esc(b.address||"")}</p></article>`).join("")}catch(e){bookings.innerHTML=`<div class="empty">Could not load assigned bookings: ${esc(e.message)}</div>`}}catch(e){content.innerHTML=`<div class="empty">Could not load worker profile: ${esc(e.message)}. Check worker_profiles schema and RLS.</div>`}}
 function support(){toast("For support, please add a verified support email or phone number to the site.");}
-if(sb){sb.auth.onAuthStateChange((_event,session)=>{user=session?.user||null;renderWelcomeProfile();renderProfile()})}
+if (sb) {
+  sb.auth.onAuthStateChange(async (event, session) => {
+    user = session?.user || null;
+
+    console.log("Auth event:", event);
+    console.log("Session exists:", !!session);
+    console.log("Email:", user?.email);
+    console.log("User metadata:", user?.user_metadata);
+
+    await renderWelcomeProfile();
+    renderProfile();
+  });
+}
+
 renderWelcomeProfile();
 restoreLastScreen();
 loadData();
