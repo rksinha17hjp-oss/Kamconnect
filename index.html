@@ -416,18 +416,17 @@ padding: 28px;
   }
 
 .cleaning-image {
-position: absolute;
-right: 0;
-bottom: 0;
-width: 52%;
-height: 78%;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .cleaning-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: bottom right;
+  object-fit: cover;
   display: block;
 }
 }
@@ -545,9 +544,8 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
     </div>
 <div class="cleaning-image">
   <img
-    src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=85"
-    alt="Home cleaning professional"
-    onerror="this.style.display='none'">
+    src="./cleaning-banner.png"
+    alt="Quick Home Cleaning Service">
 </div>
 
   </div>
