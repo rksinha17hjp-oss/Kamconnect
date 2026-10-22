@@ -424,18 +424,27 @@ async function renderProfile(){
  }
  const name=user.user_metadata?.full_name||user.email?.split("@")[0]||"KaamConnect Member";
  e.innerHTML=`<div class="profile-hero"><div class="profile-avatar">${esc(name.trim().charAt(0).toUpperCase()||"K")}</div><div style="min-width:0"><h2 style="color:#fff;margin:0 0 5px">${esc(name)} 🌸</h2><div class="tiny" style="color:#eee5ff;overflow-wrap:anywhere">${esc(user.email||"")}</div><span class="verified" style="margin-top:9px">${esc(role.toUpperCase())} ACCOUNT</span></div></div><div class="summary-band"><div>✦ <small>Account status</small><strong>Signed in</strong></div><div>♡ <small>Member since</small><strong>${user.created_at?new Date(user.created_at).toLocaleDateString():"KaamConnect member"}</strong></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn btn-light" onclick="go('bookings')">📋 My bookings</button><button class="btn btn-outline" onclick="signOut()">Sign out</button></div>`;
- 
 if (links) {
-  links.classList.remove("hidden");
-  links.innerHTML = `
-    <h3>Dashboards 🧰</h3>
-    <p class="tiny">Open your dashboard below.</p>
-    <button class="btn btn-primary" onclick="go('worker')">
-      Open Worker Dashboard →
-    </button>
-    <button class="btn btn-outline" style="margin-top:10px" onclick="go('admin')">
-      Open Admin Dashboard →
-    </button>`;
+  if (role === "admin") {
+    links.classList.remove("hidden");
+    links.innerHTML = `
+      <h3>Admin Dashboard 🛠️</h3>
+      <p class="tiny">Manage worker approvals and bookings.</p>
+      <button class="btn btn-primary" onclick="go('admin')">
+        Open Admin Dashboard →
+      </button>`;
+  } else if (role === "worker") {
+    links.classList.remove("hidden");
+    links.innerHTML = `
+      <h3>Worker Dashboard 🧰</h3>
+      <p class="tiny">View your professional profile and assigned bookings.</p>
+      <button class="btn btn-primary" onclick="go('worker')">
+        Open Worker Dashboard →
+      </button>`;
+  } else {
+    links.classList.add("hidden");
+    links.innerHTML = "";
+  }
 }
 }
 async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHTML='<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';return}if(!sb){el.innerHTML='<div class="empty">Supabase is not configured.</div>';return}el.innerHTML='<div class="empty">Loading your bookings…</div>';try{const {data,error}=await sb.from("kc_bookings")
