@@ -1000,17 +1000,24 @@ async function signInWithGoogle() {
     const redirectTo =
       window.location.origin + window.location.pathname;
 
-    const { error } = await sb.auth.signInWithOAuth({
+    const { data, error } = await sb.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo
+        redirectTo,
+        queryParams: {
+          access_type: "offline",
+          prompt: "select_account"
+        }
       }
     });
 
     if (error) {
       console.error("Google sign-in error:", error);
       alert("Google sign-in failed: " + error.message);
+      return;
     }
+
+    console.log("OAuth sign-in started:", data);
   } catch (error) {
     console.error("Google sign-in exception:", error);
     alert("Google sign-in error: " + error.message);
