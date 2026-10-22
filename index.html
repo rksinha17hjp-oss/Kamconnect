@@ -280,8 +280,8 @@ async function useMyLocation() {
     async (pos) => {
       const latitude = pos.coords.latitude;
       const longitude = pos.coords.longitude;
-      const addressInput = $("address");
-
+      const addressInput = $("address");     
+sessionStorage.setItem("kc_detected_address", "");
       try {
         const url =
           "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
@@ -299,8 +299,8 @@ async function useMyLocation() {
 
         const result = await response.json();
         const address = result.display_name;
-
-        if (addressInput && address) {
+sessionStorage.setItem("kc_detected_address", address);
+      if (addressInput && address) {
           addressInput.value = address;
           toast("Address added! Please check it.");
         } else {
