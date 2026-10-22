@@ -280,9 +280,10 @@ h1, h2, h3 {
 .cleaning-banner {
   position: relative;
   overflow: hidden;
-  min-height: 420px;
+  min-height: 0;
+  height: 340px;
   border-radius: 30px;
-  padding: 18px;
+  padding: 28px;
   margin: 12px 0 30px;
   background: linear-gradient(140deg, #dff4e7, #eaf4dc);
   isolation: isolate;
@@ -413,10 +414,22 @@ h1, h2, h3 {
     font-size: 12px;
   }
 
-  .cleaning-image {
-    width: 65%;
-    height: 53%;
-  }
+.cleaning-image {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 52%;
+  height: 78%;
+  z-index: -1;
+}
+
+.cleaning-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom right;
+  display: block;
+}
 }
 
 /* FONT RESTORE: keep the site's bundled custom fonts while retaining the layout styles above */
