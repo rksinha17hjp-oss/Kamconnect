@@ -990,18 +990,29 @@ if (links) {
  
 async function signInWithGoogle() {
   if (!sb) {
-    alert("Supabase is not configured.");
+    alert("Supabase connection is not configured.");
     return;
   }
 
-  const { error } = await sb.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: "https://rksinha17hjp-oss.github.io/Kamconnect/"
-    }
-  });
+  try {
+    const redirectTo =
+      window.location.origin + window.location.pathname;
 
-  if (error) alert(error.message);
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo
+      }
+    });
+
+    if (error) {
+      console.error("Google sign-in error:", error);
+      alert("Google sign-in failed: " + error.message);
+    }
+  } catch (error) {
+    console.error("Google sign-in exception:", error);
+    alert("Google sign-in error: " + error.message);
+  }
 }
 async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHTML='<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';return}if(!sb){el.innerHTML='<div class="empty">Supabase is not configured.</div>';return}el.innerHTML='<div class="empty">Loading your bookings…</div>';try{const {data,error}=await sb.from("kc_bookings")
   .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
