@@ -420,69 +420,136 @@ h1, h2, h3 {
 }
 
 
-/* FINAL FIX — preserve the original custom fonts and reference homepage */
+/* FINAL HOMEPAGE FIX — clean reference typography and mobile layout */
+/* Keep custom fonts available, but don't use the decorative display font for all text. */
 @font-face {
   font-family: "Improbable";
   src: url("./Improbable.ttf") format("truetype");
   font-display: swap;
-  font-weight: 100 900;
 }
 @font-face {
   font-family: "Impressum";
   src: url("./Impressum.ttf") format("truetype");
   font-display: swap;
-  font-weight: 100 900;
 }
 
-/* The later DM Sans rule was overriding these custom font settings. */
-body { font-family: "Impressum", "DM Sans", sans-serif !important; }
+/* Use the clean type style seen in the reference image on the home screen. */
+body { font-family: "DM Sans", "Manrope", sans-serif; }
 #screen-home,
 #screen-home h1,
 #screen-home h2,
 #screen-home h3,
+#screen-home p,
 #screen-home .eyebrow,
 #screen-home .tiny,
 #screen-home .welcome-profile,
 #screen-home .cleaning-badge,
-#screen-home .cleaning-discount {
-  font-family: "Improbable", "DM Sans", sans-serif !important;
-}
-#screen-home input,
-#screen-home button,
-#screen-home select,
-#screen-home textarea,
+#screen-home .cleaning-discount,
 #screen-home .chip,
-#screen-home .search input,
-#screen-home .btn {
-  font-family: "Impressum", "DM Sans", sans-serif !important;
+#screen-home button,
+#screen-home input,
+#screen-home select,
+#screen-home textarea {
+  font-family: "DM Sans", "Manrope", sans-serif !important;
 }
-.brand { font-family: "Improbable", "Manrope", sans-serif !important; }
+.brand { font-family: "Improbable", "Manrope", sans-serif; }
 
-/* Reference-like spacing on small screens */
-#screen-home { background: #faf9f3; }
-#screen-home .home-welcome { margin: 5px 0 25px; }
-#screen-home .home-heading { margin-bottom: 0; }
-#screen-home .home-heading h1 {
-  font-size: clamp(35px, 8.4vw, 48px) !important;
-  line-height: 1.08;
-  letter-spacing: -1.2px;
-  margin: 0 0 22px;
+/* On the mobile home screen, use the welcome/location/cart row instead of the global logo bar. */
+@media (max-width: 720px) {
+  body:has(#screen-home.active) .topbar { display: none; }
+  #screen-home.page { padding-top: 18px; }
+  #screen-home .home-welcome { margin: 5px 0 28px; }
+  #screen-home .welcome-profile { gap: 10px; padding-right: 14px; }
+  #screen-home .welcome-avatar { background: #e7dcff; color: #8065d8; }
+  #screen-home .home-heading h1 {
+    font-family: "DM Sans", "Manrope", sans-serif !important;
+    font-size: clamp(35px, 8.8vw, 43px) !important;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    font-weight: 600;
+    margin: 0 0 22px;
+  }
+  #screen-home .home-heading h1 em { font-style: italic; font-weight: 500; }
+  #screen-home .search-row { margin: 0 0 18px; }
+  #screen-home .search {
+    min-height: 58px;
+    background: #f0f0ee;
+    border: 1px solid #fff;
+    border-radius: 999px;
+    padding: 5px 20px;
+    box-shadow: 0 5px 15px #15192308;
+  }
+  #screen-home .search input { font-size: 15px; }
+  #screen-home .chips { gap: 9px; margin-bottom: 12px; }
+  #screen-home .chip { padding: 13px 20px; font-weight: 600; }
+  #screen-home .cleaning-banner {
+    min-height: 500px;
+    border-radius: 30px;
+    padding: 17px;
+    margin: 12px 0 30px;
+    background: linear-gradient(140deg, #dff4e7, #eaf4dc);
+  }
+  #screen-home .cleaning-badge,
+  #screen-home .cleaning-discount {
+    background: #ffffff83;
+    border: 1px solid #ffffffc9;
+    border-radius: 999px;
+  }
+  #screen-home .cleaning-copy { margin-top: 27px; max-width: 100%; }
+  #screen-home .cleaning-copy .eyebrow { font-size: 12px; color: #697b70; letter-spacing: 0; }
+  #screen-home .cleaning-copy h2 {
+    font-family: "DM Sans", "Manrope", sans-serif !important;
+    font-size: clamp(25px, 6.5vw, 31px);
+    line-height: 1.14;
+    letter-spacing: -0.8px;
+    font-weight: 700;
+    max-width: 270px;
+    margin: 12px 0 0;
+  }
+  #screen-home .cleaning-copy .btn {
+    position: absolute;
+    left: 0;
+    top: 300px;
+    margin-top: 0;
+    z-index: 3;
+    min-height: 50px;
+    padding: 14px 20px;
+  }
+  #screen-home .cleaning-image {
+    right: -4px;
+    bottom: 0;
+    width: 62%;
+    height: 63%;
+    overflow: hidden;
+  }
+  #screen-home .cleaning-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom right;
+  }
+  #screen-home .section { margin-top: 28px; }
+  .bottom-nav {
+    background: #fff;
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0 -5px 22px #1519230b;
+  }
+  .bottom-nav button.active { color: #8065d8; }
 }
-#screen-home .home-heading h1 em { font-style: italic; font-weight: 600; }
-#screen-home .search-row { margin: 0 0 16px; }
-#screen-home .search { min-height: 58px; border-radius: 999px; }
-#screen-home .chips { margin-bottom: 10px; }
-#screen-home .cleaning-banner {
-  min-height: 420px;
-  border-radius: 30px;
-  background: linear-gradient(140deg, #dff4e7, #eaf4dc);
-}
-#screen-home .cleaning-copy .btn { position: relative; z-index: 3; }
-#screen-home .cleaning-image { overflow: hidden; }
-#screen-home .cleaning-image img { object-fit: contain; object-position: bottom right; }
+
 @media (max-width: 420px) {
-  #screen-home .home-heading h1 { font-size: clamp(34px, 8.5vw, 40px) !important; }
-  #screen-home .cleaning-banner { min-height: 390px; }
+  #screen-home .welcome-profile { gap: 8px; padding-right: 10px; }
+  #screen-home .welcome-profile strong { font-size: 12px; }
+  #screen-home .welcome-actions { gap: 5px; }
+  #screen-home .welcome-actions .icon-btn { width: 42px; height: 42px; }
+  #screen-home .cleaning-banner { min-height: 470px; padding: 14px; }
+  #screen-home .cleaning-badges { gap: 6px; }
+  #screen-home .cleaning-badge,
+  #screen-home .cleaning-discount { padding: 8px 10px; font-size: 11px; }
+  #screen-home .cleaning-copy { margin-top: 25px; }
+  #screen-home .cleaning-copy h2 { font-size: 26px; max-width: 250px; }
+  #screen-home .cleaning-copy .btn { top: 300px; font-size: 12px; }
+  #screen-home .cleaning-image { width: 65%; height: 57%; }
 }
 
 </style>
@@ -1187,4 +1254,4 @@ loadData();
 </section>
 </body> 
 </body>
-</html>
+  </html>
