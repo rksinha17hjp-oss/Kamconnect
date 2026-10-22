@@ -418,6 +418,20 @@ h1, h2, h3 {
     height: 53%;
   }
 }
+
+/* FONT RESTORE: keep the site's bundled custom fonts while retaining the layout styles above */
+body { font-family: 'Impressum', 'DM Sans', sans-serif !important; }
+#screen-home { font-family: 'Improbable', 'Impressum', sans-serif !important; }
+#screen-home h1, #screen-home h2, #screen-home h3,
+#screen-home .home-heading, #screen-home .cleaning-copy {
+  font-family: 'Improbable', 'Impressum', sans-serif !important;
+}
+#screen-home button, #screen-home input, #screen-home select, #screen-home textarea,
+#screen-home .chip, #screen-home .search input, #screen-home .btn {
+  font-family: 'Impressum', 'DM Sans', sans-serif !important;
+}
+.brand { font-family: 'Improbable', 'Manrope', sans-serif !important; }
+
 </style>
 </head>
 <body>
@@ -1118,6 +1132,5 @@ loadData();
     KaamConnect Customer Support
   </p>
 </section>
-</body> 
 </body>
-  </html>
+</html>
