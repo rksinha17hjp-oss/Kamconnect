@@ -897,7 +897,112 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
   .support-help-card {
     padding: 13px 10px;
   }
+} 
+
+/* KaamConnect profile edit form */
+#screen-profile .profile-edit-section {
+  margin-top: 18px;
+  padding: 20px 16px;
+  background: #fff;
+  border: 1px solid #ebe8e1;
+  border-radius: 23px;
+  box-shadow: 0 5px 20px rgba(36,36,36,.035);
 }
+
+.profile-edit-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.profile-edit-heading h3 {
+  margin: 0 0 6px;
+  font-size: 19px;
+}
+
+.profile-edit-heading p {
+  margin: 0;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.profile-edit-badge {
+  padding: 7px 10px;
+  border-radius: 20px;
+  background: #fff2ca;
+  color: #775800;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+#profileEditForm label {
+  display: block;
+  margin: 14px 0 7px;
+  color: #34313d;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+#profileEditForm input,
+#profileEditForm textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 12px;
+  border: 1px solid #e6e3eb;
+  border-radius: 13px;
+  background: #faf9fc;
+  color: #242424;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+#profileEditForm textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+#profileEditForm input:focus,
+#profileEditForm textarea:focus {
+  border-color: #8065d8;
+  box-shadow: 0 0 0 3px rgba(128,101,216,.10);
+}
+
+.profile-edit-hint {
+  margin: 8px 0 14px;
+  color: #777;
+  font-size: 10px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+#profileSaveMessage {
+  margin: 12px 0;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+#profileEditForm .profile-save-btn {
+  width: 100%;
+  min-height: 49px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 15px;
+  background: #ffc83d;
+  color: #242424;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+#profileEditForm .profile-save-btn:disabled {
+  opacity: .65;
+}  
 </style>
 </head>
 <body>
