@@ -1161,8 +1161,11 @@ function bookWorker(id) {
     return;
   }
 
-  currentWorker = w;
-
+  // Prevent a worker from booking their own profile.
+  if (user && String(w.id) === String(user.id)) {
+    toast("You cannot book your own worker profile. Use a customer account to create a service booking.");
+    return;
+  }
   const profession = String(w.profession || "").trim().toLowerCase();
 
   const serviceKeywords = {
