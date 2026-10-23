@@ -440,6 +440,57 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
 .bottom-nav button.active span{background:#8065d8;color:white}
 @media(max-width:420px){.welcome-profile{max-width:calc(100% - 98px)}.welcome-copy strong{max-width:165px}.bottom-nav{border-radius:26px 26px 0 0;margin:0 0 0;}}
 
+/* KaamConnect homepage photo - bigger size */
+.cleaning-banner {
+  height: 440px;
+  min-height: 440px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cleaning-image {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 85%;
+  height: 82%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cleaning-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom right;
+  display: block;
+}
+
+.cleaning-copy {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 420px) {
+  .cleaning-banner {
+    height: 460px;
+    min-height: 460px;
+  }
+
+  .cleaning-image {
+    width: 90%;
+    height: 75%;
+    right: 0;
+    bottom: 0;
+  }
+
+  .cleaning-copy .btn {
+    margin-top: 65px;
+  }
+}
 </style>
 </head>
 <body>
