@@ -1433,9 +1433,85 @@ try {
 } catch (err) {
   console.warn("Role lookup:", err.message);
 }
- const name=user.user_metadata?.full_name||user.email?.split("@")[0]||"KaamConnect Member";
+ 
+let profileData = {};
+
+if (sb) {
+  const { data, error } = await sb
+    .from("kc_profiles")
+    .select("full_name, phone, address, city, postal_code, photo_url")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    console.warn("Profile details:", error.message);
+  } else if (data) {
+    profileData = data;
+  }
+}
+
+const name =
+  profileData.full_name ||
+  user.user_metadata?.full_name ||
+  user.email?.split("@")[0] ||
+  "KaamConnect Member";
+
  e.innerHTML=`<div class="profile-hero"><div class="profile-avatar">${esc(name.trim().charAt(0).toUpperCase()||"K")}</div><div style="min-width:0"><h2 style="color:#fff;margin:0 0 5px">${esc(name)} 🌸</h2><div class="tiny" style="color:#eee5ff;overflow-wrap:anywhere">${esc(user.email||"")}</div><span class="verified" style="margin-top:9px">${esc(role.toUpperCase())} ACCOUNT</span></div></div><div class="summary-band"><div>✦ <small>Account status</small><strong>Signed in</strong></div><div>♡ <small>Member since</small><strong>${user.created_at?new Date(user.created_at).toLocaleDateString():"KaamConnect member"}</strong></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn btn-light" onclick="go('bookings')">📋 My bookings</button><button class="btn btn-outline" onclick="signOut()">Sign out</button></div>`;
 
+e.insertAdjacentHTML("beforeend", `
+  <div class="profile-edit-section">
+    <div class="profile-edit-heading">
+      <div>
+        <h3>Personal information</h3>
+        <p>Update your details for easier bookings.</p>
+      </div>
+      <span class="profile-edit-badge">EDIT</span>
+    </div>
+
+    <form id="profileEditForm" onsubmit="saveProfile(event)">
+      <label for="editFullName">Full name *</label>
+      <input id="editFullName" type="text" maxlength="100" required
+        autocomplete="name" value="${esc(profileData.full_name || name)}">
+
+      <label for="editPhone">Phone number</label>
+      <input id="editPhone" type="tel" maxlength="20"
+        autocomplete="tel" placeholder="Enter phone number"
+        value="${esc(profileData.phone || "")}">
+
+      <label for="editAddress">House / street address</label>
+      <textarea id="editAddress" maxlength="300"
+        autocomplete="street-address"
+        placeholder="House number, street, area">${esc(profileData.address || "")}</textarea>
+
+      <label for="editCity">City / State</label>
+      <input id="editCity" type="text" maxlength="100"
+        placeholder="e.g. Patna, Bihar"
+        value="${esc(profileData.city || "")}">
+
+      <label for="editPostalCode">PIN code</label>
+      <input id="editPostalCode" type="text" inputmode="numeric"
+        maxlength="10" autocomplete="postal-code"
+        placeholder="Enter PIN code"
+        value="${esc(profileData.postal_code || "")}">
+
+      <label for="editPhotoUrl">Profile photo URL</label>
+      <input id="editPhotoUrl" type="url" maxlength="1000"
+        placeholder="https://example.com/photo.jpg"
+        value="${esc(profileData.photo_url || "")}">
+
+      <p class="profile-edit-hint">
+        Use a direct HTTPS image link. Photo upload can be added later.
+      </p>
+
+      <div id="profileSaveMessage" role="status" aria-live="polite"></div>
+
+      <button class="btn btn-primary profile-save-btn"
+        type="submit" id="profileSaveButton">
+        Save profile changes
+      </button>
+    </form>
+  </div>
+`);
 if (links) {
   let dashboardHTML = "";
 
@@ -1469,6 +1545,88 @@ if (links) {
     links.innerHTML = "";
   }
 }
+} 
+ 
+async function saveProfile(event) {
+  event.preventDefault();
+
+  if (!sb || !user) {
+    toast("Please sign in first.");
+    return;
+  }
+
+  const button = document.getElementById("profileSaveButton");
+  const message = document.getElementById("profileSaveMessage");
+
+  const full_name = document.getElementById("editFullName").value.trim();
+  const phone = document.getElementById("editPhone").value.trim();
+  const address = document.getElementById("editAddress").value.trim();
+  const city = document.getElementById("editCity").value.trim();
+  const postal_code = document.getElementById("editPostalCode").value.trim();
+  const photo_url = document.getElementById("editPhotoUrl").value.trim();
+
+  if (!full_name) {
+    message.textContent = "Please enter your name.";
+    return;
+  }
+
+  if (photo_url) {
+    try {
+      const parsed = new URL(photo_url);
+      if (parsed.protocol !== "https:") {
+        message.textContent = "Photo URL must start with https://";
+        return;
+      }
+    } catch {
+      message.textContent = "Please enter a valid photo URL.";
+      return;
+    }
+  }
+
+  button.disabled = true;
+  button.textContent = "Saving...";
+  message.textContent = "";
+
+  try {
+    const { error } = await sb.from("kc_profiles").upsert({
+      id: user.id,
+      email: user.email,
+      full_name,
+      phone,
+      address,
+      city,
+      postal_code,
+      photo_url
+    }, { onConflict: "id" });
+
+    if (error) throw error;
+
+    const { error: metadataError } = await sb.auth.updateUser({
+      data: { full_name, photo_url }
+    });
+
+    if (metadataError) {
+      console.warn("Auth metadata update:", metadataError.message);
+    }
+
+    message.textContent = "Profile saved successfully!";
+    message.style.color = "#197444";
+    toast("Profile updated!");
+
+    await renderProfile();
+    await renderWelcomeProfile();
+
+  } catch (error) {
+    console.error("Profile save error:", error);
+    message.textContent = "Could not save: " + error.message;
+    message.style.color = "#b42318";
+  } finally {
+    const currentButton = document.getElementById("profileSaveButton");
+    if (currentButton) {
+      currentButton.disabled = false;
+      currentButton.textContent = "Save profile changes";
+    }
+  }
 } 
 async function signInWithGoogle() {
   if (!sb) {
