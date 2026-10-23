@@ -1279,8 +1279,218 @@ async function isAdminUser(){if(!sb||!user)return false;try{const {data,error}=a
 async function loadAdminWorkers(){const list=$("adminWorkersList"),stats=$("adminStats");if(!list)return;if(!user||!sb){list.innerHTML='<div class="empty">Please sign in first.</div>';return}list.innerHTML='<div class="empty">Checking admin access…</div>';if(!(await isAdminUser())){list.innerHTML='<div class="empty">Access denied. This account is not listed in admin_users. Verify admin setup and RLS policies.</div>';return}
 try{const {data,error}=await sb.from("worker_profiles").select("id,full_name,service,phone,price,area,postal_code,photo_url,available,approval_status").order("full_name");if(error)throw error;const rows=data||[],pending=rows.filter(w=>(w.approval_status||"pending").toLowerCase()==="pending").length,approved=rows.filter(w=>(w.approval_status||"").toLowerCase()==="approved").length;if(stats)stats.innerHTML=`<div class="admin-stat"><small>Worker profiles</small><strong>${rows.length}</strong></div><div class="admin-stat"><small>Pending review</small><strong>${pending}</strong></div><div class="admin-stat"><small>Approved</small><strong>${approved}</strong></div>`;if(!rows.length){list.innerHTML='<div class="empty">No worker profiles found.</div>';return}list.innerHTML=rows.map(w=>{const st=(w.approval_status||"pending").toLowerCase(),em=st==="approved"?"✅":st==="rejected"?"⛔":"🕒";return `<article class="admin-worker-card"><div class="worker-avatar-small">${em}</div><div class="grow"><strong>${esc(w.full_name||"Unnamed professional")}</strong><div class="tiny">${esc(w.service||"Service not set")} · ${esc(w.area||"Area not set")}</div><div class="tiny">PIN: ${esc(w.postal_code||"—")} · Price: ${money(w.price||0)} · ${w.available?"Available":"Unavailable"}</div><span class="status" style="margin-top:6px">${esc(st)}</span></div><div class="admin-actions">${st!=="approved"?`<button class="btn btn-primary" onclick="setWorkerApproval('${esc(w.id)}','approved')">✓ Approve</button>`:""}${st!=="rejected"?`<button class="btn btn-light" onclick="setWorkerApproval('${esc(w.id)}','rejected')">Reject</button>`:""}${st!=="pending"?`<button class="btn btn-outline" onclick="setWorkerApproval('${esc(w.id)}','pending')">Reset</button>`:""}</div></article>`}).join("")}catch(e){list.innerHTML=`<div class="empty">Could not load worker profiles: ${esc(e.message)}. Check table columns, admin permissions and RLS.</div>`}}
 async function setWorkerApproval(id,status){if(!(await isAdminUser())){toast("Admin access required.");return}if(!confirm("Change this worker's approval status to "+status+"?"))return;try{const {error}=await sb.from("worker_profiles").update({approval_status:status}).eq("id",id);if(error)throw error;toast("Worker status updated.");loadAdminWorkers()}catch(e){toast("Status update failed: "+e.message)}}
-async function loadAdminBookings(){const list=$("adminBookingsList");if(!list)return;if(!(await isAdminUser())){list.innerHTML='<div class="empty">Admin access required.</div>';return}list.innerHTML='<div class="empty">Loading bookings…</div>';try{const {data,error}=await sb.from("bookings").select("id,service,status,booking_date,booking_time,created_at,address,postal_code,customer_name,customer_phone").order("created_at",{ascending:false}).limit(50);if(error)throw error;if(!data?.length){list.innerHTML='<div class="empty">No bookings found, or your bookings table uses another schema.</div>';return}list.innerHTML=data.map(b=>`<article class="booking-card"><strong>${esc(b.service||"Home service")}</strong> <span class="status">${esc(b.status||"pending")}</span><p class="tiny">${esc(b.booking_date||"Date not set")} · ${esc(b.booking_time||"Time not set")}</p><p class="tiny">${esc(b.address||"Address not available")}</p><p class="tiny">ID: ${esc(b.id)}</p></article>`).join("")}catch(e){list.innerHTML=`<div class="empty">Could not load bookings: ${esc(e.message)}. Check schema and admin SELECT policy.</div>`}}
-async function loadWorkerDashboard(){const content=$("workerDashboardContent"),bookings=$("workerDashboardBookings");if(!user||!sb){content.innerHTML='<div class="empty">Please sign in first.</div>';return}content.innerHTML='<div class="empty">Loading worker profile…</div>';try{let w=null;const modern=await sb.from("kc_worker_profiles").select("id,user_id,full_name,profession,service_area,available,verified,starting_price").eq("user_id",user.id).maybeSingle();if(modern.error)throw modern.error;if(modern.data){w={id:modern.data.id,full_name:modern.data.full_name,service:modern.data.profession,area:modern.data.service_area,available:modern.data.available,approval_status:modern.data.verified?"approved":"pending",price:modern.data.starting_price}}else{const legacy=await sb.from("worker_profiles").select("id,full_name,service,phone,price,area,postal_code,available,approval_status").eq("id",user.id).maybeSingle();if(legacy.error)throw legacy.error;w=legacy.data}if(!w){content.innerHTML='<div class="empty">No worker profile is linked to this login yet. Ask admin to connect your auth user to worker_profiles.</div>';return}content.innerHTML=`<div class="worker-inline"><div class="icon-btn">🧰</div><div class="grow"><strong>${esc(w.full_name||user.email)}</strong><div class="tiny">${esc(w.service||"Professional")} · ${esc(w.area||"Area not set")}</div></div><span class="status">${esc(w.approval_status||"pending")}</span></div><div class="summary-band"><div><small>Service price</small><strong>${money(w.price||0)}</strong></div><div><small>Availability</small><strong>${w.available?"Available":"Unavailable"}</strong></div></div>`;try{const {data:rows,error:be}=await sb.from("bookings").select("id,service,status,booking_date,booking_time,address,created_at").eq("worker_id",w.id).order("created_at",{ascending:false}).limit(50);if(be)throw be;if(!rows?.length){bookings.innerHTML='<div class="empty">No assigned bookings yet.</div>';return}bookings.innerHTML=rows.map(b=>`<article class="booking-card"><strong>${esc(b.service||"Home service")}</strong> <span class="status">${esc(b.status||"pending")}</span><p class="tiny">${esc(b.booking_date||"")} · ${esc(b.booking_time||"")}</p><p class="tiny">${esc(b.address||"")}</p></article>`).join("")}catch(e){bookings.innerHTML=`<div class="empty">Could not load assigned bookings: ${esc(e.message)}</div>`}}catch(e){content.innerHTML=`<div class="empty">Could not load worker profile: ${esc(e.message)}. Check worker_profiles schema and RLS.</div>`}}
+
+async function loadAdminBookings() {
+  const list = $("adminBookingsList");
+  if (!list) return;
+
+  if (!(await isAdminUser())) {
+    list.innerHTML = '<div class="empty">Admin access required.</div>';
+    return;
+  }
+
+  list.innerHTML = '<div class="empty">Loading bookings…</div>';
+
+  try {
+    const { data, error } = await sb
+      .from("kc_bookings")
+      .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,customer_id,created_at")
+      .order("created_at", { ascending: false })
+      .limit(50);
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      list.innerHTML = '<div class="empty">No bookings found.</div>';
+      return;
+    }
+
+    list.innerHTML = data.map(b => `
+      <article class="booking-card">
+        <strong>${esc(b.service_name || "Home service")}</strong>
+        <span class="status">${esc(b.status || "requested")}</span>
+        <p class="tiny">${esc(b.plan_name || "Classic")} · ${esc(b.service_date || "Date not set")} · ${esc(b.start_time || "Time not set")}</p>
+        <p class="tiny">${esc(b.address || "Address not available")}</p>
+        <p class="tiny">Amount: ${money(b.total_amount || 0)}</p>
+        <p class="tiny">Customer ID: ${esc(b.customer_id || "—")}</p>
+        <p class="tiny">Worker ID: ${esc(b.worker_id || "Not assigned")}</p>
+        <p class="tiny">Booking ID: ${esc(b.id)}</p>
+      </article>
+    `).join("");
+  } catch (e) {
+    list.innerHTML = `<div class="empty">Could not load bookings: ${esc(e.message)}</div>`;
+  }
+}
+
+async function loadWorkerDashboard() {
+  const content = $("workerDashboardContent");
+  const bookings = $("workerDashboardBookings");
+
+  if (!content || !bookings) return;
+
+  if (!user || !sb) {
+    content.innerHTML = '<div class="empty">Please sign in first.</div>';
+    bookings.innerHTML = "";
+    return;
+  }
+
+  content.innerHTML = '<div class="empty">Loading worker profile…</div>';
+  bookings.innerHTML = "";
+
+  try {
+    const modern = await sb
+      .from("kc_worker_profiles")
+      .select("id,user_id,full_name,profession,service_area,available,verified,starting_price")
+      .eq("user_id", user.id);
+
+    if (modern.error) throw modern.error;
+
+    let profiles = modern.data || [];
+
+    if (profiles.length === 0) {
+      const legacy = await sb
+        .from("worker_profiles")
+        .select("id,full_name,service,phone,price,area,postal_code,available,approval_status")
+        .eq("id", user.id);
+
+      if (legacy.error) throw legacy.error;
+
+      profiles = (legacy.data || []).map(w => ({
+        id: w.id,
+        user_id: user.id,
+        full_name: w.full_name,
+        profession: w.service,
+        service_area: w.area,
+        available: w.available,
+        verified: (w.approval_status || "").toLowerCase() === "approved",
+        starting_price: w.price
+      }));
+    }
+
+    if (profiles.length === 0) {
+      content.innerHTML = '<div class="empty">No worker profile is linked to this login. Please check the worker profile user_id.</div>';
+      bookings.innerHTML = "";
+      return;
+    }
+
+    const w = profiles[0];
+
+    content.innerHTML = `
+      <div class="worker-inline">
+        <div class="icon-btn">🧰</div>
+        <div class="grow">
+          <strong>${esc(w.full_name || user.email || "Professional")}</strong>
+          <div class="tiny">${esc(w.profession || "Professional")} · ${esc(w.service_area || "Area not set")}</div>
+          <div class="tiny">${profiles.length} linked worker profile(s)</div>
+        </div>
+        <span class="status">${w.verified ? "verified" : "pending"}</span>
+      </div>
+      <div class="summary-band">
+        <div><small>Service price</small><strong>${money(w.starting_price || 0)}</strong></div>
+        <div><small>Availability</small><strong>${w.available ? "Available" : "Unavailable"}</strong></div>
+      </div>
+    `;
+
+    const profileIds = profiles.map(p => p.id);
+
+    const { data: rows, error } = await sb
+      .from("kc_bookings")
+      .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
+      .in("worker_id", profileIds)
+      .order("created_at", { ascending: false })
+      .limit(50);
+
+    if (error) throw error;
+
+    if (!rows || rows.length === 0) {
+      bookings.innerHTML = '<div class="empty">No bookings assigned to these worker profiles yet.</div>';
+      return;
+    }
+
+    bookings.innerHTML = rows.map(b => {
+      const status = String(b.status || "requested").toLowerCase();
+
+      let actions = "";
+
+      if (status === "requested") {
+        actions = `
+          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','confirmed')">Accept</button>
+          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
+        `;
+      } else if (["confirmed", "worker_assigned"].includes(status)) {
+        actions = `
+          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','on_the_way')">On the way</button>
+          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
+        `;
+      } else if (status === "on_the_way") {
+        actions = `
+          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','arrived')">Arrived</button>
+          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
+        `;
+      } else if (status === "arrived") {
+        actions = `
+          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','in_progress')">Start work</button>
+          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
+        `;
+      } else if (status === "in_progress") {
+        actions = `
+          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','completed')">Mark complete</button>
+          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
+        `;
+      }
+
+      return `
+        <article class="booking-card">
+          <strong>${esc(b.service_name || "Home service")}</strong>
+          <span class="status">${esc(status.replaceAll("_", " "))}</span>
+          <p class="tiny">${esc(b.plan_name || "Classic")} · ${esc(b.service_date || "Date not set")} · ${esc(b.start_time || "Time not set")}</p>
+          <p class="tiny">${esc(b.address || "Address not available")}</p>
+          <p class="tiny">Amount: ${money(b.total_amount || 0)}</p>
+          <p class="tiny">Booking ID: ${esc(b.id)}</p>
+          <div class="admin-actions">${actions}</div>
+        </article>
+      `;
+    }).join("");
+
+  } catch (e) {
+    content.innerHTML = `<div class="empty">Could not load worker profile: ${esc(e.message)}</div>`;
+    bookings.innerHTML = `<div class="empty">Could not load assigned bookings: ${esc(e.message)}</div>`;
+  }
+}
+
+async function workerSetBookingStatus(id, status) {
+  if (!user || !sb) {
+    toast("Please sign in first.");
+    return;
+  }
+
+  const labels = {
+    confirmed: "accept this booking",
+    on_the_way: "mark yourself on the way",
+    arrived: "mark yourself arrived",
+    in_progress: "start this work",
+    completed: "mark this booking complete",
+    cancelled: "cancel this booking"
+  };
+
+  if (!confirm("Are you sure you want to " + (labels[status] || "update this booking") + "?")) {
+    return;
+  }
+
+  try {
+    const { data, error } = await sb.rpc("kc_worker_update_booking_status", {
+      p_booking_id: id,
+      p_status: status
+    });
+
+    if (error) throw error;
+
+    toast("Booking status updated successfully.");
+    await loadWorkerDashboard();
+  } catch (e) {
+    toast("Status update failed: " + e.message);
+  }
+}
 function support(){toast("For support, please add a verified support email or phone number to the site.");}
 
 if (sb) {
