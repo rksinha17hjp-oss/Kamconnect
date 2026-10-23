@@ -1322,6 +1322,34 @@ async function loadAdminBookings() {
   }
 }
 
+async function verifyStartOtp(bookingId) {
+  const input = document.getElementById("otp-" + bookingId);
+  const result = document.getElementById("otp-result-" + bookingId);
+  const otp = (input?.value || "").trim();
+
+  if (!/^\d{4,8}$/.test(otp)) {
+    if (result) result.textContent = "❌ Enter a valid customer OTP.";
+    return;
+  }
+
+  if (result) result.textContent = "Verifying OTP…";
+
+  try {
+    const { data, error } = await sb.rpc("kc_verify_start_otp", {
+      p_booking_id: bookingId,
+      p_otp: otp
+    });
+
+    if (error) throw error;
+
+    if (result) result.textContent = "✅ " + data;
+    toast("OTP verified. Service started!");
+    await loadWorkerDashboard();
+  } catch (e) {
+    if (result) result.textContent = "❌ " + e.message;
+  }
+}
+
 async function loadWorkerDashboard() {
   const content = $("workerDashboardContent");
   const bookings = $("workerDashboardBookings");
@@ -1335,160 +1363,88 @@ async function loadWorkerDashboard() {
   }
 
   content.innerHTML = '<div class="empty">Loading worker profile…</div>';
-  bookings.innerHTML = "";
+  bookings.innerHTML = '<div class="empty">Loading assigned bookings…</div>';
 
   try {
-    const modern = await sb
+    const { data: profiles, error: profileError } = await sb
       .from("kc_worker_profiles")
       .select("id,user_id,full_name,profession,service_area,available,verified,starting_price")
       .eq("user_id", user.id);
 
-    if (modern.error) throw modern.error;
+    if (profileError) throw profileError;
 
-    let profiles = modern.data || [];
-
-    if (profiles.length === 0) {
-      const legacy = await sb
-        .from("worker_profiles")
-        .select("id,full_name,service,phone,price,area,postal_code,available,approval_status")
-        .eq("id", user.id);
-
-      if (legacy.error) throw legacy.error;
-
-      profiles = (legacy.data || []).map(w => ({
-        id: w.id,
-        user_id: user.id,
-        full_name: w.full_name,
-        profession: w.service,
-        service_area: w.area,
-        available: w.available,
-        verified: (w.approval_status || "").toLowerCase() === "approved",
-        starting_price: w.price
-      }));
-    }
-
-    if (profiles.length === 0) {
-      content.innerHTML = '<div class="empty">No worker profile is linked to this login. Please check the worker profile user_id.</div>';
+    if (!profiles || profiles.length === 0) {
+      content.innerHTML = '<div class="empty">No worker profile is linked to this login.</div>';
       bookings.innerHTML = "";
       return;
     }
 
-    const w = profiles[0];
+    const workerIds = profiles.map(w => w.id);
 
-    content.innerHTML = `
+    content.innerHTML = profiles.map(w => `
       <div class="worker-inline">
         <div class="icon-btn">🧰</div>
         <div class="grow">
           <strong>${esc(w.full_name || user.email || "Professional")}</strong>
           <div class="tiny">${esc(w.profession || "Professional")} · ${esc(w.service_area || "Area not set")}</div>
-          <div class="tiny">${profiles.length} linked worker profile(s)</div>
         </div>
-        <span class="status">${w.verified ? "verified" : "pending"}</span>
+        <span class="status">${w.verified ? "Verified" : "Pending verification"}</span>
       </div>
-      <div class="summary-band">
-        <div><small>Service price</small><strong>${money(w.starting_price || 0)}</strong></div>
-        <div><small>Availability</small><strong>${w.available ? "Available" : "Unavailable"}</strong></div>
-      </div>
-    `;
+    `).join("");
 
-    const profileIds = profiles.map(p => p.id);
-
-    const { data: rows, error } = await sb
+    const { data: rows, error: bookingError } = await sb
       .from("kc_bookings")
-      .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
-      .in("worker_id", profileIds)
+      .select("id,service_name,plan_name,service_date,start_time,address,status,worker_id,created_at")
+      .in("worker_id", workerIds)
       .order("created_at", { ascending: false })
       .limit(50);
 
-    if (error) throw error;
+    if (bookingError) throw bookingError;
 
     if (!rows || rows.length === 0) {
-      bookings.innerHTML = '<div class="empty">No bookings assigned to these worker profiles yet.</div>';
+      bookings.innerHTML = '<div class="empty">No bookings assigned to your worker profile yet.</div>';
       return;
     }
 
     bookings.innerHTML = rows.map(b => {
       const status = String(b.status || "requested").toLowerCase();
-
-      let actions = "";
-
-      if (status === "requested") {
-        actions = `
-          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','confirmed')">Accept</button>
-          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
-        `;
-      } else if (["confirmed", "worker_assigned"].includes(status)) {
-        actions = `
-          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','on_the_way')">On the way</button>
-          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
-        `;
-      } else if (status === "on_the_way") {
-        actions = `
-          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','arrived')">Arrived</button>
-          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
-        `;
-      } else if (status === "arrived") {
-        actions = `
-          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','in_progress')">Start work</button>
-          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
-        `;
-      } else if (status === "in_progress") {
-        actions = `
-          <button class="btn btn-primary" onclick="workerSetBookingStatus('${b.id}','completed')">Mark complete</button>
-          <button class="btn btn-light" onclick="workerSetBookingStatus('${b.id}','cancelled')">Cancel</button>
-        `;
-      }
+      const readyForOtp = ["confirmed", "on_the_way", "arrived"].includes(status);
 
       return `
         <article class="booking-card">
           <strong>${esc(b.service_name || "Home service")}</strong>
           <span class="status">${esc(status.replaceAll("_", " "))}</span>
-          <p class="tiny">${esc(b.plan_name || "Classic")} · ${esc(b.service_date || "Date not set")} · ${esc(b.start_time || "Time not set")}</p>
+          <p class="tiny">${esc(b.plan_name || "")} · ${esc(b.service_date || "")} · ${esc((b.start_time || "").slice(0, 5))}</p>
           <p class="tiny">${esc(b.address || "Address not available")}</p>
-          <p class="tiny">Amount: ${money(b.total_amount || 0)}</p>
           <p class="tiny">Booking ID: ${esc(b.id)}</p>
-          <div class="admin-actions">${actions}</div>
+
+          ${readyForOtp ? `
+            <label for="otp-${esc(b.id)}">Customer's service-start OTP</label>
+            <input id="otp-${esc(b.id)}" inputmode="numeric" maxlength="8"
+              autocomplete="one-time-code" placeholder="Enter OTP"
+              style="width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:10px">
+            <button class="btn btn-primary" onclick="verifyStartOtp('${esc(b.id)}')">
+              Verify OTP &amp; Start Service
+            </button>
+            <p id="otp-result-${esc(b.id)}" class="tiny"></p>
+          ` : ""}
+
+          ${status === "in_progress" ? `
+            <p class="tiny">✅ OTP verified. Service is in progress.</p>
+            <button class="btn btn-primary" onclick="startWorkerLocationSharing('${esc(b.id)}')">
+              📍 Share Live Location
+            </button>
+          ` : ""}
+
+          ${status === "completed" ? '<p class="tiny">✅ Service completed</p>' : ""}
+          ${status === "cancelled" ? '<p class="tiny">❌ Booking cancelled</p>' : ""}
         </article>
       `;
     }).join("");
 
   } catch (e) {
-    content.innerHTML = `<div class="empty">Could not load worker profile: ${esc(e.message)}</div>`;
-    bookings.innerHTML = `<div class="empty">Could not load assigned bookings: ${esc(e.message)}</div>`;
-  }
-}
-
-async function workerSetBookingStatus(id, status) {
-  if (!user || !sb) {
-    toast("Please sign in first.");
-    return;
-  }
-
-  const labels = {
-    confirmed: "accept this booking",
-    on_the_way: "mark yourself on the way",
-    arrived: "mark yourself arrived",
-    in_progress: "start this work",
-    completed: "mark this booking complete",
-    cancelled: "cancel this booking"
-  };
-
-  if (!confirm("Are you sure you want to " + (labels[status] || "update this booking") + "?")) {
-    return;
-  }
-
-  try {
-    const { data, error } = await sb.rpc("kc_worker_update_booking_status", {
-      p_booking_id: id,
-      p_status: status
-    });
-
-    if (error) throw error;
-
-    toast("Booking status updated successfully.");
-    await loadWorkerDashboard();
-  } catch (e) {
-    toast("Status update failed: " + e.message);
+    content.innerHTML = '<div class="empty">Could not load worker profile: ' + esc(e.message) + '</div>';
+    bookings.innerHTML = '<div class="empty">Could not load bookings: ' + esc(e.message) + '</div>';
   }
 }
 function support(){toast("For support, please add a verified support email or phone number to the site.");}
