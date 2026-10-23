@@ -1003,6 +1003,20 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
 #profileEditForm .profile-save-btn:disabled {
   opacity: .65;
 }  
+  
+/* Profile photo inside the round avatar */
+.profile-avatar {
+  overflow: hidden;
+}
+
+.profile-avatar-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 </style>
 </head>
 <body>
@@ -1465,12 +1479,30 @@ async function renderWelcomeProfile(){
   const metadata=activeUser?.user_metadata||{};
   let name=(metadata.full_name||metadata.name||activeUser?.email?.split("@")[0]||"Guest").trim();
   let photo=metadata.avatar_url||metadata.picture||metadata.photo_url||activeUser?.identities?.[0]?.identity_data?.avatar_url||activeUser?.identities?.[0]?.identity_data?.picture||"";
-  // Email/password accounts may have a saved display name in kc_profiles.
-  if(activeUser && sb && !(metadata.full_name||metadata.name)){
-    try{
-      const {data}=await sb.from("kc_profiles").select("full_name").eq("id",activeUser.id).maybeSingle();
-      if(user?.id===activeUser.id && data?.full_name)name=String(data.full_name).trim();
-    }catch(e){console.debug("Could not load saved display name",e.message)}
+
+  // Load the latest saved name and photo from the profile table.
+  if (activeUser && sb) {
+    try {
+      const { data, error } = await sb
+        .from("kc_profiles")
+        .select("full_name, photo_url")
+        .eq("id", activeUser.id)
+        .maybeSingle();
+
+      if (error) {
+        console.warn("Could not load saved profile:", error.message);
+      } else if (user?.id === activeUser.id && data) {
+        if (data.full_name) {
+          name = String(data.full_name).trim();
+        }
+
+        if (data.photo_url) {
+          photo = String(data.photo_url).trim();
+        }
+      }
+    } catch (e) {
+      console.warn("Could not load saved profile:", e.message);
+    }
   }
   if(user?.id!==activeUser?.id)return;
   nameEl.textContent=name;
@@ -1561,7 +1593,16 @@ const name =
   user.email?.split("@")[0] ||
   "KaamConnect Member";
 
- e.innerHTML=`<div class="profile-hero"><div class="profile-avatar">${esc(name.trim().charAt(0).toUpperCase()||"K")}</div><div style="min-width:0"><h2 style="color:#fff;margin:0 0 5px">${esc(name)} 🌸</h2><div class="tiny" style="color:#eee5ff;overflow-wrap:anywhere">${esc(user.email||"")}</div><span class="verified" style="margin-top:9px">${esc(role.toUpperCase())} ACCOUNT</span></div></div><div class="summary-band"><div>✦ <small>Account status</small><strong>Signed in</strong></div><div>♡ <small>Member since</small><strong>${user.created_at?new Date(user.created_at).toLocaleDateString():"KaamConnect member"}</strong></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn btn-light" onclick="go('bookings')">📋 My bookings</button><button class="btn btn-outline" onclick="signOut()">Sign out</button></div>`;
+ e.innerHTML=`<div class="profile-hero">
+<div class="profile-avatar">${
+  profileData.photo_url
+    ? `<img src="${esc(profileData.photo_url)}"
+         alt="${esc(name)} profile photo"
+         class="profile-avatar-image"
+         onerror="this.style.display='none';this.parentElement.textContent='${esc(name.trim().charAt(0).toUpperCase() || "K")}'">`
+    : esc(name.trim().charAt(0).toUpperCase() || "K")
+}</div>
+<div style="min-width:0"><h2 style="color:#fff;margin:0 0 5px">${esc(name)} 🌸</h2><div class="tiny" style="color:#eee5ff;overflow-wrap:anywhere">${esc(user.email||"")}</div><span class="verified" style="margin-top:9px">${esc(role.toUpperCase())} ACCOUNT</span></div></div><div class="summary-band"><div>✦ <small>Account status</small><strong>Signed in</strong></div><div>♡ <small>Member since</small><strong>${user.created_at?new Date(user.created_at).toLocaleDateString():"KaamConnect member"}</strong></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn btn-light" onclick="go('bookings')">📋 My bookings</button><button class="btn btn-outline" onclick="signOut()">Sign out</button></div>`;
 
 e.insertAdjacentHTML("beforeend", `
   <div class="profile-edit-section">
@@ -1660,79 +1701,112 @@ async function saveProfile(event) {
     return;
   }
 
-  const button = document.getElementById("profileSaveButton");
   const message = document.getElementById("profileSaveMessage");
+  const button = document.getElementById("profileSaveButton");
 
-  const full_name = document.getElementById("editFullName").value.trim();
-  const phone = document.getElementById("editPhone").value.trim();
-  const address = document.getElementById("editAddress").value.trim();
-  const city = document.getElementById("editCity").value.trim();
-  const postal_code = document.getElementById("editPostalCode").value.trim();
-  const photo_url = document.getElementById("editPhotoUrl").value.trim();
+  const full_name = document.getElementById("editFullName")?.value.trim() || "";
+  const phone = document.getElementById("editPhone")?.value.trim() || "";
+  const address = document.getElementById("editAddress")?.value.trim() || "";
+  const city = document.getElementById("editCity")?.value.trim() || "";
+  const postal_code = document.getElementById("editPostalCode")?.value.trim() || "";
+  const photo_url = document.getElementById("editPhotoUrl")?.value.trim() || "";
 
   if (!full_name) {
-    message.textContent = "Please enter your name.";
+    if (message) {
+      message.textContent = "Please enter your name.";
+      message.style.color = "#b42318";
+    }
     return;
   }
 
   if (photo_url) {
     try {
       const parsed = new URL(photo_url);
+
       if (parsed.protocol !== "https:") {
-        message.textContent = "Photo URL must start with https://";
+        if (message) {
+          message.textContent = "Photo URL must start with https://";
+          message.style.color = "#b42318";
+        }
         return;
       }
     } catch {
-      message.textContent = "Please enter a valid photo URL.";
+      if (message) {
+        message.textContent = "Please enter a valid photo URL.";
+        message.style.color = "#b42318";
+      }
       return;
     }
   }
 
-  button.disabled = true;
-  button.textContent = "Saving...";
-  message.textContent = "";
+  const userId = user.id;
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Saving...";
+  }
+  if (message) message.textContent = "";
 
   try {
-    const { error } = await sb.from("kc_profiles").upsert({
-      id: user.id,
-      email: user.email,
-      full_name,
-      phone,
-      address,
-      city,
-      postal_code,
-      photo_url
-    }, { onConflict: "id" });
+    const { error } = await sb
+      .from("kc_profiles")
+      .upsert({
+        id: userId,
+        email: user.email,
+        full_name,
+        phone,
+        address,
+        city,
+        postal_code,
+        photo_url
+      }, { onConflict: "id" });
 
     if (error) throw error;
 
     const { error: metadataError } = await sb.auth.updateUser({
-      data: { full_name, photo_url }
+      data: {
+        full_name,
+        photo_url
+      }
     });
 
     if (metadataError) {
       console.warn("Auth metadata update:", metadataError.message);
     }
 
-    message.textContent = "Profile saved successfully!";
-    message.style.color = "#197444";
-    toast("Profile updated!");
-
+    // Reload saved data first, then show the success message.
     await renderProfile();
     await renderWelcomeProfile();
 
+    const updatedMessage = document.getElementById("profileSaveMessage");
+
+    if (updatedMessage) {
+      updatedMessage.textContent = "Profile saved successfully!";
+      updatedMessage.style.color = "#197444";
+    }
+
+    toast("Profile updated successfully!");
+
   } catch (error) {
     console.error("Profile save error:", error);
-    message.textContent = "Could not save: " + error.message;
-    message.style.color = "#b42318";
+
+    const errorMessage = document.getElementById("profileSaveMessage");
+    if (errorMessage) {
+      errorMessage.textContent = "Could not save: " + (error.message || "Please try again.");
+      errorMessage.style.color = "#b42318";
+    } else {
+      toast("Could not save profile. Please try again.");
+    }
+
   } finally {
     const currentButton = document.getElementById("profileSaveButton");
+
     if (currentButton) {
       currentButton.disabled = false;
       currentButton.textContent = "Save profile changes";
     }
   }
-} 
+}
 async function signInWithGoogle() {
   if (!sb) {
     alert("Supabase connection is not configured.");
