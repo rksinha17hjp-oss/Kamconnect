@@ -490,7 +490,56 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
   .cleaning-copy .btn {
     margin-top: 65px;
   }
+} 
+
+/* EXTRA LARGE HOMEPAGE PHOTO */
+.cleaning-banner {
+  height: 520px !important;
+  min-height: 520px !important;
+  overflow: hidden;
+  position: relative;
 }
+
+.cleaning-image {
+  position: absolute !important;
+  right: -10px !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 88% !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+  z-index: 1 !important;
+}
+
+.cleaning-image img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: bottom right !important;
+  display: block !important;
+}
+
+.cleaning-copy {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 420px) {
+  .cleaning-banner {
+    height: 540px !important;
+    min-height: 540px !important;
+  }
+
+  .cleaning-image {
+    width: 110% !important;
+    height: 82% !important;
+    right: -12px !important;
+    bottom: 0 !important;
+  }
+}
+
 </style>
 </head>
 <body>
