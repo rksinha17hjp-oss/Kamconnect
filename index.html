@@ -1373,103 +1373,186 @@ async function verifyStartOtp(bookingId) {
     if (result) result.textContent = "❌ " + e.message;
   }
 }
-
 async function loadWorkerDashboard() {
-  const content = $("workerDashboardContent");
-  const bookings = $("workerDashboardBookings");
+const content = $("workerDashboardContent");
+const bookings = $("workerDashboardBookings");
 
-  if (!content || !bookings) return;
+if (!content || !bookings) return;
 
-  if (!user || !sb) {
-    content.innerHTML = '<div class="empty">Please sign in first.</div>';
-    bookings.innerHTML = "";
-    return;
-  }
+if (!user || !sb) {
+content.innerHTML = '<div class="empty">Please sign in first.</div>';
+bookings.innerHTML = "";
+return;
+}
 
-  content.innerHTML = '<div class="empty">Loading worker profile…</div>';
-  bookings.innerHTML = '<div class="empty">Loading assigned bookings…</div>';
+content.innerHTML = '<div class="empty">Loading worker profile…</div>';
+bookings.innerHTML = '<div class="empty">Loading bookings…</div>';
 
-  try {
-    const { data: profiles, error: profileError } = await sb
-      .from("kc_worker_profiles")
-      .select("id,user_id,full_name,profession,service_area,available,verified,starting_price")
-      .eq("user_id", user.id);
+try {
+const { data: profiles, error: profileError } = await sb
+.from("kc_worker_profiles")
+.select("id,user_id,full_name,profession,service_area,available,verified,starting_price")
+.eq("user_id", user.id);
 
-    if (profileError) throw profileError;
+if (profileError) throw profileError;
 
-    if (!profiles || profiles.length === 0) {
-      content.innerHTML = '<div class="empty">No worker profile is linked to this login.</div>';
-      bookings.innerHTML = "";
-      return;
-    }
+if (!profiles || profiles.length === 0) {
+  content.innerHTML =
+    '<div class="empty">No worker profile is linked to this login.</div>';
+  bookings.innerHTML = "";
+  return;
+}
 
-    const workerIds = profiles.map(w => w.id);
+const workerIds = profiles.map(w => w.id);
 
-    content.innerHTML = profiles.map(w => `
-      <div class="worker-inline">
-        <div class="icon-btn">🧰</div>
-        <div class="grow">
-          <strong>${esc(w.full_name || user.email || "Professional")}</strong>
-          <div class="tiny">${esc(w.profession || "Professional")} · ${esc(w.service_area || "Area not set")}</div>
-        </div>
-        <span class="status">${w.verified ? "Verified" : "Pending verification"}</span>
+content.innerHTML = profiles.map(w => `
+  <div class="worker-inline">
+    <div class="icon-btn">🧰</div>
+    <div class="grow">
+      <strong>${esc(w.full_name || user.email || "Professional")}</strong>
+      <div class="tiny">
+        ${esc(w.profession || "Professional")} ·
+        ${esc(w.service_area || "Area not set")}
       </div>
-    `).join("");
+    </div>
+    <span class="status">${w.verified ? "Verified" : "Pending verification"}</span>
+  </div>
+`).join("");
 
-    const { data: rows, error: bookingError } = await sb
-      .from("kc_bookings")
-      .select("id,service_name,plan_name,service_date,start_time,address,status,worker_id,created_at")
-      .in("worker_id", workerIds)
-      .order("created_at", { ascending: false })
-      .limit(50);
+const { data: rows, error: bookingError } = await sb
+  .from("kc_bookings")
+  .select("id,service_name,plan_name,service_date,start_time,address,status,worker_id,created_at")
+  .order("created_at", { ascending: false })
+  .limit(100);
 
-    if (bookingError) throw bookingError;
+if (bookingError) throw bookingError;
 
-    if (!rows || rows.length === 0) {
-      bookings.innerHTML = '<div class="empty">No bookings assigned to your worker profile yet.</div>';
-      return;
-    }
+const professions = profiles.map(w =>
+  String(w.profession || "").trim().toLowerCase()
+);
 
-    bookings.innerHTML = rows.map(b => {
-      const status = String(b.status || "requested").toLowerCase();
-      const readyForOtp = ["confirmed", "on_the_way", "arrived"].includes(status);
+const visibleRows = (rows || []).filter(b => {
+  const status = String(b.status || "").toLowerCase();
+  const assignedToMe = workerIds.includes(b.worker_id);
 
-      return `
-        <article class="booking-card">
-          <strong>${esc(b.service_name || "Home service")}</strong>
-          <span class="status">${esc(status.replaceAll("_", " "))}</span>
-          <p class="tiny">${esc(b.plan_name || "")} · ${esc(b.service_date || "")} · ${esc((b.start_time || "").slice(0, 5))}</p>
-          <p class="tiny">${esc(b.address || "Address not available")}</p>
-          <p class="tiny">Booking ID: ${esc(b.id)}</p>
+  const isMatchingRequest =
+    b.worker_id === null &&
+    status === "requested" &&
+    professions.includes(
+      String(b.service_name || "").trim().toLowerCase()
+    ) &&
+    profiles.some(w => w.available && w.verified);
 
-          ${readyForOtp ? `
-            <label for="otp-${esc(b.id)}">Customer's service-start OTP</label>
-            <input id="otp-${esc(b.id)}" inputmode="numeric" maxlength="8"
-              autocomplete="one-time-code" placeholder="Enter OTP"
-              style="width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:10px">
-            <button class="btn btn-primary" onclick="verifyStartOtp('${esc(b.id)}')">
-              Verify OTP &amp; Start Service
-            </button>
-            <p id="otp-result-${esc(b.id)}" class="tiny"></p>
-          ` : ""}
+  return assignedToMe || isMatchingRequest;
+});
 
-          ${status === "in_progress" ? `
-            <p class="tiny">✅ OTP verified. Service is in progress.</p>
-            <button class="btn btn-primary" onclick="startWorkerLocationSharing('${esc(b.id)}')">
-              📍 Share Live Location
-            </button>
-          ` : ""}
+if (visibleRows.length === 0) {
+  bookings.innerHTML =
+    '<div class="empty">No matching requests or assigned bookings found.</div>';
+  return;
+}
 
-          ${status === "completed" ? '<p class="tiny">✅ Service completed</p>' : ""}
-          ${status === "cancelled" ? '<p class="tiny">❌ Booking cancelled</p>' : ""}
-        </article>
-      `;
-    }).join("");
+bookings.innerHTML = visibleRows.map(b => {
+  const status = String(b.status || "requested").toLowerCase();
+  const isAssigned = workerIds.includes(b.worker_id);
+  const canAccept =
+    !isAssigned &&
+    b.worker_id === null &&
+    status === "requested" &&
+    profiles.some(w =>
+      w.available &&
+      w.verified &&
+      String(w.profession || "").trim().toLowerCase() ===
+        String(b.service_name || "").trim().toLowerCase()
+    );
 
-  } catch (e) {
-    content.innerHTML = '<div class="empty">Could not load worker profile: ' + esc(e.message) + '</div>';
-    bookings.innerHTML = '<div class="empty">Could not load bookings: ' + esc(e.message) + '</div>';
-  }
+  const readyForOtp =
+    isAssigned &&
+    ["confirmed", "on_the_way", "arrived"].includes(status);
+
+  return `
+    <article class="booking-card">
+      <strong>${esc(b.service_name || "Home service")}</strong>
+      <span class="status">${esc(status.replaceAll("_", " "))}</span>
+
+      <p class="tiny">
+        ${esc(b.plan_name || "")} ·
+        ${esc(b.service_date || "")} ·
+        ${esc((b.start_time || "").slice(0, 5))}
+      </p>
+
+      <p class="tiny">${esc(b.address || "Address not available")}</p>
+      <p class="tiny">Booking ID: ${esc(b.id)}</p>
+
+      ${canAccept ? `
+        <button class="btn btn-primary"
+          onclick="acceptKaamConnectBooking('${esc(b.id)}')">
+          Accept Booking
+        </button>
+        <p id="accept-result-${esc(b.id)}" class="tiny"></p>
+      ` : ""}
+
+      ${readyForOtp ? `
+        <label for="otp-${esc(b.id)}">Customer's service-start OTP</label>
+        <input id="otp-${esc(b.id)}" inputmode="numeric" maxlength="8"
+          autocomplete="one-time-code" placeholder="Enter OTP"
+          style="width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:10px">
+
+        <button class="btn btn-primary"
+          onclick="verifyStartOtp('${esc(b.id)}')">
+          Verify OTP &amp; Start Service
+        </button>
+        <p id="otp-result-${esc(b.id)}" class="tiny"></p>
+      ` : ""}
+
+      ${status === "in_progress" && isAssigned ? `
+        <p class="tiny">✅ OTP verified. Service is in progress.</p>
+        <button class="btn btn-primary"
+          onclick="startWorkerLocationSharing('${esc(b.id)}')">
+          📍 Share Live Location
+        </button>
+      ` : ""}
+
+      ${status === "completed" ? '<p class="tiny">✅ Service completed</p>' : ""}
+      ${status === "cancelled" ? '<p class="tiny">❌ Booking cancelled</p>' : ""}
+    </article>
+  `;
+}).join("");
+
+} catch (e) {
+content.innerHTML =
+'<div class="empty">Could not load worker profile: ' + esc(e.message) + '</div>';
+bookings.innerHTML =
+'<div class="empty">Could not load bookings: ' + esc(e.message) + '</div>';
+}
+}
+
+async function acceptKaamConnectBooking(bookingId) {
+const result = $("accept-result-" + bookingId);
+
+try {
+if (!user || !sb) throw new Error("Please sign in first.");
+
+if (result) result.textContent = "Accepting booking…";
+
+const { data, error } = await sb.rpc(
+  "kc_worker_accept_booking",
+  { p_booking_id: bookingId }
+);
+
+if (error) throw error;
+
+if (data && data.success === false) {
+  throw new Error(data.message || "Booking could not be accepted.");
+}
+
+toast("Booking accepted successfully!");
+await loadWorkerDashboard();
+
+} catch (e) {
+if (result) result.textContent = "Error: " + e.message;
+else alert("Could not accept booking: " + e.message);
+}
 }
 function support(){toast("For support, please add a verified support email or phone number to the site.");}
 
