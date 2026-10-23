@@ -640,6 +640,264 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
   }
 }
 
+/* KaamConnect Modern Support Page */
+.support-screen {
+  background: #faf9f5 !important;
+  color: #242424;
+  padding: 24px 16px 35px !important;
+  margin: 0 !important;
+  border-top: 3px solid #ffc83d;
+  text-align: left !important;
+  min-height: 100%;
+}
+
+.support-hero {
+  background: linear-gradient(135deg, #fff3c9, #fffaf0);
+  border: 1px solid #f4e5b6;
+  border-radius: 24px;
+  padding: 25px 19px;
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.support-hero-icon {
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  background: #ffc83d;
+  font-size: 31px;
+  box-shadow: 0 7px 18px #e4bc4930;
+}
+
+.support-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #8065d8;
+  margin: 0 0 8px;
+}
+
+.support-hero h2 {
+  font-size: clamp(23px, 6vw, 31px);
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.support-hero > p:last-child {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.support-content > h3,
+.support-faq > h3 {
+  font-size: 19px;
+  margin: 0 0 15px;
+}
+
+.support-help-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.support-help-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  min-width: 0;
+  padding: 16px 12px;
+  text-decoration: none;
+  color: #242424;
+  background: #fff;
+  border: 1px solid #ece9e0;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px #24242408;
+  transition: transform .2s ease, border-color .2s ease;
+}
+
+.support-help-card:active {
+  transform: scale(.98);
+}
+
+.support-card-icon {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff4d1;
+  border-radius: 14px;
+  font-size: 22px;
+}
+
+.support-help-card strong {
+  font-size: 14px;
+}
+
+.support-help-card small {
+  color: #777;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.support-card-arrow {
+  position: absolute;
+  top: 15px;
+  right: 13px;
+  color: #8065d8;
+  font-size: 17px;
+}
+
+.support-contact-card {
+  padding: 19px 15px;
+  margin-bottom: 27px;
+  background: #fff;
+  border: 1px solid #eee8d9;
+  border-radius: 22px;
+  box-shadow: 0 7px 24px #24242408;
+}
+
+.support-contact-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.support-contact-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: #f0eaff;
+  font-size: 23px;
+}
+
+.support-contact-heading h3 {
+  margin: 0 0 5px;
+  font-size: 16px;
+}
+
+.support-contact-heading p {
+  margin: 0;
+  color: #777;
+  font-size: 12px;
+}
+
+.support-contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 15px;
+  margin-top: 10px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.support-email {
+  background: #ffc83d;
+  color: #242424;
+}
+
+.support-call {
+  background: #f0eaff;
+  color: #49318b;
+}
+
+.support-btn-arrow {
+  margin-left: auto;
+  font-size: 19px;
+}
+
+.support-contact-note {
+  color: #777;
+  font-size: 11px;
+  line-height: 1.8;
+  text-align: center;
+  overflow-wrap: anywhere;
+  margin: 15px 0 0;
+}
+
+.support-faq {
+  margin-bottom: 23px;
+}
+
+.support-faq details {
+  padding: 15px 13px;
+  margin-bottom: 9px;
+  background: #fff;
+  border: 1px solid #ece9e0;
+  border-radius: 14px;
+}
+
+.support-faq summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+  padding-right: 5px;
+}
+
+.support-faq details p {
+  color: #666;
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 12px 0 0;
+}
+
+.support-bottom-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: #fff4d7;
+  border-radius: 16px;
+}
+
+.support-bottom-note > span {
+  font-size: 25px;
+}
+
+.support-bottom-note p {
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.support-bottom-note strong {
+  font-size: 13px;
+}
+
+@media (max-width: 360px) {
+  .support-screen {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .support-help-grid {
+    gap: 8px;
+  }
+
+  .support-help-card {
+    padding: 13px 10px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1689,40 +1947,107 @@ restoreLastScreen();
 loadData();
 </script> 
   
-<!-- KaamConnect Support Contact -->
-<section id="screen-support" class="screen page support-screen" style="
-  background:#fff7e5;
-  color:#242424;
-  padding:24px 16px;
-  margin:24px 0 0;
-  border-top:2px solid #ffc83d;
-  text-align:center;
-">
-  <h2 style="margin:0 0 8px;">Need Help?</h2>
 
-  <p style="margin:0 0 16px;">
-    KaamConnect Support — We're here to help.
-  </p>
+<!-- KaamConnect Modern Support Page -->
+<section id="screen-support" class="screen page support-screen">
+  <div class="support-hero">
+    <div class="support-hero-icon">🎧</div>
+    <p class="support-eyebrow">KAAMCONNECT HELP CENTER</p>
+    <h2>How can we help you?</h2>
+    <p>We're here to make your home-service experience easier.</p>
+  </div>
 
-  <p style="margin:8px 0;">
-    📧 Email:
-    <a
-      href="mailto:rksinha18hjp@gmail.com"
-      style="color:#242424;font-weight:bold;"
-    >rksinha18hjp@gmail.com</a>
-  </p>
+  <div class="support-content">
+    <h3>What do you need help with?</h3>
 
-  <p style="margin:8px 0;">
-    📞 Phone:
-    <a
-      href="tel:9939290986"
-      style="color:#242424;font-weight:bold;"
-    >9939290986</a>
-  </p>
+    <div class="support-help-grid">
+      <a class="support-help-card" href="mailto:rksinha18hjp@gmail.com?subject=Booking%20Help">
+        <span class="support-card-icon">📅</span>
+        <strong>Booking Help</strong>
+        <small>Booking, timing or cancellation</small>
+        <span class="support-card-arrow">↗</span>
+      </a>
 
-  <p style="font-size:12px;color:#666;margin:16px 0 0;">
-    KaamConnect Customer Support
-  </p>
+      <a class="support-help-card" href="mailto:rksinha18hjp@gmail.com?subject=Worker%20Related%20Issue">
+        <span class="support-card-icon">🧰</span>
+        <strong>Worker Issues</strong>
+        <small>Professional or service problem</small>
+        <span class="support-card-arrow">↗</span>
+      </a>
+
+      <a class="support-help-card" href="mailto:rksinha18hjp@gmail.com?subject=Payment%20or%20Price%20Query">
+        <span class="support-card-icon">₹</span>
+        <strong>Price & Payment</strong>
+        <small>Price clarification or payment query</small>
+        <span class="support-card-arrow">↗</span>
+      </a>
+
+      <a class="support-help-card" href="mailto:rksinha18hjp@gmail.com?subject=Account%20Help">
+        <span class="support-card-icon">👤</span>
+        <strong>Account Help</strong>
+        <small>Login, profile or account issues</small>
+        <span class="support-card-arrow">↗</span>
+      </a>
+    </div>
+
+    <div class="support-contact-card">
+      <div class="support-contact-heading">
+        <span class="support-contact-icon">💬</span>
+        <div>
+          <h3>Talk to our support team</h3>
+          <p>Choose how you'd like to contact us.</p>
+        </div>
+      </div>
+
+      <a class="support-contact-btn support-email"
+         href="mailto:rksinha18hjp@gmail.com?subject=KaamConnect%20Support">
+        <span>✉</span>
+        <span>Email Support</span>
+        <span class="support-btn-arrow">→</span>
+      </a>
+
+      <a class="support-contact-btn support-call" href="tel:9939290986">
+        <span>☎</span>
+        <span>Call Support</span>
+        <span class="support-btn-arrow">→</span>
+      </a>
+
+      <p class="support-contact-note">
+        Email: rksinha18hjp@gmail.com<br>
+        Phone: 9939290986
+      </p>
+    </div>
+
+    <div class="support-faq">
+      <h3>Quick answers</h3>
+
+      <details>
+        <summary>How can I check my booking status?</summary>
+        <p>Open the Bookings tab to view the status of your service request.</p>
+      </details>
+
+      <details>
+        <summary>Can I cancel a booking?</summary>
+        <p>Open your booking details and check whether a cancellation option is available. If you need help, contact support.</p>
+      </details>
+
+      <details>
+        <summary>When will my worker be confirmed?</summary>
+        <p>Your booking starts as a request. The professional and final service details may need confirmation.</p>
+      </details>
+
+      <details>
+        <summary>What if I have a problem with my service?</summary>
+        <p>Email support with your booking details and a short description of the issue.</p>
+      </details>
+    </div>
+
+    <div class="support-bottom-note">
+      <span>🛡️</span>
+      <p><strong>Need more help?</strong><br>
+      Contact our support team and explain your issue.</p>
+    </div>
+  </div>
 </section>
 </body>
- </html>
+</html>
