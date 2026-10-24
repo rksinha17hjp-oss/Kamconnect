@@ -1627,7 +1627,40 @@ const name =
     : esc(name.trim().charAt(0).toUpperCase() || "K")
 }</div>
 <div style="min-width:0"><h2 style="color:#fff;margin:0 0 5px">${esc(name)} 🌸</h2><div class="tiny" style="color:#eee5ff;overflow-wrap:anywhere">${esc(user.email||"")}</div><span class="verified" style="margin-top:9px">${esc(role.toUpperCase())} ACCOUNT</span></div></div><div class="summary-band"><div>✦ <small>Account status</small><strong>Signed in</strong></div><div>♡ <small>Member since</small><strong>${user.created_at?new Date(user.created_at).toLocaleDateString():"KaamConnect member"}</strong></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn btn-light" onclick="go('bookings')">📋 My bookings</button><button class="btn btn-outline" onclick="signOut()">Sign out</button></div>`;
+// Customer Dashboard: booking summary
+e.insertAdjacentHTML("beforeend", `
+  <div class="panel" id="customerDashboardStats" style="margin-top:16px">
+    <h3>📊 My Dashboard</h3>
+    <p class="tiny">Your booking activity at a glance.</p>
 
+    <div class="admin-stat-grid" style="margin-top:14px">
+      <div class="admin-stat">
+        <small>Total bookings</small>
+        <strong id="customerTotalBookings">—</strong>
+      </div>
+      <div class="admin-stat">
+        <small>In progress</small>
+        <strong id="customerActiveBookings">—</strong>
+      </div>
+      <div class="admin-stat">
+        <small>Completed</small>
+        <strong id="customerCompletedBookings">—</strong>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <button class="btn btn-primary" onclick="go('services')">
+        + Book a service
+      </button>
+      <button class="btn btn-light" onclick="go('bookings')">
+        📋 View my bookings
+      </button>
+    </div>
+    <p id="customerDashboardMessage" class="tiny" style="margin-top:10px"></p>
+  </div>
+`);
+
+loadCustomerDashboardStats(user.id);
 e.insertAdjacentHTML("beforeend", `
   <div class="profile-edit-section">
     <div class="profile-edit-heading">
@@ -1716,7 +1749,52 @@ if (links) {
   }
 }
 } 
- 
+ async function loadCustomerDashboardStats(customerId) {
+  const totalEl = $("customerTotalBookings");
+  const activeEl = $("customerActiveBookings");
+  const completedEl = $("customerCompletedBookings");
+  const messageEl = $("customerDashboardMessage");
+
+  if (!sb || !customerId) return;
+
+  try {
+    const { data, error } = await sb
+      .from("kc_bookings")
+      .select("status")
+      .eq("customer_id", customerId);
+
+    if (error) throw error;
+
+    const bookings = data || [];
+    const activeStatuses = ["requested", "confirmed", "accepted", "in_progress"];
+
+    const activeCount = bookings.filter(b =>
+      activeStatuses.includes(
+        String(b.status || "").toLowerCase()
+      )
+    ).length;
+
+    const completedCount = bookings.filter(b =>
+      String(b.status || "").toLowerCase() === "completed"
+    ).length;
+
+    if (totalEl) totalEl.textContent = bookings.length;
+    if (activeEl) activeEl.textContent = activeCount;
+    if (completedEl) completedEl.textContent = completedCount;
+
+    if (messageEl) {
+      messageEl.textContent = bookings.length
+        ? "Your booking summary is up to date."
+        : "No bookings yet. Book your first service whenever you need help.";
+    }
+  } catch (error) {
+    console.error("Customer dashboard:", error.message);
+
+    if (messageEl) {
+      messageEl.textContent = "Booking summary could not load. Please try again later.";
+    }
+  }
+ }
 async function saveProfile(event) {
   event.preventDefault();
 
