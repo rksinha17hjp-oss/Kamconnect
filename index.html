@@ -2203,7 +2203,82 @@ async function trackBooking(id) {
 function initTrackingMap(){if(!window.L||mapInstance)return;const el=$("trackingMap");if(!el||!el.isConnected)return;mapInstance=L.map(el,{zoomControl:false}).setView([25.5941,85.1376],13);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(mapInstance);setTimeout(()=>mapInstance?.invalidateSize(),250);if(sb&&trackingBookingId)subscribeTracking(trackingBookingId)}
 async function subscribeTracking(id){if(!sb||!id)return;if(locationChannel)sb.removeChannel(locationChannel);try{const {data,error}=await sb.from("kc_worker_locations").select("latitude,longitude,updated_at,worker_id").eq("booking_id",id).order("updated_at",{ascending:false}).limit(1);if(!error&&data?.[0])updateWorkerMarker(data[0]);locationChannel=sb.channel("tracking-"+id).on("postgres_changes",{event:"*",schema:"public",table:"kc_worker_locations",filter:"booking_id=eq."+id},payload=>{if(payload.new)updateWorkerMarker(payload.new)}).subscribe()}catch(e){console.warn(e.message)}}
 function updateWorkerMarker(row){if(!mapInstance||!row.latitude||!row.longitude)return;const p=[Number(row.latitude),Number(row.longitude)];if(workerMarker)workerMarker.setLatLng(p);else workerMarker=L.marker(p).addTo(mapInstance).bindPopup("Assigned professional");mapInstance.setView(p,15);$("arrivalText").textContent="Worker location updated "+new Date(row.updated_at).toLocaleTimeString();$("etaValue").textContent="—"}
-async function startWorkerLocationSharing(bookingId){if(!sb||!user){toast("Worker must sign in first");return}if(!navigator.geolocation){toast("GPS is not supported");return}if(locWatch!==null)navigator.geolocation.clearWatch(locWatch);locWatch=navigator.geolocation.watchPosition(async pos=>{try{const {error}=await sb.rpc("kc_update_worker_location",{p_booking_id:bookingId,p_latitude:pos.coords.latitude,p_longitude:pos.coords.longitude,p_accuracy:pos.coords.accuracy});if(error)console.error(error.message)}catch(e){console.error(e.message)}},err=>toast("GPS error: "+err.message),{enableHighAccuracy:true,maximumAge:10000,timeout:20000});toast("Location sharing started for this active booking. Keep this page open.");}
+
+async function startWorkerLocationSharing(bookingId) {
+  if (!sb || !user) {
+    toast("Please sign in with the worker account.");
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    toast("GPS is not supported by this browser.");
+    return;
+  }
+
+  const options = {
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 20000
+  };
+
+  const savePosition = async (pos, showSuccess = false) => {
+    try {
+      const { error } = await sb.rpc(
+        "kc_update_worker_location",
+        {
+          p_booking_id: bookingId,
+          p_latitude: pos.coords.latitude,
+          p_longitude: pos.coords.longitude,
+          p_accuracy: pos.coords.accuracy
+        }
+      );
+
+      if (error) {
+        console.error("Location RPC failed:", error);
+        toast("Location save failed: " + error.message);
+        return false;
+      }
+
+      if (showSuccess) {
+        toast("Live location saved successfully!");
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Location save error:", error);
+      toast("Location error: " + error.message);
+      return false;
+    }
+  };
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const saved = await savePosition(pos, true);
+
+      if (!saved) return;
+
+      if (locWatch !== null) {
+        navigator.geolocation.clearWatch(locWatch);
+      }
+
+      locWatch = navigator.geolocation.watchPosition(
+        async (nextPos) => {
+          await savePosition(nextPos);
+        },
+        (error) => {
+          toast("GPS update failed: " + error.message);
+        },
+        options
+      );
+
+      toast("Live tracking active. Keep this page open.");
+    },
+    (error) => {
+      toast("GPS permission/error: " + error.message);
+    },
+    options
+  );
+}
 function stopWorkerLocationSharing(){if(locWatch!==null){navigator.geolocation.clearWatch(locWatch);locWatch=null}if(locationChannel&&sb){sb.removeChannel(locationChannel);locationChannel=null}toast("Location sharing stopped on this device.")}
   
 async function isAdminUser(){if(!sb||!user)return false;try{const {data,error}=await sb.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();return !error&&!!data}catch(e){return false}}
