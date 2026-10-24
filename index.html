@@ -2247,12 +2247,9 @@ async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHT
   onclick="trackBooking('${esc(b.id)}')">
   Track / details
 </button>
-
 ${String(b.status).toLowerCase() === "completed" && b.worker_id
-  ? `<div class="review-form">
+  ? `<div class="review-form" id="review-form-${esc(b.id)}">
        <h4>Rate your experience</h4>
-
-       <label for="review-rating-${esc(b.id)}">Your rating</label>
        <select id="review-rating-${esc(b.id)}" required>
          <option value="">Choose stars</option>
          <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
@@ -2261,37 +2258,72 @@ ${String(b.status).toLowerCase() === "completed" && b.worker_id
          <option value="2">⭐⭐ Poor</option>
          <option value="1">⭐ Very poor</option>
        </select>
-
-       <label for="review-text-${esc(b.id)}">Comment (optional)</label>
-       <textarea id="review-text-${esc(b.id)}"
-         maxlength="1000"
-         placeholder="Apna experience share karein..."></textarea>
-
-       <button class="btn btn-primary"
+       <button class="btn btn-primary" type="button"
          onclick="submitWorkerReview('${esc(b.id)}','${esc(b.worker_id)}')">
-         Submit review
+         Submit rating
        </button>
      </div>`
   : ""}</article>`).join("")}catch(e){el.innerHTML='<div class="empty">Could not load bookings: '+esc(e.message)+'. Run the SQL migration and check your Supabase configuration.</div>'}}
-
 async function submitWorkerReview(bookingId, workerId) {
   if (!sb || !user) {
     toast("Please sign in first.");
     return;
   }
 
-  const rating = Number(
-    prompt("Rate this worker from 1 to 5 stars:")
-  );
+  const ratingEl = document.getElementById("review-rating-" + bookingId);
+  const form = document.getElementById("review-form-" + bookingId);
+  const button = form?.querySelector("button");
 
-  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    toast("Please enter a rating from 1 to 5.");
+  if (!ratingEl || !form) {
+    toast("Rating form not found. Please refresh.");
     return;
   }
 
-  const review = prompt("Write a review (optional):") || "";
+  const rating = Number(ratingEl.value);
+
+  if (!ratingEl.value || !Number.isInteger(rating) || rating < 1 || rating > 5) {
+    toast("Please select a rating from 1 to 5 stars.");
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Submitting...";
+  }
 
   try {
+    const { data: existing, error: checkError } = await sb
+      .from("worker_reviews")
+      .select("kc_booking_id")
+      .eq("kc_booking_id", bookingId)
+      .maybeSingle();
+
+    if (checkError) throw checkError;
+
+    if (existing) {
+      toast("You have already rated this booking.");
+      await loadBookings();
+      return;
+    }
+
+    const { data: booking, error: bookingError } = await sb
+      .from("kc_bookings")
+      .select("id,customer_id,worker_id,status")
+      .eq("id", bookingId)
+      .eq("customer_id", user.id)
+      .maybeSingle();
+
+    if (bookingError) throw bookingError;
+
+    if (
+      !booking ||
+      String(booking.status).toLowerCase() !== "completed" ||
+      String(booking.worker_id) !== String(workerId)
+    ) {
+      toast("Only your completed booking can be rated.");
+      return;
+    }
+
     const { error } = await sb
       .from("worker_reviews")
       .insert({
@@ -2300,23 +2332,31 @@ async function submitWorkerReview(bookingId, workerId) {
         customer_id: user.id,
         worker_id: workerId,
         rating: rating,
-        review: review.trim() || null
+        review: null
       });
 
     if (error) throw error;
 
-    toast("Thank you! Your review was submitted.");
+    toast("Your rating was submitted successfully!");
+
     await loadBookings();
     await loadData();
     renderWorkers();
-  } catch (e) {
-    console.error("Review submission error:", e);
 
-    toast(
-      e.code === "23505"
-        ? "You have already reviewed this booking."
-        : "Could not submit review: " + e.message
-    );
+  } catch (e) {
+    console.error("Rating submission error:", e);
+
+    if (e.code === "23505") {
+      toast("You have already rated this booking.");
+      await loadBookings();
+    } else {
+      toast("Could not submit rating: " + e.message);
+
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Submit rating";
+      }
+    }
   }
 }
 function renderWorkersInto(id,list){const el=$(id);if(!el)return;if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">No worker profiles are available yet. Add real worker profiles after enabling the worker registration workflow.</div>';return}el.innerHTML=list.map(w=>`<article class="worker-card"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><span class="verified">${w.verified?"✓ Verified":"Professional"}</span><h3>${esc(w.full_name||"Worker")}</h3><div class="tiny">${esc(w.profession||"Service professional")}</div><div class="tiny">★ ${w.rating||"—"} · ${w.review_count||0} reviews</div><div class="tiny">${w.experience_years?esc(w.experience_years)+" years experience":"Experience not listed"}</div><div class="price" style="margin-top:8px">${w.starting_price?money(w.starting_price):"Quote on request"}</div><button class="btn btn-light" onclick="viewWorker('${esc(w.id)}')">View profile</button><button class="btn btn-primary" onclick="bookWorker('${esc(w.id)}')">Book worker</button></article>`).join("")}
