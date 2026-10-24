@@ -2292,7 +2292,9 @@ if (sb) {
     }
   });
 
-  sb.auth.onAuthStateChange((event, session) => {
+  
+sb.auth.onAuthStateChange((event, session) => {
+  setTimeout(() => {
     user = session?.user || null;
 
     renderWelcomeProfile();
@@ -2301,9 +2303,9 @@ if (sb) {
     if (session?.user) {
       go("home");
     }
-  });
+  }, 0);
+});
 }
-
 renderWelcomeProfile();
 restoreLastScreen();
 loadData();
