@@ -1727,7 +1727,32 @@ async function loadData(){
         starting_price:w.price,
         postal_code:w.postal_code
       }));
+      const { data: reviews, error: reviewError } = await sb
+        .from("worker_reviews")
+        .select("worker_id, rating");
 
+      if (reviewError) throw reviewError;
+
+      const ratingStats = {};
+
+      (reviews || []).forEach(r => {
+        if (!ratingStats[r.worker_id]) {
+          ratingStats[r.worker_id] = { total: 0, count: 0 };
+        }
+
+        ratingStats[r.worker_id].total += r.rating;
+        ratingStats[r.worker_id].count++;
+      });
+
+      workers = workers.map(w => {
+        const s = ratingStats[w.id];
+
+        return {
+          ...w,
+          rating: s ? (s.total / s.count).toFixed(1) : null,
+          review_count: s ? s.count : 0
+        };
+      });
     }catch(e){
       console.warn("Worker query:",e.message);
     }
@@ -2218,7 +2243,58 @@ console.log("Redirect URL:", window.location.origin + window.location.pathname);
 async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHTML='<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';return}if(!sb){el.innerHTML='<div class="empty">Supabase is not configured.</div>';return}el.innerHTML='<div class="empty">Loading your bookings…</div>';try{const {data,error}=await sb.from("kc_bookings")
   .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
   .eq("customer_id", user.id)
-  .order("created_at",{ascending:false});if(error)throw error;if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button></article>`).join("")}catch(e){el.innerHTML='<div class="empty">Could not load bookings: '+esc(e.message)+'. Run the SQL migration and check your Supabase configuration.</div>'}}
+  .order("created_at",{ascending:false});if(error)throw error;if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button>${String(b.status).toLowerCase() === "completed" && b.worker_id
+  ? `<button class="btn btn-primary"
+      onclick="submitWorkerReview('${b.id}','${b.worker_id}')">
+      Rate Worker
+    </button>`
+  : ""}</article>`).join("")}catch(e){el.innerHTML='<div class="empty">Could not load bookings: '+esc(e.message)+'. Run the SQL migration and check your Supabase configuration.</div>'}}
+
+async function submitWorkerReview(bookingId, workerId) {
+  if (!sb || !user) {
+    toast("Please sign in first.");
+    return;
+  }
+
+  const rating = Number(
+    prompt("Rate this worker from 1 to 5 stars:")
+  );
+
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+    toast("Please enter a rating from 1 to 5.");
+    return;
+  }
+
+  const review = prompt("Write a review (optional):") || "";
+
+  try {
+    const { error } = await sb
+      .from("worker_reviews")
+      .insert({
+        booking_id: null,
+        kc_booking_id: bookingId,
+        customer_id: user.id,
+        worker_id: workerId,
+        rating: rating,
+        review: review.trim() || null
+      });
+
+    if (error) throw error;
+
+    toast("Thank you! Your review was submitted.");
+    await loadBookings();
+    await loadData();
+    renderWorkers();
+  } catch (e) {
+    console.error("Review submission error:", e);
+
+    toast(
+      e.code === "23505"
+        ? "You have already reviewed this booking."
+        : "Could not submit review: " + e.message
+    );
+  }
+}
 function renderWorkersInto(id,list){const el=$(id);if(!el)return;if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">No worker profiles are available yet. Add real worker profiles after enabling the worker registration workflow.</div>';return}el.innerHTML=list.map(w=>`<article class="worker-card"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><span class="verified">${w.verified?"✓ Verified":"Professional"}</span><h3>${esc(w.full_name||"Worker")}</h3><div class="tiny">${esc(w.profession||"Service professional")}</div><div class="tiny">★ ${w.rating||"—"} · ${w.review_count||0} reviews</div><div class="tiny">${w.experience_years?esc(w.experience_years)+" years experience":"Experience not listed"}</div><div class="price" style="margin-top:8px">${w.starting_price?money(w.starting_price):"Quote on request"}</div><button class="btn btn-light" onclick="viewWorker('${esc(w.id)}')">View profile</button><button class="btn btn-primary" onclick="bookWorker('${esc(w.id)}')">Book worker</button></article>`).join("")}
 function renderWorkers() {
   const q = ($("workerSearch")?.value || "").toLowerCase();
