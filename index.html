@@ -3034,6 +3034,207 @@ sb.auth.onAuthStateChange((event, session) => {
 renderWelcomeProfile();
 restoreLastScreen();
 loadData();
+
+async function loadPayroll() {
+  const list = $("payrollList");
+  const workerSelect = $("payrollWorker");
+
+  if (!sb || !(await isAdminUser())) {
+    if (list) list.innerHTML = '<p class="tiny">Admin access required.</p>';
+    notice("payrollNotice", "Please sign in with an authorized admin account.", "error");
+    return;
+  }
+
+  list.innerHTML = '<p class="tiny">Loading salary records...</p>';
+
+  try {
+    const { data: workersData, error: workersError } = await sb
+      .from("worker_profiles")
+      .select("id,full_name,service,area")
+      .order("full_name");
+
+    if (workersError) throw workersError;
+
+    const workersList = workersData || [];
+    const previousWorker = workerSelect.value;
+
+    workerSelect.innerHTML =
+      '<option value="">Select worker</option>' +
+      workersList.map(w =>
+        `<option value="${esc(w.id)}">${esc(w.full_name || "Unnamed worker")} — ${esc(w.service || "Service not set")}</option>`
+      ).join("");
+
+    if (workersList.some(w => w.id === previousWorker)) {
+      workerSelect.value = previousWorker;
+    }
+
+    const { data, error } = await sb
+      .from("kc_worker_payroll")
+      .select("*, worker_profiles(full_name,service,area)")
+      .order("period_end", { ascending: false });
+
+    if (error) throw error;
+
+    const records = data || [];
+    const total = records.reduce((sum, r) => sum + Number(r.total_amount || 0), 0);
+    const pending = records
+      .filter(r => r.payment_status === "pending")
+      .reduce((sum, r) => sum + Number(r.total_amount || 0), 0);
+    const paid = records
+      .filter(r => r.payment_status === "paid")
+      .reduce((sum, r) => sum + Number(r.total_amount || 0), 0);
+
+    $("payrollStats").innerHTML = `
+      <div class="admin-stat"><small>Salary records</small><strong>${records.length}</strong></div>
+      <div class="admin-stat"><small>Total salary</small><strong>${money(total)}</strong></div>
+      <div class="admin-stat"><small>Pending payment</small><strong>${money(pending)}</strong></div>
+      <div class="admin-stat"><small>Paid</small><strong>${money(paid)}</strong></div>
+    `;
+
+    if (!records.length) {
+      list.innerHTML = '<p class="tiny">No salary records found.</p>';
+      return;
+    }
+
+    list.innerHTML = records.map(r => {
+      const w = r.worker_profiles || {};
+      const status = r.payment_status || "pending";
+
+      return `
+        <article class="panel" style="margin-top:12px">
+          <strong>${esc(w.full_name || "Worker")}</strong>
+          <p class="tiny">${esc(w.service || "")} ${w.area ? "· " + esc(w.area) : ""}</p>
+          <p class="tiny">Period: ${esc(r.period_start)} to ${esc(r.period_end)}</p>
+          <p>Target: ${r.target_jobs} · Completed: ${r.completed_jobs}</p>
+          <p>Base salary: ${money(r.base_salary)}</p>
+          <p>Bonus: ${money(r.bonus_amount)}</p>
+          <p><strong>Total: ${money(r.total_amount)}</strong></p>
+          <p>Status: <strong>${esc(status.toUpperCase())}</strong></p>
+          ${r.notes ? `<p class="tiny">Notes: ${esc(r.notes)}</p>` : ""}
+          <button class="btn ${status === "paid" ? "btn-light" : "btn-primary"}"
+            onclick="setPayrollStatus('${esc(r.id)}','${status === "paid" ? "pending" : "paid"}')">
+            ${status === "paid" ? "Mark Pending" : "Mark Paid"}
+          </button>
+        </article>
+      `;
+    }).join("");
+
+  } catch (e) {
+    list.innerHTML = `<p class="tiny">Could not load payroll: ${esc(e.message)}</p>`;
+    console.error("Payroll load error:", e);
+  }
+}
+
+function calculatePayroll() {
+  const target = Math.max(0, Number($("payrollTarget").value) || 0);
+  const completed = Math.max(0, Number($("payrollCompleted").value) || 0);
+  const salary = Math.max(0, Number($("payrollSalary").value) || 0);
+  const bonus = Math.max(0, Number($("payrollBonus").value) || 0);
+  const earnedBonus = target > 0 && completed >= target ? bonus : 0;
+  const total = salary + earnedBonus;
+
+  $("payrollCalc").innerHTML =
+    `Base: ${money(salary)} · Earned bonus: ${money(earnedBonus)} · <strong>Total: ${money(total)}</strong>`;
+
+  return { target, completed, salary, earnedBonus, total };
+}
+
+["payrollTarget", "payrollCompleted", "payrollSalary", "payrollBonus"].forEach(id => {
+  $(id)?.addEventListener("input", calculatePayroll);
+});
+
+$("payrollForm")?.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  if (!sb || !(await isAdminUser())) {
+    notice("payrollNotice", "Admin access required.", "error");
+    return;
+  }
+
+  const workerId = $("payrollWorker").value;
+  const periodStart = $("payrollStart").value;
+  const periodEnd = $("payrollEnd").value;
+
+  if (!workerId || !periodStart || !periodEnd) {
+    notice("payrollNotice", "Please complete all required fields.", "error");
+    return;
+  }
+
+  if (periodEnd < periodStart) {
+    notice("payrollNotice", "Period end must be on or after period start.", "error");
+    return;
+  }
+
+  const calc = calculatePayroll();
+
+  const payload = {
+    worker_id: workerId,
+    period_start: periodStart,
+    period_end: periodEnd,
+    target_jobs: calc.target,
+    completed_jobs: calc.completed,
+    base_salary: calc.salary,
+    bonus_amount: calc.earnedBonus,
+    total_amount: calc.total,
+    notes: $("payrollNotes").value.trim() || null,
+    created_by: user.id,
+    updated_at: new Date().toISOString()
+  };
+
+  const button = this.querySelector('button[type="submit"]');
+  button.disabled = true;
+
+  try {
+    const { error } = await sb
+      .from("kc_worker_payroll")
+      .upsert(payload, {
+        onConflict: "worker_id,period_start,period_end"
+      });
+
+    if (error) throw error;
+
+    notice("payrollNotice", "Salary record saved successfully.", "success");
+    await loadPayroll();
+  } catch (e) {
+    notice("payrollNotice", "Save failed: " + e.message, "error");
+    console.error("Payroll save error:", e);
+  } finally {
+    button.disabled = false;
+  }
+});
+
+async function setPayrollStatus(id, status) {
+  if (!["paid", "pending"].includes(status)) return;
+
+  if (!sb || !(await isAdminUser())) {
+    toast("Admin access required.");
+    return;
+  }
+
+  const updateData = {
+    payment_status: status,
+    paid_at: status === "paid" ? new Date().toISOString() : null,
+    paid_by: status === "paid" ? user.id : null,
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    const { error } = await sb
+      .from("kc_worker_payroll")
+      .update(updateData)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    toast(status === "paid" ? "Salary marked as paid." : "Salary marked as pending.");
+    await loadPayroll();
+  } catch (e) {
+    toast("Payment update failed: " + e.message);
+    console.error("Payroll status error:", e);
+  }
+}
+
+calculatePayroll();
 </script> 
   
 
