@@ -2011,8 +2011,117 @@ async function useMyLocation() {
       maximumAge: 60000
     }
   );
+} 
+
+async function trackBooking(id) {
+  trackingBookingId = id;
+  go("tracking");
+
+  const otp = window.sessionStorage
+    ? sessionStorage.getItem("kc_otp_" + id)
+    : null;
+
+  const otpEl = $("trackingOtpValue");
+  const detailsEl = $("trackingBooking");
+
+  if (otpEl) otpEl.textContent = otp || "••••••";
+  if (detailsEl) {
+    detailsEl.textContent = "Loading booking details...";
+  }
+
+  if (!sb) {
+    if (detailsEl) detailsEl.textContent =
+      "Database connection is unavailable.";
+    return;
+  }
+
+  try {
+    const { data, error } = await sb
+      .from("kc_bookings")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw error;
+
+    const status = String(data.status || "requested")
+      .toLowerCase();
+
+    const steps = [
+      ["requested", "Booking requested"],
+      ["confirmed", "Booking confirmed"],
+      ["in_progress", "Service in progress"],
+      ["completed", "Service completed"]
+    ];
+
+    const labels = {
+      pending: "Booking pending",
+      accepted: "Booking accepted",
+      confirmed: "Booking confirmed",
+      requested: "Booking requested",
+      in_progress: "Service in progress",
+      completed: "Service completed",
+      cancelled: "Booking cancelled",
+      rejected: "Booking declined"
+    };
+
+    const flow = status === "accepted"
+      ? "confirmed"
+      : status;
+
+    const currentIndex = steps.findIndex(
+      step => step[0] === flow
+    );
+
+    const terminal = ["cancelled", "rejected"].includes(status);
+
+    const timeline = terminal
+      ? `<p class="status">${labels[status]}</p>
+         <p class="tiny">This booking is no longer active.</p>`
+      : steps.map((step, index) => {
+          const done = currentIndex >= 0 && index <= currentIndex;
+          const current = index === currentIndex;
+
+          return `
+            <div style="display:flex;gap:10px;margin:12px 0">
+              <span style="font-size:20px">
+                ${done ? "✅" : "⚪"}
+              </span>
+              <div>
+                <strong>${step[1]}</strong>
+                <div class="tiny">
+                  ${current ? "Current status" :
+                    done ? "Completed step" : "Waiting"}
+                </div>
+              </div>
+            </div>`;
+        }).join("");
+
+    detailsEl.innerHTML = `
+      <h3>${esc(data.service_name || "Service booking")}</h3>
+      <p>${esc(data.service_date || "")}
+        · ${esc((data.start_time || "").slice(0, 5))}</p>
+      <p>${esc(data.address || "")}</p>
+      <p><strong>Current status:</strong>
+        ${esc(labels[status] || status)}</p>
+      <hr>
+      <h3>Booking progress</h3>
+      ${timeline}
+    `;
+
+    const arrivalEl = $("arrivalText");
+    if (arrivalEl) {
+      arrivalEl.textContent = data.worker_id
+        ? "Waiting for worker GPS update…"
+        : "A professional has not been assigned yet.";
+    }
+  } catch (error) {
+    if (detailsEl) {
+      detailsEl.textContent =
+        "Booking details unavailable: " + error.message;
+    }
+  }
 }
-async function trackBooking(id){trackingBookingId=id;go("tracking");const otp=window.sessionStorage?sessionStorage.getItem("kc_otp_"+id):null;$("trackingOtpValue").textContent=otp||"••••••";if(sb){try{const {data,error}=await sb.from("kc_bookings").select("*").eq("id",id).single();if(error)throw error;$("trackingBooking").innerHTML=`<strong>${esc(data.service_name||"Service booking")}</strong><p>${esc(data.service_date||"")} · ${esc((data.start_time||"").slice(0,5))}</p><p>${esc(data.address||"")}</p><p>Status: ${esc(data.status||"")}</p>`;$("arrivalText").textContent=data.worker_id?"Waiting for worker GPS update…":"A professional has not been assigned yet."}catch(e){$("trackingBooking").textContent="Booking details unavailable: "+e.message}}}
 function initTrackingMap(){if(!window.L||mapInstance)return;const el=$("trackingMap");if(!el||!el.isConnected)return;mapInstance=L.map(el,{zoomControl:false}).setView([25.5941,85.1376],13);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(mapInstance);setTimeout(()=>mapInstance?.invalidateSize(),250);if(sb&&trackingBookingId)subscribeTracking(trackingBookingId)}
 async function subscribeTracking(id){if(!sb||!id)return;if(locationChannel)sb.removeChannel(locationChannel);try{const {data,error}=await sb.from("kc_worker_locations").select("latitude,longitude,updated_at,worker_id").eq("booking_id",id).order("updated_at",{ascending:false}).limit(1);if(!error&&data?.[0])updateWorkerMarker(data[0]);locationChannel=sb.channel("tracking-"+id).on("postgres_changes",{event:"*",schema:"public",table:"kc_worker_locations",filter:"booking_id=eq."+id},payload=>{if(payload.new)updateWorkerMarker(payload.new)}).subscribe()}catch(e){console.warn(e.message)}}
 function updateWorkerMarker(row){if(!mapInstance||!row.latitude||!row.longitude)return;const p=[Number(row.latitude),Number(row.longitude)];if(workerMarker)workerMarker.setLatLng(p);else workerMarker=L.marker(p).addTo(mapInstance).bindPopup("Assigned professional");mapInstance.setView(p,15);$("arrivalText").textContent="Worker location updated "+new Date(row.updated_at).toLocaleTimeString();$("etaValue").textContent="—"}
