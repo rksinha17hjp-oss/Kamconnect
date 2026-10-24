@@ -1857,7 +1857,8 @@ async function signInWithGoogle() {
       alert("Google sign-in failed: " + error.message);
       return;
     }
-
+console.log("Google login started");
+console.log("Redirect URL:", window.location.origin + window.location.pathname);
     console.log("OAuth sign-in started:", data);
   } catch (error) {
     console.error("Google sign-in exception:", error);
