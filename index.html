@@ -1298,7 +1298,17 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
     <div id="homeWorkers" class="worker-grid"></div>
   </div>
 </section>
-<section id="screen-services" class="screen page"><div class="section-head"><div><button class="btn btn-light" onclick="go('home')">← Back</button><div class="eyebrow" style="margin-top:18px">Find the right help</div><h1 style="font-size:38px">Our Services</h1><p class="tiny">Browse all services and book the right professional.</p></div><button class="icon-btn" onclick="go('bookings')" aria-label="Bookings">🛒</button></div><label class="search"><span>⌕</span><input id="serviceSearch" placeholder="Search services, e.g. plumber, AC repair..." oninput="renderServices()"><button class="btn btn-light" onclick="document.getElementById('serviceSearch').value='';renderServices()">Clear</button></label><div id="serviceChips" class="chips" style="margin-top:12px"></div><div id="serviceList" class="service-list"></div></section>
+<section id="screen-services" class="screen page"><div class="section-head"><div>
+<div class="page-photo-banner">
+  <img src="./trusted-workers.jpg"
+       alt="Trusted local professionals"
+       loading="lazy">
+  <div class="banner-copy">
+    <h2>Trusted hands for your home</h2>
+    <p>Find the right professional for your next task.</p>
+  </div>
+</div>
+<button class="btn btn-light" onclick="go('home')">← Back</button><div class="eyebrow" style="margin-top:18px">Find the right help</div><h1 style="font-size:38px">Our Services</h1><p class="tiny">Browse all services and book the right professional.</p></div><button class="icon-btn" onclick="go('bookings')" aria-label="Bookings">🛒</button></div><label class="search"><span>⌕</span><input id="serviceSearch" placeholder="Search services, e.g. plumber, AC repair..." oninput="renderServices()"><button class="btn btn-light" onclick="document.getElementById('serviceSearch').value='';renderServices()">Clear</button></label><div id="serviceChips" class="chips" style="margin-top:12px"></div><div id="serviceList" class="service-list"></div></section>
 <section id="screen-workers" class="screen page"><button class="btn btn-light" onclick="go('home')">← Back</button>
 <div class="page-photo-banner">
   <img src="./customer-support.jpg"
