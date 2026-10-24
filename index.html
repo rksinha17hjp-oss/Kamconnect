@@ -1040,152 +1040,7 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
     height: 82px;
     min-width: 82px;
   }
-} 
-  
-/* KAAMCONNECT PROMO BANNERS */
-.promo-banner {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  min-height: 300px;
-  margin: 22px 0 28px;
-  padding: 25px;
-  border-radius: 28px;
-  display: flex;
-  align-items: center;
-  background: var(--promo-bg, #e6f1ff);
 }
-
-.promo-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    90deg,
-    var(--promo-bg, #e6f1ff) 0%,
-    transparent 100%
-  );
-}
-
-.promo-banner .promo-copy {
-  position: relative;
-  z-index: 3;
-  width: 58%;
-}
-
-.promo-banner .promo-kicker {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-}
-
-.promo-banner h2 {
-  font-family: "Improbable", sans-serif !important;
-  font-size: clamp(27px, 5vw, 39px);
-  line-height: 1.12;
-  margin: 0 0 12px;
-  overflow-wrap: anywhere;
-}
-
-.promo-banner p {
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.promo-banner .promo-photo {
-  position: absolute;
-  z-index: 1;
-  width: 57%;
-  height: 94%;
-  bottom: 0;
-  object-fit: contain;
-  object-position: bottom;
-  pointer-events: none;
-}
-
-.promo-banner .btn {
-  position: relative;
-  z-index: 4;
-}
-
-/* Plumbing: photo left, text right */
-.promo-plumbing {
-  --promo-bg: #dceeff;
-}
-.promo-plumbing .promo-photo {
-  left: 0;
-}
-.promo-plumbing .promo-copy {
-  margin-left: auto;
-}
-
-/* Workers: photo right, text left */
-.promo-workers {
-  --promo-bg: #fff0d8;
-}
-.promo-workers .promo-photo {
-  right: 0;
-}
-
-/* Bookings: photo left, text right, lavender */
-.promo-bookings {
-  --promo-bg: #e9e0ff;
-}
-.promo-bookings .promo-photo {
-  left: 0;
-  height: 80%;
-}
-.promo-bookings .promo-copy {
-  margin-left: auto;
-}
-
-/* Support: photo right, text left */
-.promo-support {
-  --promo-bg: #fff2c9;
-}
-.promo-support .promo-photo {
-  right: 0;
-  height: 83%;
-}
-
-@media (max-width: 560px) {
-  .promo-banner {
-    min-height: 340px;
-    padding: 18px;
-    border-radius: 25px;
-  }
-
-  .promo-banner .promo-copy {
-    width: 65%;
-    align-self: flex-start;
-    margin-top: 45px;
-  }
-
-  .promo-banner h2 {
-    font-size: clamp(24px, 6vw, 31px);
-  }
-
-  .promo-banner .promo-photo {
-    width: 68%;
-    height: 76%;
-  }
-
-  .promo-plumbing .promo-copy,
-  .promo-bookings .promo-copy {
-    width: 63%;
-  }
-
-  .promo-bookings .promo-photo {
-    height: 66%;
-  }
-
-  .promo-support .promo-photo {
-    height: 70%;
-  }
-}
-
 </style>
 </head>
 <body>
@@ -1245,21 +1100,7 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
   </div>
 
   <!-- Search -->
-  <div class="search-row"> 
-    
-<div class="promo-banner promo-plumbing">
-  <div class="promo-copy">
-    <div class="promo-kicker">✦ FAST & RELIABLE SERVICE</div>
-    <h2>LEAK TODAY?<br>FIX IT FAST!</h2>
-    <p>Expert plumbing help, right at your doorstep.</p>
-    <button class="btn btn-dark" onclick="go('services')">
-      Explore Services →
-    </button>
-  </div>
-  <img class="promo-photo"
-       src="./plumbing-banner.jpg"
-       alt="Plumbing service">
-</div>
+  <div class="search-row">
     <label class="search">
       <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="m16.5 16.5 5 5"/></svg>
       <input id="homeSearch"
@@ -1327,40 +1168,11 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
   </div>
 </section>
 <section id="screen-services" class="screen page"><div class="section-head"><div><button class="btn btn-light" onclick="go('home')">← Back</button><div class="eyebrow" style="margin-top:18px">Find the right help</div><h1 style="font-size:38px">Our Services</h1><p class="tiny">Browse all services and book the right professional.</p></div><button class="icon-btn" onclick="go('bookings')" aria-label="Bookings">🛒</button></div><label class="search"><span>⌕</span><input id="serviceSearch" placeholder="Search services, e.g. plumber, AC repair..." oninput="renderServices()"><button class="btn btn-light" onclick="document.getElementById('serviceSearch').value='';renderServices()">Clear</button></label><div id="serviceChips" class="chips" style="margin-top:12px"></div><div id="serviceList" class="service-list"></div></section>
-<section id="screen-workers" class="screen page">
-<div class="promo-banner promo-workers">
-  <div class="promo-copy">
-    <div class="promo-kicker">✦ VERIFIED PROFESSIONALS</div>
-    <h2>YOUR HOME<br>DESERVES THE BEST</h2>
-    <p>Discover skilled professionals for your home.</p>
-    <button class="btn btn-dark"
-      onclick="document.getElementById('workerList').scrollIntoView({behavior:'smooth'})">
-      Meet Our Experts →
-    </button>
-  </div>
-  <img class="promo-photo"
-       src="./trusted-workers.jpg"
-       alt="Trusted professionals">
-</div>
-<button class="btn btn-light" onclick="go('home')">← Back</button><div class="section-head" style="margin-top:18px"><div><div class="eyebrow">Local experts</div><h1 style="font-size:36px">Trusted Workers</h1><p class="tiny">Only worker profiles returned by your database appear here.</p></div></div><label class="search"><span>⌕</span><input id="workerSearch" placeholder="Search worker or speciality..." oninput="renderWorkers()"></label><div id="workerList" class="worker-grid" style="margin-top:16px"></div></section>
+<section id="screen-workers" class="screen page"><button class="btn btn-light" onclick="go('home')">← Back</button><div class="section-head" style="margin-top:18px"><div><div class="eyebrow">Local experts</div><h1 style="font-size:36px">Trusted Workers</h1><p class="tiny">Only worker profiles returned by your database appear here.</p></div></div><label class="search"><span>⌕</span><input id="workerSearch" placeholder="Search worker or speciality..." oninput="renderWorkers()"></label><div id="workerList" class="worker-grid" style="margin-top:16px"></div></section>
 <section id="screen-detail" class="screen page"><div id="detailContent"></div></section>
 <section id="screen-schedule" class="screen page"><button class="btn btn-light" onclick="go('detail')">← Back to service</button><div style="margin-top:22px"><div class="eyebrow">Choose a convenient time</div><h1 style="color:var(--navy);font-size:42px">Schedule</h1><p class="muted">Book at a time slot as per your convenience.</p></div><div class="panel"><div class="calendar-head"><h3 id="monthTitle">Month 2026</h3><div class="month-actions"><button class="icon-btn" onclick="changeMonth(-1)">‹</button><button class="icon-btn" onclick="changeMonth(1)">›</button></div></div><div id="calendar" class="calendar-grid"></div><div class="summary-band"><div>▦ <small>Selected Date</small><strong id="selectedDateText">Choose a date</strong></div><div>◷ <small>Selected Time</small><strong id="selectedTimeText">Choose a time</strong></div></div></div><div class="panel"><h3>Available Time Slots</h3><p class="tiny">Choose a time that works best for you. Slots shown are checked against the schedule when configured.</p><div id="slots" class="slots"></div><p id="slotNote" class="tiny" style="margin-top:12px"></p></div><button class="btn btn-primary" style="width:100%" onclick="goCheckout()">Continue to booking →</button></section>
 <section id="screen-checkout" class="screen page"><button class="btn btn-light" onclick="go('schedule')">← Back to schedule</button><div style="margin-top:20px"><div class="eyebrow">Almost there</div><h1 style="font-size:36px">Review & Book</h1><p class="tiny">Check your details before submitting your booking.</p></div><div id="checkoutSummary" class="panel"></div><form id="bookingForm" class="panel"><h3>Service address</h3><div class="form-grid"><div class="field"><label for="addressLabel">Address type</label><select id="addressLabel"><option>Home</option><option>Work</option><option>Other</option></select></div><div class="field"><label for="landmark">Landmark (optional)</label><input id="landmark" placeholder="Near a landmark"></div><div class="field full"><label for="address">House / street / locality</label><textarea id="address" required placeholder="Enter complete service address"></textarea></div><div class="field full"><label for="notes">Instructions (optional)</label><textarea id="notes" placeholder="Anything the professional should know?"></textarea></div><div class="field full"><label for="payment">Payment method</label><select id="payment"><option value="cash">Cash after service</option><option value="online" disabled>Online payment (not configured yet)</option></select></div></div><div id="bookingNotice" class="notice"></div><button id="confirmBooking" class="btn btn-primary" style="width:100%;margin-top:15px" type="submit">Confirm Booking</button><p class="tiny" style="margin-top:10px">Booking is confirmed only after Supabase accepts it. Availability and price are validated again by the backend.</p></form></section>
-<section id="screen-bookings" class="screen page">
-<div class="promo-banner promo-bookings">
-  <div class="promo-copy">
-    <div class="promo-kicker">✦ SIMPLE & CONVENIENT</div>
-    <h2>BOOK TODAY.<br>RELAX TOMORROW.</h2>
-    <p>Your next home service is just a few taps away.</p>
-    <button class="btn btn-dark" onclick="go('services')">
-      Book a Service →
-    </button>
-  </div>
-  <img class="promo-photo"
-       src="./quick-booking.jpg"
-       alt="Easy home service booking">
-</div>
-<div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p><div id="bookingsContent"></div></section>
+<section id="screen-bookings" class="screen page"><div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p><div id="bookingsContent"></div></section>
 <section id="screen-auth" class="screen page"><div class="auth-card panel"><div class="eyebrow">Welcome to KaamConnect</div><h1 style="font-size:34px">Your account</h1><p class="tiny">Sign in to book services or create an account to get started.</p><div class="chips"><button id="loginTab" class="chip active" onclick="setAuthMode('login')">Sign in</button><button id="signupTab" class="chip" onclick="setAuthMode('signup')">Create account</button></div><form id="authForm"><div class="form-grid"><div id="nameField" class="field full hidden"><label for="authName">Full name</label><input id="authName" autocomplete="name" placeholder="Your name"></div><div class="field full"><label for="authEmail">Email</label><input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></div><div class="field full"><label for="authPassword">Password</label><input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters"></div></div><div id="authNotice" class="notice"></div><button class="btn btn-primary" id="authSubmit" style="width:100%;margin-top:14px">Sign in</button></form><button type="button" class="btn btn-light"
   style="width:100%;margin-top:10px"
   onclick="signInWithGoogle()">
@@ -2945,22 +2757,7 @@ loadData();
 
 <!-- KaamConnect Modern Support Page -->
 <section id="screen-support" class="screen page support-screen">
-  <div class="support-hero"> 
-    
-<div class="promo-banner promo-support">
-  <div class="promo-copy">
-    <div class="promo-kicker">✦ KAAMCONNECT CARE</div>
-    <h2>WE'RE HERE<br>WHEN YOU NEED US</h2>
-    <p>Questions or concerns? We're ready to help.</p>
-    <button class="btn btn-dark"
-      onclick="document.querySelector('.support-contact-card').scrollIntoView({behavior:'smooth'})">
-      Get Help →
-    </button>
-  </div>
-  <img class="promo-photo"
-       src="./customer-support.jpg"
-       alt="Customer support">
-</div>
+  <div class="support-hero">
     <div class="support-hero-icon">🎧</div>
     <p class="support-eyebrow">KAAMCONNECT HELP CENTER</p>
     <h2>How can we help you?</h2>
@@ -3060,4 +2857,4 @@ loadData();
   </div>
 </section>
 </body>
-</html>
+  </html>
