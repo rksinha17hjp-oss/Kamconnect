@@ -2421,17 +2421,33 @@ const workerIds = profiles.map(w => w.id);
 content.innerHTML = profiles.map(w => `
   <div class="worker-inline">
     <div class="icon-btn">🧰</div>
+
     <div class="grow">
       <strong>${esc(w.full_name || user.email || "Professional")}</strong>
+
       <div class="tiny">
         ${esc(w.profession || "Professional")} ·
         ${esc(w.service_area || "Area not set")}
       </div>
+
+      <div class="tiny">
+        Availability:
+        <strong>${w.available ? "🟢 Online" : "⚪ Offline"}</strong>
+      </div>
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        onclick="setWorkerAvailability(${!w.available})">
+        ${w.available ? "Go Offline" : "Go Online"}
+      </button>
     </div>
-    <span class="status">${w.verified ? "Verified" : "Pending verification"}</span>
+
+    <span class="status">
+      ${w.verified ? "Verified" : "Pending verification"}
+    </span>
   </div>
 `).join("");
-
 const { data: rows, error: bookingError } = await sb
   .from("kc_bookings")
   .select("id,service_name,plan_name,service_date,start_time,address,status,worker_id,created_at")
@@ -2574,6 +2590,31 @@ bookings.innerHTML =
 }
 }
 
+async function setWorkerAvailability(available) {
+  if (!user || !sb) {
+    alert("Please sign in first.");
+    return;
+  }
+
+  try {
+    const { data, error } = await sb.rpc(
+      "kc_set_worker_availability",
+      { p_available: available }
+    );
+
+    if (error) throw error;
+
+    toast(
+      available
+        ? "You are now Online!"
+        : "You are now Offline!"
+    );
+
+    await loadWorkerDashboard();
+  } catch (e) {
+    alert("Availability update failed: " + e.message);
+  }
+}
 async function acceptKaamConnectBooking(bookingId) {
 const result = $("accept-result-" + bookingId);
 
