@@ -2243,11 +2243,35 @@ console.log("Redirect URL:", window.location.origin + window.location.pathname);
 async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHTML='<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';return}if(!sb){el.innerHTML='<div class="empty">Supabase is not configured.</div>';return}el.innerHTML='<div class="empty">Loading your bookings…</div>';try{const {data,error}=await sb.from("kc_bookings")
   .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
   .eq("customer_id", user.id)
-  .order("created_at",{ascending:false});if(error)throw error;if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button>${String(b.status).toLowerCase() === "completed" && b.worker_id
-  ? `<button class="btn btn-primary"
-      onclick="submitWorkerReview('${b.id}','${b.worker_id}')">
-      Rate Worker
-    </button>`
+  .order("created_at",{ascending:false});if(error)throw error;if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light"
+  onclick="trackBooking('${esc(b.id)}')">
+  Track / details
+</button>
+
+${String(b.status).toLowerCase() === "completed" && b.worker_id
+  ? `<div class="review-form">
+       <h4>Rate your experience</h4>
+
+       <label for="review-rating-${esc(b.id)}">Your rating</label>
+       <select id="review-rating-${esc(b.id)}" required>
+         <option value="">Choose stars</option>
+         <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+         <option value="4">⭐⭐⭐⭐ Good</option>
+         <option value="3">⭐⭐⭐ Average</option>
+         <option value="2">⭐⭐ Poor</option>
+         <option value="1">⭐ Very poor</option>
+       </select>
+
+       <label for="review-text-${esc(b.id)}">Comment (optional)</label>
+       <textarea id="review-text-${esc(b.id)}"
+         maxlength="1000"
+         placeholder="Apna experience share karein..."></textarea>
+
+       <button class="btn btn-primary"
+         onclick="submitWorkerReview('${esc(b.id)}','${esc(b.worker_id)}')">
+         Submit review
+       </button>
+     </div>`
   : ""}</article>`).join("")}catch(e){el.innerHTML='<div class="empty">Could not load bookings: '+esc(e.message)+'. Run the SQL migration and check your Supabase configuration.</div>'}}
 
 async function submitWorkerReview(bookingId, workerId) {
