@@ -2928,7 +2928,7 @@ if (sb) {
     if (user) {
       renderWelcomeProfile();
       renderProfile();
-      go("home");
+      restoreLastScreen(); 
     }
   });
 
@@ -2941,7 +2941,7 @@ sb.auth.onAuthStateChange((event, session) => {
     renderProfile();
 
     if (session?.user) {
-      go("home");
+     restoreLastScreen(); 
     }
   }, 0);
 });
