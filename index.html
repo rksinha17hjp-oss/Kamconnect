@@ -1040,6 +1040,58 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
     height: 82px;
     min-width: 82px;
   }
+} 
+  
+/* KaamConnect page banners */
+.page-photo-banner {
+  position: relative;
+  width: 100%;
+  margin: 18px 0 24px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #f2f0f7;
+  isolation: isolate;
+}
+
+.page-photo-banner img {
+  display: block;
+  width: 100%;
+  height: clamp(230px, 42vw, 360px);
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.page-photo-banner .banner-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 48px 18px 18px;
+  color: #fff;
+  background: linear-gradient(transparent, #101522e8);
+  z-index: 1;
+}
+
+.page-photo-banner .banner-copy h2 {
+  color: #fff;
+  margin: 0 0 6px;
+  font-size: clamp(20px, 5vw, 29px);
+}
+
+.page-photo-banner .banner-copy p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.page-photo-banner img {
+  object-position: center top;
+}
+
+@media (max-width: 480px) {
+  .page-photo-banner img {
+    height: 250px;
+  }
 }
 </style>
 </head>
@@ -1099,6 +1151,15 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
     </h1>
   </div>
 
+<div class="page-photo-banner">
+  <img src="./trusted-workers.jpg"
+       alt="Trusted local professionals"
+       loading="lazy">
+  <div class="banner-copy">
+    <h2>Trusted hands for your home</h2>
+    <p>Find the right professional for your next task.</p>
+  </div>
+</div>
   <!-- Search -->
   <div class="search-row">
     <label class="search">
@@ -1162,17 +1223,65 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
         <h2>Meet trusted workers</h2>
       </div>
       <button class="btn btn-light"
-        onclick="go('workers')">View all →</button>
+        onclick="go('workers')">View all →</button> 
+      <button class="btn btn-light" onclick="go('customers')">
+  👥 Customers
+      </button>
     </div>
     <div id="homeWorkers" class="worker-grid"></div>
   </div>
 </section>
 <section id="screen-services" class="screen page"><div class="section-head"><div><button class="btn btn-light" onclick="go('home')">← Back</button><div class="eyebrow" style="margin-top:18px">Find the right help</div><h1 style="font-size:38px">Our Services</h1><p class="tiny">Browse all services and book the right professional.</p></div><button class="icon-btn" onclick="go('bookings')" aria-label="Bookings">🛒</button></div><label class="search"><span>⌕</span><input id="serviceSearch" placeholder="Search services, e.g. plumber, AC repair..." oninput="renderServices()"><button class="btn btn-light" onclick="document.getElementById('serviceSearch').value='';renderServices()">Clear</button></label><div id="serviceChips" class="chips" style="margin-top:12px"></div><div id="serviceList" class="service-list"></div></section>
-<section id="screen-workers" class="screen page"><button class="btn btn-light" onclick="go('home')">← Back</button><div class="section-head" style="margin-top:18px"><div><div class="eyebrow">Local experts</div><h1 style="font-size:36px">Trusted Workers</h1><p class="tiny">Only worker profiles returned by your database appear here.</p></div></div><label class="search"><span>⌕</span><input id="workerSearch" placeholder="Search worker or speciality..." oninput="renderWorkers()"></label><div id="workerList" class="worker-grid" style="margin-top:16px"></div></section>
-<section id="screen-detail" class="screen page"><div id="detailContent"></div></section>
+<section id="screen-workers" class="screen page"><button class="btn btn-light" onclick="go('home')">← Back</button>
+<div class="page-photo-banner">
+  <img src="./customer-support.jpg"
+       alt="KaamConnect customer support"
+       loading="lazy">
+  <div class="banner-copy">
+    <h2>Meet trusted professionals</h2>
+    <p>Discover people ready to help with your home services.</p>
+  </div>
+</div>
+<div class="section-head" style="margin-top:18px"><div><div class="eyebrow">Local experts</div><h1 style="font-size:36px">Trusted Workers</h1><p class="tiny">Only worker profiles returned by your database appear here.</p></div></div><label class="search"><span>⌕</span><input id="workerSearch" placeholder="Search worker or speciality..." oninput="renderWorkers()"></label><div id="workerList" class="worker-grid" style="margin-top:16px"></div></section>
+
+<section id="screen-customers" class="screen page">
+  <button class="btn btn-light" onclick="go('home')">← Back</button>
+
+  <div class="page-photo-banner">
+    <img src="./customer-support.jpg"
+         alt="KaamConnect customers"
+         loading="lazy">
+    <div class="banner-copy">
+      <h2>Welcome, customers! 💜</h2>
+      <p>Discover trusted professionals for your everyday needs.</p>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Local professionals</div>
+      <h1 style="font-size:32px">Find your professional</h1>
+      <p class="tiny">Browse available workers and book a service.</p>
+    </div>
+    <span style="font-size:30px" aria-label="Customers">👥</span>
+  </div>
+
+  <div id="customerWorkerList" class="worker-grid"></div>
+</section>
+  <section id="screen-detail" class="screen page"><div id="detailContent"></div></section>
 <section id="screen-schedule" class="screen page"><button class="btn btn-light" onclick="go('detail')">← Back to service</button><div style="margin-top:22px"><div class="eyebrow">Choose a convenient time</div><h1 style="color:var(--navy);font-size:42px">Schedule</h1><p class="muted">Book at a time slot as per your convenience.</p></div><div class="panel"><div class="calendar-head"><h3 id="monthTitle">Month 2026</h3><div class="month-actions"><button class="icon-btn" onclick="changeMonth(-1)">‹</button><button class="icon-btn" onclick="changeMonth(1)">›</button></div></div><div id="calendar" class="calendar-grid"></div><div class="summary-band"><div>▦ <small>Selected Date</small><strong id="selectedDateText">Choose a date</strong></div><div>◷ <small>Selected Time</small><strong id="selectedTimeText">Choose a time</strong></div></div></div><div class="panel"><h3>Available Time Slots</h3><p class="tiny">Choose a time that works best for you. Slots shown are checked against the schedule when configured.</p><div id="slots" class="slots"></div><p id="slotNote" class="tiny" style="margin-top:12px"></p></div><button class="btn btn-primary" style="width:100%" onclick="goCheckout()">Continue to booking →</button></section>
 <section id="screen-checkout" class="screen page"><button class="btn btn-light" onclick="go('schedule')">← Back to schedule</button><div style="margin-top:20px"><div class="eyebrow">Almost there</div><h1 style="font-size:36px">Review & Book</h1><p class="tiny">Check your details before submitting your booking.</p></div><div id="checkoutSummary" class="panel"></div><form id="bookingForm" class="panel"><h3>Service address</h3><div class="form-grid"><div class="field"><label for="addressLabel">Address type</label><select id="addressLabel"><option>Home</option><option>Work</option><option>Other</option></select></div><div class="field"><label for="landmark">Landmark (optional)</label><input id="landmark" placeholder="Near a landmark"></div><div class="field full"><label for="address">House / street / locality</label><textarea id="address" required placeholder="Enter complete service address"></textarea></div><div class="field full"><label for="notes">Instructions (optional)</label><textarea id="notes" placeholder="Anything the professional should know?"></textarea></div><div class="field full"><label for="payment">Payment method</label><select id="payment"><option value="cash">Cash after service</option><option value="online" disabled>Online payment (not configured yet)</option></select></div></div><div id="bookingNotice" class="notice"></div><button id="confirmBooking" class="btn btn-primary" style="width:100%;margin-top:15px" type="submit">Confirm Booking</button><p class="tiny" style="margin-top:10px">Booking is confirmed only after Supabase accepts it. Availability and price are validated again by the backend.</p></form></section>
-<section id="screen-bookings" class="screen page"><div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p><div id="bookingsContent"></div></section>
+<section id="screen-bookings" class="screen page"><div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p>
+<div class="page-photo-banner">
+  <img src="./plumbing-banner.jpg"
+       alt="Professional plumber"
+       loading="lazy">
+  <div class="banner-copy">
+    <h2>Home repairs, made simple</h2>
+    <p>Book reliable local professionals for your home.</p>
+  </div>
+</div>
+<div id="bookingsContent"></div></section>
 <section id="screen-auth" class="screen page"><div class="auth-card panel"><div class="eyebrow">Welcome to KaamConnect</div><h1 style="font-size:34px">Your account</h1><p class="tiny">Sign in to book services or create an account to get started.</p><div class="chips"><button id="loginTab" class="chip active" onclick="setAuthMode('login')">Sign in</button><button id="signupTab" class="chip" onclick="setAuthMode('signup')">Create account</button></div><form id="authForm"><div class="form-grid"><div id="nameField" class="field full hidden"><label for="authName">Full name</label><input id="authName" autocomplete="name" placeholder="Your name"></div><div class="field full"><label for="authEmail">Email</label><input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></div><div class="field full"><label for="authPassword">Password</label><input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters"></div></div><div id="authNotice" class="notice"></div><button class="btn btn-primary" id="authSubmit" style="width:100%;margin-top:14px">Sign in</button></form><button type="button" class="btn btn-light"
   style="width:100%;margin-top:10px"
   onclick="signInWithGoogle()">
@@ -1948,7 +2057,18 @@ async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHT
   .eq("customer_id", user.id)
   .order("created_at",{ascending:false});if(error)throw error;if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button></article>`).join("")}catch(e){el.innerHTML='<div class="empty">Could not load bookings: '+esc(e.message)+'. Run the SQL migration and check your Supabase configuration.</div>'}}
 function renderWorkersInto(id,list){const el=$(id);if(!el)return;if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">No worker profiles are available yet. Add real worker profiles after enabling the worker registration workflow.</div>';return}el.innerHTML=list.map(w=>`<article class="worker-card"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><span class="verified">${w.verified?"✓ Verified":"Professional"}</span><h3>${esc(w.full_name||"Worker")}</h3><div class="tiny">${esc(w.profession||"Service professional")}</div><div class="tiny">★ ${w.rating||"—"} · ${w.review_count||0} reviews</div><div class="tiny">${w.experience_years?esc(w.experience_years)+" years experience":"Experience not listed"}</div><div class="price" style="margin-top:8px">${w.starting_price?money(w.starting_price):"Quote on request"}</div><button class="btn btn-light" onclick="viewWorker('${esc(w.id)}')">View profile</button><button class="btn btn-primary" onclick="bookWorker('${esc(w.id)}')">Book worker</button></article>`).join("")}
-function renderWorkers(){const q=($("workerSearch")?.value||"").toLowerCase();renderWorkersInto("workerList",workers.filter(w=>((w.full_name||"")+" "+(w.profession||"")+" "+(w.service_area||"")).toLowerCase().includes(q)))}
+function renderWorkers() {
+  const q = ($("workerSearch")?.value || "").toLowerCase();
+
+  const filtered = workers.filter(w =>
+    ((w.full_name || "") + " " +
+     (w.profession || "") + " " +
+     (w.service_area || "")).toLowerCase().includes(q)
+  );
+
+  renderWorkersInto("workerList", filtered);
+  renderWorkersInto("customerWorkerList", workers);
+}
 function viewWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(!w){toast("Worker not found");return}currentWorker=w;const s=services.find(s=>(w.profession||"").toLowerCase().includes(s.category.toLowerCase()))||services[0];if(s)currentService=s;renderDetail();$("workerInlineArea").innerHTML=workerInline(w);go("detail")}
 
 function bookWorker(id) {
@@ -2796,7 +2916,15 @@ loadData();
         <span class="support-card-arrow">↗</span>
       </a>
     </div>
-
+<div class="page-photo-banner">
+  <img src="./quick-booking.jpg"
+       alt="Quick service booking"
+       loading="lazy">
+  <div class="banner-copy">
+    <h2>Need help quickly?</h2>
+    <p>Find answers and get support with your booking.</p>
+  </div>
+</div>
     <div class="support-contact-card">
       <div class="support-contact-heading">
         <span class="support-contact-icon">💬</span>
