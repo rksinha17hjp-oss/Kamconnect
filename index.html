@@ -1093,13 +1093,13 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
     height: 250px;
   }
 } 
-  
-/* Large but balanced page banners */
+
+/* Large hero banners */
 .page-photo-banner {
   position: relative;
   width: 100%;
-  margin: 18px 0 24px;
-  border-radius: 24px;
+  margin: 20px 0 28px;
+  border-radius: 30px;
   overflow: hidden;
   background: #e5f3e6;
   isolation: isolate;
@@ -1108,7 +1108,7 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
 .page-photo-banner img {
   display: block;
   width: 100%;
-  height: clamp(320px, 65vw, 480px);
+  height: 1020px;
   object-fit: cover;
   object-position: center 25%;
 }
@@ -1119,38 +1119,49 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: 55px 18px 20px;
-  color: #fff;
+  padding: 100px 24px 30px;
+  color: #15151d;
   background: linear-gradient(
     transparent,
-    rgba(16, 21, 34, 0.88)
+    rgba(229, 243, 230, 0.98)
   );
   z-index: 1;
 }
 
 .page-photo-banner .banner-copy h2 {
-  margin: 0 0 8px;
-  font-size: clamp(22px, 5vw, 30px);
+  margin: 0 0 14px;
+  font-family: "Improbable", Impact, sans-serif;
+  font-size: clamp(28px, 6vw, 42px);
   line-height: 1.2;
-  color: #fff;
+  color: #15151d;
 }
 
 .page-photo-banner .banner-copy p {
   margin: 0;
-  font-size: 14px;
+  font-family: "Improbable", Impact, sans-serif;
+  font-size: clamp(16px, 3.8vw, 20px);
   line-height: 1.5;
+  color: #15151d;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .page-photo-banner img {
-    height: 380px;
+    height: 1020px;
     object-position: center 25%;
   }
 
   .page-photo-banner .banner-copy {
-    padding: 50px 16px 18px;
+    padding: 90px 20px 28px;
   }
-}
+
+  .page-photo-banner .banner-copy h2 {
+    font-size: 30px;
+  }
+
+  .page-photo-banner .banner-copy p {
+    font-size: 16px;
+  }
+} 
 </style>
 </head>
 <body>
