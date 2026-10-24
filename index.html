@@ -2243,7 +2243,19 @@ console.log("Redirect URL:", window.location.origin + window.location.pathname);
 async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHTML='<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';return}if(!sb){el.innerHTML='<div class="empty">Supabase is not configured.</div>';return}el.innerHTML='<div class="empty">Loading your bookings…</div>';try{const {data,error}=await sb.from("kc_bookings")
   .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
   .eq("customer_id", user.id)
-  .order("created_at",{ascending:false});if(error)throw error;if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light"
+  .order("created_at",{ascending:false});if(error)throw error;const { data: reviewRows, error: reviewError } = await sb
+  .from("worker_reviews")
+  .select("kc_booking_id, rating")
+  .eq("customer_id", user.id)
+  .in("kc_booking_id", data.map(b => b.id));
+
+if (reviewError) throw reviewError;
+
+const reviewsByBooking = Object.fromEntries(
+  (reviewRows || [])
+    .filter(r => r.kc_booking_id)
+    .map(r => [r.kc_booking_id, r])
+);if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light"
   onclick="trackBooking('${esc(b.id)}')">
   Track / details
 </button>
