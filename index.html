@@ -2352,7 +2352,41 @@ const visibleRows = (rows || []).filter(b => {
 
   return assignedToMe || isMatchingRequest;
 });
+// Worker dashboard job statistics
+const oldStats = $("workerJobStats");
+if (oldStats) oldStats.remove();
 
+const totalJobs = visibleRows.length;
+const assignedJobs = visibleRows.filter(b =>
+  workerIds.includes(b.worker_id)
+);
+const completedJobs = assignedJobs.filter(b =>
+  String(b.status || "").toLowerCase() === "completed"
+);
+const activeJobs = assignedJobs.filter(b =>
+  ["confirmed", "on_the_way", "arrived", "in_progress"]
+    .includes(String(b.status || "").toLowerCase())
+);
+
+content.insertAdjacentHTML("beforeend", `
+  <div class="panel" id="workerJobStats" style="margin-top:14px">
+    <h3>📊 Job Summary</h3>
+    <div class="admin-stat-grid" style="margin-top:12px">
+      <div class="admin-stat">
+        <small>Visible jobs</small>
+        <strong>${totalJobs}</strong>
+      </div>
+      <div class="admin-stat">
+        <small>Active jobs</small>
+        <strong>${activeJobs.length}</strong>
+      </div>
+      <div class="admin-stat">
+        <small>Completed</small>
+        <strong>${completedJobs.length}</strong>
+      </div>
+    </div>
+  </div>
+`); 
 if (visibleRows.length === 0) {
   bookings.innerHTML =
     '<div class="empty">No matching requests or assigned bookings found.</div>';
