@@ -1164,38 +1164,33 @@ background: #e5f3e6;
     font-size: 16px;
   }
   }
-/* Only Trusted Hands home banner */
+/* Fix Trusted Worker banner on Services page */
 #screen-services .trusted-home-banner {
   width: 100%;
-  max-width: none;
-  box-sizing: border-box;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-#screen-services .trusted-home-banner img {
-  width: 100%;
-  display: block;
-  box-sizing: border-box;
-} 
-
-/* Fix only Trusted Hands banner width */
-#screen-services .trusted-home-banner {
-  width: 100vw;
-  max-width: none;
+  max-width: 100%;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 20px 0 28px;
+  left: auto;
+  transform: none;
+  margin: 16px 0 22px;
   box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 18px;
 }
 
 #screen-services .trusted-home-banner img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 170px;
+  object-fit: cover;
+  object-position: center;
+  box-sizing: border-box;
 }
 
+@media (max-width: 600px) {
+  #screen-services .trusted-home-banner img {
+    height: 145px;
+  }
+}
 </style>
 </head>
 <body>
