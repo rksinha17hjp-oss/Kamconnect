@@ -2618,24 +2618,26 @@ async function trackBooking(id) {
     const status = String(data.status || "requested")
       .toLowerCase();
 
-    const steps = [
-      ["requested", "Booking requested"],
-      ["confirmed", "Booking confirmed"],
-      ["in_progress", "Service in progress"],
-      ["completed", "Service completed"]
-    ];
-
-    const labels = {
-      pending: "Booking pending",
-      accepted: "Booking accepted",
-      confirmed: "Booking confirmed",
-      requested: "Booking requested",
-      in_progress: "Service in progress",
-      completed: "Service completed",
-      cancelled: "Booking cancelled",
-      rejected: "Booking declined"
-    };
-
+const steps = [
+  ["requested", "Booking requested"],
+  ["confirmed", "Booking accepted"],
+  ["on_the_way", "Worker travelling"],
+  ["arrived", "Worker has arrived"],
+  ["in_progress", "Service in progress"],
+  ["completed", "Service completed"]
+];
+const labels = {
+  pending: "Booking pending",
+  accepted: "Booking accepted",
+  confirmed: "Booking accepted",
+  requested: "Booking requested",
+  on_the_way: "Worker is travelling",
+  arrived: "Worker has arrived",
+  in_progress: "Service in progress",
+  completed: "Service completed",
+  cancelled: "Booking cancelled",
+  rejected: "Booking declined"
+};
     const flow = status === "accepted"
       ? "confirmed"
       : status;
@@ -3086,6 +3088,7 @@ if (visibleRows.length === 0) {
 bookings.innerHTML = visibleRows.map(b => {
   const status = String(b.status || "requested").toLowerCase();
   const isAssigned = workerIds.includes(b.worker_id);
+
   const canAccept =
     !isAssigned &&
     b.worker_id === null &&
@@ -3097,9 +3100,11 @@ bookings.innerHTML = visibleRows.map(b => {
         String(b.service_name || "").trim().toLowerCase()
     );
 
-  const readyForOtp =
+  const canShareLocation =
     isAssigned &&
     ["confirmed", "on_the_way", "arrived"].includes(status);
+
+  const readyForOtp = isAssigned && status === "arrived";
 
   return `
     <article class="booking-card">
@@ -3123,6 +3128,30 @@ bookings.innerHTML = visibleRows.map(b => {
         <p id="accept-result-${esc(b.id)}" class="tiny"></p>
       ` : ""}
 
+      ${canShareLocation ? `
+        <button class="btn btn-light"
+          onclick="startWorkerLocationSharing('${esc(b.id)}')">
+          📍 Share Live Location
+        </button>
+        <p class="tiny">Keep this page open while sharing your GPS.</p>
+      ` : ""}
+
+      ${isAssigned && status === "confirmed" ? `
+        <button class="btn btn-primary"
+          onclick="updateWorkerBookingStatus('${esc(b.id)}','on_the_way')">
+          🚗 Start Travelling
+        </button>
+        <p id="status-result-${esc(b.id)}" class="tiny"></p>
+      ` : ""}
+
+      ${isAssigned && status === "on_the_way" ? `
+        <button class="btn btn-primary"
+          onclick="updateWorkerBookingStatus('${esc(b.id)}','arrived')">
+          📍 I Have Arrived
+        </button>
+        <p id="status-result-${esc(b.id)}" class="tiny"></p>
+      ` : ""}
+
       ${readyForOtp ? `
         <label for="otp-${esc(b.id)}">Customer's service-start OTP</label>
         <input id="otp-${esc(b.id)}" inputmode="numeric" maxlength="8"
@@ -3139,9 +3168,10 @@ bookings.innerHTML = visibleRows.map(b => {
       ${status === "in_progress" && isAssigned ? `
         <p class="tiny">✅ OTP verified. Service is in progress.</p>
         <button class="btn btn-primary"
-          onclick="startWorkerLocationSharing('${esc(b.id)}')">
-          📍 Share Live Location
+          onclick="completeWorkerService('${esc(b.id)}')">
+          ✅ Complete Service
         </button>
+        <p id="status-result-${esc(b.id)}" class="tiny"></p>
       ` : ""}
 
       ${status === "completed" ? '<p class="tiny">✅ Service completed</p>' : ""}
@@ -3149,7 +3179,6 @@ bookings.innerHTML = visibleRows.map(b => {
     </article>
   `;
 }).join("");
-
 } catch (e) {
 content.innerHTML =
 '<div class="empty">Could not load worker profile: ' + esc(e.message) + '</div>';
@@ -3158,6 +3187,62 @@ bookings.innerHTML =
 }
 }
 
+async function updateWorkerBookingStatus(bookingId, nextStatus) {
+  const result = document.getElementById("status-result-" + bookingId);
+
+  try {
+    if (!sb || !user) throw new Error("Please sign in first.");
+
+    if (result) result.textContent = "Updating booking status…";
+
+    const { data, error } = await sb.rpc(
+      "kc_worker_update_booking_status",
+      {
+        p_booking_id: bookingId,
+        p_status: nextStatus
+      }
+    );
+
+    if (error) throw error;
+
+    if (result) result.textContent = "✅ Status updated: " + nextStatus.replaceAll("_", " ");
+    toast("Booking status updated.");
+    await loadWorkerDashboard();
+  } catch (e) {
+    if (result) result.textContent = "❌ " + e.message;
+    else toast("Status update failed: " + e.message);
+  }
+}
+
+async function completeWorkerService(bookingId) {
+  const result = document.getElementById("status-result-" + bookingId);
+
+  if (!confirm("Have you finished this service?")) return;
+
+  try {
+    if (!sb || !user) throw new Error("Please sign in first.");
+
+    if (result) result.textContent = "Completing service…";
+
+    const { data, error } = await sb.rpc(
+      "kc_worker_update_booking_status",
+      {
+        p_booking_id: bookingId,
+        p_status: "completed"
+      }
+    );
+
+    if (error) throw error;
+
+    stopWorkerLocationSharing();
+    if (result) result.textContent = "✅ Service completed successfully.";
+    toast("Service completed!");
+    await loadWorkerDashboard();
+  } catch (e) {
+    if (result) result.textContent = "❌ " + e.message;
+    else toast("Could not complete service: " + e.message);
+  }
+}
 async function setWorkerAvailability(available) {
   if (!user || !sb) {
     alert("Please sign in first.");
