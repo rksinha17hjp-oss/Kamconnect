@@ -3760,29 +3760,14 @@ function openWorkerProfile(id, returnScreen = "workers") {
   go("worker-profile");
   loadWorkerProfileReviews(w.id);
 } 
-  
-function restoreLastWorkerProfile() {
-  let workerId = null;
-  let returnScreen = "workers";
-
+  function restoreLastWorkerProfile() {
   try {
-    workerId = localStorage.getItem("kc_last_worker_id");
-    returnScreen =
-      localStorage.getItem("kc_worker_profile_return") || "workers";
+    localStorage.removeItem("kc_last_worker_id");
+    localStorage.removeItem("kc_worker_profile_return");
   } catch (e) {
-    return;
+    console.warn("Could not clear saved worker profile:", e);
   }
-
-  if (!workerId) return;
-
-  const workerExists = workers.some(
-    w => String(w.id) === String(workerId)
-  );
-
-  if (workerExists) {
-    openWorkerProfile(workerId, returnScreen);
   }
-}
 function workerProfileTab(tab, button) {
   ["about", "availability", "experience", "reviews"].forEach(name => {
     const panel = $("workerTab-" + name);
@@ -4786,13 +4771,7 @@ sb.auth.onAuthStateChange((event, session) => {
 }
 renderWelcomeProfile();
 restoreLastScreen();
-
-loadData().then(() => {
-  restoreLastWorkerProfile();
-}).catch(error => {
-  console.error("Could not restore worker profile:", error);
-});
-
+loadData();
 async function loadPayroll() {
   const list = $("payrollList");
   const workerSelect = $("payrollWorker");
