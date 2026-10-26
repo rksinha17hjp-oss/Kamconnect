@@ -2282,6 +2282,30 @@ body:has(#screen-splash.active) .bottom-nav {
   font-family: "Improbable", sans-serif;
 }
 }  
+
+/* FINAL FIX: Show every welcome photo completely */
+#screen-splash .splash-photo {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 auto 22px !important;
+  border-radius: 0 !important;
+}
+
+#screen-splash .welcome-slide {
+  overflow: visible !important;
+}
+
+#screen-splash {
+  height: auto !important;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: visible !important;
+}
 </style>
 </head>
 <body>
