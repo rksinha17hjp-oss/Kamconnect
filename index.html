@@ -14,8 +14,20 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 :root{--navy:#18356b;--ink:#151923;--muted:#737887;--purple:#8065d8;--pink:#ed2788;--bg:#f8f8f6;--line:#e9e9ed;--white:#fff;--green:#d9f0d0;--shadow:0 10px 28px #17213a0d;--radius:24px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.55;cursor:not-allowed}img{max-width:100%;display:block}a{color:inherit;text-decoration:none}.wrap{width:min(1100px,calc(100% - 28px));margin:auto}.hidden{display:none!important}.muted{color:var(--muted)}.tiny{font-size:12px;color:var(--muted);line-height:1.6}.eyebrow{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:800;color:var(--purple)}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:Manrope,sans-serif;letter-spacing:-.7px}h1{font-size:clamp(32px,7vw,52px);line-height:1.08;margin-bottom:12px}h2{font-size:clamp(22px,4vw,30px);margin-bottom:8px}h3{font-size:17px;margin-bottom:7px}.btn{border:0;border-radius:999px;padding:12px 18px;min-height:44px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .16s,box-shadow .16s}.btn:active{transform:scale(.97)}.btn-primary{background:var(--purple);color:white;box-shadow:0 7px 18px #8065d833}.btn-dark{background:#151515;color:#fff}.btn-light{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-outline{background:transparent;border:1px solid #d8d9df;color:var(--ink)}.icon-btn{width:48px;height:48px;border-radius:50%;border:1px solid #ffffffa8;background:#ffffffbd;box-shadow:0 6px 16px #17213a12;display:grid;place-items:center;font-size:20px;flex-shrink:0}.topbar{position:sticky;top:0;z-index:20;background:#f8f8f4ed;backdrop-filter:blur(14px);border-bottom:1px solid #e7e6e177}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}.brand{font:800 23px Manrope,sans-serif;letter-spacing:-1px}.brand span{color:var(--purple)}.nav-actions{display:flex;align-items:center;gap:8px}.nav-link{border:0;background:transparent;font-weight:700;font-size:13px;padding:10px}.screen{display:none;animation:fade .2s}.screen.active{display:block}@keyframes fade{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}.page{padding:22px 0 100px}.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:18px;background:linear-gradient(125deg,#eef9e7,#e4f3e9 58%,#fff5dc);border-radius:32px;padding:clamp(22px,4vw,42px);box-shadow:var(--shadow);min-height:300px}.hero h1 em{font-style:italic;font-weight:600}.hero p{color:#626b66;line-height:1.7;max-width:470px}.hero-art{align-self:stretch;display:flex;align-items:end;justify-content:center;min-height:220px}.hero-art img{max-height:300px;max-width:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 10px 14px #24332214)}.promo-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.pill{border:1px solid #ffffffc9;background:#ffffffa8;border-radius:999px;padding:10px 14px;font-size:12px;font-weight:800;display:inline-flex;gap:7px;align-items:center}.search-row{display:flex;gap:10px;margin:22px 0 16px}.search{display:flex;align-items:center;gap:10px;border:1px solid #e9e9eb;background:white;border-radius:999px;padding:5px 17px;flex:1;box-shadow:0 5px 16px #1d26300a}.search input{border:0;outline:0;min-width:0;width:100%;background:transparent;padding:12px 0}.search input:focus{box-shadow:none}.chips{display:flex;gap:9px;overflow:auto;padding:2px 0 14px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:0;border-radius:999px;padding:13px 20px;background:#eeeff1;font-weight:700;font-size:13px;color:#343740}.chip.active{background:#161616;color:white;box-shadow:0 6px 14px #0002}.section{margin:30px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:16px}.section-head p{margin-bottom:0}.feature-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px}.feature{border-radius:24px;padding:20px;background:#f9d6ed;min-height:135px;display:flex;align-items:center;justify-content:space-between;gap:10px}.feature:nth-child(2){background:#e0d9fa}.feature:nth-child(3){background:#dff2d9}.feature:nth-child(4){background:#d7edff}.feature .emoji{font-size:35px}.feature strong{display:block;font-size:16px;margin-bottom:6px}.service-list{display:grid;grid-template-columns:1fr;gap:12px}.service-row{display:grid;grid-template-columns:104px minmax(0,1fr) 46px;gap:15px;align-items:center;border-radius:29px;padding:11px;background:var(--card-bg,#f8d9ee);min-height:132px;transition:transform .15s;cursor:pointer}.service-row:active{transform:scale(.99)}.service-row img{width:104px;height:108px;object-fit:cover;border-radius:22px;background:#fff8}.service-row h3{font-size:17px;margin:0 0 5px}.service-row p{font-size:12px;color:#5c5c65;margin:0;line-height:1.5}.arrow{width:42px;height:42px;border-radius:50%;border:1px solid #2222;background:#ffffff3a;font-size:22px;display:grid;place-items:center}.service-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:11px;font-weight:700}.worker-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.worker-card{background:white;border:1px solid var(--line);border-radius:23px;padding:13px;box-shadow:var(--shadow);min-width:0}.worker-card img{width:100%;height:150px;object-fit:cover;border-radius:16px;background:#f0eef7}.worker-card h3{margin:12px 0 4px}.worker-card .btn{width:100%;margin-top:12px}.verified{font-size:10px;background:#e4f7e9;color:#147442;padding:5px 8px;border-radius:99px;font-weight:800;display:inline-block}.price{font-size:19px;font-weight:800}.panel{background:white;border:1px solid var(--line);border-radius:25px;padding:20px;box-shadow:var(--shadow);margin:14px 0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:800}.field input,.field select,.field textarea{width:100%;border:1px solid #dedfe5;border-radius:13px;padding:13px;background:white;min-height:46px;outline:0}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #8065d81b}.notice{display:none;padding:13px;border-radius:13px;font-size:13px;line-height:1.5;margin:12px 0}.notice.show{display:block}.notice.ok{background:#e4f7e9;color:#17633b}.notice.bad{background:#ffeded;color:#9c2525}.notice.info{background:#edf2ff;color:#234b93}.empty{padding:25px;border:1px dashed #d6d7de;border-radius:18px;text-align:center;color:var(--muted);line-height:1.6}.auth-card{max-width:520px;margin:20px auto}.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.month-actions{display:flex;gap:7px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:15px}.weekday{text-align:center;color:#858995;font-size:10px;font-weight:800;padding:8px 0}.day{aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:#262b34;font-size:13px}.day:disabled{color:#c9cbd1;cursor:not-allowed}.day.today{outline:1px solid var(--navy)}.day.selected{background:var(--navy);color:white}.day:not(:disabled):hover{background:#e8edf8}.summary-band{background:#f4f6fa;border-radius:16px;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.summary-band small{display:block;color:var(--muted);font-size:11px}.summary-band strong{display:block;margin-top:5px;color:var(--navy);font-size:13px}.slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.slot{border:1px solid #e2e3e8;background:white;border-radius:13px;padding:12px 6px;font-size:13px;font-weight:700}.slot.selected{background:var(--navy);color:white;border-color:var(--navy)}.slot:disabled{background:#f1f1f3;color:#b4b5bb}.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.plan{border:2px solid transparent;border-radius:18px;padding:14px 10px;text-align:left;background:#ded7fa;min-width:0}.plan:first-child{background:#161616;color:#fff}.plan:last-child{background:#d5edff}.plan.selected{border-color:var(--purple);box-shadow:0 0 0 2px #8065d822}.plan small,.plan strong{display:block}.plan small{font-size:11px;opacity:.8}.plan strong{font-size:18px;margin-top:7px}.detail-hero{height:290px;border-radius:30px;overflow:hidden;background:#f5c5e3;position:relative}.detail-hero img{width:100%;height:100%;object-fit:cover}.detail-actions{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between}.worker-inline{display:flex;align-items:center;gap:12px;background:#f5f5f7;border-radius:999px;padding:12px;margin:15px 0}.worker-inline img{width:55px;height:55px;border-radius:50%;object-fit:cover}.worker-inline .grow{flex:1;min-width:0}.worker-inline .icon-btn{width:42px;height:42px;background:white}.fixed-cta{position:fixed;z-index:30;left:0;right:0;bottom:0;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid #e8e8ed;padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center}.fixed-cta-inner{width:min(760px,100%);display:flex;align-items:center;gap:12px}.price-capsule{padding:13px 18px;border:1px solid var(--line);border-radius:999px;background:white;font-weight:800;white-space:nowrap}.fixed-cta .btn{flex:1;min-height:52px}.booking-card{border:1px solid var(--line);border-radius:19px;padding:16px;margin:12px 0;background:white}.booking-card .btn{margin:5px 6px 0 0}.status{display:inline-block;border-radius:999px;padding:6px 10px;background:#e7edff;color:#274c95;font-size:10px;font-weight:800}.tracking-page{background:#50001f;color:white;border-radius:28px;padding:22px;overflow:hidden}.tracking-phone{max-width:430px;margin:20px auto 0;background:#f9fafc;border:8px solid #101014;border-radius:44px;padding:14px;color:#151923;overflow:hidden}.map{height:330px;border-radius:27px;overflow:hidden;background:#eee}.arrival{position:relative;z-index:2;background:linear-gradient(110deg,#f3268b,#d80c69);border-radius:24px;padding:20px 145px 20px 18px;margin:-25px -3px 15px;min-height:140px;box-shadow:0 12px 25px #d10e6940}.arrival strong{display:block;font-size:19px;margin-bottom:8px}.eta{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:125px;height:125px;border:7px solid #fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#ed147c;color:white}.eta small{font-size:9px;font-weight:800}.eta b{font-size:38px;line-height:1.1}.tracking-info{background:white;border:1px solid #eee;border-radius:16px;padding:14px;margin:12px 0;font-size:12px}.tracking-info strong{font-size:13px}.otp{display:flex;gap:6px;justify-content:flex-end}.otp input{width:35px;text-align:center;border:1px solid #ddd;border-radius:7px;padding:8px 2px}.bottom-nav{display:none}.toast{position:fixed;top:82px;left:50%;transform:translateX(-50%);z-index:1000;background:#171923;color:white;border-radius:999px;padding:12px 18px;font-size:13px;box-shadow:var(--shadow);max-width:90%;text-align:center}.footer{padding:26px 0 100px;color:var(--muted);font-size:12px}.rule-list{padding-left:18px;color:#626773;font-size:13px;line-height:1.8}.review{border-bottom:1px solid var(--line);padding:12px 0}.review:last-child{border:0}
-@media(max-width:720px){.wrap{width:calc(100% - 22px)}.nav{min-height:60px}.nav-link{display:none}.brand{font-size:21px}.hero{grid-template-columns:1fr;padding:24px 20px;min-height:0}.hero-art{min-height:140px;max-height:180px}.hero-art img{max-height:185px}.hero h1{font-size:37px}.search-row{margin-top:17px}.feature-strip{grid-template-columns:1fr}.feature{min-height:110px}.service-row{grid-template-columns:82px minmax(0,1fr) 38px;gap:11px;min-height:112px;border-radius:24px;padding:9px}.service-row img{width:82px;height:92px;border-radius:18px}.service-row h3{font-size:14px}.service-row p{font-size:11px}.arrow{width:36px;height:36px}.worker-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.worker-card{padding:9px}.worker-card img{height:125px}.worker-card h3{font-size:14px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:15px;border-radius:20px}.page{padding-top:16px}.detail-hero{height:260px}.tracking-page{padding:16px 10px;border-radius:22px}.tracking-phone{border-width:6px;padding:9px;border-radius:35px}.map{height:280px}.arrival{padding:17px 115px 17px 13px;min-height:125px}.arrival strong{font-size:15px}.arrival span{font-size:11px}.eta{width:105px;height:105px;border-width:5px}.eta b{font-size:31px}.eta small{font-size:8px}.plans{gap:6px}.plan{padding:12px 8px}.plan strong{font-size:15px}.plan small{font-size:10px}.summary-band{padding:12px}.fixed-cta-inner{gap:8px}.price-capsule{padding:12px;font-size:13px}.fixed-cta .btn{font-size:12px;padding:12px}.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:25;background:#fff;border-top:1px solid var(--line);padding:7px 5px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px #17213a0d}.bottom-nav button{border:0;background:transparent;color:#747784;font-size:10px;font-weight:700;display:flex;align-items:center;flex-direction:column;gap:3px;padding:4px 1px}.bottom-nav button span{font-size:19px}.bottom-nav button.active{color:var(--purple)}body{padding-bottom:72px}.fixed-cta{bottom:66px}.fixed-cta~.bottom-nav{bottom:0}.footer{padding-bottom:100px}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.55;cursor:not-allowed}img{max-width:100%;display:block}a{color:inherit;text-decoration:none}.wrap{width:min(1100px,calc(100% - 28px));margin:auto}.hidden{display:none!important}.muted{color:var(--muted)}.tiny{font-size:12px;color:var(--muted);line-height:1.6}.eyebrow{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:800;color:var(--purple)}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:Manrope,sans-serif;letter-spacing:-.7px}h1{font-size:clamp(32px,7vw,52px);line-height:1.08;margin-bottom:12px}h2{font-size:clamp(22px,4vw,30px);margin-bottom:8px}h3{font-size:17px;margin-bottom:7px}.btn{border:0;border-radius:999px;padding:12px 18px;min-height:44px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .16s,box-shadow .16s}.btn:active{transform:scale(.97)}.btn-primary{background:var(--purple);color:white;box-shadow:0 7px 18px #8065d833}.btn-dark{background:#151515;color:#fff}.btn-light{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-outline{background:transparent;border:1px solid #d8d9df;color:var(--ink)}.icon-btn{width:48px;height:48px;border-radius:50%;border:1px solid #ffffffa8;background:#ffffffbd;box-shadow:0 6px 16px #17213a12;display:grid;place-items:center;font-size:20px;flex-shrink:0}.topbar{position:sticky;top:0;z-index:20;background:#f8f8f4ed;backdrop-filter:blur(14px);border-bottom:1px solid #e7e6e177}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}.brand{font:800 23px Manrope,sans-serif;letter-spacing:-1px}.brand span{color:var(--purple)}.nav-actions{display:flex;align-items:center;gap:8px}.nav-link{border:0;background:transparent;font-weight:700;font-size:13px;padding:10px}.screen{display:none;animation:fade .2s}.screen.active{display:block}@keyframes fade{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}.page{padding:22px 0 100px}.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:18px;background:linear-gradient(125deg,#eef9e7,#e4f3e9 58%,#fff5dc);border-radius:32px;padding:clamp(22px,4vw,42px);box-shadow:var(--shadow);min-height:300px}.hero h1 em{font-style:italic;font-weight:600}.hero p{color:#626b66;line-height:1.7;max-width:470px}.hero-art{align-self:stretch;display:flex;align-items:end;justify-content:center;min-height:220px}.hero-art img{max-height:300px;max-width:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 10px 14px #24332214)}.promo-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.pill{border:1px solid #ffffffc9;background:#ffffffa8;border-radius:999px;padding:10px 14px;font-size:12px;font-weight:800;display:inline-flex;gap:7px;align-items:center}.search-row{display:flex;gap:10px;margin:22px 0 16px}.search{display:flex;align-items:center;gap:10px;border:1px solid #e9e9eb;background:white;border-radius:999px;padding:5px 17px;flex:1;box-shadow:0 5px 16px #1d26300a}.search input{border:0;outline:0;min-width:0;width:100%;background:transparent;padding:12px 0}.search input:focus{box-shadow:none}.chips{display:flex;gap:9px;overflow:auto;padding:2px 0 14px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:0;border-radius:999px;padding:13px 20px;background:#eeeff1;font-weight:700;font-size:13px;color:#343740}.chip.active{background:#161616;color:white;box-shadow:0 6px 14px #0002}.section{margin:30px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:16px}.section-head p{margin-bottom:0}.feature-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px}.feature{border-radius:24px;padding:20px;background:#f9d6ed;min-height:135px;display:flex;align-items:center;justify-content:space-between;gap:10px}.feature:nth-child(2){background:#e0d9fa}.feature:nth-child(3){background:#dff2d9}.feature:nth-child(4){background:#d7edff}.feature .emoji{font-size:35px}.feature strong{display:block;font-size:16px;margin-bottom:6px}.service-list{display:grid;grid-template-columns:1fr;gap:12px}.service-row{display:grid;grid-template-columns:104px minmax(0,1fr) 46px;gap:15px;align-items:center;border-radius:29px;padding:11px;background:var(--card-bg,#f8d9ee);min-height:132px;transition:transform .15s;cursor:pointer}.service-row:active{transform:scale(.99)}.service-row img{width:104px;height:108px;object-fit:cover;border-radius:22px;background:#fff8}.service-row h3{font-size:17px;margin:0 0 5px}.service-row p{font-size:12px;color:#5c5c65;margin:0;line-height:1.5}.arrow{width:42px;height:42px;border-radius:50%;border:1px solid #2222;background:#ffffff3a;font-size:22px;display:grid;place-items:center}.service-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:11px;font-weight:700}.worker-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: stretch;
+}.worker-card{background:white;border:1px solid var(--line);border-radius:23px;padding:13px;box-shadow:var(--shadow);min-width:0}.worker-card img{width:100%;height:150px;object-fit:cover;border-radius:16px;background:#f0eef7}.worker-card h3{margin:12px 0 4px}.worker-card .btn{width:100%;margin-top:12px}.verified{font-size:10px;background:#e4f7e9;color:#147442;padding:5px 8px;border-radius:99px;font-weight:800;display:inline-block}.price{font-size:19px;font-weight:800}.panel{background:white;border:1px solid var(--line);border-radius:25px;padding:20px;box-shadow:var(--shadow);margin:14px 0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:800}.field input,.field select,.field textarea{width:100%;border:1px solid #dedfe5;border-radius:13px;padding:13px;background:white;min-height:46px;outline:0}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #8065d81b}.notice{display:none;padding:13px;border-radius:13px;font-size:13px;line-height:1.5;margin:12px 0}.notice.show{display:block}.notice.ok{background:#e4f7e9;color:#17633b}.notice.bad{background:#ffeded;color:#9c2525}.notice.info{background:#edf2ff;color:#234b93}.empty{padding:25px;border:1px dashed #d6d7de;border-radius:18px;text-align:center;color:var(--muted);line-height:1.6}.auth-card{max-width:520px;margin:20px auto}.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.month-actions{display:flex;gap:7px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:15px}.weekday{text-align:center;color:#858995;font-size:10px;font-weight:800;padding:8px 0}.day{aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:#262b34;font-size:13px}.day:disabled{color:#c9cbd1;cursor:not-allowed}.day.today{outline:1px solid var(--navy)}.day.selected{background:var(--navy);color:white}.day:not(:disabled):hover{background:#e8edf8}.summary-band{background:#f4f6fa;border-radius:16px;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.summary-band small{display:block;color:var(--muted);font-size:11px}.summary-band strong{display:block;margin-top:5px;color:var(--navy);font-size:13px}.slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.slot{border:1px solid #e2e3e8;background:white;border-radius:13px;padding:12px 6px;font-size:13px;font-weight:700}.slot.selected{background:var(--navy);color:white;border-color:var(--navy)}.slot:disabled{background:#f1f1f3;color:#b4b5bb}.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.plan{border:2px solid transparent;border-radius:18px;padding:14px 10px;text-align:left;background:#ded7fa;min-width:0}.plan:first-child{background:#161616;color:#fff}.plan:last-child{background:#d5edff}.plan.selected{border-color:var(--purple);box-shadow:0 0 0 2px #8065d822}.plan small,.plan strong{display:block}.plan small{font-size:11px;opacity:.8}.plan strong{font-size:18px;margin-top:7px}.detail-hero{height:290px;border-radius:30px;overflow:hidden;background:#f5c5e3;position:relative}.detail-hero img{width:100%;height:100%;object-fit:cover}.detail-actions{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between}.worker-inline{display:flex;align-items:center;gap:12px;background:#f5f5f7;border-radius:999px;padding:12px;margin:15px 0}.worker-inline img{width:55px;height:55px;border-radius:50%;object-fit:cover}.worker-inline .grow{flex:1;min-width:0}.worker-inline .icon-btn{width:42px;height:42px;background:white}.fixed-cta{position:fixed;z-index:30;left:0;right:0;bottom:0;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid #e8e8ed;padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center}.fixed-cta-inner{width:min(760px,100%);display:flex;align-items:center;gap:12px}.price-capsule{padding:13px 18px;border:1px solid var(--line);border-radius:999px;background:white;font-weight:800;white-space:nowrap}.fixed-cta .btn{flex:1;min-height:52px}.booking-card{border:1px solid var(--line);border-radius:19px;padding:16px;margin:12px 0;background:white}.booking-card .btn{margin:5px 6px 0 0}.status{display:inline-block;border-radius:999px;padding:6px 10px;background:#e7edff;color:#274c95;font-size:10px;font-weight:800}.tracking-page{background:#50001f;color:white;border-radius:28px;padding:22px;overflow:hidden}.tracking-phone{max-width:430px;margin:20px auto 0;background:#f9fafc;border:8px solid #101014;border-radius:44px;padding:14px;color:#151923;overflow:hidden}.map{height:330px;border-radius:27px;overflow:hidden;background:#eee}.arrival{position:relative;z-index:2;background:linear-gradient(110deg,#f3268b,#d80c69);border-radius:24px;padding:20px 145px 20px 18px;margin:-25px -3px 15px;min-height:140px;box-shadow:0 12px 25px #d10e6940}.arrival strong{display:block;font-size:19px;margin-bottom:8px}.eta{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:125px;height:125px;border:7px solid #fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#ed147c;color:white}.eta small{font-size:9px;font-weight:800}.eta b{font-size:38px;line-height:1.1}.tracking-info{background:white;border:1px solid #eee;border-radius:16px;padding:14px;margin:12px 0;font-size:12px}.tracking-info strong{font-size:13px}.otp{display:flex;gap:6px;justify-content:flex-end}.otp input{width:35px;text-align:center;border:1px solid #ddd;border-radius:7px;padding:8px 2px}.bottom-nav{display:none}.toast{position:fixed;top:82px;left:50%;transform:translateX(-50%);z-index:1000;background:#171923;color:white;border-radius:999px;padding:12px 18px;font-size:13px;box-shadow:var(--shadow);max-width:90%;text-align:center}.footer{padding:26px 0 100px;color:var(--muted);font-size:12px}.rule-list{padding-left:18px;color:#626773;font-size:13px;line-height:1.8}.review{border-bottom:1px solid var(--line);padding:12px 0}.review:last-child{border:0}
+@media(max-width:720px){.wrap{width:calc(100% - 22px)}.nav{min-height:60px}.nav-link{display:none}.brand{font-size:21px}.hero{grid-template-columns:1fr;padding:24px 20px;min-height:0}.hero-art{min-height:140px;max-height:180px}.hero-art img{max-height:185px}.hero h1{font-size:37px}.search-row{margin-top:17px}.feature-strip{grid-template-columns:1fr}.feature{min-height:110px}.service-row{grid-template-columns:82px minmax(0,1fr) 38px;gap:11px;min-height:112px;border-radius:24px;padding:9px}.service-row img{width:82px;height:92px;border-radius:18px}.service-row h3{font-size:14px}.service-row p{font-size:11px}.arrow{width:36px;height:36px}.worker-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}.worker-card img{height:125px}.worker-card h3{font-size:14px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:15px;border-radius:20px}.page{padding-top:16px}.detail-hero{height:260px}.tracking-page{padding:16px 10px;border-radius:22px}.tracking-phone{border-width:6px;padding:9px;border-radius:35px}.map{height:280px}.arrival{padding:17px 115px 17px 13px;min-height:125px}.arrival strong{font-size:15px}.arrival span{font-size:11px}.eta{width:105px;height:105px;border-width:5px}.eta b{font-size:31px}.eta small{font-size:8px}.plans{gap:6px}.plan{padding:12px 8px}.plan strong{font-size:15px}.plan small{font-size:10px}.summary-band{padding:12px}.fixed-cta-inner{gap:8px}.price-capsule{padding:12px;font-size:13px}.fixed-cta .btn{font-size:12px;padding:12px}.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:25;background:#fff;border-top:1px solid var(--line);padding:7px 5px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px #17213a0d}.bottom-nav button{border:0;background:transparent;color:#747784;font-size:10px;font-weight:700;display:flex;align-items:center;flex-direction:column;gap:3px;padding:4px 1px}.bottom-nav button span{font-size:19px}.bottom-nav button.active{color:var(--purple)}body{padding-bottom:72px}.fixed-cta{bottom:66px}.fixed-cta~.bottom-nav{bottom:0}.footer{padding-bottom:100px}}
 @media(min-width:721px){.page{padding-bottom:70px}.service-list{grid-template-columns:1fr 1fr}.bottom-nav{display:none!important}}
 
 @font-face{font-family:'Improbable';src:url('./Improbable.ttf') format('truetype');font-display:swap;font-weight:100 900}
@@ -1517,6 +1529,374 @@ background: #e5f3e6;
     padding: 12px 3px;
   }
 }  
+  /* KaamConnect: single-column worker cards */
+.worker-card-modern {
+  width: 100%;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #ededeb;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(25, 30, 40, 0.06);
+}
+
+.worker-card-modern-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.worker-card-modern-photo {
+  width: 105px;
+  height: 115px;
+  flex: 0 0 105px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 17px;
+}
+
+.worker-card-modern-identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.worker-card-modern-identity h3 {
+  margin: 9px 0 5px;
+  font-size: 18px;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.worker-card-modern-identity p {
+  margin: 4px 0 8px;
+  font-size: 13px;
+}
+
+.worker-modern-info {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.worker-modern-info strong {
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.worker-modern-bottom {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.worker-modern-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.worker-modern-actions .btn {
+  min-width: 82px;
+  min-height: 43px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 390px) {
+  .worker-card-modern-photo {
+    width: 88px;
+    height: 100px;
+    flex-basis: 88px;
+  }
+
+  .worker-card-modern-identity h3 {
+    font-size: 16px;
+  }
+
+  .worker-modern-bottom {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .worker-modern-actions {
+    width: auto;
+  }
+}
+  .worker-profile-photo {
+  display: block;
+  width: 100%;
+  height: clamp(280px, 72vw, 440px);
+  margin: 0 auto 16px;
+  object-fit: cover;
+  object-position: center 30%;
+  border: 4px solid #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 28px rgba(57, 42, 10, .14);
+  background: #f4f0e8;
+  }
+  /* Worker profile: richer content panels */
+.worker-profile-kicker {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #b78213;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+}
+
+.worker-profile-panel h4 {
+  margin: 20px 0 12px;
+  font-size: 15px;
+}
+
+.worker-profile-note {
+  margin-top: 16px;
+  padding: 15px;
+  border: 1px solid #f2e2b9;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff8e7, #fffdf7);
+}
+
+.worker-profile-note > strong {
+  display: block;
+  color: #76530b;
+  font-size: 13px;
+}
+
+.worker-profile-note p {
+  margin: 7px 0 0;
+  line-height: 1.7;
+}
+
+.worker-availability-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px;
+  margin-bottom: 14px;
+  border: 1px solid #dcefe0;
+  border-radius: 16px;
+  background: #f3fbf5;
+}
+
+.worker-availability-dot {
+  flex: 0 0 11px;
+  width: 11px;
+  height: 11px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: #20a464;
+}
+
+.worker-availability-status strong {
+  display: block;
+  font-size: 13px;
+}
+
+.worker-availability-status p {
+  margin: 5px 0 0;
+}
+
+.worker-experience-highlight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px;
+  margin-bottom: 18px;
+  border: 1px solid #f0dfb7;
+  border-radius: 19px;
+  background: linear-gradient(135deg, #fff2cb, #fffaf0);
+}
+
+.worker-experience-icon {
+  display: grid;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 15px;
+  background: #fff;
+  font-size: 24px;
+  box-shadow: 0 3px 10px rgba(90, 65, 10, .08);
+}
+
+.worker-experience-highlight small,
+.worker-experience-highlight strong {
+  display: block;
+}
+
+.worker-experience-highlight small {
+  color: #7c7054;
+  font-size: 11px;
+}
+
+.worker-experience-highlight strong {
+  margin-top: 4px;
+  font-size: 20px;
+}
+
+.worker-experience-highlight p {
+  margin: 5px 0 0;
+}
+
+.worker-review-summary {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 12px;
+  margin: 15px 0 18px;
+}
+
+.worker-review-average,
+.worker-review-total {
+  padding: 18px 12px;
+  text-align: center;
+  border: 1px solid #eee5d3;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fff9e9, #fff);
+}
+
+.worker-review-average > strong {
+  display: block;
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+.worker-review-total > strong {
+  display: block;
+  margin: 6px 0;
+  font-size: 27px;
+}
+
+.worker-review-average small,
+.worker-review-total small {
+  display: block;
+  margin-top: 5px;
+  color: #777064;
+  font-size: 11px;
+}
+
+.worker-review-stars {
+  color: #e4a20a;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.worker-review-stars span {
+  margin-left: 5px;
+  color: #625b4d;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.worker-review-card {
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 1px solid #eee9df;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(30, 25, 10, .035);
+}
+
+.worker-review-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.worker-review-avatar {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  color: #7652cb;
+  background: #f0eaff;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.worker-review-person {
+  flex: 1;
+  min-width: 0;
+}
+
+.worker-review-person strong,
+.worker-review-person small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.worker-review-person strong {
+  font-size: 13px;
+}
+
+.worker-review-person small {
+  margin-top: 4px;
+  color: #888174;
+  font-size: 10px;
+}
+
+.worker-review-badge {
+  padding: 5px 8px;
+  border-radius: 20px;
+  color: #217247;
+  background: #eaf8ef;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.worker-review-card .worker-review-stars {
+  margin-top: 13px;
+}
+
+.worker-review-comment {
+  margin: 9px 0 0;
+  color: #625f56;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.worker-review-empty {
+  padding: 24px 16px;
+  text-align: center;
+  border: 1px dashed #e7dfd0;
+  border-radius: 17px;
+  background: #fffdf8;
+}
+
+.worker-review-empty strong {
+  display: block;
+  font-size: 14px;
+}
+
+.worker-review-empty p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 390px) {
+  .worker-profile-stats {
+    gap: 6px;
+  }
+
+  .worker-profile-stat {
+    padding: 12px 4px;
+  }
+
+  .worker-profile-stat strong {
+    font-size: 12px;
+  }
+
+  .worker-profile-tabs button {
+    padding: 10px;
+  }
+
+  .worker-review-badge {
+    font-size: 8px;
+  }
+} 
+  
 </style>
 </head>
 <body>
@@ -2951,41 +3331,123 @@ function openWorkerProfile(id, returnScreen = "workers") {
       <button type="button"
         onclick="workerProfileTab('reviews',this)">Reviews</button>
     </div>
+<div id="workerTab-about" class="worker-profile-panel">
+  <span class="worker-profile-kicker">MEET YOUR PROFESSIONAL</span>
+  <h3>About ${esc(w.full_name || "this professional")}</h3>
 
-    <div id="workerTab-about" class="worker-profile-panel">
-      <h3>About ${esc(w.full_name || "this professional")}</h3>
-      <p>
-        ${esc(w.full_name || "This professional")} provides
-        ${esc(w.profession || "home services")} in
-        ${esc(w.service_area || "the service area available at booking")}.
-      </p>
+  <p>
+    ${esc(w.full_name || "This professional")} is listed on KaamConnect
+    as a ${esc(w.profession || "home service")} professional serving
+    ${esc(w.service_area || "the selected service area")}.
+    You can review the service details, check availability, and request
+    a booking directly through KaamConnect.
+  </p>
 
-      <div class="worker-profile-row">
-        <div>🏆</div>
-        <div>
-          <span>Experience</span>
-          <strong>${esc(experience)}</strong>
-        </div>
-      </div>
+  <p>
+    The goal is to make arranging home services easier, with the service,
+    location, preferred time, and price discussed clearly before the work
+    begins. Share your requirements and any important details when booking
+    so the professional can understand the job.
+  </p>
 
-      <div class="worker-profile-row">
-        <div>📍</div>
-        <div>
-          <span>Service area</span>
-          <strong>${esc(w.service_area || "Not listed")}</strong>
-        </div>
-      </div>
-
-      <div class="worker-profile-row">
-        <div>✓</div>
-        <div>
-          <span>Professional status</span>
-          <strong>${w.verified ? "Verified" : "Profile available"}</strong>
-        </div>
-      </div>
+  <div class="worker-profile-row">
+    <div>🛠️</div>
+    <div>
+      <span>Primary service</span>
+      <strong>${esc(w.profession || "Not listed")}</strong>
     </div>
+  </div>
 
+  <div class="worker-profile-row">
+    <div>📍</div>
+    <div>
+      <span>Service coverage</span>
+      <strong>${esc(w.service_area || "Confirm location during booking")}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>💰</div>
+    <div>
+      <span>Starting price</span>
+      <strong>${price}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>✓</div>
+    <div>
+      <span>Profile status</span>
+      <strong>${w.verified ? "Verified professional" : "Professional profile"}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-note">
+    <strong>Before you book</strong>
+    <p>
+      Describe the work clearly, confirm the final price and timing with
+      the professional, and provide any access instructions needed for
+      your location.
+    </p>
+  </div>
+</div>
     <div id="workerTab-availability" class="worker-profile-panel" hidden>
+  <span class="worker-profile-kicker">BOOKING INFORMATION</span>
+  <h3>Availability & Service Details</h3>
+
+  <div class="worker-availability-status">
+    <span class="worker-availability-dot"></span>
+    <div>
+      <strong>${w.available ? "Currently marked available" : "Availability needs confirmation"}</strong>
+      <p>
+        ${w.available
+          ? "This professional is marked as available in the current profile data."
+          : "This professional is not currently marked available. Check again before booking."}
+      </p>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>📍</div>
+    <div>
+      <span>Service location</span>
+      <strong>${esc(w.service_area || "Confirm your location during booking")}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>🗓️</div>
+    <div>
+      <span>Choose a date</span>
+      <strong>Select your preferred service date in the booking form</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>🕒</div>
+    <div>
+      <span>Choose a time</span>
+      <strong>Confirm the suitable time with the professional</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>💵</div>
+    <div>
+      <span>Price confirmation</span>
+      <strong>${price}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-note">
+    <strong>Good to know</strong>
+    <p>
+      The availability flag does not guarantee a particular time slot.
+      Submit your preferred date and time through booking and confirm
+      the final schedule before the service begins.
+    </p>
+  </div>
+</div>
       <h3>Availability</h3>
       <p>
         ${w.available
@@ -2996,6 +3458,64 @@ function openWorkerProfile(id, returnScreen = "workers") {
     </div>
 
     <div id="workerTab-experience" class="worker-profile-panel" hidden>
+  <span class="worker-profile-kicker">PROFESSIONAL SNAPSHOT</span>
+  <h3>Experience & Skills</h3>
+
+  <div class="worker-experience-highlight">
+    <div class="worker-experience-icon">🏆</div>
+    <div>
+      <small>Listed experience</small>
+      <strong>${esc(experience)}</strong>
+      <p>
+        ${w.experience_years
+          ? "Experience information is based on the professional profile."
+          : "Years of experience have not been provided in this profile yet."}
+      </p>
+    </div>
+  </div>
+
+  <h4>Professional overview</h4>
+
+  <div class="worker-profile-row">
+    <div>🔧</div>
+    <div>
+      <span>Service category</span>
+      <strong>${esc(w.profession || "Not listed")}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>📍</div>
+    <div>
+      <span>Working area</span>
+      <strong>${esc(w.service_area || "Not listed")}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>⭐</div>
+    <div>
+      <span>Customer rating</span>
+      <strong>${w.rating ? "★ " + esc(w.rating) + " out of 5" : "No rating available yet"}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-row">
+    <div>💼</div>
+    <div>
+      <span>Booking price</span>
+      <strong>${price}</strong>
+    </div>
+  </div>
+
+  <div class="worker-profile-note">
+    <strong>What to confirm before work starts</strong>
+    <p>
+      Explain the task, discuss any materials or equipment needed, and
+      agree on the final scope, price, and timing before the job begins.
+    </p>
+  </div>
+</div>
       <h3>Experience & Skills</h3>
       <div class="worker-profile-row">
         <div>🛠️</div>
@@ -3021,6 +3541,26 @@ function openWorkerProfile(id, returnScreen = "workers") {
     </div>
 
     <div id="workerTab-reviews" class="worker-profile-panel" hidden>
+  <span class="worker-profile-kicker">CUSTOMER FEEDBACK</span>
+  <h3>Ratings & Reviews</h3>
+
+  <div class="worker-review-summary">
+    <div class="worker-review-average">
+      <strong>${w.rating ? esc(w.rating) : "—"}</strong>
+      <div class="worker-review-stars">★★★★★</div>
+      <small>Average customer rating</small>
+    </div>
+
+    <div class="worker-review-total">
+      <strong>${reviewCount}</strong>
+      <small>Total ratings</small>
+    </div>
+  </div>
+
+  <div id="workerReviewsList">
+    <div class="empty">Loading customer reviews…</div>
+  </div>
+</div>
       <h3>Customer Reviews</h3>
       ${reviewCount
         ? `<p><strong>★ ${esc(w.rating || "—")}</strong> based on ${reviewCount} customer ratings.</p>
@@ -3033,10 +3573,9 @@ function openWorkerProfile(id, returnScreen = "workers") {
       Book This Worker →
     </button>
   `;
-
   go("worker-profile");
+  loadWorkerProfileReviews(w.id);
 }
-
 function workerProfileTab(tab, button) {
   ["about", "availability", "experience", "reviews"].forEach(name => {
     const panel = $("workerTab-" + name);
@@ -3047,7 +3586,106 @@ function workerProfileTab(tab, button) {
     .forEach(b => b.classList.remove("active"));
 
   if (button) button.classList.add("active");
-}
+} 
+async function loadWorkerProfileReviews(workerId) {
+  const list = $("workerReviewsList");
+  if (!list) return;
+
+  if (!sb) {
+    list.innerHTML = '<div class="empty">Reviews are currently unavailable.</div>';
+    return;
+  }
+
+  try {
+    const { data: reviewRows, error } = await sb
+      .from("worker_reviews")
+      .select("customer_id,rating,review,created_at")
+      .eq("worker_id", workerId)
+      .order("created_at", { ascending: false })
+      .limit(30);
+
+    if (error) throw error;
+
+    if (!reviewRows || !reviewRows.length) {
+      list.innerHTML = `
+        <div class="worker-review-empty">
+          <div style="font-size:34px">💬</div>
+          <strong>No customer reviews yet</strong>
+          <p>When customers submit ratings for this professional, they will appear here.</p>
+        </div>`;
+      return;
+    }
+
+    const customerIds = [
+      ...new Set(reviewRows.map(r => r.customer_id).filter(Boolean))
+    ];
+
+    let customerNames = {};
+
+    if (customerIds.length) {
+      const { data: profiles, error: profileError } = await sb
+        .from("kc_profiles")
+        .select("id,full_name")
+        .in("id", customerIds);
+
+      if (!profileError && profiles) {
+        customerNames = Object.fromEntries(
+          profiles.map(p => [String(p.id), p.full_name])
+        );
+      }
+    }
+
+    list.innerHTML = reviewRows.map(r => {
+      const score = Math.max(0, Math.min(5, Number(r.rating) || 0));
+      const name = customerNames[String(r.customer_id)] || "KaamConnect customer";
+      const date = r.created_at
+        ? new Date(r.created_at).toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+          })
+        : "Date not available";
+
+      const comment = String(r.review || "").trim();
+
+      return `
+        <article class="worker-review-card">
+          <div class="worker-review-card-top">
+            <div class="worker-review-avatar">
+              ${esc(name.trim().charAt(0).toUpperCase() || "C")}
+            </div>
+
+            <div class="worker-review-person">
+              <strong>${esc(name)}</strong>
+              <small>${esc(date)}</small>
+            </div>
+
+            <span class="worker-review-badge">✓ Customer</span>
+          </div>
+
+          <div class="worker-review-stars" aria-label="${score} out of 5 stars">
+            ${"★".repeat(score)}${"☆".repeat(5 - score)}
+            <span>${score}/5</span>
+          </div>
+
+          <p class="worker-review-comment">
+            ${comment
+              ? esc(comment)
+              : "Customer rating submitted. No written comment was provided."}
+          </p>
+        </article>`;
+    }).join("");
+
+  } catch (error) {
+    console.error("Worker reviews could not be loaded:", error);
+
+    list.innerHTML = `
+      <div class="worker-review-empty">
+        <strong>Reviews could not be loaded right now.</strong>
+        <p>Please check review-table permissions and try again.</p>
+      </div>`;
+  }
+}  
 function bookWorker(id) {
   const w = workers.find(x => String(x.id) === String(id));
 
