@@ -2129,6 +2129,147 @@ textarea:focus {
     padding: 14px;
   }
 }
+  
+/* KaamConnect Welcome Splash Screen */
+#screen-splash {
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding: 22px 16px 35px;
+  margin: 0 auto;
+  max-width: 560px;
+  background: #f8f6ef;
+  text-align: center;
+}
+
+#screen-splash .splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#screen-splash .splash-brand,
+#screen-splash .splash-title,
+#screen-splash .splash-note {
+  font-family: "Improbable", sans-serif;
+}
+
+#screen-splash .splash-brand {
+  color: #8065d8;
+  font-size: clamp(36px, 9vw, 48px);
+  line-height: 1.1;
+  margin: 8px 0 18px;
+}
+
+#screen-splash .splash-main-image {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  height: 260px;
+  object-fit: contain;
+  border-radius: 24px;
+  margin: 0 auto 18px;
+}
+
+#screen-splash .splash-title {
+  color: #292536;
+  font-size: clamp(27px, 7vw, 35px);
+  line-height: 1.15;
+  margin: 5px 0 10px;
+}
+
+#screen-splash .splash-note {
+  color: #6d6878;
+  font-size: 17px;
+  line-height: 1.5;
+  max-width: 390px;
+  margin: 0 auto 22px;
+}
+
+#screen-splash .splash-trust-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin: 0 0 24px;
+}
+
+#screen-splash .splash-trust-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 5px;
+  background: #fff;
+  border: 1px solid #ece7f8;
+  border-radius: 18px;
+  color: #292536;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#screen-splash .splash-trust-item img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+#screen-splash .splash-start-btn {
+  width: 100%;
+  max-width: 390px;
+  min-height: 54px;
+  border: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #8065d8, #6245c4);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px #8065d83d;
+}
+
+#screen-splash .splash-start-btn span {
+  margin-left: 8px;
+}
+
+#screen-splash .splash-login {
+  color: #6d6878;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+#screen-splash .splash-login button {
+  border: 0;
+  background: transparent;
+  color: #7053cf;
+  font-size: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+body:has(#screen-splash.active) .topbar,
+body:has(#screen-splash.active) .bottom-nav {
+  display: none !important;
+}
+
+@media (max-width: 380px) {
+  #screen-splash .splash-main-image {
+    height: 220px;
+  }
+
+  #screen-splash .splash-trust-item img {
+    width: 46px;
+    height: 46px;
+  }
+
+  #screen-splash .splash-trust-item {
+    font-size: 11px;
+  }
+}
 </style>
 </head>
 <body>
@@ -2158,6 +2299,55 @@ textarea:focus {
 </div></div></header>
 <main class="wrap">
 
+<section id="screen-splash" class="screen active page">
+  <div class="splash-content">
+
+    <h1 class="splash-brand">KaamConnect</h1>
+
+    <img
+      class="splash-main-image"
+      src="./welcome-home.png"
+      alt="Welcome to KaamConnect">
+
+    <h2 class="splash-title">Welcome to KaamConnect!</h2>
+    <p class="splash-note">
+      Reliable home services, trusted professionals, and easy booking —
+      all in one place.
+    </p>
+
+    <div class="splash-trust-points">
+
+      <div class="splash-trust-item">
+        <img src="./trusted-professionals.png"
+             alt="Trusted professionals">
+        <span>Trusted Professionals</span>
+      </div>
+
+      <div class="splash-trust-item">
+        <img src="./easy-booking.png"
+             alt="Easy booking">
+        <span>Easy Booking</span>
+      </div>
+
+      <div class="splash-trust-item">
+        <img src="./customer-support.png"
+             alt="Customer support">
+        <span>Customer Support</span>
+      </div>
+
+    </div>
+
+    <button class="splash-start-btn" onclick="go('home')">
+      Get Started <span>→</span>
+    </button>
+
+    <p class="splash-login">
+      Already have an account?
+      <button type="button" onclick="go('auth')">Login</button>
+    </p>
+
+  </div>
+</section>
 <section id="screen-home" class="screen active page">
 
   <!-- Welcome header -->
@@ -2936,13 +3126,10 @@ async function renderWelcomeProfile(){
     avatarEl.textContent=(name[0]||"G").toUpperCase();
   }
 }
-function restoreLastScreen(){
-  let last="home";
-  try { last=localStorage.getItem("kc_last_screen")||"home"; } catch(e) {}
-  if(last==="support") last="home";
-  if($("screen-"+last)) go(last);
-}
 
+function restoreLastScreen() {
+  go("splash");
+}
 async function ensureProfile(){if(!sb||!user)return;try{const activeUser=user;const {data:existing}=await sb.from("kc_profiles").select("full_name").eq("id",activeUser.id).maybeSingle();if(user?.id!==activeUser.id)return;const fullName=activeUser.user_metadata?.full_name||activeUser.user_metadata?.name||existing?.full_name||activeUser.email?.split("@")[0]||"Customer";await sb.from("kc_profiles").upsert({id:activeUser.id,full_name:fullName,email:activeUser.email},{onConflict:"id"})}catch(e){console.warn(e.message)}}
 async function signOut(){if(sb)await sb.auth.signOut();user=null;refreshAuth();toast("Signed out");go("home")}
 function refreshAuth(){if(sb)sb.auth.getUser().then(({data})=>{user=data.user||null;renderWelcomeProfile();renderProfile()}).catch(()=>{});else{user=null;renderWelcomeProfile()}}
