@@ -3429,6 +3429,12 @@ function openWorkerProfile(id, returnScreen = "workers") {
   }
 
   currentWorker = w;
+  try {
+  localStorage.setItem("kc_last_worker_id", String(w.id));
+  localStorage.setItem("kc_worker_profile_return", workerProfileReturnScreen);
+} catch (e) {
+  console.warn("Could not save worker profile:", e);
+  }
   workerProfileReturnScreen =
     returnScreen === "home" ? "home" : "workers";
 
@@ -3753,6 +3759,29 @@ function openWorkerProfile(id, returnScreen = "workers") {
   `;
   go("worker-profile");
   loadWorkerProfileReviews(w.id);
+} 
+  
+function restoreLastWorkerProfile() {
+  let workerId = null;
+  let returnScreen = "workers";
+
+  try {
+    workerId = localStorage.getItem("kc_last_worker_id");
+    returnScreen =
+      localStorage.getItem("kc_worker_profile_return") || "workers";
+  } catch (e) {
+    return;
+  }
+
+  if (!workerId) return;
+
+  const workerExists = workers.some(
+    w => String(w.id) === String(workerId)
+  );
+
+  if (workerExists) {
+    openWorkerProfile(workerId, returnScreen);
+  }
 }
 function workerProfileTab(tab, button) {
   ["about", "availability", "experience", "reviews"].forEach(name => {
@@ -4757,7 +4786,12 @@ sb.auth.onAuthStateChange((event, session) => {
 }
 renderWelcomeProfile();
 restoreLastScreen();
-loadData();
+
+loadData().then(() => {
+  restoreLastWorkerProfile();
+}).catch(error => {
+  console.error("Could not restore worker profile:", error);
+});
 
 async function loadPayroll() {
   const list = $("payrollList");
