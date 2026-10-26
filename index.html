@@ -2842,7 +2842,8 @@ function chooseTime(t) {
 async function loadAvailability(){if(!selectedDate||!sb||!currentService)return;try{const {data,error}=await sb.from("kc_worker_schedules").select("id,worker_id,start_time,end_time,break_start,break_end,weekday,is_available").eq("weekday",new Date(selectedDate+"T12:00:00").getDay()).eq("is_available",true);if(error)throw error;/* Worker-specific slot validation is repeated in the booking RPC. */if(!data?.length)$("slotNote").textContent="No worker schedule is published for this weekday yet. Available times shown are request preferences; booking may be declined by the backend.";else $("slotNote").textContent="Worker schedules found. Final slot availability is validated when the booking is submitted."}catch(e){$("slotNote").textContent="Schedule data could not be loaded. The backend will validate availability during booking."}}
 function goCheckout(){if(!currentService){toast("Choose a service first");go("services");return}if(!selectedDate||!selectedTime){toast("Please select a date and time");return}renderCheckout();go("checkout")}
 function renderCheckout(){$("checkoutSummary").innerHTML=`<h3>Booking summary</h3><div style="display:flex;justify-content:space-between;gap:12px"><div><strong>${esc(currentService.name)}</strong><p class="tiny">${esc(currentPlan)} plan · ${currentService.duration_minutes||60} minutes</p><p class="tiny">${new Date(selectedDate+"T12:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})} · ${esc(selectedTime)}</p></div><strong>${money(selectedPrice())}</strong></div><p class="tiny">Worker: ${currentWorker?esc(currentWorker.full_name):"To be assigned based on availability"}</p><p class="tiny">No coupon or online payment is applied unless configured in your backend.</p>`}
-$("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("bookingNotice");if(!sb){notice("bookingNotice","Supabase is not configured. Add your project URL and publishable/anon key in index.html, then run supabase.sql.","bad");return}if(!user){notice("bookingNotice","Please sign in before confirming your booking.","bad");go("auth");return} 
+let bookingSubmitting = false;
+  $("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("bookingNotice");if(!sb){notice("bookingNotice","Supabase is not configured. Add your project URL and publishable/anon key in index.html, then run supabase.sql.","bad");return}if(!user){notice("bookingNotice","Please sign in before confirming your booking.","bad");go("auth");return} 
   if (!selectedDate || !selectedTime) {
   notice(
     "bookingNotice",
@@ -2851,17 +2852,14 @@ $("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNoti
   );
   return;
 }
-
 const [clock, ampm] = selectedTime.split(" ");
 const [hours, minutes] = clock.split(":").map(Number);
 const hour24 = (hours % 12) + (ampm === "PM" ? 12 : 0);
-
 const chosenTime = new Date(
   selectedDate + "T" +
   String(hour24).padStart(2, "0") + ":" +
   String(minutes).padStart(2, "0") + ":00"
 );
-
 if (chosenTime.getTime() <= Date.now()) {
   notice(
     "bookingNotice",
