@@ -2546,6 +2546,65 @@ body:has(#screen-splash.active) {
     padding: 15px;
   }
 }
+/* Home page role dashboard shortcuts */
+.home-role-dashboards {
+  margin: 24px 0;
+}
+
+.role-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.role-dashboard-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 17px 14px;
+  border: 1px solid #e8e2f5;
+  border-radius: 20px;
+  background: #fff;
+  color: #292536;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.role-dashboard-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  background: #eee8ff;
+  font-size: 24px;
+}
+
+.role-dashboard-card strong {
+  font-size: 14px;
+}
+
+.role-dashboard-card small {
+  color: #777386;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.role-dashboard-arrow {
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  color: #8065d8;
+}
+
+@media (max-width: 360px) {
+  .role-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 <body>
@@ -2736,7 +2795,30 @@ body:has(#screen-splash.active) {
       <button class="btn btn-light"
         onclick="go('services')">View all →</button>
     </div>
-    <div id="homeServices" class="service-list"></div>
+<!-- Role-based dashboard shortcuts -->  <div id="homeRoleDashboards" class="home-role-dashboards hidden">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Your workspace</div>
+        <h2>Quick Access</h2>
+      </div>
+    </div><div class="role-dashboard-grid">
+  <button id="homeAdminDashboard" class="role-dashboard-card hidden"
+    type="button" onclick="go('admin')">
+    <span class="role-dashboard-icon">🛡️</span>
+    <strong>Admin Dashboard</strong>
+    <small>Manage workers and bookings</small>
+    <span class="role-dashboard-arrow">↗</span>
+  </button>
+
+  <button id="homeWorkerDashboard" class="role-dashboard-card hidden"
+    type="button" onclick="go('worker')">
+    <span class="role-dashboard-icon">🧰</span>
+    <strong>Worker Dashboard</strong>
+    <small>View jobs and update progress</small>
+    <span class="role-dashboard-arrow">↗</span>
+  </button>
+</div>
+</div>
   </div> 
 </section>
 <section id="screen-services" class="screen page"><div class="section-head"><div>
@@ -4013,9 +4095,19 @@ el.innerHTML = `
           </div>
           <strong>${money(b.total_amount)}</strong>
         </div>
-        <p class="tiny">Booking ID: ${esc(b.id)}</p>
-        <p class="tiny">${esc(b.address || "")}</p>
-        <button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button>
+  <p class="tiny">${esc(b.address || "")}</p>
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">
+  <p class="tiny" style="margin:0;word-break:break-all">
+    Booking ID: ${esc(b.id)}
+  </p>
+  <button
+    class="btn btn-light"
+    type="button"
+    onclick="GenUICopyBookingId('${esc(b.id)}')">
+    📋 Copy ID
+  </button>
+</div>
+  <button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button>
         ${reviewHTML}
       </article>`;
     }).join("");
@@ -5140,10 +5232,153 @@ async function startWorkerLocationSharing(bookingId) {
 function stopWorkerLocationSharing(){if(locWatch!==null){navigator.geolocation.clearWatch(locWatch);locWatch=null}if(locationChannel&&sb){sb.removeChannel(locationChannel);locationChannel=null}toast("Location sharing stopped on this device.")}
   
 async function isAdminUser(){if(!sb||!user)return false;try{const {data,error}=await sb.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();return !error&&!!data}catch(e){return false}}
-async function loadAdminWorkers(){const list=$("adminWorkersList"),stats=$("adminStats");if(!list)return;if(!user||!sb){list.innerHTML='<div class="empty">Please sign in first.</div>';return}list.innerHTML='<div class="empty">Checking admin access…</div>';if(!(await isAdminUser())){list.innerHTML='<div class="empty">Access denied. This account is not listed in admin_users. Verify admin setup and RLS policies.</div>';return}
-try{const {data,error}=await sb.from("worker_profiles").select("id,full_name,service,phone,price,area,postal_code,photo_url,available,approval_status").order("full_name");if(error)throw error;const rows=data||[],pending=rows.filter(w=>(w.approval_status||"pending").toLowerCase()==="pending").length,approved=rows.filter(w=>(w.approval_status||"").toLowerCase()==="approved").length;if(stats)stats.innerHTML=`<div class="admin-stat"><small>Worker profiles</small><strong>${rows.length}</strong></div><div class="admin-stat"><small>Pending review</small><strong>${pending}</strong></div><div class="admin-stat"><small>Approved</small><strong>${approved}</strong></div>`;if(!rows.length){list.innerHTML='<div class="empty">No worker profiles found.</div>';return}list.innerHTML=rows.map(w=>{const st=(w.approval_status||"pending").toLowerCase(),em=st==="approved"?"✅":st==="rejected"?"⛔":"🕒";return `<article class="admin-worker-card"><div class="worker-avatar-small">${em}</div><div class="grow"><strong>${esc(w.full_name||"Unnamed professional")}</strong><div class="tiny">${esc(w.service||"Service not set")} · ${esc(w.area||"Area not set")}</div><div class="tiny">PIN: ${esc(w.postal_code||"—")} · Price: ${money(w.price||0)} · ${w.available?"Available":"Unavailable"}</div><span class="status" style="margin-top:6px">${esc(st)}</span></div><div class="admin-actions">${st!=="approved"?`<button class="btn btn-primary" onclick="setWorkerApproval('${esc(w.id)}','approved')">✓ Approve</button>`:""}${st!=="rejected"?`<button class="btn btn-light" onclick="setWorkerApproval('${esc(w.id)}','rejected')">Reject</button>`:""}${st!=="pending"?`<button class="btn btn-outline" onclick="setWorkerApproval('${esc(w.id)}','pending')">Reset</button>`:""}</div></article>`}).join("")}catch(e){list.innerHTML=`<div class="empty">Could not load worker profiles: ${esc(e.message)}. Check table columns, admin permissions and RLS.</div>`}}
-async function setWorkerApproval(id,status){if(!(await isAdminUser())){toast("Admin access required.");return}if(!confirm("Change this worker's approval status to "+status+"?"))return;try{const {error}=await sb.from("worker_profiles").update({approval_status:status}).eq("id",id);if(error)throw error;toast("Worker status updated.");loadAdminWorkers()}catch(e){toast("Status update failed: "+e.message)}}
 
+async function loadAdminWorkers() {
+  const list = $("adminWorkersList");
+  const stats = $("adminStats");
+
+  if (!list) return;
+
+  if (!user || !sb) {
+    list.innerHTML = '<div class="empty">Please sign in first.</div>';
+    return;
+  }
+
+  list.innerHTML = '<div class="empty">Checking admin access…</div>';
+
+  if (!(await isAdminUser())) {
+    list.innerHTML =
+      '<div class="empty">Access denied. Please use your authorized admin account.</div>';
+    return;
+  }
+
+  try {
+    const { data, error } = await sb
+      .from("kc_worker_profiles")
+      .select(
+        "id,user_id,full_name,profession,service_area,available,verified,starting_price"
+      )
+      .order("full_name");
+
+    if (error) throw error;
+
+    const rows = data || [];
+    const verifiedCount = rows.filter(w => w.verified === true).length;
+    const pendingCount = rows.length - verifiedCount;
+
+    if (stats) {
+      stats.innerHTML = `
+        <div class="admin-stat">
+          <small>Worker profiles</small>
+          <strong>${rows.length}</strong>
+        </div>
+        <div class="admin-stat">
+          <small>Pending verification</small>
+          <strong>${pendingCount}</strong>
+        </div>
+        <div class="admin-stat">
+          <small>Verified</small>
+          <strong>${verifiedCount}</strong>
+        </div>
+      `;
+    }
+
+    if (!rows.length) {
+      list.innerHTML =
+        '<div class="empty">No worker profiles found.</div>';
+      return;
+    }
+
+    list.innerHTML = rows.map(w => {
+      const verified = w.verified === true;
+
+      return `
+        <article class="admin-worker-card">
+          <div class="worker-avatar-small">
+            ${verified ? "✅" : "🕒"}
+          </div>
+
+          <div class="grow">
+            <strong>${esc(w.full_name || "Unnamed professional")}</strong>
+
+            <div class="tiny">
+              ${esc(w.profession || "Service not set")} ·
+              ${esc(w.service_area || "Area not set")}
+            </div>
+
+            <div class="tiny">
+              Starting price: ${money(w.starting_price || 0)}
+            </div>
+
+            <div class="tiny">
+              ${w.available ? "🟢 Available" : "⚪ Unavailable"}
+            </div>
+
+            <span class="status" style="margin-top:6px">
+              ${verified ? "Verified" : "Pending verification"}
+            </span>
+          </div>
+
+          <div class="admin-actions">
+            ${
+              !verified
+                ? `<button class="btn btn-primary"
+                     onclick="setWorkerApproval('${esc(w.id)}','approved')">
+                     ✓ Verify
+                   </button>`
+                : `<button class="btn btn-light"
+                     onclick="setWorkerApproval('${esc(w.id)}','pending')">
+                     Revoke verification
+                   </button>`
+            }
+          </div>
+        </article>
+      `;
+    }).join("");
+
+  } catch (e) {
+    list.innerHTML =
+      `<div class="empty">Could not load worker profiles: ${esc(e.message)}</div>`;
+  }
+}
+
+async function setWorkerApproval(id, status) {
+  if (!sb || !user || !(await isAdminUser())) {
+    toast("Authorized admin access required.");
+    return;
+  }
+
+  const verified = status === "approved";
+
+  if (!confirm(
+    verified
+      ? "Verify this worker profile?"
+      : "Revoke verification for this worker?"
+  )) {
+    return;
+  }
+
+  try {
+    const { data, error } = await sb
+      .from("kc_worker_profiles")
+      .update({ verified })
+      .eq("id", id)
+      .select("id");
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      throw new Error(
+        "No profile was updated. Check the admin UPDATE policy in Supabase."
+      );
+    }
+
+    toast(verified ? "Worker verified successfully." : "Worker verification revoked.");
+    await loadAdminWorkers();
+  } catch (e) {
+    toast("Verification update failed: " + e.message);
+  }
+}
 async function loadAdminBookings() {
   const list = $("adminBookingsList");
   if (!list) return;
@@ -5291,7 +5526,15 @@ async function loadAdminBookings() {
     list.innerHTML =
       `<div class="empty">Could not load bookings: ${esc(e.message)}</div>`;
   }
-}
+} 
+async function GenUICopyBookingId(bookingId) {
+  try {
+    await navigator.clipboard.writeText(String(bookingId));
+    toast("Booking ID copied successfully!");
+  } catch (e) {
+    prompt("Copy this booking ID:", String(bookingId));
+  }
+} 
 async function verifyStartOtp(bookingId) {
   const input = document.getElementById("otp-" + bookingId);
   const result = document.getElementById("otp-result-" + bookingId);
@@ -5450,8 +5693,42 @@ if (visibleRows.length === 0) {
 
 bookings.innerHTML = visibleRows.map(b => {
   const status = String(b.status || "requested").toLowerCase();
-  const isAssigned = workerIds.includes(b.worker_id);
+  const workerSteps = [
+  { key: "confirmed", label: "Accepted" },
+  { key: "on_the_way", label: "Travelling" },
+  { key: "arrived", label: "Arrived" },
+  { key: "in_progress", label: "In service" },
+  { key: "completed", label: "Completed" }
+];
 
+const workerStepIndex = {
+  confirmed: 0,
+  accepted: 0,
+  on_the_way: 1,
+  arrived: 2,
+  in_progress: 3,
+  completed: 4
+};
+
+const currentWorkerStep = workerStepIndex[status] ?? -1;
+
+const workerProgressHTML = `
+  <div style="margin:16px 0;padding:14px;border:1px solid #e8e4f3;border-radius:14px;background:#faf9ff">
+    <strong style="display:block;margin-bottom:12px">Booking progress</strong>
+    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px">
+      ${workerSteps.map((step, index) => `
+        <div style="text-align:center;min-width:0">
+          <div style="height:5px;border-radius:10px;margin-bottom:7px;background:${currentWorkerStep >= index ? "#8065d8" : "#e5e1ee"}"></div>
+          <span style="font-size:11px;line-height:1.3;display:block;overflow-wrap:anywhere;color:${currentWorkerStep >= index ? "#5942a5" : "#777"}">
+            ${step.label}
+          </span>
+        </div>
+      `).join("")}
+    </div>
+    ${status === "cancelled" ? '<p class="tiny" style="color:#b42318;margin-top:10px">This booking was cancelled.</p>' : ""}
+  </div>
+`;
+  const isAssigned = workerIds.includes(b.worker_id);
   const canAccept =
     !isAssigned &&
     b.worker_id === null &&
@@ -5469,6 +5746,49 @@ bookings.innerHTML = visibleRows.map(b => {
 
   const readyForOtp = isAssigned && status === "arrived";
 
+  const workerSteps = [
+    "Accepted",
+    "Travelling",
+    "Arrived",
+    "In service",
+    "Completed"
+  ];
+
+  const workerStepIndex = {
+    confirmed: 0,
+    accepted: 0,
+    on_the_way: 1,
+    arrived: 2,
+    in_progress: 3,
+    completed: 4
+  };
+
+  const currentWorkerStep = workerStepIndex[status] ?? -1;
+
+  const workerProgressHTML = `
+    <div style="margin:14px 0;padding:14px;border:1px solid #e8e4f3;border-radius:14px;background:#faf9ff">
+      <strong style="display:block;margin-bottom:12px">Booking Progress</strong>
+
+      <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px">
+        ${workerSteps.map((step, index) => `
+          <div style="min-width:0;text-align:center">
+            <div style="height:5px;border-radius:8px;margin-bottom:7px;background:${currentWorkerStep >= index ? "#8065d8" : "#e5e1ee"}"></div>
+            <span style="font-size:10px;line-height:1.3;display:block;overflow-wrap:anywhere;color:${currentWorkerStep >= index ? "#5942a5" : "#777"}">
+              ${step}
+            </span>
+          </div>
+        `).join("")}
+      </div>
+
+      ${status === "requested" ? `
+        <p class="tiny" style="margin-top:10px">Waiting for a professional to accept this booking.</p>
+      ` : ""}
+
+      ${status === "cancelled" ? `
+        <p class="tiny" style="margin-top:10px;color:#b42318">This booking was cancelled.</p>
+      ` : ""}
+    </div>
+  `;
   return `
     <article class="booking-card">
       <strong>${esc(b.service_name || "Home service")}</strong>
