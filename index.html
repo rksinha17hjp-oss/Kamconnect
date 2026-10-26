@@ -2129,29 +2129,37 @@ textarea:focus {
     padding: 14px;
   }
 }
-  
-/* KaamConnect Welcome Splash Screen */
+
+/* KaamConnect: Four Welcome Slides */
 #screen-splash {
   min-height: 100vh;
   min-height: 100dvh;
   box-sizing: border-box;
-  padding: 22px 16px 35px;
-  margin: 0 auto;
   max-width: 560px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
   background: #f8f6ef;
   text-align: center;
 }
 
 #screen-splash .splash-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
+}
+
+#screen-splash .welcome-slide {
+  display: none;
+  width: 100%;
+  animation: welcomeFade .25s ease;
+}
+
+#screen-splash .welcome-slide.active {
+  display: block;
 }
 
 #screen-splash .splash-brand,
 #screen-splash .splash-title,
-#screen-splash .splash-note {
+#screen-splash .splash-note,
+#screen-splash .splash-next {
   font-family: "Improbable", sans-serif;
 }
 
@@ -2159,96 +2167,52 @@ textarea:focus {
   color: #8065d8;
   font-size: clamp(36px, 9vw, 48px);
   line-height: 1.1;
-  margin: 8px 0 18px;
+  margin: 8px 0 20px;
 }
 
-#screen-splash .splash-main-image {
+#screen-splash .splash-photo {
   display: block;
   width: 100%;
-  max-width: 390px;
-  height: 260px;
+  height: 48vh;
+  height: 48dvh;
+  min-height: 280px;
+  max-height: 520px;
   object-fit: contain;
-  border-radius: 24px;
-  margin: 0 auto 18px;
+  object-position: center;
+  margin: 0 auto 22px;
+  border-radius: 0;
+  background: transparent;
 }
 
 #screen-splash .splash-title {
   color: #292536;
   font-size: clamp(27px, 7vw, 35px);
-  line-height: 1.15;
-  margin: 5px 0 10px;
+  line-height: 1.2;
+  margin: 8px 0 12px;
 }
 
 #screen-splash .splash-note {
   color: #6d6878;
-  font-size: 17px;
+  font-size: clamp(17px, 4.5vw, 21px);
   line-height: 1.5;
-  max-width: 390px;
-  margin: 0 auto 22px;
+  margin: 0 auto 28px;
+  max-width: 440px;
 }
 
-#screen-splash .splash-trust-points {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+#screen-splash .splash-next {
   width: 100%;
-  margin: 0 0 24px;
-}
-
-#screen-splash .splash-trust-item {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 12px 5px;
-  background: #fff;
-  border: 1px solid #ece7f8;
-  border-radius: 18px;
-  color: #292536;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-#screen-splash .splash-trust-item img {
-  width: 58px;
-  height: 58px;
-  object-fit: contain;
-}
-
-#screen-splash .splash-start-btn {
-  width: 100%;
-  max-width: 390px;
-  min-height: 54px;
+  min-height: 62px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 22px;
   background: linear-gradient(135deg, #8065d8, #6245c4);
   color: #fff;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 8px 20px #8065d83d;
+  box-shadow: 0 8px 22px #8065d83d;
 }
 
-#screen-splash .splash-start-btn span {
-  margin-left: 8px;
-}
-
-#screen-splash .splash-login {
-  color: #6d6878;
-  margin-top: 18px;
-  font-size: 14px;
-}
-
-#screen-splash .splash-login button {
-  border: 0;
-  background: transparent;
-  color: #7053cf;
-  font-size: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  text-decoration: underline;
+#screen-splash .splash-next span {
+  margin-left: 12px;
 }
 
 body:has(#screen-splash.active) .topbar,
@@ -2256,20 +2220,27 @@ body:has(#screen-splash.active) .bottom-nav {
   display: none !important;
 }
 
-@media (max-width: 380px) {
-  #screen-splash .splash-main-image {
-    height: 220px;
+@keyframes welcomeFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
-
-  #screen-splash .splash-trust-item img {
-    width: 46px;
-    height: 46px;
-  }
-
-  #screen-splash .splash-trust-item {
-    font-size: 11px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+@media (max-width: 380px) {
+  #screen-splash {
+    padding: 16px 12px 26px;
+  }
+
+  #screen-splash .splash-photo {
+    height: 43dvh;
+    min-height: 240px;
+  }
+}  
 </style>
 </head>
 <body>
@@ -2302,49 +2273,81 @@ body:has(#screen-splash.active) .bottom-nav {
 <section id="screen-splash" class="screen active page">
   <div class="splash-content">
 
-    <h1 class="splash-brand">KaamConnect</h1>
+    <!-- Slide 1: Welcome -->
+    <div class="welcome-slide active" data-slide="0">
+      <h1 class="splash-brand">KaamConnect</h1>
 
-    <img
-      class="splash-main-image"
-      src="./welcome-home.png"
-      alt="Welcome to KaamConnect">
+      <img class="splash-photo"
+           src="./welcome-home.png"
+           alt="Welcome to KaamConnect">
 
-    <h2 class="splash-title">Welcome to KaamConnect!</h2>
-    <p class="splash-note">
-      Reliable home services, trusted professionals, and easy booking —
-      all in one place.
-    </p>
+      <h2 class="splash-title">Welcome to KaamConnect!</h2>
+      <p class="splash-note">
+        Reliable home services, trusted professionals, and easy
+        booking — all in one place.
+      </p>
 
-    <div class="splash-trust-points">
-
-      <div class="splash-trust-item">
-        <img src="./trusted-professionals.png"
-             alt="Trusted professionals">
-        <span>Trusted Professionals</span>
-      </div>
-
-      <div class="splash-trust-item">
-        <img src="./easy-booking.png"
-             alt="Easy booking">
-        <span>Easy Booking</span>
-      </div>
-
-      <div class="splash-trust-item">
-        <img src="./customer-support.png"
-             alt="Customer support">
-        <span>Customer Support</span>
-      </div>
-
+      <button class="splash-next" onclick="nextWelcomeSlide()">
+        Next <span>→</span>
+      </button>
     </div>
 
-    <button class="splash-start-btn" onclick="go('home')">
-      Get Started <span>→</span>
-    </button>
+    <!-- Slide 2: Trusted Professionals -->
+    <div class="welcome-slide" data-slide="1">
+      <h1 class="splash-brand">KaamConnect</h1>
 
-    <p class="splash-login">
-      Already have an account?
-      <button type="button" onclick="go('auth')">Login</button>
-    </p>
+      <img class="splash-photo"
+           src="./trusted-professionals.png"
+           alt="Trusted professionals">
+
+      <h2 class="splash-title">Trusted Professionals</h2>
+      <p class="splash-note">
+        Skilled and reliable professionals to help take care
+        of your home with confidence.
+      </p>
+
+      <button class="splash-next" onclick="nextWelcomeSlide()">
+        Next <span>→</span>
+      </button>
+    </div>
+
+    <!-- Slide 3: Easy Booking -->
+    <div class="welcome-slide" data-slide="2">
+      <h1 class="splash-brand">KaamConnect</h1>
+
+      <img class="splash-photo"
+           src="./easy-booking.png"
+           alt="Easy service booking">
+
+      <h2 class="splash-title">Easy Booking</h2>
+      <p class="splash-note">
+        Choose the service you need and book your preferred
+        professional in just a few simple steps.
+      </p>
+
+      <button class="splash-next" onclick="nextWelcomeSlide()">
+        Next <span>→</span>
+      </button>
+    </div>
+
+    <!-- Slide 4: Customer Support -->
+    <div class="welcome-slide" data-slide="3">
+      <h1 class="splash-brand">KaamConnect</h1>
+
+      <img class="splash-photo"
+           src="./customer-support.png"
+           alt="KaamConnect customer support">
+
+      <h2 class="splash-title">Customer Support</h2>
+      <p class="splash-note">
+        Need help? We're here to support you and make your
+        home-service experience easier.
+      </p>
+
+      <button class="splash-next" onclick="finishWelcome()">
+        Get Started <span>→</span>
+      </button>
+    </div>
 
   </div>
 </section>
@@ -3125,6 +3128,29 @@ async function renderWelcomeProfile(){
   }else{
     avatarEl.textContent=(name[0]||"G").toUpperCase();
   }
+}
+function nextWelcomeSlide() {
+  const slides = document.querySelectorAll(
+    "#screen-splash .welcome-slide"
+  );
+
+  let current = 0;
+
+  slides.forEach((slide, index) => {
+    if (slide.classList.contains("active")) {
+      current = index;
+    }
+  });
+
+  if (current < slides.length - 1) {
+    slides[current].classList.remove("active");
+    slides[current + 1].classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function finishWelcome() {
+  go("home");
 }
 
 function restoreLastScreen() {
