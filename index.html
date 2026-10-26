@@ -2357,6 +2357,194 @@ body:has(#screen-splash.active) {
   #screen-profile .profile-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+} 
+  
+/* ===== KaamConnect Profile Page ===== */
+
+#screen-profile .profile-page-title {
+  font-size: clamp(30px, 5vw, 38px);
+  line-height: 1.2;
+  margin: 8px 0;
+}
+
+#screen-profile .profile-main-card,
+#screen-profile #profileContent {
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+#screen-profile .profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #8065d8, #5944a8);
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+#screen-profile .profile-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 68px;
+  overflow: hidden;
+  border: 3px solid rgba(255,255,255,.75);
+  border-radius: 50%;
+  background: #f0ebff;
+  color: #5944a8;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+#screen-profile .profile-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#screen-profile .summary-band {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+#screen-profile .summary-band > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #eee8ff;
+  border-radius: 16px;
+  background: #faf8ff;
+  overflow-wrap: anywhere;
+}
+
+#screen-profile .summary-band small {
+  color: #716b80;
+  font-size: 12px;
+}
+
+#screen-profile .summary-band strong {
+  color: #292536;
+  font-size: 14px;
+}
+
+#screen-profile .profile-edit-section {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid #eee8ff;
+  border-radius: 20px;
+  background: #fff;
+}
+
+#screen-profile .profile-edit-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+#screen-profile .profile-edit-heading h3 {
+  margin: 0 0 6px;
+}
+
+#screen-profile .profile-edit-heading p,
+#screen-profile .profile-edit-hint {
+  margin: 0;
+  color: #716b80;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+#screen-profile .profile-edit-badge {
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #f0ebff;
+  color: #5944a8;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+#screen-profile #profileEditForm label {
+  display: block;
+  margin: 15px 0 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#screen-profile #profileEditForm input,
+#screen-profile #profileEditForm textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 13px;
+  border: 1px solid #ded8ec;
+  border-radius: 12px;
+  background: #fff;
+  color: #292536;
+  font: inherit;
+}
+
+#screen-profile #profileEditForm textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+#screen-profile #profileEditForm input:focus,
+#screen-profile #profileEditForm textarea:focus {
+  outline: 2px solid #8065d8;
+  outline-offset: 1px;
+  border-color: #8065d8;
+}
+
+#screen-profile .profile-edit-hint {
+  margin-top: 10px;
+}
+
+#screen-profile .profile-save-btn {
+  width: 100%;
+  margin-top: 14px;
+}
+
+#screen-profile .profile-save-btn:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+#screen-profile #roleDashboardLinks {
+  margin-top: 18px;
+  border-radius: 20px;
+}
+
+#screen-profile #roleDashboardLinks .btn {
+  margin-top: 8px;
+}
+
+@media (max-width: 380px) {
+  #screen-profile .profile-hero {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  #screen-profile .profile-avatar {
+    flex-basis: 54px;
+    width: 54px;
+    height: 54px;
+  }
+
+  #screen-profile .summary-band {
+    grid-template-columns: 1fr;
+  }
+
+  #screen-profile .profile-edit-section {
+    padding: 15px;
+  }
 }
 </style>
 </head>
