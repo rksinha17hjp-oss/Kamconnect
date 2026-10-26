@@ -2587,7 +2587,15 @@ async function useMyLocation() {
 async function trackBooking(id) {
   trackingBookingId = id;
   go("tracking");
+setTimeout(() => {
+  initTrackingMap();
 
+  if (mapInstance) {
+    mapInstance.invalidateSize();
+  }
+
+  subscribeTracking(id);
+}, 300);
   const otp = window.sessionStorage
     ? sessionStorage.getItem("kc_otp_" + id)
     : null;
