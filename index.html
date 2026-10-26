@@ -2300,11 +2300,81 @@ body:has(#screen-splash.active) .bottom-nav {
   overflow: visible !important;
 }
 
+/* Welcome Splash: Fit everything on one mobile screen */
 #screen-splash {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  padding: 10px 14px !important;
+}
+
+#screen-splash .splash-content {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+#screen-splash .welcome-slide {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: none;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: space-evenly !important;
+  gap: 6px !important;
+  overflow: hidden !important;
+}
+
+#screen-splash .welcome-slide.active {
+  display: flex !important;
+}
+
+#screen-splash .splash-brand {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  text-align: center !important;
+  font-size: clamp(24px, 6vw, 36px) !important;
+}
+
+#screen-splash .splash-photo {
+  display: block !important;
+  width: 100% !important;
   height: auto !important;
-  min-height: 100vh;
-  min-height: 100dvh;
-  overflow: visible !important;
+  min-height: 0 !important;
+  max-height: 58dvh !important;
+  flex: 0 1 auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 auto !important;
+}
+
+#screen-splash .splash-title {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  text-align: center !important;
+  font-size: clamp(19px, 5vw, 28px) !important;
+}
+
+#screen-splash .splash-note {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  text-align: center !important;
+  font-size: clamp(12px, 3.5vw, 16px) !important;
+}
+
+#screen-splash .splash-next {
+  flex: 0 0 auto !important;
+  margin: 4px 0 0 !important;
 }
 </style>
 </head>
