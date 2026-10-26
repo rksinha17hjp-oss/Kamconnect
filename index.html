@@ -1185,7 +1185,338 @@ background: #e5f3e6;
   object-position: center center;
   box-sizing: border-box;
 }
+} 
+
+/* KaamConnect modern worker cards and detail profile */
+
+.worker-card-modern {
+  padding: 16px;
+  border: 1px solid #eee8da;
+  border-radius: 23px;
+  background: linear-gradient(145deg, #fff, #fffdf7);
+  box-shadow: 0 7px 24px rgba(40, 32, 12, .07);
+  overflow: hidden;
 }
+
+.worker-card-modern-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.worker-card-modern-photo {
+  width: 94px;
+  height: 105px;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 18px;
+  background: #fff2ce;
+}
+
+.worker-card-modern-identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.worker-card-modern-identity h3 {
+  margin: 8px 0 4px;
+  font-size: 17px;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.worker-card-modern-identity p {
+  margin: 4px 0 8px;
+  color: #747064;
+  font-size: 12px;
+}
+
+.worker-modern-rating {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.worker-modern-rating span {
+  color: #eda900;
+  font-size: 18px;
+}
+
+.worker-modern-rating small {
+  color: #77736a;
+}
+
+.worker-modern-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 13px 0;
+  border-top: 1px solid #eeeae0;
+  border-bottom: 1px solid #eeeae0;
+}
+
+.worker-modern-info div,
+.worker-modern-price {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.worker-modern-info small,
+.worker-modern-price small {
+  color: #858073;
+  font-size: 10px;
+}
+
+.worker-modern-info strong {
+  color: #302e27;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.worker-modern-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.worker-modern-price strong {
+  color: #c68a12;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.worker-modern-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.worker-modern-actions .btn {
+  padding: 10px 12px;
+  min-height: 40px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* Worker detail page */
+.worker-profile-screen {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+}
+
+.worker-profile-hero {
+  position: relative;
+  margin-top: 15px;
+  padding: 22px 17px 25px;
+  border-radius: 27px;
+  background: linear-gradient(145deg, #ffe6a1, #fff9e9 70%, #fff);
+  overflow: hidden;
+}
+
+.worker-profile-photo {
+  display: block;
+  width: 150px;
+  height: 170px;
+  margin: 0 auto 15px;
+  object-fit: cover;
+  object-position: center top;
+  border: 4px solid white;
+  border-radius: 25px;
+  box-shadow: 0 9px 25px rgba(57, 42, 10, .12);
+}
+
+.worker-profile-heading {
+  position: relative;
+  margin-top: -2px;
+  padding: 17px;
+  border-radius: 22px;
+  background: white;
+  box-shadow: 0 6px 20px rgba(57, 42, 10, .07);
+}
+
+.worker-profile-heading h1 {
+  margin: 0 0 7px;
+  color: #24241f;
+  font-size: 25px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.worker-profile-heading p {
+  margin: 5px 0;
+  color: #69665c;
+}
+
+.worker-profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin: 15px 0;
+}
+
+.worker-profile-stat {
+  padding: 15px 5px;
+  text-align: center;
+  border: 1px solid #f2e9d6;
+  border-radius: 17px;
+  background: white;
+  box-shadow: 0 4px 13px rgba(57, 42, 10, .04);
+}
+
+.worker-profile-stat strong {
+  display: block;
+  color: #29271f;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.worker-profile-stat small {
+  display: block;
+  margin-top: 5px;
+  color: #777368;
+  font-size: 10px;
+}
+
+.worker-profile-price-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #fff3d0;
+  margin: 15px 0;
+}
+
+.worker-profile-price-panel small {
+  color: #777065;
+}
+
+.worker-profile-price-panel strong {
+  display: block;
+  margin-top: 5px;
+  color: #bc8010;
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.worker-profile-tabs {
+  display: flex;
+  gap: 5px;
+  padding: 6px;
+  margin: 17px 0;
+  overflow-x: auto;
+  border-radius: 16px;
+  background: #f1f0ec;
+}
+
+.worker-profile-tabs button {
+  flex: 1;
+  min-width: max-content;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #777267;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.worker-profile-tabs button.active {
+  background: #fff;
+  color: #26241f;
+  box-shadow: 0 3px 9px rgba(30, 25, 10, .08);
+}
+
+.worker-profile-panel {
+  padding: 18px;
+  border: 1px solid #eee9df;
+  border-radius: 20px;
+  background: white;
+  margin-bottom: 15px;
+}
+
+.worker-profile-panel h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.worker-profile-panel p {
+  color: #666257;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.worker-profile-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid #efede6;
+}
+
+.worker-profile-row span {
+  display: block;
+  margin-bottom: 4px;
+  color: #777267;
+  font-size: 11px;
+}
+
+.worker-profile-row strong {
+  color: #28271f;
+  font-size: 13px;
+}
+
+.worker-profile-book {
+  width: 100%;
+  min-height: 53px;
+  margin-top: 5px;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+@media (max-width: 390px) {
+  .worker-card-modern {
+    padding: 12px;
+  }
+
+  .worker-card-modern-photo {
+    width: 78px;
+    height: 92px;
+  }
+
+  .worker-modern-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .worker-modern-actions {
+    width: 100%;
+  }
+
+  .worker-modern-actions .btn {
+    flex: 1;
+  }
+
+  .worker-profile-heading h1 {
+    font-size: 22px;
+  }
+
+  .worker-profile-stat {
+    padding: 12px 3px;
+  }
+}  
 </style>
 </head>
 <body>
@@ -1358,7 +1689,18 @@ background: #e5f3e6;
   <div id="customerWorkerList" class="worker-grid"></div>
 </section>
   <section id="screen-detail" class="screen page"><div id="detailContent"></div></section>
-<section id="screen-schedule" class="screen page"><button class="btn btn-light" onclick="go('detail')">← Back to service</button><div style="margin-top:22px"><div class="eyebrow">Choose a convenient time</div><h1 style="color:var(--navy);font-size:42px">Schedule</h1><p class="muted">Book at a time slot as per your convenience.</p></div><div class="panel"><div class="calendar-head"><h3 id="monthTitle">Month 2026</h3><div class="month-actions"><button class="icon-btn" onclick="changeMonth(-1)">‹</button><button class="icon-btn" onclick="changeMonth(1)">›</button></div></div><div id="calendar" class="calendar-grid"></div><div class="summary-band"><div>▦ <small>Selected Date</small><strong id="selectedDateText">Choose a date</strong></div><div>◷ <small>Selected Time</small><strong id="selectedTimeText">Choose a time</strong></div></div></div><div class="panel"><h3>Available Time Slots</h3><p class="tiny">Choose a time that works best for you. Slots shown are checked against the schedule when configured.</p><div id="slots" class="slots"></div><p id="slotNote" class="tiny" style="margin-top:12px"></p></div><button class="btn btn-primary" style="width:100%" onclick="goCheckout()">Continue to booking →</button></section>
+
+<section id="screen-worker-profile" class="screen page worker-profile-screen">
+  <button class="btn btn-light"
+    onclick="go(workerProfileReturnScreen || 'workers')">
+    ← Back to workers
+  </button>
+
+  <div id="workerProfileContent">
+    <div class="empty">Select a professional to view their profile.</div>
+  </div>
+</section>
+  <section id="screen-schedule" class="screen page"><button class="btn btn-light" onclick="go('detail')">← Back to service</button><div style="margin-top:22px"><div class="eyebrow">Choose a convenient time</div><h1 style="color:var(--navy);font-size:42px">Schedule</h1><p class="muted">Book at a time slot as per your convenience.</p></div><div class="panel"><div class="calendar-head"><h3 id="monthTitle">Month 2026</h3><div class="month-actions"><button class="icon-btn" onclick="changeMonth(-1)">‹</button><button class="icon-btn" onclick="changeMonth(1)">›</button></div></div><div id="calendar" class="calendar-grid"></div><div class="summary-band"><div>▦ <small>Selected Date</small><strong id="selectedDateText">Choose a date</strong></div><div>◷ <small>Selected Time</small><strong id="selectedTimeText">Choose a time</strong></div></div></div><div class="panel"><h3>Available Time Slots</h3><p class="tiny">Choose a time that works best for you. Slots shown are checked against the schedule when configured.</p><div id="slots" class="slots"></div><p id="slotNote" class="tiny" style="margin-top:12px"></p></div><button class="btn btn-primary" style="width:100%" onclick="goCheckout()">Continue to booking →</button></section>
 <section id="screen-checkout" class="screen page"><button class="btn btn-light" onclick="go('schedule')">← Back to schedule</button><div style="margin-top:20px"><div class="eyebrow">Almost there</div><h1 style="font-size:36px">Review & Book</h1><p class="tiny">Check your details before submitting your booking.</p></div><div id="checkoutSummary" class="panel"></div><form id="bookingForm" class="panel"><h3>Service address</h3><div class="form-grid"><div class="field"><label for="addressLabel">Address type</label><select id="addressLabel"><option>Home</option><option>Work</option><option>Other</option></select></div><div class="field"><label for="landmark">Landmark (optional)</label><input id="landmark" placeholder="Near a landmark"></div><div class="field full"><label for="address">House / street / locality</label><textarea id="address" required placeholder="Enter complete service address"></textarea></div><div class="field full"><label for="notes">Instructions (optional)</label><textarea id="notes" placeholder="Anything the professional should know?"></textarea></div><div class="field full"><label for="payment">Payment method</label><select id="payment"><option value="cash">Cash after service</option><option value="online" disabled>Online payment (not configured yet)</option></select></div></div><div id="bookingNotice" class="notice"></div><button id="confirmBooking" class="btn btn-primary" style="width:100%;margin-top:15px" type="submit">Confirm Booking</button><p class="tiny" style="margin-top:10px">Booking is confirmed only after Supabase accepts it. Availability and price are validated again by the backend.</p></form></section>
 <section id="screen-bookings" class="screen page"><div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p>
 <div class="page-photo-banner">
@@ -2430,7 +2772,77 @@ if (existing) {
     }
   }
 }
-function renderWorkersInto(id,list){const el=$(id);if(!el)return;if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">No worker profiles are available yet. Add real worker profiles after enabling the worker registration workflow.</div>';return}el.innerHTML=list.map(w=>`<article class="worker-card"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><span class="verified">${w.verified?"✓ Verified":"Professional"}</span><h3>${esc(w.full_name||"Worker")}</h3><div class="tiny">${esc(w.profession||"Service professional")}</div><div class="tiny">★ ${w.rating||"—"} · ${w.review_count||0} reviews</div><div class="tiny">${w.experience_years?esc(w.experience_years)+" years experience":"Experience not listed"}</div><div class="price" style="margin-top:8px">${w.starting_price?money(w.starting_price):"Quote on request"}</div><button class="btn btn-light" onclick="viewWorker('${esc(w.id)}')">View profile</button><button class="btn btn-primary" onclick="bookWorker('${esc(w.id)}')">Book worker</button></article>`).join("")}
+
+function renderWorkersInto(id, list) {
+  const el = $(id);
+  if (!el) return;
+
+  if (!list.length) {
+    el.innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        No worker profiles are available yet.
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = list.map(w => `
+    <article class="worker-card worker-card-modern">
+      <div class="worker-card-modern-top">
+        <img
+          class="worker-card-modern-photo"
+          src="${esc(w.avatar_url || './handyman.jpg')}"
+          alt="${esc(w.full_name || 'Worker')}"
+          onerror="this.onerror=null;this.src='./handyman.jpg'">
+
+        <div class="worker-card-modern-identity">
+          <span class="verified">
+            ${w.verified ? '✓ Verified' : 'Professional'}
+          </span>
+          <h3>${esc(w.full_name || 'Worker')}</h3>
+          <p>${esc(w.profession || 'Service professional')}</p>
+          <div class="worker-modern-rating">
+            <span>★</span>
+            <strong>${w.rating || 'New'}</strong>
+            <small>(${Number(w.review_count || 0)} reviews)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="worker-modern-info">
+        <div>
+          <small>📍 Service area</small>
+          <strong>${esc(w.service_area || 'Not listed')}</strong>
+        </div>
+        <div>
+          <small>🏆 Experience</small>
+          <strong>${w.experience_years
+            ? esc(w.experience_years) + ' years'
+            : 'Not listed'}</strong>
+        </div>
+      </div>
+
+      <div class="worker-modern-bottom">
+        <div class="worker-modern-price">
+          <small>Starting price</small>
+          <strong>${w.starting_price
+            ? money(w.starting_price)
+            : 'Quote on request'}</strong>
+        </div>
+
+        <div class="worker-modern-actions">
+          <button class="btn btn-light"
+            onclick="openWorkerProfile('${esc(w.id)}','${id === 'homeWorkers' ? 'home' : 'workers'}')">
+            Details →
+          </button>
+          <button class="btn btn-primary"
+            onclick="bookWorker('${esc(w.id)}')">
+            Book
+          </button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
 function renderWorkers() {
   const q = ($("workerSearch")?.value || "").toLowerCase();
 
@@ -2444,6 +2856,198 @@ function renderWorkers() {
 }
 function viewWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(!w){toast("Worker not found");return}currentWorker=w;const s=services.find(s=>(w.profession||"").toLowerCase().includes(s.category.toLowerCase()))||services[0];if(s)currentService=s;renderDetail();$("workerInlineArea").innerHTML=workerInline(w);go("detail")}
 
+let workerProfileReturnScreen = "workers";
+
+function openWorkerProfile(id, returnScreen = "workers") {
+  const w = workers.find(x => String(x.id) === String(id));
+
+  if (!w) {
+    toast("Worker not found. Please refresh and try again.");
+    return;
+  }
+
+  currentWorker = w;
+  workerProfileReturnScreen =
+    returnScreen === "home" ? "home" : "workers";
+
+  const content = $("workerProfileContent");
+  if (!content) return;
+
+  const experience = w.experience_years
+    ? String(w.experience_years) + " years"
+    : "Not listed";
+
+  const price = w.starting_price
+    ? money(w.starting_price)
+    : "Quote on request";
+
+  const rating = w.rating
+    ? "★ " + w.rating
+    : "New professional";
+
+  const reviewCount = Number(w.review_count || 0);
+
+  content.innerHTML = `
+    <div class="worker-profile-hero">
+      <img
+        class="worker-profile-photo"
+        src="${esc(w.avatar_url || './handyman.jpg')}"
+        alt="${esc(w.full_name || 'Worker')}"
+        onerror="this.onerror=null;this.src='./handyman.jpg'">
+
+      <div style="text-align:center;margin-bottom:18px">
+        <span class="verified">
+          ${w.verified ? "✓ Verified Professional" : "Professional"}
+        </span>
+      </div>
+
+      <div class="worker-profile-heading">
+        <h1>${esc(w.full_name || "Service Professional")}</h1>
+        <p>🛠️ ${esc(w.profession || "Home service professional")}</p>
+        <p>
+          <strong style="color:#d69a14">${rating}</strong>
+          <span style="font-size:12px;color:#777">
+            (${reviewCount} reviews)
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <div class="worker-profile-stats">
+      <div class="worker-profile-stat">
+        <strong>🏆</strong>
+        <strong>${esc(experience)}</strong>
+        <small>Experience</small>
+      </div>
+
+      <div class="worker-profile-stat">
+        <strong>★ ${esc(w.rating || "—")}</strong>
+        <strong>${reviewCount}</strong>
+        <small>Reviews</small>
+      </div>
+
+      <div class="worker-profile-stat">
+        <strong>📍</strong>
+        <strong>${w.available ? "Available" : "Check"}</strong>
+        <small>Availability</small>
+      </div>
+    </div>
+
+    <div class="worker-profile-price-panel">
+      <div>
+        <small>Starting price</small>
+        <strong>${price}</strong>
+      </div>
+      <small>Service charges</small>
+    </div>
+
+    <div class="worker-profile-tabs">
+      <button type="button" class="active"
+        onclick="workerProfileTab('about',this)">About</button>
+      <button type="button"
+        onclick="workerProfileTab('availability',this)">Availability</button>
+      <button type="button"
+        onclick="workerProfileTab('experience',this)">Experience</button>
+      <button type="button"
+        onclick="workerProfileTab('reviews',this)">Reviews</button>
+    </div>
+
+    <div id="workerTab-about" class="worker-profile-panel">
+      <h3>About ${esc(w.full_name || "this professional")}</h3>
+      <p>
+        ${esc(w.full_name || "This professional")} provides
+        ${esc(w.profession || "home services")} in
+        ${esc(w.service_area || "the service area available at booking")}.
+      </p>
+
+      <div class="worker-profile-row">
+        <div>🏆</div>
+        <div>
+          <span>Experience</span>
+          <strong>${esc(experience)}</strong>
+        </div>
+      </div>
+
+      <div class="worker-profile-row">
+        <div>📍</div>
+        <div>
+          <span>Service area</span>
+          <strong>${esc(w.service_area || "Not listed")}</strong>
+        </div>
+      </div>
+
+      <div class="worker-profile-row">
+        <div>✓</div>
+        <div>
+          <span>Professional status</span>
+          <strong>${w.verified ? "Verified" : "Profile available"}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div id="workerTab-availability" class="worker-profile-panel" hidden>
+      <h3>Availability</h3>
+      <p>
+        ${w.available
+          ? "This worker is currently marked as available."
+          : "Please check availability while booking."}
+      </p>
+      <p>Choose a service date and time in the booking flow to continue.</p>
+    </div>
+
+    <div id="workerTab-experience" class="worker-profile-panel" hidden>
+      <h3>Experience & Skills</h3>
+      <div class="worker-profile-row">
+        <div>🛠️</div>
+        <div>
+          <span>Profession</span>
+          <strong>${esc(w.profession || "Not listed")}</strong>
+        </div>
+      </div>
+      <div class="worker-profile-row">
+        <div>🏆</div>
+        <div>
+          <span>Experience</span>
+          <strong>${esc(experience)}</strong>
+        </div>
+      </div>
+      <div class="worker-profile-row">
+        <div>📍</div>
+        <div>
+          <span>Service area</span>
+          <strong>${esc(w.service_area || "Not listed")}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div id="workerTab-reviews" class="worker-profile-panel" hidden>
+      <h3>Customer Reviews</h3>
+      ${reviewCount
+        ? `<p><strong>★ ${esc(w.rating || "—")}</strong> based on ${reviewCount} customer ratings.</p>
+           <p>Individual review details are shown only when available in the existing review data.</p>`
+        : `<p>No customer reviews are available yet.</p>`}
+    </div>
+
+    <button class="btn btn-primary worker-profile-book"
+      onclick="bookWorker('${esc(w.id)}')">
+      Book This Worker →
+    </button>
+  `;
+
+  go("worker-profile");
+}
+
+function workerProfileTab(tab, button) {
+  ["about", "availability", "experience", "reviews"].forEach(name => {
+    const panel = $("workerTab-" + name);
+    if (panel) panel.hidden = name !== tab;
+  });
+
+  document.querySelectorAll(".worker-profile-tabs button")
+    .forEach(b => b.classList.remove("active"));
+
+  if (button) button.classList.add("active");
+}
 function bookWorker(id) {
   const w = workers.find(x => String(x.id) === String(id));
 
