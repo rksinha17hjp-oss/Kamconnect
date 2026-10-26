@@ -2236,10 +2236,51 @@ body:has(#screen-splash.active) .bottom-nav {
     padding: 16px 12px 26px;
   }
 
-  #screen-splash .splash-photo {
-    height: 43dvh;
-    min-height: 240px;
-  }
+
+#screen-splash {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background: #f8f6ef;
+  box-sizing: border-box;
+}
+
+#screen-splash .splash-content,
+#screen-splash .welcome-slide {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#screen-splash .splash-brand {
+  margin: 0;
+  padding: 12px 8px;
+  text-align: center;
+  font-family: "Improbable", sans-serif;
+}
+
+#screen-splash .splash-photo {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  object-fit: cover;
+  object-position: center;
+  margin: 0;
+  border-radius: 0;
+}
+
+#screen-splash .splash-title,
+#screen-splash .splash-note,
+#screen-splash .splash-next {
+  margin-left: 16px;
+  margin-right: 16px;
+  font-family: "Improbable", sans-serif;
+}
 }  
 </style>
 </head>
