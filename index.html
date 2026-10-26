@@ -2053,6 +2053,82 @@ background: #e5f3e6;
     font-size: 16px;
   }
 } 
+
+/* KAAMCONNECT PREMIUM UI UPGRADE */
+:root {
+  --navy: #18254b;
+  --ink: #20243a;
+  --purple: #7051e8;
+  --bg: #f7f7fc;
+  --line: #e9e7f4;
+  --shadow: 0 12px 32px rgba(44, 35, 92, 0.09);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.panel,
+.booking-card,
+.worker-card,
+.service-row {
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.booking-card,
+.worker-card,
+.service-row {
+  border-radius: 22px;
+  background: #fff;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #7658f0, #5938d6);
+  box-shadow: 0 8px 20px rgba(112, 81, 232, .24);
+}
+
+.btn-primary:active {
+  transform: scale(.97);
+}
+
+.panel {
+  border-radius: 24px;
+  background: #fff;
+}
+
+input,
+select,
+textarea {
+  border-radius: 13px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid rgba(112, 81, 232, .25);
+  border-color: var(--purple);
+}
+
+@media (max-width: 560px) {
+  .page {
+    padding-top: 14px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .btn {
+    min-height: 46px;
+  }
+
+  .booking-card {
+    padding: 14px;
+  }
+}
 </style>
 </head>
 <body>
@@ -2447,19 +2523,34 @@ function go(name) {
   if (name === "worker") loadWorkerDashboard();
   if (name === "payroll") loadPayroll();
 }
-function support(){toast("Support: add your customer support email/phone in the project settings.");}
+function support() {
+  const supportScreen = document.getElementById("screen-support");
+
+  if (supportScreen) {
+    go("support");
+    return;
+  }
+  toast("Open the Support page from the bottom navigation.");
+}
 function imgFor(s){
   return s.image_url || (s.image_file ? "./" + s.image_file : "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=85");
 }
 function normalizeService(row){return {id:row.id,name:row.name,category:row.category||"Other",description:row.description||"",icon:row.icon||"✧",image_url:row.image_url||null,image_file:row.image_file||null,starting_price:Number(row.starting_price||0),duration_minutes:Number(row.duration_minutes||60),active:row.active!==false}}
-
 async function loadNotifications() {
   const list = document.getElementById("notificationList");
   if (!list) return;
-
-  list.innerHTML = '<p class="muted">Loading notifications...</p>';
-
-  
+list.innerHTML = `
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
+    <div>
+      <h3 style="margin:0">Booking Updates</h3>
+      <p class="muted" style="margin:5px 0 0">Your latest service booking activity</p>
+    </div>
+    <button class="btn btn-light" onclick="loadNotifications()">
+      ↻ Refresh
+    </button>
+  </div>
+  <p class="muted">Loading notifications...</p>
+`;  
 if (!sb) {
   list.innerHTML = "<p>Database connection is not available. Please refresh the page.</p>";
   return;
@@ -2501,19 +2592,60 @@ const loggedInUser = authData.user;
     list.innerHTML = data.map(b => {
       const status = String(b.status || "requested").toLowerCase();
 
-      const messages = {
-        requested: ["🕒", "Booking requested", "Your booking request has been received."],
-        pending: ["🕒", "Booking pending", "Your booking is waiting for confirmation."],
-        confirmed: ["✅", "Booking confirmed", "Your booking has been confirmed."],
-        accepted: ["✅", "Booking accepted", "Your service professional has accepted the booking."],
-        completed: ["🎉", "Service completed", "Your booking is marked as completed."],
-        cancelled: ["❌", "Booking cancelled", "This booking has been cancelled."],
-        rejected: ["⚠️", "Booking declined", "This booking was declined."]
-      };
-
-      const message = messages[status] || ["🔔", "Booking update", "Current status: " + status];
-      const date = b.created_at ? new Date(b.created_at).toLocaleString() : "";
-
+const messages = {
+  requested: [
+    "🕒",
+    "Request received",
+    "Your booking request has been submitted and is awaiting processing."
+  ],
+  pending: [
+    "⏳",
+    "Awaiting confirmation",
+    "Your service booking is waiting for confirmation."
+  ],
+  confirmed: [
+    "✅",
+    "Booking confirmed",
+    "Your booking has been confirmed. Check your booking details for the scheduled time."
+  ],
+  accepted: [
+    "🤝",
+    "Professional accepted",
+    "Your service professional has accepted the booking."
+  ],
+  on_the_way: [
+    "🚗",
+    "Professional on the way",
+    "Your professional is on the way. Open tracking to check available location updates."
+  ],
+  arrived: [
+    "📍",
+    "Professional arrived",
+    "Your professional has marked arrival."
+  ],
+  in_progress: [
+    "🛠️",
+    "Service in progress",
+    "Your service is marked as in progress."
+  ],
+  completed: [
+    "🎉",
+    "Service completed",
+    "Your booking is marked as completed. You can submit a rating if eligible."
+  ],
+  cancelled: [
+    "❌",
+    "Booking cancelled",
+    "This booking has been cancelled."
+  ],
+  rejected: [
+    "⚠️",
+    "Booking declined",
+    "This booking was declined. Contact support if you need help."
+  ]
+};
+  const message = messages[status] || ["🔔", "Booking update", "Current status: " + status];
+  const date = b.created_at ? new Date(b.created_at).toLocaleString() : "";
       return `
         <div style="padding:14px 0;border-bottom:1px solid #eee">
           <div style="font-size:22px">${message[0]}</div>
@@ -2588,7 +2720,7 @@ async function loadData(){
         avatar_url:w.photo_url,
         experience_years:null,
         service_area:w.area,
-        verified:true,
+        verified: false,
         available:w.available,
         rating:null,
         review_count:0,
@@ -2678,11 +2810,72 @@ function renderCalendar(){const y=monthCursor.getFullYear(),m=monthCursor.getMon
 function chooseDate(key){selectedDate=key;selectedTime="";renderCalendar();loadAvailability()}
 function updateSelectedSummary(){$("selectedDateText").textContent=selectedDate?new Date(selectedDate+"T12:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}):"Choose a date";$("selectedTimeText").textContent=selectedTime||"Choose a time"}
 function renderSlots(available=null){const times=["09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM"];if(!selectedDate){$("slots").innerHTML='<div class="empty" style="grid-column:1/-1">Select a date to view available times.</div>';return}const now=new Date();const isToday=selectedDate===dateKey(now);const slots=times.filter(t=>{if(!isToday)return true;const [time,ampm]=t.split(" "),[hh,mm]=time.split(":").map(Number);let h=hh%12+(ampm==="PM"?12:0);return h>now.getHours()||(h===now.getHours()&&mm>now.getMinutes())});$("slots").innerHTML=slots.map(t=>`<button class="slot ${selectedTime===t?'selected':''}" onclick="chooseTime('${t}')">${t}</button>`).join("")||'<div class="empty" style="grid-column:1/-1">No time slots left for this date.</div>';updateSelectedSummary()}
-function chooseTime(t){selectedTime=t;renderSlots();updateSelectedSummary()}
+
+function chooseTime(t) {
+  if (!selectedDate) {
+    toast("Please select a date first.");
+    return;
+  }
+
+  const [clock, ampm] = t.split(" ");
+  const [hours, minutes] = clock.split(":").map(Number);
+
+  const hour24 = (hours % 12) + (ampm === "PM" ? 12 : 0);
+  const chosen = new Date(
+    selectedDate + "T" +
+    String(hour24).padStart(2, "0") + ":" +
+    String(minutes).padStart(2, "0") + ":00"
+  );
+
+  if (chosen.getTime() <= Date.now()) {
+    toast("Please choose a future time.");
+    selectedTime = "";
+    renderSlots();
+    updateSelectedSummary();
+    return;
+  }
+
+  selectedTime = t;
+  renderSlots();
+  updateSelectedSummary();
+}
 async function loadAvailability(){if(!selectedDate||!sb||!currentService)return;try{const {data,error}=await sb.from("kc_worker_schedules").select("id,worker_id,start_time,end_time,break_start,break_end,weekday,is_available").eq("weekday",new Date(selectedDate+"T12:00:00").getDay()).eq("is_available",true);if(error)throw error;/* Worker-specific slot validation is repeated in the booking RPC. */if(!data?.length)$("slotNote").textContent="No worker schedule is published for this weekday yet. Available times shown are request preferences; booking may be declined by the backend.";else $("slotNote").textContent="Worker schedules found. Final slot availability is validated when the booking is submitted."}catch(e){$("slotNote").textContent="Schedule data could not be loaded. The backend will validate availability during booking."}}
 function goCheckout(){if(!currentService){toast("Choose a service first");go("services");return}if(!selectedDate||!selectedTime){toast("Please select a date and time");return}renderCheckout();go("checkout")}
 function renderCheckout(){$("checkoutSummary").innerHTML=`<h3>Booking summary</h3><div style="display:flex;justify-content:space-between;gap:12px"><div><strong>${esc(currentService.name)}</strong><p class="tiny">${esc(currentPlan)} plan · ${currentService.duration_minutes||60} minutes</p><p class="tiny">${new Date(selectedDate+"T12:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})} · ${esc(selectedTime)}</p></div><strong>${money(selectedPrice())}</strong></div><p class="tiny">Worker: ${currentWorker?esc(currentWorker.full_name):"To be assigned based on availability"}</p><p class="tiny">No coupon or online payment is applied unless configured in your backend.</p>`}
-$("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("bookingNotice");if(!sb){notice("bookingNotice","Supabase is not configured. Add your project URL and publishable/anon key in index.html, then run supabase.sql.","bad");return}if(!user){notice("bookingNotice","Please sign in before confirming your booking.","bad");go("auth");return}const address=$("address").value.trim();if(address.length<8){notice("bookingNotice","Please enter a complete service address.","bad");return}const btn=$("confirmBooking");btn.disabled=true;btn.textContent="Submitting…";try{const {data,error}=await sb.rpc("kc_create_booking",{p_service_id:currentService.id,p_worker_id:currentWorker?.id||null,p_plan:currentPlan,p_service_date:selectedDate,p_start_time:to24h(selectedTime),p_address_label:$("addressLabel").value,p_address:address+( $("landmark").value.trim()?" · Landmark: "+$("landmark").value.trim():""),p_notes:$("notes").value.trim(),p_payment_method:$("payment").value});console.log("Booking RPC result:", { data, error, userId: user?.id });if (error) {
+$("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("bookingNotice");if(!sb){notice("bookingNotice","Supabase is not configured. Add your project URL and publishable/anon key in index.html, then run supabase.sql.","bad");return}if(!user){notice("bookingNotice","Please sign in before confirming your booking.","bad");go("auth");return} 
+  if (!selectedDate || !selectedTime) {
+  notice(
+    "bookingNotice",
+    "Please select a booking date and time.",
+    "bad"
+  );
+  return;
+}
+
+const [clock, ampm] = selectedTime.split(" ");
+const [hours, minutes] = clock.split(":").map(Number);
+const hour24 = (hours % 12) + (ampm === "PM" ? 12 : 0);
+
+const chosenTime = new Date(
+  selectedDate + "T" +
+  String(hour24).padStart(2, "0") + ":" +
+  String(minutes).padStart(2, "0") + ":00"
+);
+
+if (chosenTime.getTime() <= Date.now()) {
+  notice(
+    "bookingNotice",
+    "This time has passed. Please choose a future slot.",
+    "bad"
+  );
+  return;
+}
+const address=$("address").value.trim();if(address.length<8){notice("bookingNotice","Please enter a complete service address.","bad");return}
+if (bookingSubmitting) return;
+bookingSubmitting = true;
+const btn = $("confirmBooking");
+btn.disabled = true;
+btn.textContent = "Submitting…";try{const {data,error}=await sb.rpc("kc_create_booking",{p_service_id:currentService.id,p_worker_id:currentWorker?.id||null,p_plan:currentPlan,p_service_date:selectedDate,p_start_time:to24h(selectedTime),p_address_label:$("addressLabel").value,p_address:address+( $("landmark").value.trim()?" · Landmark: "+$("landmark").value.trim():""),p_notes:$("notes").value.trim(),p_payment_method:$("payment").value});console.log("Booking RPC result:", { data, error, userId: user?.id });if (error) {
   console.error("Booking RPC failed:", error);
   throw new Error(error.message || JSON.stringify(error));
 }const row=Array.isArray(data)?data[0]:data;if(!row?.id)throw new Error("Booking was not returned by the server.");if(row.customer_otp&&window.sessionStorage)sessionStorage.setItem("kc_otp_"+row.id,row.customer_otp);notice("bookingNotice","Booking confirmed! ID: "+row.id+(row.customer_otp?" · Your one-time service OTP is "+row.customer_otp+" — share it only with your assigned professional. Save it now; it is not shown again.":""),"ok");toast("Booking created successfully");await loadBookings();setTimeout(()=>go("bookings"),5000)} catch (err) {
@@ -2693,7 +2886,12 @@ $("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNoti
     ". Check browser Console and Network.",
     "bad"
   );
-}finally{btn.disabled=false;btn.textContent="Confirm Booking"}});
+}
+finally {
+  bookingSubmitting = false;
+  btn.disabled = false;
+  btn.textContent = "Confirm Booking";
+}});
 function to24h(t){const [clock,ap]=t.split(" ");let [h,m]=clock.split(":").map(Number);h=h%12+(ap==="PM"?12:0);return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":00"}
 function friendlyError(msg){if(/slot|available|duplicate|conflict/i.test(msg))return "This time may no longer be available. Please go back and choose another slot.";if(/row-level|permission|policy|not allowed/i.test(msg))return "Your account does not have permission for this action. Please sign in again or contact support.";return msg||"Something went wrong. Please try again."}
 function setAuthMode(mode){authMode=mode;$("loginTab").classList.toggle("active",mode==="login");$("signupTab").classList.toggle("active",mode==="signup");$("nameField").classList.toggle("hidden",mode!=="signup");$("authSubmit").textContent=mode==="login"?"Sign in":"Create account";$("authPassword").autocomplete=mode==="login"?"current-password":"new-password";hideNotice("authNotice")}
@@ -3159,8 +3357,18 @@ async function loadBookings() {
     return;
   }
 
-  el.innerHTML = '<div class="empty">Loading your bookings…</div>';
-
+el.innerHTML = `
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
+    <div>
+      <h3 style="margin:0">My Bookings</h3>
+      <p class="tiny" style="margin:5px 0 0">Check your latest service status</p>
+    </div>
+    <button class="btn btn-light" onclick="loadBookings()">
+      ↻ Refresh
+    </button>
+  </div>
+  <div class="empty">Loading your bookings…</div>
+`;
   try {
     const { data, error } = await sb
       .from("kc_bookings")
@@ -3358,7 +3566,7 @@ function renderWorkersInto(id, list) {
 
         <div class="worker-card-modern-identity">
           <span class="verified">
-            ${w.verified ? '✓ Verified' : 'Professional'}
+            ${w.verified ? '✓ Verified Professional' : 'Profile Listed'}
           </span>
           <h3>${esc(w.full_name || 'Worker')}</h3>
           <p>${esc(w.profession || 'Service professional')}</p>
@@ -3428,16 +3636,20 @@ function openWorkerProfile(id, returnScreen = "workers") {
     return;
   }
 
-  currentWorker = w;
-  try {
+currentWorker = w;
+
+workerProfileReturnScreen =
+  returnScreen === "home" ? "home" : "workers";
+
+try {
   localStorage.setItem("kc_last_worker_id", String(w.id));
-  localStorage.setItem("kc_worker_profile_return", workerProfileReturnScreen);
+  localStorage.setItem(
+    "kc_worker_profile_return",
+    workerProfileReturnScreen
+  );
 } catch (e) {
   console.warn("Could not save worker profile:", e);
-  }
-  workerProfileReturnScreen =
-    returnScreen === "home" ? "home" : "workers";
-
+}
   const content = $("workerProfileContent");
   if (!content) return;
 
@@ -4137,10 +4349,140 @@ const labels = {
     }
   }
 }
-function initTrackingMap(){if(!window.L||mapInstance)return;const el=$("trackingMap");if(!el||!el.isConnected)return;mapInstance=L.map(el,{zoomControl:false}).setView([25.5941,85.1376],13);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(mapInstance);setTimeout(()=>mapInstance?.invalidateSize(),250);if(sb&&trackingBookingId)subscribeTracking(trackingBookingId)}
-async function subscribeTracking(id){if(!sb||!id)return;if(locationChannel)sb.removeChannel(locationChannel);try{const {data,error}=await sb.from("kc_worker_locations").select("latitude,longitude,updated_at,worker_id").eq("booking_id",id).order("updated_at",{ascending:false}).limit(1);if(!error&&data?.[0])updateWorkerMarker(data[0]);locationChannel=sb.channel("tracking-"+id).on("postgres_changes",{event:"*",schema:"public",table:"kc_worker_locations",filter:"booking_id=eq."+id},payload=>{if(payload.new)updateWorkerMarker(payload.new)}).subscribe()}catch(e){console.warn(e.message)}}
-function updateWorkerMarker(row){if(!mapInstance||!row.latitude||!row.longitude)return;const p=[Number(row.latitude),Number(row.longitude)];if(workerMarker)workerMarker.setLatLng(p);else workerMarker=L.marker(p).addTo(mapInstance).bindPopup("Assigned professional");mapInstance.setView(p,15);$("arrivalText").textContent="Worker location updated "+new Date(row.updated_at).toLocaleTimeString();$("etaValue").textContent="—"}
 
+function initTrackingMap() {
+  if (!window.L) {
+    const el = $("arrivalText");
+    if (el) el.textContent = "Map library is unavailable.";
+    return;
+  }
+
+  const el = $("trackingMap");
+  if (!el || !el.isConnected) return;
+
+  if (!mapInstance) {
+    // Neutral world view: no invented worker location.
+    mapInstance = L.map(el, {
+      zoomControl: true
+    }).setView([20, 0], 2);
+
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap contributors"
+      }
+    ).addTo(mapInstance);
+  }
+
+  setTimeout(() => {
+    if (mapInstance) mapInstance.invalidateSize();
+  }, 250);
+
+  if (sb && trackingBookingId) {
+    subscribeTracking(trackingBookingId);
+  }
+}
+
+async function subscribeTracking(id) {
+  if (!sb || !id) return;
+
+  if (locationChannel) {
+    await sb.removeChannel(locationChannel);
+    locationChannel = null;
+  }
+
+  const arrivalEl = $("arrivalText");
+
+  if (arrivalEl) {
+    arrivalEl.textContent = "Checking the latest worker location…";
+  }
+
+  try {
+    const { data, error } = await sb
+      .from("kc_worker_locations")
+      .select("latitude,longitude,updated_at,worker_id")
+      .eq("booking_id", id)
+      .order("updated_at", { ascending: false })
+      .limit(1);
+
+    if (error) throw error;
+
+    if (data && data.length) {
+      updateWorkerMarker(data[0]);
+    } else if (arrivalEl) {
+      arrivalEl.textContent =
+        "No GPS update yet. The assigned worker must share their location.";
+    }
+
+    locationChannel = sb
+      .channel("tracking-" + id)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "kc_worker_locations",
+          filter: "booking_id=eq." + id
+        },
+        payload => {
+          if (payload.new) updateWorkerMarker(payload.new);
+        }
+      )
+      .subscribe();
+  } catch (error) {
+    console.error("Tracking error:", error);
+
+    if (arrivalEl) {
+      arrivalEl.textContent =
+        "Could not load GPS. Check location permissions and database access.";
+    }
+  }
+}
+
+function updateWorkerMarker(row) {
+  if (!mapInstance || !row) return;
+
+  const lat = Number(row.latitude);
+  const lng = Number(row.longitude);
+
+  if (
+    row.latitude == null ||
+    row.longitude == null ||
+    !Number.isFinite(lat) ||
+    !Number.isFinite(lng) ||
+    lat < -90 || lat > 90 ||
+    lng < -180 || lng > 180
+  ) {
+    return;
+  }
+
+  const position = [lat, lng];
+
+  if (workerMarker) {
+    workerMarker.setLatLng(position);
+  } else {
+    workerMarker = L.marker(position)
+      .addTo(mapInstance)
+      .bindPopup("Assigned professional");
+  }
+
+  mapInstance.setView(position, 15);
+
+  const arrivalEl = $("arrivalText");
+  if (arrivalEl) {
+    const time = row.updated_at
+      ? new Date(row.updated_at).toLocaleTimeString("en-IN")
+      : "time unavailable";
+
+    arrivalEl.textContent = "Last GPS update: " + time;
+  }
+
+  const etaEl = $("etaValue");
+  if (etaEl) {
+    etaEl.textContent = "Not available";
+  }
+}
 async function startWorkerLocationSharing(bookingId) {
   if (!sb || !user) {
     toast("Please sign in with the worker account.");
@@ -4697,14 +5039,15 @@ async function setWorkerAvailability(available) {
       { p_available: available }
     );
 
-    if (error) throw error;
-
-    toast(
-      available
-        ? "You are now Online!"
-        : "You are now Offline!"
-    );
-
+    if (error) throw error;   
+if (!available) {
+  stopWorkerLocationSharing();
+}
+toast(
+  available
+    ? "You are now Online!"
+    : "You are now Offline!"
+);
     await loadWorkerDashboard();
   } catch (e) {
     alert("Availability update failed: " + e.message);
