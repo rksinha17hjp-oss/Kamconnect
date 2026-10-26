@@ -2282,6 +2282,81 @@ body:has(#screen-splash.active) {
 #screen-splash,
 #screen-splash * {
   font-family: "Improbable", sans-serif !important;
+} 
+
+/* KaamConnect Profile page */
+#screen-profile .profile-page-title {
+  font-size: clamp(30px, 5vw, 38px);
+  line-height: 1.2;
+  margin: 8px 0;
+}
+
+#screen-profile .profile-main-card {
+  margin: 22px 0;
+  padding: 22px;
+  border-radius: 22px;
+}
+
+#screen-profile .profile-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+#screen-profile .profile-action {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  text-align: left;
+  border: 1px solid rgba(128, 101, 216, 0.18);
+  border-radius: 18px;
+  background: #fff;
+  color: #292536;
+  cursor: pointer;
+}
+
+#screen-profile .profile-symbol {
+  display: grid;
+  place-items: center;
+  flex: 0 0 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #f0ebff;
+  font-size: 23px;
+}
+
+#screen-profile .profile-action > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+#screen-profile .profile-action strong {
+  font-size: 15px;
+}
+
+#screen-profile .profile-action small {
+  font-size: 12px;
+  opacity: 0.72;
+}
+
+#screen-profile .profile-arrow {
+  font-size: 26px;
+  color: #8065d8;
+}
+
+#screen-profile .profile-action:active {
+  transform: scale(0.99);
+}
+
+@media (min-width: 650px) {
+  #screen-profile .profile-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 </style>
 </head>
@@ -2564,10 +2639,58 @@ body:has(#screen-splash.active) {
   style="width:100%;margin-top:10px"
   onclick="signInWithGoogle()">
   Continue with Google
-</button><button class="btn btn-light" style="width:100%;margin-top:10px" onclick="signOut()">Sign out</button><p class="tiny" style="margin-top:14px">Use the same email you registered with. If email confirmation is enabled in Supabase, confirm the email before signing in.</p></div></section>
-<section id="screen-profile" class="screen page"><div class="eyebrow">Your account 🌸</div><h1 style="font-size:38px">My Profile ✨</h1><p class="tiny">Manage your KaamConnect account, bookings and preferences in one place.</p><div id="profileContent" class="panel"></div><div class="profile-actions"><button class="profile-action" onclick="go('bookings')"><span class="profile-symbol">📋</span><span><strong>My bookings</strong><small>Check booking status and details</small></span></button><button class="profile-action" onclick="go('services')"><span class="profile-symbol">🧰</span><span><strong>Book a service</strong><small>Find trusted local professionals</small></span></button><button class="profile-action" onclick="useMyLocation()"><span class="profile-symbol">📍</span><span><strong>My location</strong><small>Use your location for a booking</small></span></button><button class="profile-action" onclick="support()"><span class="profile-symbol">💬</span><span><strong>Help & support</strong><small>Get help with KaamConnect</small></span></button></div><div id="roleDashboardLinks" class="panel hidden"></div></section>
-<section id="screen-admin" class="screen page"><div class="eyebrow">Control centre</div><h1 style="font-size:38px">Admin Dashboard 🛠️</h1><p class="tiny">Review professional profiles and manage worker approvals.</p><div id="adminStats" class="admin-stat-grid"><div class="admin-stat"><small>Worker profiles</small><strong>—</strong></div><div class="admin-stat"><small>Pending review</small><strong>—</strong></div><div class="admin-stat"><small>Approved</small><strong>—</strong></div></div><div class="panel"><div class="section-head"><div><h2>Worker approvals</h2><p class="tiny">Approve only profiles you have verified.</p></div><button class="btn btn-light" onclick="loadAdminWorkers()">↻ Refresh</button></div><div id="adminWorkersList"><div class="empty">Sign in with your admin account to load worker profiles.</div></div></div><div class="panel"><h2>Recent bookings</h2><div id="adminBookingsList"><div class="empty">Press refresh to load bookings.</div></div><button class="btn btn-light" onclick="loadAdminBookings()">Refresh bookings</button></div></section>
+</button><button class="btn btn-light" style="width:100%;margin-top:10px" onclick="signOut()">Sign out</button><p class="tiny" style="margin-top:14px">Use the same email you registered with. If email confirmation is enabled in Supabase, confirm the email before signing in.</p></div></section>><small>Use your location for a booking</small></span></button><button class="profile-action" onclick="support()"><span class="profile-symbol">💬</span><span><strong>Help & support</strong><small>Get help with KaamConnect</small></span></button></div><div id="roleDashboardLinks" class="panel hidden"></div></section>
 
+<section id="screen-profile" class="screen page">
+  <div class="eyebrow">YOUR ACCOUNT ✨</div>
+  <h1 class="profile-page-title">My Profile</h1>
+  <p class="tiny">Manage your account, bookings and preferences.</p>
+
+  <div id="profileContent" class="panel profile-main-card">
+    <div class="empty">Loading your profile...</div>
+  </div>
+
+  <div class="profile-actions">
+    <button class="profile-action" onclick="go('bookings')">
+      <span class="profile-symbol">📋</span>
+      <span>
+        <strong>My Bookings</strong>
+        <small>Check booking status and details</small>
+      </span>
+      <span class="profile-arrow">›</span>
+    </button>
+
+    <button class="profile-action" onclick="go('services')">
+      <span class="profile-symbol">🧰</span>
+      <span>
+        <strong>Book a Service</strong>
+        <small>Find trusted local professionals</small>
+      </span>
+      <span class="profile-arrow">›</span>
+    </button>
+
+    <button class="profile-action" onclick="useMyLocation()">
+      <span class="profile-symbol">📍</span>
+      <span>
+        <strong>My Location</strong>
+        <small>Use your location for a booking</small>
+      </span>
+      <span class="profile-arrow">›</span>
+    </button>
+
+    <button class="profile-action" onclick="support()">
+      <span class="profile-symbol">💬</span>
+      <span>
+        <strong>Help &amp; Support</strong>
+        <small>Get help with KaamConnect</small>
+      </span>
+      <span class="profile-arrow">›</span>
+    </button>
+  </div>
+
+  <div id="roleDashboardLinks" class="panel hidden"></div>
+</section>
+<section id="screen-admin" class="screen page"><div class="eyebrow">Control centre</div><h1 style="font-size:38px">Admin Dashboard 🛠️</h1><p class="tiny">Review professional profiles and manage worker approvals.</p><div id="adminStats" class="admin-stat-grid"><div class="admin-stat"><small>Worker profiles</small><strong>—</strong></div><div class="admin-stat"><small>Pending review</small><strong>—</strong></div><div class="admin-stat"><small>Approved</small><strong>—</strong></div></div><div class="panel"><div class="section-head"><div><h2>Worker approvals</h2><p class="tiny">Approve only profiles you have verified.</p></div><button class="btn btn-light" onclick="loadAdminWorkers()">↻ Refresh</button></div><div id="adminWorkersList"><div class="empty">Sign in with your admin account to load worker profiles.</div></div></div><div class="panel"><h2>Recent bookings</h2><div id="adminBookingsList"><div class="empty">Press refresh to load bookings.</div></div><button class="btn btn-light" onclick="loadAdminBookings()">Refresh bookings</button></div></section>
 <section id="screen-payroll" class="screen page">
   <button class="btn btn-light" onclick="go('workers')">
     ← Back to Workers
