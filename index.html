@@ -2712,7 +2712,13 @@ function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidd
 function notice(id,msg,type="info"){const e=$(id);if(!e)return;e.className="notice show "+type;e.textContent=msg}
 function hideNotice(id){if($(id))$(id).className="notice"}
 
-function go(name) {
+function go(name) { 
+  if (
+  name !== "splash" &&
+  localStorage.getItem("kc_welcome_completed") === "true"
+) {
+  localStorage.setItem("kc_last_screen", name);
+  }
   const target = $("screen-" + name);
 
   if (!target) {
@@ -3192,11 +3198,20 @@ function nextWelcomeSlide() {
 }
 
 function finishWelcome() {
+  localStorage.setItem("kc_welcome_completed", "true");
+  localStorage.setItem("kc_last_screen", "home");
   go("home");
 }
-
 function restoreLastScreen() {
-  go("splash");
+  const navigationEntry = performance.getEntriesByType("navigation")[0];
+  const isRefresh = navigationEntry?.type === "reload";
+  const lastScreen = localStorage.getItem("kc_last_screen") || "home";
+
+  if (isRefresh) {
+    go(lastScreen === "splash" ? "home" : lastScreen);
+  } else {
+    go("splash");
+  }
 }
 async function ensureProfile(){if(!sb||!user)return;try{const activeUser=user;const {data:existing}=await sb.from("kc_profiles").select("full_name").eq("id",activeUser.id).maybeSingle();if(user?.id!==activeUser.id)return;const fullName=activeUser.user_metadata?.full_name||activeUser.user_metadata?.name||existing?.full_name||activeUser.email?.split("@")[0]||"Customer";await sb.from("kc_profiles").upsert({id:activeUser.id,full_name:fullName,email:activeUser.email},{onConflict:"id"})}catch(e){console.warn(e.message)}}
 async function signOut(){if(sb)await sb.auth.signOut();user=null;refreshAuth();toast("Signed out");go("home")}
