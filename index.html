@@ -2282,328 +2282,6 @@ body:has(#screen-splash.active) {
 #screen-splash,
 #screen-splash * {
   font-family: "Improbable", sans-serif !important;
-} 
-
-/* KaamConnect Profile page */
-#screen-profile .profile-page-title {
-  font-size: clamp(30px, 5vw, 38px);
-  line-height: 1.2;
-  margin: 8px 0;
-}
-
-#screen-profile .profile-main-card {
-  margin: 22px 0;
-  padding: 22px;
-  border-radius: 22px;
-}
-
-#screen-profile .profile-actions {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-#screen-profile .profile-action {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding: 16px;
-  text-align: left;
-  border: 1px solid rgba(128, 101, 216, 0.18);
-  border-radius: 18px;
-  background: #fff;
-  color: #292536;
-  cursor: pointer;
-}
-
-#screen-profile .profile-symbol {
-  display: grid;
-  place-items: center;
-  flex: 0 0 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: #f0ebff;
-  font-size: 23px;
-}
-
-#screen-profile .profile-action > span:nth-child(2) {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  flex: 1;
-}
-
-#screen-profile .profile-action strong {
-  font-size: 15px;
-}
-
-#screen-profile .profile-action small {
-  font-size: 12px;
-  opacity: 0.72;
-}
-
-#screen-profile .profile-arrow {
-  font-size: 26px;
-  color: #8065d8;
-}
-
-#screen-profile .profile-action:active {
-  transform: scale(0.99);
-}
-
-@media (min-width: 650px) {
-  #screen-profile .profile-actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-} 
-  
-/* ===== KaamConnect Profile Page ===== */
-
-#screen-profile .profile-page-title {
-  font-size: clamp(30px, 5vw, 38px);
-  line-height: 1.2;
-  margin: 8px 0;
-}
-
-#screen-profile .profile-main-card,
-#screen-profile #profileContent {
-  border-radius: 22px;
-  overflow: hidden;
-}
-
-#screen-profile .profile-hero {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 22px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #8065d8, #5944a8);
-  color: #fff;
-  overflow-wrap: anywhere;
-}
-
-#screen-profile .profile-avatar {
-  display: grid;
-  place-items: center;
-  flex: 0 0 68px;
-  width: 68px;
-  height: 68px;
-  overflow: hidden;
-  border: 3px solid rgba(255,255,255,.75);
-  border-radius: 50%;
-  background: #f0ebff;
-  color: #5944a8;
-  font-size: 27px;
-  font-weight: 700;
-}
-
-#screen-profile .profile-avatar-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-#screen-profile .summary-band {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 16px;
-}
-
-#screen-profile .summary-band > div {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-  padding: 15px;
-  border: 1px solid #eee8ff;
-  border-radius: 16px;
-  background: #faf8ff;
-  overflow-wrap: anywhere;
-}
-
-#screen-profile .summary-band small {
-  color: #716b80;
-  font-size: 12px;
-}
-
-#screen-profile .summary-band strong {
-  color: #292536;
-  font-size: 14px;
-}
-
-#screen-profile .profile-edit-section {
-  margin-top: 22px;
-  padding: 20px;
-  border: 1px solid #eee8ff;
-  border-radius: 20px;
-  background: #fff;
-}
-
-#screen-profile .profile-edit-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-#screen-profile .profile-edit-heading h3 {
-  margin: 0 0 6px;
-}
-
-#screen-profile .profile-edit-heading p,
-#screen-profile .profile-edit-hint {
-  margin: 0;
-  color: #716b80;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-#screen-profile .profile-edit-badge {
-  padding: 6px 10px;
-  border-radius: 20px;
-  background: #f0ebff;
-  color: #5944a8;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-#screen-profile #profileEditForm label {
-  display: block;
-  margin: 15px 0 7px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-#screen-profile #profileEditForm input,
-#screen-profile #profileEditForm textarea {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 0;
-  padding: 12px 13px;
-  border: 1px solid #ded8ec;
-  border-radius: 12px;
-  background: #fff;
-  color: #292536;
-  font: inherit;
-}
-
-#screen-profile #profileEditForm textarea {
-  min-height: 85px;
-  resize: vertical;
-}
-
-#screen-profile #profileEditForm input:focus,
-#screen-profile #profileEditForm textarea:focus {
-  outline: 2px solid #8065d8;
-  outline-offset: 1px;
-  border-color: #8065d8;
-}
-
-#screen-profile .profile-edit-hint {
-  margin-top: 10px;
-}
-
-#screen-profile .profile-save-btn {
-  width: 100%;
-  margin-top: 14px;
-}
-
-#screen-profile .profile-save-btn:disabled {
-  opacity: .65;
-  cursor: wait;
-}
-
-#screen-profile #roleDashboardLinks {
-  margin-top: 18px;
-  border-radius: 20px;
-}
-
-#screen-profile #roleDashboardLinks .btn {
-  margin-top: 8px;
-}
-
-@media (max-width: 380px) {
-  #screen-profile .profile-hero {
-    gap: 12px;
-    padding: 16px;
-  }
-
-  #screen-profile .profile-avatar {
-    flex-basis: 54px;
-    width: 54px;
-    height: 54px;
-  }
-
-  #screen-profile .summary-band {
-    grid-template-columns: 1fr;
-  }
-
-  #screen-profile .profile-edit-section {
-    padding: 15px;
-  }
-}
-/* Home page role dashboard shortcuts */
-.home-role-dashboards {
-  margin: 24px 0;
-}
-
-.role-dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.role-dashboard-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 17px 14px;
-  border: 1px solid #e8e2f5;
-  border-radius: 20px;
-  background: #fff;
-  color: #292536;
-  text-align: left;
-  cursor: pointer;
-  font: inherit;
-}
-
-.role-dashboard-icon {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 15px;
-  background: #eee8ff;
-  font-size: 24px;
-}
-
-.role-dashboard-card strong {
-  font-size: 14px;
-}
-
-.role-dashboard-card small {
-  color: #777386;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.role-dashboard-arrow {
-  position: absolute;
-  top: 16px;
-  right: 14px;
-  color: #8065d8;
-}
-
-@media (max-width: 360px) {
-  .role-dashboard-grid {
-    grid-template-columns: 1fr;
-  }
 }
 </style>
 </head>
@@ -2795,30 +2473,7 @@ body:has(#screen-splash.active) {
       <button class="btn btn-light"
         onclick="go('services')">View all →</button>
     </div>
-<!-- Role-based dashboard shortcuts -->  <div id="homeRoleDashboards" class="home-role-dashboards hidden">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">Your workspace</div>
-        <h2>Quick Access</h2>
-      </div>
-    </div><div class="role-dashboard-grid">
-  <button id="homeAdminDashboard" class="role-dashboard-card hidden"
-    type="button" onclick="go('admin')">
-    <span class="role-dashboard-icon">🛡️</span>
-    <strong>Admin Dashboard</strong>
-    <small>Manage workers and bookings</small>
-    <span class="role-dashboard-arrow">↗</span>
-  </button>
-
-  <button id="homeWorkerDashboard" class="role-dashboard-card hidden"
-    type="button" onclick="go('worker')">
-    <span class="role-dashboard-icon">🧰</span>
-    <strong>Worker Dashboard</strong>
-    <small>View jobs and update progress</small>
-    <span class="role-dashboard-arrow">↗</span>
-  </button>
-</div>
-</div>
+    <div id="homeServices" class="service-list"></div>
   </div> 
 </section>
 <section id="screen-services" class="screen page"><div class="section-head"><div>
@@ -2909,58 +2564,10 @@ body:has(#screen-splash.active) {
   style="width:100%;margin-top:10px"
   onclick="signInWithGoogle()">
   Continue with Google
-</button><button class="btn btn-light" style="width:100%;margin-top:10px" onclick="signOut()">Sign out</button><p class="tiny" style="margin-top:14px">Use the same email you registered with. If email confirmation is enabled in Supabase, confirm the email before signing in.</p></div></section>><small>Use your location for a booking</small></span></button><button class="profile-action" onclick="support()"><span class="profile-symbol">💬</span><span><strong>Help & support</strong><small>Get help with KaamConnect</small></span></button></div><div id="roleDashboardLinks" class="panel hidden"></div></section>
-
-<section id="screen-profile" class="screen page">
-  <div class="eyebrow">YOUR ACCOUNT ✨</div>
-  <h1 class="profile-page-title">My Profile</h1>
-  <p class="tiny">Manage your account, bookings and preferences.</p>
-
-  <div id="profileContent" class="panel profile-main-card">
-    <div class="empty">Loading your profile...</div>
-  </div>
-
-  <div class="profile-actions">
-    <button class="profile-action" onclick="go('bookings')">
-      <span class="profile-symbol">📋</span>
-      <span>
-        <strong>My Bookings</strong>
-        <small>Check booking status and details</small>
-      </span>
-      <span class="profile-arrow">›</span>
-    </button>
-
-    <button class="profile-action" onclick="go('services')">
-      <span class="profile-symbol">🧰</span>
-      <span>
-        <strong>Book a Service</strong>
-        <small>Find trusted local professionals</small>
-      </span>
-      <span class="profile-arrow">›</span>
-    </button>
-
-    <button class="profile-action" onclick="useMyLocation()">
-      <span class="profile-symbol">📍</span>
-      <span>
-        <strong>My Location</strong>
-        <small>Use your location for a booking</small>
-      </span>
-      <span class="profile-arrow">›</span>
-    </button>
-
-    <button class="profile-action" onclick="support()">
-      <span class="profile-symbol">💬</span>
-      <span>
-        <strong>Help &amp; Support</strong>
-        <small>Get help with KaamConnect</small>
-      </span>
-      <span class="profile-arrow">›</span>
-    </button>
-  </div>
-
-  <div id="roleDashboardLinks" class="panel hidden"></div>
-</section>
+</button><button class="btn btn-light" style="width:100%;margin-top:10px" onclick="signOut()">Sign out</button><p class="tiny" style="margin-top:14px">Use the same email you registered with. If email confirmation is enabled in Supabase, confirm the email before signing in.</p></div></section>
+<section id="screen-profile" class="screen page"><div class="eyebrow">Your account 🌸</div><h1 style="font-size:38px">My Profile ✨</h1><p class="tiny">Manage your KaamConnect account, bookings and preferences in one place.</p><div id="profileContent" class="panel"></div><div class="profile-actions"><button class="profile-action" onclick="go('bookings')"><span class="profile-symbol">📋</span><span><strong>My bookings</strong><small>Check booking status and details</small></span></button><button class="profile-action" onclick="go('services')"><span class="profile-symbol">🧰</span><span><strong>Book a service</strong><small>Find trusted local professionals</small></span></button><button class="profile-action" onclick="useMyLocation()"><span class="profile-symbol">📍</span><span><strong>My location</strong><small>Use your location for a booking</small></span></button><button class="profile-action" onclick="support()"><span class="profile-symbol">💬</span><span><strong>Help & support</strong><small>Get help with KaamConnect</small></span></button></div><div id="roleDashboardLinks" class="panel hidden"></div></section>
 <section id="screen-admin" class="screen page"><div class="eyebrow">Control centre</div><h1 style="font-size:38px">Admin Dashboard 🛠️</h1><p class="tiny">Review professional profiles and manage worker approvals.</p><div id="adminStats" class="admin-stat-grid"><div class="admin-stat"><small>Worker profiles</small><strong>—</strong></div><div class="admin-stat"><small>Pending review</small><strong>—</strong></div><div class="admin-stat"><small>Approved</small><strong>—</strong></div></div><div class="panel"><div class="section-head"><div><h2>Worker approvals</h2><p class="tiny">Approve only profiles you have verified.</p></div><button class="btn btn-light" onclick="loadAdminWorkers()">↻ Refresh</button></div><div id="adminWorkersList"><div class="empty">Sign in with your admin account to load worker profiles.</div></div></div><div class="panel"><h2>Recent bookings</h2><div id="adminBookingsList"><div class="empty">Press refresh to load bookings.</div></div><button class="btn btn-light" onclick="loadAdminBookings()">Refresh bookings</button></div></section>
+
 <section id="screen-payroll" class="screen page">
   <button class="btn btn-light" onclick="go('workers')">
     ← Back to Workers
@@ -3105,15 +2712,9 @@ function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidd
 function notice(id,msg,type="info"){const e=$(id);if(!e)return;e.className="notice show "+type;e.textContent=msg}
 function hideNotice(id){if($(id))$(id).className="notice"}
 
-function go(name) { 
+function go(name) {
+  const target = $("screen-" + name);
 
-if (
-  name !== "splash" &&
-  localStorage.getItem("kc_welcome_completed") === "true"
-) {
-  localStorage.setItem("kc_last_screen", name);
-}  
-const target = $("screen-" + name);
   if (!target) {
     if (name === "support") {
       support();
@@ -3589,22 +3190,13 @@ function nextWelcomeSlide() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
+
 function finishWelcome() {
-  localStorage.setItem("kc_welcome_completed", "true");
-  localStorage.setItem("kc_last_screen", "home");
   go("home");
 }
 
 function restoreLastScreen() {
-  const navigationEntry = performance.getEntriesByType("navigation")[0];
-  const isRefresh = navigationEntry?.type === "reload";
-  const lastScreen = localStorage.getItem("kc_last_screen") || "home";
-
-  if (isRefresh) {
-    go(lastScreen === "splash" ? "home" : lastScreen);
-  } else {
-    go("splash");
-  }
+  go("splash");
 }
 async function ensureProfile(){if(!sb||!user)return;try{const activeUser=user;const {data:existing}=await sb.from("kc_profiles").select("full_name").eq("id",activeUser.id).maybeSingle();if(user?.id!==activeUser.id)return;const fullName=activeUser.user_metadata?.full_name||activeUser.user_metadata?.name||existing?.full_name||activeUser.email?.split("@")[0]||"Customer";await sb.from("kc_profiles").upsert({id:activeUser.id,full_name:fullName,email:activeUser.email},{onConflict:"id"})}catch(e){console.warn(e.message)}}
 async function signOut(){if(sb)await sb.auth.signOut();user=null;refreshAuth();toast("Signed out");go("home")}
@@ -4095,19 +3687,9 @@ el.innerHTML = `
           </div>
           <strong>${money(b.total_amount)}</strong>
         </div>
-  <p class="tiny">${esc(b.address || "")}</p>
-<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">
-  <p class="tiny" style="margin:0;word-break:break-all">
-    Booking ID: ${esc(b.id)}
-  </p>
-  <button
-    class="btn btn-light"
-    type="button"
-    onclick="GenUICopyBookingId('${esc(b.id)}')">
-    📋 Copy ID
-  </button>
-</div>
-  <button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button>
+        <p class="tiny">Booking ID: ${esc(b.id)}</p>
+        <p class="tiny">${esc(b.address || "")}</p>
+        <button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button>
         ${reviewHTML}
       </article>`;
     }).join("");
@@ -5232,153 +4814,10 @@ async function startWorkerLocationSharing(bookingId) {
 function stopWorkerLocationSharing(){if(locWatch!==null){navigator.geolocation.clearWatch(locWatch);locWatch=null}if(locationChannel&&sb){sb.removeChannel(locationChannel);locationChannel=null}toast("Location sharing stopped on this device.")}
   
 async function isAdminUser(){if(!sb||!user)return false;try{const {data,error}=await sb.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();return !error&&!!data}catch(e){return false}}
+async function loadAdminWorkers(){const list=$("adminWorkersList"),stats=$("adminStats");if(!list)return;if(!user||!sb){list.innerHTML='<div class="empty">Please sign in first.</div>';return}list.innerHTML='<div class="empty">Checking admin access…</div>';if(!(await isAdminUser())){list.innerHTML='<div class="empty">Access denied. This account is not listed in admin_users. Verify admin setup and RLS policies.</div>';return}
+try{const {data,error}=await sb.from("worker_profiles").select("id,full_name,service,phone,price,area,postal_code,photo_url,available,approval_status").order("full_name");if(error)throw error;const rows=data||[],pending=rows.filter(w=>(w.approval_status||"pending").toLowerCase()==="pending").length,approved=rows.filter(w=>(w.approval_status||"").toLowerCase()==="approved").length;if(stats)stats.innerHTML=`<div class="admin-stat"><small>Worker profiles</small><strong>${rows.length}</strong></div><div class="admin-stat"><small>Pending review</small><strong>${pending}</strong></div><div class="admin-stat"><small>Approved</small><strong>${approved}</strong></div>`;if(!rows.length){list.innerHTML='<div class="empty">No worker profiles found.</div>';return}list.innerHTML=rows.map(w=>{const st=(w.approval_status||"pending").toLowerCase(),em=st==="approved"?"✅":st==="rejected"?"⛔":"🕒";return `<article class="admin-worker-card"><div class="worker-avatar-small">${em}</div><div class="grow"><strong>${esc(w.full_name||"Unnamed professional")}</strong><div class="tiny">${esc(w.service||"Service not set")} · ${esc(w.area||"Area not set")}</div><div class="tiny">PIN: ${esc(w.postal_code||"—")} · Price: ${money(w.price||0)} · ${w.available?"Available":"Unavailable"}</div><span class="status" style="margin-top:6px">${esc(st)}</span></div><div class="admin-actions">${st!=="approved"?`<button class="btn btn-primary" onclick="setWorkerApproval('${esc(w.id)}','approved')">✓ Approve</button>`:""}${st!=="rejected"?`<button class="btn btn-light" onclick="setWorkerApproval('${esc(w.id)}','rejected')">Reject</button>`:""}${st!=="pending"?`<button class="btn btn-outline" onclick="setWorkerApproval('${esc(w.id)}','pending')">Reset</button>`:""}</div></article>`}).join("")}catch(e){list.innerHTML=`<div class="empty">Could not load worker profiles: ${esc(e.message)}. Check table columns, admin permissions and RLS.</div>`}}
+async function setWorkerApproval(id,status){if(!(await isAdminUser())){toast("Admin access required.");return}if(!confirm("Change this worker's approval status to "+status+"?"))return;try{const {error}=await sb.from("worker_profiles").update({approval_status:status}).eq("id",id);if(error)throw error;toast("Worker status updated.");loadAdminWorkers()}catch(e){toast("Status update failed: "+e.message)}}
 
-async function loadAdminWorkers() {
-  const list = $("adminWorkersList");
-  const stats = $("adminStats");
-
-  if (!list) return;
-
-  if (!user || !sb) {
-    list.innerHTML = '<div class="empty">Please sign in first.</div>';
-    return;
-  }
-
-  list.innerHTML = '<div class="empty">Checking admin access…</div>';
-
-  if (!(await isAdminUser())) {
-    list.innerHTML =
-      '<div class="empty">Access denied. Please use your authorized admin account.</div>';
-    return;
-  }
-
-  try {
-    const { data, error } = await sb
-      .from("kc_worker_profiles")
-      .select(
-        "id,user_id,full_name,profession,service_area,available,verified,starting_price"
-      )
-      .order("full_name");
-
-    if (error) throw error;
-
-    const rows = data || [];
-    const verifiedCount = rows.filter(w => w.verified === true).length;
-    const pendingCount = rows.length - verifiedCount;
-
-    if (stats) {
-      stats.innerHTML = `
-        <div class="admin-stat">
-          <small>Worker profiles</small>
-          <strong>${rows.length}</strong>
-        </div>
-        <div class="admin-stat">
-          <small>Pending verification</small>
-          <strong>${pendingCount}</strong>
-        </div>
-        <div class="admin-stat">
-          <small>Verified</small>
-          <strong>${verifiedCount}</strong>
-        </div>
-      `;
-    }
-
-    if (!rows.length) {
-      list.innerHTML =
-        '<div class="empty">No worker profiles found.</div>';
-      return;
-    }
-
-    list.innerHTML = rows.map(w => {
-      const verified = w.verified === true;
-
-      return `
-        <article class="admin-worker-card">
-          <div class="worker-avatar-small">
-            ${verified ? "✅" : "🕒"}
-          </div>
-
-          <div class="grow">
-            <strong>${esc(w.full_name || "Unnamed professional")}</strong>
-
-            <div class="tiny">
-              ${esc(w.profession || "Service not set")} ·
-              ${esc(w.service_area || "Area not set")}
-            </div>
-
-            <div class="tiny">
-              Starting price: ${money(w.starting_price || 0)}
-            </div>
-
-            <div class="tiny">
-              ${w.available ? "🟢 Available" : "⚪ Unavailable"}
-            </div>
-
-            <span class="status" style="margin-top:6px">
-              ${verified ? "Verified" : "Pending verification"}
-            </span>
-          </div>
-
-          <div class="admin-actions">
-            ${
-              !verified
-                ? `<button class="btn btn-primary"
-                     onclick="setWorkerApproval('${esc(w.id)}','approved')">
-                     ✓ Verify
-                   </button>`
-                : `<button class="btn btn-light"
-                     onclick="setWorkerApproval('${esc(w.id)}','pending')">
-                     Revoke verification
-                   </button>`
-            }
-          </div>
-        </article>
-      `;
-    }).join("");
-
-  } catch (e) {
-    list.innerHTML =
-      `<div class="empty">Could not load worker profiles: ${esc(e.message)}</div>`;
-  }
-}
-
-async function setWorkerApproval(id, status) {
-  if (!sb || !user || !(await isAdminUser())) {
-    toast("Authorized admin access required.");
-    return;
-  }
-
-  const verified = status === "approved";
-
-  if (!confirm(
-    verified
-      ? "Verify this worker profile?"
-      : "Revoke verification for this worker?"
-  )) {
-    return;
-  }
-
-  try {
-    const { data, error } = await sb
-      .from("kc_worker_profiles")
-      .update({ verified })
-      .eq("id", id)
-      .select("id");
-
-    if (error) throw error;
-
-    if (!data || data.length === 0) {
-      throw new Error(
-        "No profile was updated. Check the admin UPDATE policy in Supabase."
-      );
-    }
-
-    toast(verified ? "Worker verified successfully." : "Worker verification revoked.");
-    await loadAdminWorkers();
-  } catch (e) {
-    toast("Verification update failed: " + e.message);
-  }
-}
 async function loadAdminBookings() {
   const list = $("adminBookingsList");
   if (!list) return;
@@ -5526,15 +4965,7 @@ async function loadAdminBookings() {
     list.innerHTML =
       `<div class="empty">Could not load bookings: ${esc(e.message)}</div>`;
   }
-} 
-async function GenUICopyBookingId(bookingId) {
-  try {
-    await navigator.clipboard.writeText(String(bookingId));
-    toast("Booking ID copied successfully!");
-  } catch (e) {
-    prompt("Copy this booking ID:", String(bookingId));
-  }
-} 
+}
 async function verifyStartOtp(bookingId) {
   const input = document.getElementById("otp-" + bookingId);
   const result = document.getElementById("otp-result-" + bookingId);
@@ -5693,42 +5124,8 @@ if (visibleRows.length === 0) {
 
 bookings.innerHTML = visibleRows.map(b => {
   const status = String(b.status || "requested").toLowerCase();
-  const workerSteps = [
-  { key: "confirmed", label: "Accepted" },
-  { key: "on_the_way", label: "Travelling" },
-  { key: "arrived", label: "Arrived" },
-  { key: "in_progress", label: "In service" },
-  { key: "completed", label: "Completed" }
-];
-
-const workerStepIndex = {
-  confirmed: 0,
-  accepted: 0,
-  on_the_way: 1,
-  arrived: 2,
-  in_progress: 3,
-  completed: 4
-};
-
-const currentWorkerStep = workerStepIndex[status] ?? -1;
-
-const workerProgressHTML = `
-  <div style="margin:16px 0;padding:14px;border:1px solid #e8e4f3;border-radius:14px;background:#faf9ff">
-    <strong style="display:block;margin-bottom:12px">Booking progress</strong>
-    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px">
-      ${workerSteps.map((step, index) => `
-        <div style="text-align:center;min-width:0">
-          <div style="height:5px;border-radius:10px;margin-bottom:7px;background:${currentWorkerStep >= index ? "#8065d8" : "#e5e1ee"}"></div>
-          <span style="font-size:11px;line-height:1.3;display:block;overflow-wrap:anywhere;color:${currentWorkerStep >= index ? "#5942a5" : "#777"}">
-            ${step.label}
-          </span>
-        </div>
-      `).join("")}
-    </div>
-    ${status === "cancelled" ? '<p class="tiny" style="color:#b42318;margin-top:10px">This booking was cancelled.</p>' : ""}
-  </div>
-`;
   const isAssigned = workerIds.includes(b.worker_id);
+
   const canAccept =
     !isAssigned &&
     b.worker_id === null &&
@@ -5746,49 +5143,6 @@ const workerProgressHTML = `
 
   const readyForOtp = isAssigned && status === "arrived";
 
-  const workerSteps = [
-    "Accepted",
-    "Travelling",
-    "Arrived",
-    "In service",
-    "Completed"
-  ];
-
-  const workerStepIndex = {
-    confirmed: 0,
-    accepted: 0,
-    on_the_way: 1,
-    arrived: 2,
-    in_progress: 3,
-    completed: 4
-  };
-
-  const currentWorkerStep = workerStepIndex[status] ?? -1;
-
-  const workerProgressHTML = `
-    <div style="margin:14px 0;padding:14px;border:1px solid #e8e4f3;border-radius:14px;background:#faf9ff">
-      <strong style="display:block;margin-bottom:12px">Booking Progress</strong>
-
-      <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px">
-        ${workerSteps.map((step, index) => `
-          <div style="min-width:0;text-align:center">
-            <div style="height:5px;border-radius:8px;margin-bottom:7px;background:${currentWorkerStep >= index ? "#8065d8" : "#e5e1ee"}"></div>
-            <span style="font-size:10px;line-height:1.3;display:block;overflow-wrap:anywhere;color:${currentWorkerStep >= index ? "#5942a5" : "#777"}">
-              ${step}
-            </span>
-          </div>
-        `).join("")}
-      </div>
-
-      ${status === "requested" ? `
-        <p class="tiny" style="margin-top:10px">Waiting for a professional to accept this booking.</p>
-      ` : ""}
-
-      ${status === "cancelled" ? `
-        <p class="tiny" style="margin-top:10px;color:#b42318">This booking was cancelled.</p>
-      ` : ""}
-    </div>
-  `;
   return `
     <article class="booking-card">
       <strong>${esc(b.service_name || "Home service")}</strong>
