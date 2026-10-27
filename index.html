@@ -2282,6 +2282,123 @@ body:has(#screen-splash.active) {
 #screen-splash,
 #screen-splash * {
   font-family: "Improbable", sans-serif !important;
+} 
+
+/* KAAMCONNECT — WELCOME SCREEN POLISH */
+/* Add this AFTER your existing splash CSS */
+
+#screen-splash .welcome-slide::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(12, 14, 28, 0.20) 0%,
+    transparent 25%,
+    transparent 48%,
+    rgba(12, 14, 28, 0.22) 63%,
+    rgba(12, 14, 28, 0.82) 100%
+  ) !important;
+}
+
+/* Modern brand placement */
+#screen-splash .splash-brand {
+  margin-top: 14px !important;
+  font-family: "Improbable", sans-serif !important;
+  font-size: clamp(25px, 6.5vw, 34px) !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  line-height: 1.2 !important;
+  text-shadow: 0 3px 14px rgba(0,0,0,.65) !important;
+}
+
+/* Modern styling for an existing home icon */
+#screen-splash .splash-brand svg,
+#screen-splash .splash-brand .home-icon,
+#screen-splash .splash-brand .fa-house {
+  width: 30px !important;
+  height: 30px !important;
+  vertical-align: middle !important;
+  color: #b9a0ff !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2.2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  filter: drop-shadow(0 2px 5px rgba(128,101,216,.4)) !important;
+}
+
+/* Welcome heading */
+#screen-splash .splash-title {
+  margin: auto 0 12px !important;
+  padding: 0 8px !important;
+  font-family: "Improbable", sans-serif !important;
+  font-size: clamp(24px, 6vw, 33px) !important;
+  font-weight: 700 !important;
+  line-height: 1.22 !important;
+  letter-spacing: .2px !important;
+  text-wrap: balance !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,.75) !important;
+}
+
+/* Description */
+#screen-splash .splash-note {
+  max-width: 360px !important;
+  margin-bottom: 22px !important;
+  padding: 0 10px !important;
+  font-family: "Improbable", sans-serif !important;
+  font-size: clamp(15px, 3.9vw, 18px) !important;
+  font-weight: 500 !important;
+  line-height: 1.55 !important;
+  letter-spacing: .25px !important;
+  text-wrap: pretty !important;
+  text-shadow: 0 2px 9px rgba(0,0,0,.9) !important;
+}
+
+/* Elegant NEXT button — keep existing functionality */
+#screen-splash .splash-next {
+  min-width: 174px !important;
+  min-height: 52px !important;
+  margin-bottom: 12px !important;
+  padding: 13px 32px !important;
+  border: 1px solid rgba(255,255,255,.24) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    135deg,
+    #9277ed,
+    #7657d1
+  ) !important;
+  color: #fff !important;
+  font-family: "Improbable", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  box-shadow: 0 7px 22px rgba(30,18,70,.35) !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Keep every splash element on the same font */
+#screen-splash,
+#screen-splash * {
+  font-family: "Improbable", sans-serif !important;
+}
+
+/* Modern KaamConnect home icon */
+#screen-splash .splash-brand {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+}
+
+#screen-splash .kc-home-icon {
+  display: inline-block !important;
+  width: 31px !important;
+  height: 31px !important;
+  flex-shrink: 0 !important;
+  fill: none !important;
+  stroke: #b69aff !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  filter: drop-shadow(0 2px 5px rgba(143,105,255,.35)) !important;
 }
 </style>
 </head>
@@ -2317,8 +2434,19 @@ body:has(#screen-splash.active) {
 
     <!-- Slide 1: Welcome -->
     <div class="welcome-slide active" data-slide="0">
-      <h1 class="splash-brand">KaamConnect</h1>
-
+      
+<h1 class="splash-brand">
+  <svg class="kc-home-icon"
+       viewBox="0 0 24 24"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-hidden="true">
+    <path d="M3 10.5 12 3l9 7.5"/>
+    <path d="M5.5 9.5V21h13V9.5"/>
+    <path d="M9 21v-6h6v6"/>
+    <path d="M8 10.5h.01M16 10.5h.01"/>
+  </svg>
+  <span>KaamConnect</span>
+</h1>
       <img class="splash-photo"
            src="./welcome-home.png"
            alt="Welcome to KaamConnect">
@@ -2335,9 +2463,19 @@ body:has(#screen-splash.active) {
     </div>
 
     <!-- Slide 2: Trusted Professionals -->
-    <div class="welcome-slide" data-slide="1">
-      <h1 class="splash-brand">KaamConnect</h1>
-
+    <div class="welcome-slide" data-slide="1">   
+<h1 class="splash-brand">
+  <svg class="kc-home-icon"
+       viewBox="0 0 24 24"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-hidden="true">
+    <path d="M3 10.5 12 3l9 7.5"/>
+    <path d="M5.5 9.5V21h13V9.5"/>
+    <path d="M9 21v-6h6v6"/>
+    <path d="M8 10.5h.01M16 10.5h.01"/>
+  </svg>
+  <span>KaamConnect</span>
+</h1>
       <img class="splash-photo"
            src="./trusted-professionals.png"
            alt="Trusted professionals">
@@ -2354,9 +2492,19 @@ body:has(#screen-splash.active) {
     </div>
 
     <!-- Slide 3: Easy Booking -->
-    <div class="welcome-slide" data-slide="2">
-      <h1 class="splash-brand">KaamConnect</h1>
-
+    <div class="welcome-slide" data-slide="2">   
+<h1 class="splash-brand">
+  <svg class="kc-home-icon"
+       viewBox="0 0 24 24"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-hidden="true">
+    <path d="M3 10.5 12 3l9 7.5"/>
+    <path d="M5.5 9.5V21h13V9.5"/>
+    <path d="M9 21v-6h6v6"/>
+    <path d="M8 10.5h.01M16 10.5h.01"/>
+  </svg>
+  <span>KaamConnect</span>
+</h1>
       <img class="splash-photo"
            src="./easy-booking.png"
            alt="Easy service booking">
@@ -2374,8 +2522,18 @@ body:has(#screen-splash.active) {
 
     <!-- Slide 4: Customer Support -->
     <div class="welcome-slide" data-slide="3">
-      <h1 class="splash-brand">KaamConnect</h1>
-
+<h1 class="splash-brand">
+  <svg class="kc-home-icon"
+       viewBox="0 0 24 24"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-hidden="true">
+    <path d="M3 10.5 12 3l9 7.5"/>
+    <path d="M5.5 9.5V21h13V9.5"/>
+    <path d="M9 21v-6h6v6"/>
+    <path d="M8 10.5h.01M16 10.5h.01"/>
+  </svg>
+  <span>KaamConnect</span>
+</h1>
       <img class="splash-photo"
            src="./customer-support.png"
            alt="KaamConnect customer support">
