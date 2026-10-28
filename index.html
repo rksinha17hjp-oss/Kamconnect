@@ -2441,6 +2441,1285 @@ body:has(#screen-splash.active) {
   position: relative !important;
   z-index: 2 !important;
 } 
+/* ==========================================
+   KAAMCONNECT — MODERN AESTHETIC UI
+   Safe visual enhancements for existing pages
+   ========================================== */
+
+:root {
+  --kc-ink: #192447;
+  --kc-purple: #7652e8;
+  --kc-pink: #ed2788;
+  --kc-lilac: #f0ebff;
+  --kc-mint: #e8f7ef;
+  --kc-surface: #ffffff;
+  --kc-border: #eceaf4;
+  --kc-shadow: 0 14px 38px rgba(35, 29, 75, .09);
+}
+
+/* Custom fonts: upload these exact font files beside now.html.
+   Existing Improbable/Impressum fonts remain as fallbacks. */
+@font-face {
+  font-family: "RadicalBeat";
+  src: url("./RadicalBeat.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EvogriaItalic";
+  src: url("./EvogriaItalic.ttf") format("truetype");
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Premium headings and page titles */
+.screen.page > h1,
+.screen.page > h2,
+.screen.page .section-head h2 {
+  color: var(--kc-ink);
+  letter-spacing: -.35px;
+}
+
+.screen.page > h1,
+.screen.page > h2 {
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+/* Premium card appearance */
+.screen.page .panel {
+  border: 1px solid var(--kc-border);
+  border-radius: 24px;
+  box-shadow: var(--kc-shadow);
+  background: var(--kc-surface);
+}
+
+.screen.page .btn {
+  border-radius: 15px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.screen.page .btn:active {
+  transform: scale(.98);
+}
+
+/* Notifications — modern notification centre */
+#screen-notifications {
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      rgba(118, 82, 232, .10),
+      transparent 42%
+    ),
+    #f8f7fc;
+}
+
+#screen-notifications .wrap > h2 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: clamp(27px, 6vw, 38px);
+  margin-top: 8px;
+}
+
+#screen-notifications .wrap > .muted {
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#notificationList {
+  padding: 18px !important;
+  overflow: hidden;
+  border: 1px solid #ebe7f5;
+  border-radius: 26px;
+  box-shadow: 0 18px 48px rgba(39, 31, 82, .08);
+}
+
+#notificationList h3 {
+  color: var(--kc-ink);
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+#notificationList > div {
+  min-width: 0;
+}
+
+#notificationList > div > div {
+  min-width: 0;
+}
+
+#screen-notifications .wrap > button {
+  min-height: 46px;
+  margin-right: 6px;
+  box-shadow: 0 7px 20px rgba(50, 38, 90, .07);
+}
+
+/* Support — attractive help centre */
+#screen-support {
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      rgba(237, 39, 136, .08),
+      transparent 38%
+    ),
+    #faf9fe;
+}
+
+.support-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: 27px 23px;
+  background: linear-gradient(135deg, #211e43, #5942a5 66%, #9279ed);
+  color: #fff;
+  box-shadow: 0 20px 42px rgba(66, 44, 125, .19);
+}
+
+.support-hero h2 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: clamp(27px, 6vw, 38px);
+  line-height: 1.15;
+}
+
+.support-hero p {
+  line-height: 1.7;
+}
+
+.support-hero-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 14px;
+  border: 1px solid #ffffff35;
+  border-radius: 19px;
+  background: #ffffff18;
+  font-size: 28px;
+}
+
+.support-content {
+  margin-top: 24px;
+}
+
+.support-content > h3 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: 22px;
+}
+
+.support-help-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.support-help-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 150px;
+  padding: 16px;
+  border: 1px solid var(--kc-border);
+  border-radius: 22px;
+  background: #fff;
+  color: var(--kc-ink);
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(40, 31, 80, .05);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.support-help-card:active {
+  transform: scale(.98);
+}
+
+.support-card-icon {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  margin-bottom: 13px;
+  border-radius: 15px;
+  background: var(--kc-lilac);
+  font-size: 21px;
+}
+
+.support-help-card strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.support-help-card small {
+  margin-top: 6px;
+  color: #77768a;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.support-contact-card {
+  margin-top: 18px;
+  padding: 19px;
+  border: 1px solid var(--kc-border);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--kc-shadow);
+}
+
+.support-contact-btn {
+  min-height: 52px;
+  border-radius: 15px;
+}
+
+/* Profile — cleaner personal dashboard */
+#screen-profile .profile-hero {
+  border-radius: 27px;
+  background: linear-gradient(135deg, #24213a, #51438a 60%, #9b7fe4);
+  box-shadow: 0 18px 38px rgba(51, 37, 91, .17);
+}
+
+#screen-profile .profile-actions {
+  gap: 12px;
+}
+
+#screen-profile .profile-action {
+  min-height: 76px;
+  border-radius: 19px;
+  box-shadow: 0 7px 20px rgba(35, 29, 75, .04);
+}
+
+/* Worker list — upgrade outside of worker details */
+#screen-workers .worker-card {
+  border: 1px solid var(--kc-border);
+  border-radius: 25px;
+  box-shadow: 0 14px 34px rgba(35, 29, 75, .09);
+  overflow: hidden;
+}
+
+#screen-workers .worker-card .btn {
+  border-radius: 14px;
+}
+
+/* Worker details: change typography only */
+#screen-worker-detail h1,
+#screen-worker-detail h2,
+#screen-worker-detail h3,
+#screen-worker-detail h4,
+#screen-worker-detail p,
+#screen-worker-detail span,
+#screen-worker-detail strong,
+#screen-worker-detail small,
+#screen-worker-detail label {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+/* Salary and bonus typography */
+#screen-payroll h1,
+#screen-payroll h2,
+#screen-payroll h3,
+#screen-payroll label {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+#screen-payroll .summary-band strong,
+#screen-payroll .admin-stat strong {
+  font-family: "EvogriaItalic", "Improbable", sans-serif;
+}
+
+/* Booking cards */
+#screen-bookings .booking-card {
+  border: 1px solid var(--kc-border);
+  border-radius: 23px;
+  box-shadow: 0 12px 30px rgba(35, 29, 75, .07);
+}
+
+#screen-bookings .status {
+  border-radius: 999px;
+  padding: 7px 12px;
+}
+
+/* Real-time tracking and progress */
+#screen-tracking .tracking-page {
+  border-radius: 29px;
+  background: linear-gradient(155deg, #211e43, #50001f);
+}
+
+#screen-tracking .arrival {
+  border-radius: 23px;
+  box-shadow: 0 15px 32px rgba(209, 14, 105, .25);
+}
+
+#screen-tracking .tracking-info {
+  border-radius: 19px;
+  box-shadow: 0 8px 22px rgba(35, 29, 75, .06);
+}
+
+/* Responsive support cards */
+@media (max-width: 420px) {
+  .support-help-grid {
+    gap: 9px;
+  }
+
+  .support-help-card {
+    min-height: 145px;
+    padding: 12px;
+  }
+
+  .support-hero {
+    padding: 23px 18px;
+  }
+
+  #notificationList {
+    padding: 13px !important;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .screen.page .btn,
+  .support-help-card {
+    transition: none;
+  }
+  }
+  /* Only change the typography inside the existing worker profile.
+   Do not change the worker's information or layout. */
+
+#screen-worker-profile .worker-profile-overlay h1,
+#screen-worker-profile .worker-profile-overlay p,
+#screen-worker-profile .worker-profile-stats,
+#screen-worker-profile .worker-profile-content {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+} 
+/* KAAMCONNECT TOOLS STORE */
+
+.tools-screen {
+  background:
+    radial-gradient(ellipse at 100% 0%, #e9e2ff 0, transparent 35%),
+    #f8f7fc;
+}
+
+.tools-hero {
+  padding: 26px 22px;
+  color: #fff;
+  border-radius: 28px;
+  background: linear-gradient(140deg, #1a2040, #5140a2 65%, #8e70ee);
+  box-shadow: 0 20px 42px #30205b24;
+}
+
+.tools-hero-icon,
+.tools-cart-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 17px;
+  background: #ffffff20;
+  font-size: 26px;
+}
+
+.tools-eyebrow {
+  color: #8e70ee;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.tools-hero .tools-eyebrow {
+  display: block;
+  margin-top: 20px;
+  color: #e0d7ff;
+}
+
+.tools-hero h1 {
+  margin: 8px 0;
+  color: #fff;
+  font-family: "EvogriaItalic", "Improbable", sans-serif;
+  font-size: clamp(29px, 7vw, 42px);
+  line-height: 1.2;
+}
+
+.tools-hero > p {
+  color: #eeeaff;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.tools-hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.tools-hero-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px;
+  border: 1px solid #ffffff25;
+  border-radius: 17px;
+  background: #ffffff13;
+}
+
+.tools-hero-stats strong {
+  font-size: 25px;
+  font-family: "EvogriaItalic", sans-serif;
+}
+
+.tools-hero-stats span {
+  color: #e3dcff;
+  font-size: 11px;
+}
+
+.tools-panel {
+  margin-top: 20px;
+  padding: 19px;
+  border: 1px solid #eae6f4;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 0 12px 34px #261b510c;
+}
+
+.tools-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tools-section-title h2 {
+  margin: 6px 0;
+  color: #192447;
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: 23px;
+}
+
+.tools-muted {
+  color: #7d7c90;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.tools-badge {
+  padding: 8px 11px;
+  border-radius: 99px;
+  background: #eee9ff;
+  color: #6348cb;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tools-upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  margin-top: 17px;
+  padding: 24px 12px;
+  border: 1.5px dashed #b5a5ef;
+  border-radius: 21px;
+  background: #f8f6ff;
+  color: #302854;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tools-upload-icon {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+  background: #e8e0ff;
+  color: #684bd4;
+  font-size: 28px;
+}
+
+.tools-upload-zone strong {
+  font-size: 14px;
+}
+
+.tools-upload-zone > span:last-of-type {
+  color: #858199;
+  font-size: 11px;
+}
+
+.tools-notice {
+  margin-top: 10px;
+  color: #6250a3;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.tools-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 17px;
+}
+
+.tools-item-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #ece9f4;
+  border-radius: 19px;
+  background: #fff;
+}
+
+.tools-item-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #f4f2f8;
+}
+
+.tools-item-body {
+  padding: 11px;
+}
+
+.tools-item-body label {
+  display: block;
+  margin: 9px 0 5px;
+  color: #7b778e;
+  font-size: 10px;
+}
+
+.tools-item-body input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #e6e2f0;
+  border-radius: 11px;
+  background: #fcfbff;
+  color: #20203c;
+  font-size: 12px;
+}
+
+.tools-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.tools-item-actions button {
+  width: 100%;
+  min-height: 37px;
+  padding: 8px 5px;
+  border: 0;
+  border-radius: 11px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tools-add-btn {
+  background: #7652e8;
+  color: #fff;
+}
+
+.tools-remove-btn {
+  background: #f2eff9;
+  color: #514675;
+}
+
+.tools-cart-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #eeebf4;
+}
+
+.tools-cart-thumb {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  object-fit: contain;
+  background: #f4f2f8;
+}
+
+.tools-cart-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tools-cart-info strong {
+  display: block;
+  color: #20203c;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.tools-cart-info small {
+  display: block;
+  margin-top: 5px;
+  color: #858199;
+  font-size: 11px;
+}
+
+.tools-cart-row button {
+  padding: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff0f3;
+  color: #b32952;
+  font-size: 11px;
+}
+
+.tools-cart-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #f2eeff;
+  color: #292046;
+}
+
+.tools-cart-total strong {
+  font-size: 21px;
+}
+
+.tools-checkout-btn {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 14px;
+  border-radius: 15px;
+}
+
+.tools-empty {
+  padding: 25px 12px;
+  text-align: center;
+}
+
+.tools-empty > span {
+  font-size: 35px;
+}
+
+.tools-empty strong {
+  display: block;
+  margin-top: 10px;
+  color: #292046;
+}
+
+.tools-empty p {
+  color: #858199;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 360px) {
+  .tools-panel {
+    padding: 13px;
+  }
+
+  .tools-gallery {
+    gap: 8px;
+  }
+
+  .tools-item-body {
+    padding: 8px;
+  }
+  } 
+/* WELCOME SPLASH — BRAND AND TYPOGRAPHY */
+
+#screen-splash .splash-brand {
+  width: 100% !important;
+  text-align: left !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 7px !important;
+  font-family: "EvogriaItalic", "Improbable", sans-serif !important;
+  font-style: italic !important;
+  font-size: clamp(29px, 8vw, 42px) !important;
+  line-height: 1.15 !important;
+  padding-left: 4px !important;
+}
+
+#screen-splash .splash-brand .kc-home-icon {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+}
+
+#screen-splash .splash-title {
+  width: 100% !important;
+  text-align: left !important;
+  font-family: "RadicalBeat", "Impressum", sans-serif !important;
+  font-size: clamp(27px, 7vw, 36px) !important;
+  line-height: 1.15 !important;
+  margin-bottom: 9px !important;
+}
+
+#screen-splash .splash-note {
+  width: 100% !important;
+  max-width: none !important;
+  text-align: left !important;
+  font-family: "RadicalBeat", "Impressum", sans-serif !important;
+  font-size: clamp(12px, 3.4vw, 15px) !important;
+  line-height: 1.55 !important;
+  margin-bottom: 18px !important;
+}
+
+#screen-splash .splash-next {
+  align-self: flex-start !important;
+  font-family: "RadicalBeat", "Impressum", sans-serif !important;
+  font-size: 16px !important;
+  letter-spacing: .3px;
+}
+
+#screen-splash .welcome-slide {
+  align-items: flex-start !important;
+}
+
+#screen-splash .splash-brand,
+#screen-splash .splash-title,
+#screen-splash .splash-note,
+#screen-splash .splash-next {
+  z-index: 3 !important;
+}
+
+/* Keep the uploaded photo visible across the screen. */
+#screen-splash .splash-photo {
+  object-fit: cover !important;
+  object-position: center center !important;
+} 
+/* HOME — POPULAR SERVICES */
+#screen-home .section {
+  margin-top: 27px;
+}
+
+#screen-home .section-head h2 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: clamp(23px, 5.5vw, 31px);
+  line-height: 1.2;
+}
+
+#screen-home #homeServices {
+  gap: 15px;
+}
+
+#screen-home #homeServices .service-card,
+#screen-home #homeServices .service-item {
+  border-radius: 23px;
+  border: 1px solid #ece7f5;
+  box-shadow: 0 12px 28px #2920470d;
+  overflow: hidden;
+}
+
+/* BOOKING STATUS AND PROGRESS */
+#screen-bookings .booking-card {
+  position: relative;
+  padding: 18px;
+  margin-bottom: 16px;
+  background: linear-gradient(145deg, #fff, #faf8ff);
+}
+
+#screen-bookings .booking-card h3,
+#screen-bookings .booking-card h4 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  color: #202442;
+  line-height: 1.35;
+}
+
+#screen-bookings .booking-card .status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* TRACKING — modern progress cards */
+#screen-tracking .tracking-page {
+  padding: 18px;
+  background: linear-gradient(145deg, #1b203e, #483486);
+  color: #fff;
+  box-shadow: 0 18px 42px #26184925;
+}
+
+#screen-tracking .tracking-page h1 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: clamp(30px, 7vw, 40px);
+  line-height: 1.2;
+}
+
+#screen-tracking .arrival {
+  padding: 21px;
+  border: 1px solid #ffffff2b;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #a82071, #6d3bd2);
+}
+
+#screen-tracking .arrival > strong {
+  display: block;
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: 21px;
+}
+
+#screen-tracking .arrival .eta b {
+  font-family: "EvogriaItalic", "Improbable", sans-serif;
+  font-size: 37px;
+}
+
+#screen-tracking .tracking-info {
+  padding: 19px;
+  margin-top: 13px;
+  border: 1px solid #ffffff1e;
+  border-radius: 21px;
+  background: #ffffff0e;
+  color: #fff;
+}
+
+#screen-tracking .tracking-info > strong {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: 19px;
+}
+
+/* PAYROLL — salary and bonus dashboard */
+#screen-payroll > h1 {
+  font-family: "EvogriaItalic", "Improbable", sans-serif;
+  font-size: clamp(30px, 7vw, 40px);
+  line-height: 1.2;
+}
+
+#screen-payroll .admin-stat {
+  border: 1px solid #eae5f4;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #fff, #f8f5ff);
+  box-shadow: 0 10px 25px #2820470c;
+}
+
+#screen-payroll .admin-stat strong {
+  font-family: "EvogriaItalic", "Improbable", sans-serif;
+  font-size: 27px;
+  color: #6347c8;
+}
+
+#screen-payroll .panel {
+  border-radius: 24px;
+  box-shadow: 0 12px 30px #2920470b;
+}
+
+#screen-payroll .panel h2,
+#screen-payroll .panel h3 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+/* NOTIFICATIONS — readable status and timestamps */
+#screen-notifications #notificationList {
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(160deg, #fff, #fbfaff);
+}
+
+#screen-notifications #notificationList h3 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+#screen-notifications #notificationList button {
+  min-height: 42px;
+  border-radius: 13px;
+}
+
+#screen-notifications .wrap > button {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+/* MOBILE SPACING */
+@media (max-width: 480px) {
+  #screen-home .section {
+    margin-top: 22px;
+  }
+
+  #screen-tracking .tracking-page {
+    padding: 13px;
+  }
+
+  #screen-tracking .arrival,
+  #screen-tracking .tracking-info {
+    padding: 15px;
+  }
+
+  #screen-payroll .admin-stat {
+    padding: 13px;
+  }
+}
+.profile-saved-summary {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+  padding: 17px;
+  border: 1px solid #ece7f5;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #fff, #faf8ff);
+}
+
+.profile-saved-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #efedf5;
+}
+
+.profile-saved-row span {
+  color: #858199;
+  font-size: 11px;
+}
+
+.profile-saved-row strong {
+  color: #24213e;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+/* Notification card layout */
+#notificationList .notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 19px 0;
+  border-bottom: 1px solid #efedf5;
+}
+
+#notificationList .notification-item:last-child {
+  border-bottom: 0;
+}
+
+#notificationList .notification-item-icon {
+  display: grid;
+  place-items: center;
+  width: 47px;
+  height: 47px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #eee8ff, #f8e9f4);
+  font-size: 23px;
+}
+
+#notificationList .notification-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+#notificationList .notification-item-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+}
+
+#notificationList .notification-item-status {
+  padding: 5px 9px;
+  border-radius: 99px;
+  background: #f0edff;
+  color: #6445c8;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+#notificationList .notification-item-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #8d72eb;
+}
+
+#notificationList .notification-item-content h4 {
+  margin: 4px 0 7px;
+  color: #1e2340;
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+#notificationList .notification-item-content > p {
+  margin: 0 0 10px;
+  color: #66677c;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+#notificationList .notification-item-service {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 10px 0;
+  color: #363250;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+#notificationList .notification-item-content time {
+  display: block;
+  color: #8a889b;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+#notificationList .notification-booking-link {
+  margin-top: 12px;
+  padding: 9px 12px;
+  border: 1px solid #e7e0fb;
+  border-radius: 12px;
+  background: #faf8ff;
+  color: #6549cc;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+@media (max-width: 380px) {
+  #notificationList .notification-item {
+    gap: 9px;
+  }
+
+  #notificationList .notification-item-icon {
+    width: 39px;
+    height: 39px;
+    font-size: 20px;
+  }
+}
+/* WORKER PROFILE — outside styling */
+#screen-workers .section-head {
+  align-items: center;
+  gap: 12px;
+}
+
+#screen-workers .section-head h2 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+#screen-worker-profile .worker-profile-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 27px;
+  box-shadow: 0 18px 40px rgba(32, 24, 67, .15);
+}
+
+#screen-worker-profile .worker-profile-photo {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+#screen-worker-profile .worker-profile-overlay h1 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+#screen-worker-profile .worker-profile-stats,
+#screen-worker-profile .worker-profile-price-panel {
+  border-radius: 20px;
+}
+
+#screen-worker-profile .worker-profile-tabs button {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+  border-radius: 13px;
+}
+
+#screen-worker-profile .worker-profile-panel h3 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+/* BOOKING PAGE */
+#screen-bookings > h1 {
+  font-family: "EvogriaItalic", "Improbable", sans-serif;
+  font-size: clamp(30px, 7vw, 40px);
+}
+
+#screen-bookings .page-photo-banner {
+  overflow: hidden;
+  border-radius: 25px;
+  box-shadow: 0 15px 35px rgba(31, 25, 63, .10);
+}
+
+#screen-bookings .page-photo-banner img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+#screen-bookings .booking-card {
+  margin-top: 15px;
+}
+
+/* SUPPORT IMAGE — move it above the help cards */
+#screen-support .support-photo-banner {
+  margin-top: 20px;
+  margin-bottom: 24px;
+  height: 245px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ece8fa;
+}
+
+#screen-support .support-photo-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+#screen-support .support-hero {
+  margin-bottom: 20px;
+}
+
+#screen-support .support-content > h3 {
+  margin-bottom: 15px;
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+#screen-support .support-faq {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #ece7f5;
+  border-radius: 23px;
+  background: #fff;
+}
+
+#screen-support .support-faq > h3 {
+  font-family: "RadicalBeat", "Impressum", sans-serif;
+}
+
+#screen-support .support-faq details {
+  padding: 13px 0;
+  border-bottom: 1px solid #efedf5;
+}
+
+#screen-support .support-faq summary {
+  color: #292541;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#screen-support .support-faq details p {
+  color: #77758b;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@media (max-width: 480px) {
+  #screen-support .support-photo-banner {
+    height: 215px;
+  }
+
+  #screen-bookings .page-photo-banner {
+    border-radius: 20px;
+  }
+}
+
+/* KAAMCONNECT TOOLS STORE */
+.tools-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 25px 20px;
+  border-radius: 27px;
+  color: #fff;
+  background: linear-gradient(130deg,#1b2445,#6248bc 70%,#a45fc2);
+  box-shadow: 0 17px 35px #3c2a6c24;
+  overflow: hidden;
+  margin: 20px 0 28px;
+}
+.tools-hero > div:first-child { flex: 1; min-width: 0; }
+.tools-hero h2 {
+  font-size: clamp(25px,6vw,36px);
+  line-height: 1.1;
+  margin: 10px 0;
+}
+.tools-hero p { color: #f0eaff; font-size: 12px; line-height: 1.7; }
+.tools-kicker { font-size: 10px; font-weight: 800; letter-spacing: 1.4px; }
+.tools-hero-icon { font-size: clamp(55px,15vw,92px); filter: drop-shadow(0 9px 10px #0003); }
+.tools-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:22px 0 15px; }
+.tools-toolbar h2 { margin:0; }
+.kc-tools-grid { display:grid; grid-template-columns:1fr; gap:14px; }
+.kc-tool-card {
+  display:grid;
+  grid-template-columns:112px minmax(0,1fr);
+  gap:14px;
+  align-items:center;
+  padding:12px;
+  background:#fff;
+  border:1px solid #ebe7f4;
+  border-radius:23px;
+  box-shadow:0 9px 25px #20193b0a;
+}
+.kc-tool-card img {
+  width:112px; height:125px; object-fit:contain;
+  border-radius:17px; background:#f7f5fb;
+}
+.kc-tool-card h3 { font-size:17px; line-height:1.35; margin:0 0 5px; }
+.kc-tool-card p { color:#77758a; font-size:11px; line-height:1.6; margin:0 0 9px; }
+.kc-tool-price { font-size:20px; font-weight:900; color:#6245c8; margin-bottom:8px; }
+.kc-tool-stock { font-size:10px; font-weight:800; color:#26804e; margin-bottom:8px; }
+.kc-tool-actions { display:flex; gap:7px; flex-wrap:wrap; }
+.kc-tool-actions .btn { min-height:38px; padding:9px 12px; font-size:11px; }
+.kc-tool-card .btn[disabled] { opacity:.45; }
+.kc-cart-row {
+  display:grid; grid-template-columns:55px minmax(0,1fr) auto;
+  gap:10px; align-items:center; padding:12px 0;
+  border-bottom:1px solid #efedf5;
+}
+.kc-cart-row img { width:55px; height:55px; object-fit:contain; border-radius:12px; background:#f7f5fb; }
+.kc-cart-row h4 { margin:0 0 5px; font-size:13px; }
+.kc-quantity { display:flex; align-items:center; gap:8px; margin-top:7px; }
+.kc-quantity button {
+  width:30px; height:30px; border:1px solid #e5e0f0;
+  background:#faf8ff; border-radius:9px; font-weight:900;
+}
+.tools-total {
+  display:flex; justify-content:space-between; align-items:center;
+  margin:18px 0; padding:17px; border-radius:15px;
+  background:#f5f1ff;
+}
+.tools-total strong { font-size:22px; color:#6245c8; }
+.kc-order-card {
+  padding:15px; border:1px solid #ece7f5; border-radius:18px;
+  margin:12px 0; background:#fff;
+}
+.kc-order-head { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.kc-order-head strong { overflow-wrap:anywhere; }
+.kc-order-line { display:flex; gap:9px; align-items:center; padding:9px 0; border-bottom:1px solid #f0eef5; }
+.kc-order-line img { width:45px; height:45px; object-fit:contain; background:#f7f5fb; border-radius:10px; }
+.kc-order-line > div { flex:1; min-width:0; }
+.kc-order-line small { color:#77758a; }
+.kc-order-total { display:flex; justify-content:space-between; gap:10px; margin-top:13px; font-weight:900; }
+.kc-order-status { display:inline-block; padding:6px 9px; border-radius:99px; background:#f0eaff; color:#6043be; font-size:10px; font-weight:900; text-transform:uppercase; }
+.kc-sales-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.kc-sales-stat {
+  padding:17px 13px; border:1px solid #ece7f5;
+  border-radius:19px; background:linear-gradient(145deg,#fff,#f8f5ff);
+}
+.kc-sales-stat small { display:block; color:#77758a; font-size:11px; line-height:1.5; }
+.kc-sales-stat strong { display:block; font-size:clamp(19px,4.7vw,27px); color:#6245c8; margin-top:8px; overflow-wrap:anywhere; }
+.kc-admin-product {
+  padding:13px 0; border-bottom:1px solid #efedf5;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.kc-admin-product > div { min-width:0; }
+.kc-admin-product strong { display:block; overflow-wrap:anywhere; }
+.kc-admin-product small { color:#77758a; }
+.kc-admin-product .btn { padding:8px 10px; min-height:36px; }
+@media(min-width:640px) {
+  .kc-tools-grid { grid-template-columns:1fr 1fr; }
+  .kc-tool-card { grid-template-columns:95px minmax(0,1fr); }
+  .kc-tool-card img { width:95px; height:115px; }
+}
+@media(max-width:360px) {
+  .kc-tool-card { grid-template-columns:83px minmax(0,1fr); gap:10px; }
+  .kc-tool-card img { width:83px; height:105px; }
+  .kc-tool-card h3 { font-size:14px; }
+  .kc-sales-stats { grid-template-columns:1fr 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -2456,7 +3735,27 @@ body:has(#screen-splash.active) {
     <path d="M10 21h4"></path>
   </svg>
 </button> 
-  
+<button
+  class="icon-btn"
+  aria-label="Location"
+  title="Use my location"
+  onclick="useMyLocation()"
+>
+  <svg
+    viewBox="0 0 24 24"
+    width="25"
+    height="25"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/>
+    <circle cx="12" cy="10" r="2.5"/>
+  </svg>
+</button>   
 <button class="icon-btn" aria-label="Profile" title="Profile" onclick="go('profile')">
   <svg xmlns="http://www.w3.org/2000/svg"
        width="23" height="23" viewBox="0 0 24 24"
@@ -2605,9 +3904,6 @@ body:has(#screen-splash.active) {
     </div>
 
     <div class="welcome-actions">
-      <button class="icon-btn" aria-label="Location" title="Use my location" onclick="useMyLocation()">
-        <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-      </button>
       <button class="icon-btn cart-home" aria-label="My bookings" title="My bookings" onclick="go('bookings')">
         <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="cart-count" id="cartCount">0</span>
       </button>
@@ -2712,7 +4008,6 @@ body:has(#screen-splash.active) {
 
 <section id="screen-customers" class="screen page">
   <button class="btn btn-light" onclick="go('home')">← Back</button>
-
   <div class="page-photo-banner">
     <img src="./customer-support.jpg"
          alt="KaamConnect customers"
@@ -2856,7 +4151,11 @@ body:has(#screen-splash.active) {
     </svg>
   </span>
   Workers
-</button>  
+</button>   
+  <button type="button" data-go="tools" onclick="go('tools')">
+  <span>🧰</span>
+  Tools
+  </button> 
 <button data-go="bookings" onclick="go('bookings')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg></span>Bookings</button>
  <button data-go="services" onclick="go('services')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a5 5 0 0 0-6.4 6.4L3 18l3 3 5.3-5.3a5 5 0 0 0 6.4-6.4L14 13l-3-3z"/><path d="m15 5 4-4M18 8l4-4"/></svg></span>Services</button>
 <button data-go="support" onclick="go('support')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><path d="M3 13h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM21 13h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2z"/></svg></span>Support</button>
@@ -2962,6 +4261,9 @@ function go(name) {
 
   if (name === "worker") loadWorkerDashboard();
   if (name === "payroll") loadPayroll();
+if (name === "tools") {
+  loadToolsGallery();
+}
 }
 function support() {
   const supportScreen = document.getElementById("screen-support");
@@ -3086,16 +4388,41 @@ const messages = {
 };
   const message = messages[status] || ["🔔", "Booking update", "Current status: " + status];
   const date = b.created_at ? new Date(b.created_at).toLocaleString() : "";
-      return `
-        <div style="padding:14px 0;border-bottom:1px solid #eee">
-          <div style="font-size:22px">${message[0]}</div>
-          <strong>${message[1]}</strong>
-          <p style="margin:6px 0">${message[2]}</p>
-          <p class="muted" style="margin:4px 0">${b.service_name || "Service booking"}</p>
-          <small class="muted">${date}</small>
-        </div>`;
-    }).join("");
+     return `
+  <article class="notification-item">
+    <div class="notification-item-icon">
+      ${message[0]}
+    </div>
 
+    <div class="notification-item-content">
+      <div class="notification-item-top">
+        <span class="notification-item-status">
+          ${kcToolsEscape(status.replace(/_/g, " "))}
+        </span>
+        <span class="notification-item-dot"></span>
+      </div>
+
+      <h4>${kcToolsEscape(message[1])}</h4>
+
+      <p>${kcToolsEscape(message[2])}</p>
+
+      <div class="notification-item-service">
+        <span>🧰</span>
+        <strong>${kcToolsEscape(b.service_name || "Service booking")}</strong>
+      </div>
+
+      <time>${kcToolsEscape(date)}</time>
+
+      <button
+        class="notification-booking-link"
+        onclick="go('bookings')"
+      >
+        View booking details →
+      </button>
+    </div>
+  </article>
+`;    
+    }).join("");
   } catch (error) {
     console.error("Notifications error:", error);
     list.innerHTML = `
@@ -3402,14 +4729,87 @@ function finishWelcome() {
   go("home");
 }
 function restoreLastScreen() {
-  const navigationEntry = performance.getEntriesByType("navigation")[0];
-  const isRefresh = navigationEntry?.type === "reload";
-  const lastScreen = localStorage.getItem("kc_last_screen") || "home";
+  let welcomeDone = false;
+  let lastScreen = "home";
 
-  if (isRefresh) {
-    go(lastScreen === "splash" ? "home" : lastScreen);
-  } else {
+  try {
+    welcomeDone =
+      localStorage.getItem("kc_welcome_completed") === "true";
+
+    lastScreen =
+      localStorage.getItem("kc_last_screen") || "home";
+  } catch (error) {
+    console.warn("Could not restore saved screen:", error);
+  }
+
+  // First visit: keep the existing welcome experience.
+  if (!welcomeDone) {
     go("splash");
+    return;
+  }
+
+  // A completed welcome should never reappear on refresh.
+  if (!lastScreen || lastScreen === "splash") {
+    lastScreen = "home";
+  }
+
+  const allowedScreens = [
+    "home",
+    "services",
+    "workers",
+    "worker-profile",
+    "detail",
+    "schedule",
+    "checkout",
+    "bookings",
+    "tracking",
+    "notifications",
+    "support",
+    "profile",
+    "auth",
+    "worker",
+    "payroll",
+    "admin",
+    "customers",
+    "tools"
+  ];
+
+  if (!allowedScreens.includes(lastScreen)) {
+    lastScreen = "home";
+  }
+
+  // Restore the last screen rather than sending the user to Welcome.
+  go(lastScreen);
+
+  // Reopen the saved worker profile after the worker data is loaded.
+  if (lastScreen === "worker-profile") {
+    const savedWorkerId =
+      localStorage.getItem("kc_last_worker_id");
+
+    if (savedWorkerId) {
+      const tryRestoreWorker = () => {
+        const worker = workers.find(
+          item => String(item.id) === String(savedWorkerId)
+        );
+
+        if (worker) {
+          const returnScreen =
+            localStorage.getItem("kc_worker_profile_return") ||
+            "workers";
+
+          openWorkerProfile(savedWorkerId, returnScreen);
+        }
+      };
+
+      tryRestoreWorker();
+
+      // If workers load asynchronously, try again when the page is ready.
+      if (!workers.some(
+        item => String(item.id) === String(savedWorkerId)
+      )) {
+        setTimeout(tryRestoreWorker, 1200);
+      }
+    }
   }
 }
 async function ensureProfile(){if(!sb||!user)return;try{const activeUser=user;const {data:existing}=await sb.from("kc_profiles").select("full_name").eq("id",activeUser.id).maybeSingle();if(user?.id!==activeUser.id)return;const fullName=activeUser.user_metadata?.full_name||activeUser.user_metadata?.name||existing?.full_name||activeUser.email?.split("@")[0]||"Customer";await sb.from("kc_profiles").upsert({id:activeUser.id,full_name:fullName,email:activeUser.email},{onConflict:"id"})}catch(e){console.warn(e.message)}}
@@ -3537,8 +4937,45 @@ e.insertAdjacentHTML("beforeend", `
       </div>
       <span class="profile-edit-badge">EDIT</span>
     </div>
+<div class="profile-saved-summary">
+  <div class="profile-saved-row">
+    <span>Full name</span>
+    <strong>${esc(profileData.full_name || name)}</strong>
+  </div>
 
-    <form id="profileEditForm" onsubmit="saveProfile(event)">
+  <div class="profile-saved-row">
+    <span>Phone number</span>
+    <strong>${esc(profileData.phone || "Not added")}</strong>
+  </div>
+
+  <div class="profile-saved-row">
+    <span>Address</span>
+    <strong>${esc(profileData.address || "Not added")}</strong>
+  </div>
+
+  <div class="profile-saved-row">
+    <span>City / State</span>
+    <strong>${esc(profileData.city || "Not added")}</strong>
+  </div>
+
+  <div class="profile-saved-row">
+    <span>PIN code</span>
+    <strong>${esc(profileData.postal_code || "Not added")}</strong>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    onclick="toggleProfileEdit(true)"
+  >
+    ✎ Edit personal information
+  </button>
+</div>
+<form
+  id="profileEditForm"
+  onsubmit="saveProfile(event)"
+  style="display:none"
+>
       <label for="editFullName">Full name *</label>
       <input id="editFullName" type="text" maxlength="100" required
         autocomplete="name" value="${esc(profileData.full_name || name)}">
@@ -5547,8 +6984,15 @@ if (result) result.textContent = "Error: " + e.message;
 else alert("Could not accept booking: " + e.message);
 }
 }
-function support(){toast("For support, please add a verified support email or phone number to the site.");}
+function support() {
+  const screen = document.getElementById("screen-support");
 
+  if (screen) {
+    go("support");
+  } else {
+    toast("Support page is not available.");
+  }
+}
 if (sb) {
   sb.auth.getSession().then(({ data, error }) => {
     if (error) {
@@ -5782,9 +7226,499 @@ async function setPayrollStatus(id, status) {
 }
 
 calculatePayroll();
+/* ===========================================
+   KAAMCONNECT TOOLS STORE
+   IndexedDB photo storage + persistent cart
+   =========================================== */
+
+let kcToolsDBPromise = null;
+
+function kcOpenToolsDB() {
+  if (kcToolsDBPromise) return kcToolsDBPromise;
+
+  kcToolsDBPromise = new Promise((resolve, reject) => {
+    const request = indexedDB.open("KaamConnectToolsDB", 1);
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+
+      if (!db.objectStoreNames.contains("tools")) {
+        db.createObjectStore("tools", { keyPath: "id" });
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+
+  return kcToolsDBPromise;
+}
+
+function kcToolsTransaction(mode, action) {
+  return kcOpenToolsDB().then(db => new Promise((resolve, reject) => {
+    const tx = db.transaction("tools", mode);
+    const store = tx.objectStore("tools");
+    let request;
+
+    try {
+      request = action(store);
+    } catch (error) {
+      reject(error);
+      return;
+    }
+
+    tx.oncomplete = () => resolve(request ? request.result : true);
+    tx.onerror = () => reject(tx.error);
+    tx.onabort = () => reject(tx.error || new Error("Storage operation aborted"));
+  }));
+}
+
+function kcToolsGetAll() {
+  return kcToolsTransaction("readonly", store => store.getAll());
+}
+
+function kcToolsPut(item) {
+  return kcToolsTransaction("readwrite", store => store.put(item));
+}
+
+function kcToolsDelete(id) {
+  return kcToolsTransaction("readwrite", store => store.delete(id));
+}
+
+function kcToolsGet(id) {
+  return kcToolsTransaction("readonly", store => store.get(id));
+}
+
+function kcToolsEscape(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function kcToolsCartIDs() {
+  try {
+    const parsed = JSON.parse(
+      localStorage.getItem("kc_tools_cart") || "[]"
+    );
+
+    return Array.isArray(parsed) ? parsed.map(String) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function kcToolsSaveCart(ids) {
+  localStorage.setItem("kc_tools_cart", JSON.stringify(ids));
+}
+
+function kcToolsMoney(amount) {
+  return "₹" + Number(amount || 0).toLocaleString("en-IN", {
+    maximumFractionDigits: 2
+  });
+}
+
+/* Compress large photos before storing them. */
+async function kcToolsPreparePhoto(file) {
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Please select image files only.");
+  }
+
+  if (file.size > 15 * 1024 * 1024) {
+    throw new Error(file.name + " is larger than 15 MB.");
+  }
+
+  const bitmap = await createImageBitmap(file);
+
+  try {
+    const maxSide = 1200;
+    const scale = Math.min(1, maxSide / Math.max(
+      bitmap.width,
+      bitmap.height
+    ));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+
+    const context = canvas.getContext("2d");
+    context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+
+    return await new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (blob) resolve(blob);
+        else reject(new Error("Could not prepare " + file.name));
+      }, "image/jpeg", 0.78);
+    });
+  } finally {
+    bitmap.close();
+  }
+}
+
+async function handleToolsPhotoUpload(event) {
+  const input = event.target;
+  const files = Array.from(input.files || []);
+  const notice = document.getElementById("toolsUploadNotice");
+
+  if (!files.length) return;
+
+  if (notice) notice.textContent = "Saving your photos…";
+
+  let saved = 0;
+  const errors = [];
+
+  try {
+    for (const file of files) {
+      try {
+        const photo = await kcToolsPreparePhoto(file);
+
+        const item = {
+          id: (
+            window.crypto &&
+            typeof crypto.randomUUID === "function"
+          ) ? crypto.randomUUID() :
+              "tool-" + Date.now() + "-" + Math.random().toString(36).slice(2),
+          name: file.name.replace(/\.[^.]+$/, "").slice(0, 80),
+          price: 0,
+          photo: photo,
+          updatedAt: new Date().toISOString()
+        };
+
+        await kcToolsPut(item);
+        saved++;
+      } catch (error) {
+        errors.push(file.name + ": " + error.message);
+      }
+    }
+
+    if (notice) {
+      notice.textContent = saved + " photo(s) saved." +
+        (errors.length ? " Some photos could not be saved: " +
+          errors.join(" ") : "");
+    }
+
+    await loadToolsGallery();
+  } catch (error) {
+    if (notice) {
+      notice.textContent =
+        "Could not open photo storage. Please check browser storage permissions.";
+    }
+    console.error("Tools storage error:", error);
+  } finally {
+    input.value = "";
+  }
+}
+
+async function kcToolsUpdateItem(id, field, value) {
+  const item = await kcToolsGet(id);
+  if (!item) return;
+
+  if (field === "name") {
+    item.name = String(value).trim().slice(0, 80);
+  } else if (field === "price") {
+    const number = Number(value);
+
+    if (!Number.isFinite(number) || number < 0) {
+      toast("Enter a valid price.");
+      await loadToolsGallery();
+      return;
+    }
+
+    item.price = number;
+  }
+
+  item.updatedAt = new Date().toISOString();
+  await kcToolsPut(item);
+  await loadToolsGallery();
+}
+
+async function kcToolsAddToCart(id) {
+  const item = await kcToolsGet(id);
+
+  if (!item) {
+    toast("This tool could not be found.");
+    return;
+  }
+
+  if (!String(item.name || "").trim()) {
+    toast("Please enter a name for this tool first.");
+    return;
+  }
+
+  const ids = kcToolsCartIDs();
+
+  if (!ids.includes(String(id))) {
+    ids.push(String(id));
+    kcToolsSaveCart(ids);
+  }
+
+  await loadToolsGallery();
+  toast("Added to cart.");
+}
+
+async function kcToolsRemoveFromCart(id) {
+  const ids = kcToolsCartIDs().filter(itemId => itemId !== String(id));
+  kcToolsSaveCart(ids);
+  await loadToolsGallery();
+}
+
+async function kcToolsDeleteItem(id) {
+  if (!confirm("Delete this tool and its saved photo?")) return;
+
+  await kcToolsDelete(id);
+
+  kcToolsSaveCart(
+    kcToolsCartIDs().filter(itemId => itemId !== String(id))
+  );
+
+  await loadToolsGallery();
+  toast("Tool removed.");
+}
+
+async function loadToolsGallery() {
+  const gallery = document.getElementById("toolsGallery");
+  const cartBox = document.getElementById("toolsCartItems");
+
+  if (!gallery || !cartBox) return;
+
+  try {
+    const items = await kcToolsGetAll();
+    const ids = kcToolsCartIDs();
+
+    const count = document.getElementById("toolsItemCount");
+    const cartCount = document.getElementById("toolsCartCount");
+    const totalBox = document.getElementById("toolsCartTotal");
+
+    if (count) count.textContent = items.length;
+    if (cartCount) cartCount.textContent = ids.length;
+
+    if (!items.length) {
+      gallery.innerHTML = `
+        <div class="tools-empty" style="grid-column:1/-1">
+          <span>📸</span>
+          <strong>Your collection starts here</strong>
+          <p>Upload your first equipment photo above.</p>
+        </div>
+      `;
+    } else {
+      gallery.innerHTML = items.map(item => {
+        const imageURL = URL.createObjectURL(item.photo);
+
+        // Keep a reference so the URL can be revoked on the next render.
+        return `
+          <article class="tools-item-card" data-tool-id="${kcToolsEscape(item.id)}">
+            <img
+              class="tools-item-photo"
+              src="${imageURL}"
+              alt="${kcToolsEscape(item.name)}"
+            >
+
+            <div class="tools-item-body">
+              <label>Tool name</label>
+              <input
+                value="${kcToolsEscape(item.name)}"
+                maxlength="80"
+                aria-label="Tool name"
+                onchange="kcToolsUpdateItem('${kcToolsEscape(item.id)}','name',this.value)"
+              >
+
+              <label>Price (₹)</label>
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value="${Number(item.price || 0)}"
+                aria-label="Tool price"
+                onchange="kcToolsUpdateItem('${kcToolsEscape(item.id)}','price',this.value)"
+              >
+
+              <div class="tools-item-actions">
+                <button
+                  class="tools-add-btn"
+                  onclick="kcToolsAddToCart('${kcToolsEscape(item.id)}')"
+                >${ids.includes(String(item.id)) ? "✓ In Cart" : "＋ Add to Cart"}</button>
+
+                <button
+                  class="tools-remove-btn"
+                  onclick="kcToolsDeleteItem('${kcToolsEscape(item.id)}')"
+                >Delete Tool</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    const cartItems = items.filter(item =>
+      ids.includes(String(item.id))
+    );
+
+    if (!cartItems.length) {
+      cartBox.innerHTML = `
+        <div class="tools-empty">
+          <span>🧺</span>
+          <strong>Your cart is waiting</strong>
+          <p>Add equipment from your collection to see it here.</p>
+        </div>
+      `;
+    } else {
+      cartBox.innerHTML = cartItems.map(item => {
+        const imageURL = URL.createObjectURL(item.photo);
+
+        return `
+          <div class="tools-cart-row">
+            <img
+              class="tools-cart-thumb"
+              src="${imageURL}"
+              alt="${kcToolsEscape(item.name)}"
+            >
+            <div class="tools-cart-info">
+              <strong>${kcToolsEscape(item.name)}</strong>
+              <small>${kcToolsMoney(item.price)}</small>
+            </div>
+            <button
+              onclick="kcToolsRemoveFromCart('${kcToolsEscape(item.id)}')"
+            >Remove</button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    const total = cartItems.reduce(
+      (sum, item) => sum + Number(item.price || 0), 0
+    );
+
+    if (totalBox) totalBox.textContent = kcToolsMoney(total);
+  } catch (error) {
+    console.error("Could not load tools:", error);
+
+    gallery.innerHTML = `
+      <div class="tools-empty" style="grid-column:1/-1">
+        <strong>Unable to load tools</strong>
+        <p>Check browser storage permissions and refresh the page.</p>
+      </div>
+    `;
+  }
+}
+
+function checkoutToolsCart() {
+  const ids = kcToolsCartIDs();
+
+  if (!ids.length) {
+    toast("Add a tool to your cart first.");
+    return;
+  }
+
+  // No payment or purchase is claimed here.
+  toast("Your equipment cart is ready. Checkout/payment is not configured yet.");
+          } 
+function toggleProfileEdit(show) {
+  const form = document.getElementById("profileEditForm");
+
+  if (!form) return;
+
+  form.style.display = show ? "block" : "none";
+
+  if (show) {
+    form.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+}
 </script> 
   
+<!-- KAAMCONNECT TOOLS & EQUIPMENT -->
+<section id="screen-tools" class="screen page tools-screen">
 
+  <div class="tools-hero">
+    <div class="tools-hero-icon">🧰</div>
+    <p class="tools-eyebrow">KAAMCONNECT EQUIPMENT STORE</p>
+    <h1>Tools & Equipment</h1>
+    <p>Explore your tools, manage prices and add equipment to your cart.</p>
+
+    <div class="tools-hero-stats">
+      <div>
+        <strong id="toolsItemCount">0</strong>
+        <span>Tools added</span>
+      </div>
+      <div>
+        <strong id="toolsCartCount">0</strong>
+        <span>In your cart</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-panel">
+    <div class="tools-section-title">
+      <div>
+        <span class="tools-eyebrow">YOUR COLLECTION</span>
+        <h2>Upload your tools</h2>
+      </div>
+      <span class="tools-badge">6+ photos</span>
+    </div>
+
+    <p class="tools-muted">
+      Choose multiple photos together. Add a name and price to each tool.
+    </p>
+
+    <label class="tools-upload-zone" for="toolsPhotoUpload">
+      <span class="tools-upload-icon">＋</span>
+      <strong>Upload equipment photos</strong>
+      <span>Select 6 or more photos if you want</span>
+      <input
+        id="toolsPhotoUpload"
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+        onchange="handleToolsPhotoUpload(event)"
+      >
+    </label>
+
+    <div id="toolsUploadNotice" class="tools-notice" aria-live="polite"></div>
+    <div id="toolsGallery" class="tools-gallery"></div>
+  </div>
+
+  <div class="tools-panel">
+    <div class="tools-section-title">
+      <div>
+        <span class="tools-eyebrow">YOUR SHOPPING</span>
+        <h2>Equipment cart</h2>
+      </div>
+      <span class="tools-cart-icon">🛒</span>
+    </div>
+
+    <div id="toolsCartItems">
+      <div class="tools-empty">
+        <span>🧺</span>
+        <strong>Your cart is waiting</strong>
+        <p>Add equipment from your collection to see it here.</p>
+      </div>
+    </div>
+
+    <div class="tools-cart-total">
+      <span>Total</span>
+      <strong id="toolsCartTotal">₹0</strong>
+    </div>
+
+    <button
+      class="btn btn-primary tools-checkout-btn"
+      type="button"
+      onclick="checkoutToolsCart()"
+    >
+      Continue with cart →
+    </button>
+
+    <p class="tools-muted">
+      This is a local equipment cart, not a confirmed purchase or payment.
+    </p>
+  </div>
+
+</section>
 <!-- KaamConnect Modern Support Page -->
 <section id="screen-support" class="screen page support-screen">
   <div class="support-hero">
@@ -5826,15 +7760,6 @@ calculatePayroll();
         <span class="support-card-arrow">↗</span>
       </a>
     </div>
-<div class="page-photo-banner">
-  <img src="./quick-booking.jpg"
-       alt="Quick service booking"
-       loading="lazy">
-  <div class="banner-copy">
-    <h2>Need help quickly?</h2>
-    <p>Find answers and get support with your booking.</p>
-  </div>
-</div>
     <div class="support-contact-card">
       <div class="support-contact-heading">
         <span class="support-contact-icon">💬</span>
@@ -5893,6 +7818,684 @@ calculatePayroll();
       Contact our support team and explain your issue.</p>
     </div>
   </div>
+</section> 
+
+<!-- KAAMCONNECT TOOLS STORE -->
+<section id="screen-tools" class="screen page">
+  <div class="wrap">
+    <div class="eyebrow">KAAMCONNECT MARKETPLACE</div>
+    <h1>Tools <em>Store.</em></h1>
+    <p class="muted">Professional tools, ready for your next project.</p>
+
+    <div class="tools-hero">
+      <div>
+        <span class="tools-kicker">YOUR WORK. YOUR TOOLS.</span>
+        <h2>Equip yourself<br>for better work.</h2>
+        <p>Browse tools, add to cart and place your order.</p>
+        <button class="btn btn-dark" onclick="kcToolsShowCart()">
+          🛒 View Cart (<span id="kcToolsCartCount">0</span>)
+        </button>
+      </div>
+      <div class="tools-hero-icon">🧰</div>
+    </div>
+
+    <div class="tools-toolbar">
+      <div>
+        <h2>Available tools</h2>
+        <p class="tiny">Choose a product to see its details.</p>
+      </div>
+      <button class="btn btn-light" onclick="kcToolsLoadProducts()">↻ Refresh</button>
+    </div>
+
+    <div id="kcToolsNotice" class="notice"></div>
+    <div id="kcToolsProductGrid" class="kc-tools-grid">
+      <div class="empty">Loading tools…</div>
+    </div>
+
+    <div id="kcToolsCartPanel" class="panel hidden">
+      <div class="tools-toolbar">
+        <h2>Your cart</h2>
+        <button class="btn btn-light" onclick="kcToolsShowCart(false)">Close ✕</button>
+      </div>
+      <div id="kcToolsCartItems"></div>
+      <div class="tools-total">
+        <span>Subtotal</span>
+        <strong id="kcToolsSubtotal">₹0</strong>
+      </div>
+      <p class="tiny">Delivery charge: ₹0 for now. Cash on Delivery only.</p>
+
+      <form id="kcToolsCheckoutForm">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="kcToolsCustomerName">Customer name</label>
+            <input id="kcToolsCustomerName" required minlength="2" autocomplete="name">
+          </div>
+          <div class="field full">
+            <label for="kcToolsPhone">Mobile number</label>
+            <input id="kcToolsPhone" required minlength="7" autocomplete="tel">
+          </div>
+          <div class="field full">
+            <label for="kcToolsAddress">Full delivery address</label>
+            <textarea id="kcToolsAddress" required minlength="8" autocomplete="street-address"></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:15px" type="submit">
+          Place COD Order →
+        </button>
+        <p class="tiny">Sign in is required to place an order.</p>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h2>My tool orders</h2>
+      <p class="tiny">Track orders placed through your account.</p>
+      <button class="btn btn-light" onclick="kcToolsLoadMyOrders()">View my orders</button>
+      <div id="kcToolsMyOrders" style="margin-top:12px"></div>
+    </div>
+
+    <!-- Only a registered admin can use the product controls. -->
+    <div id="kcToolsAdminPanel" class="panel hidden">
+      <div class="eyebrow">ADMIN WORKSPACE</div>
+      <h2>Manage products</h2>
+      <p class="tiny">Add products, image filenames, selling prices, purchase costs and stock.</p>
+
+      <form id="kcToolsProductForm">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="kcToolName">Product name</label>
+            <input id="kcToolName" required maxlength="120">
+          </div>
+          <div class="field full">
+            <label for="kcToolDescription">Description</label>
+            <textarea id="kcToolDescription" maxlength="1000"></textarea>
+          </div>
+          <div class="field full">
+            <label for="kcToolImage">Photo filename or image URL</label>
+            <input id="kcToolImage" required placeholder="./tool-1.jpg">
+            <small class="tiny">Example: ./tool-1.jpg</small>
+          </div>
+          <div class="field">
+            <label for="kcToolPrice">Selling price (₹)</label>
+            <input id="kcToolPrice" type="number" min="0.01" step="0.01" required>
+          </div>
+          <div class="field">
+            <label for="kcToolCost">Purchase cost (₹)</label>
+            <input id="kcToolCost" type="number" min="0" step="0.01" value="0" required>
+          </div>
+          <div class="field full">
+            <label for="kcToolStock">Stock quantity</label>
+            <input id="kcToolStock" type="number" min="0" step="1" value="1" required>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-top:14px">
+          + Save product
+        </button>
+      </form>
+
+      <h3 style="margin-top:25px">Manage existing products</h3>
+      <div id="kcToolsAdminProducts"></div>
+      <button class="btn btn-light" onclick="kcToolsLoadProducts()">Refresh products</button>
+    </div>
+
+    <div class="panel">
+      <h2>My purchases</h2>
+      <p class="tiny">Your order history is linked to your signed-in account.</p>
+      <button class="btn btn-light" onclick="kcToolsLoadMyOrders()">Refresh order history</button>
+      <div id="kcToolsMyOrders2" style="margin-top:12px"></div>
+    </div>
+  </div>
 </section>
+
+<!-- SALES DASHBOARD: admin access only -->
+<section id="screen-sales" class="screen page">
+  <div class="wrap">
+    <div class="eyebrow">PRIVATE ADMIN REPORT</div>
+    <h1>Sales <em>Dashboard.</em></h1>
+    <p class="muted">Orders, sales totals and estimated product profit.</p>
+
+    <div id="kcSalesNotice" class="notice"></div>
+    <div id="kcSalesStats" class="kc-sales-stats">
+      <div class="panel">Loading sales…</div>
+    </div>
+
+    <div class="panel">
+      <div class="tools-toolbar">
+        <h2>Customer orders</h2>
+        <button class="btn btn-light" onclick="kcToolsLoadSales()">↻ Refresh</button>
+      </div>
+      <p class="tiny">Each order includes customer details, purchased items, quantity, amount and status.</p>
+      <div id="kcSalesOrders"></div>
+    </div>
+  </div>
+</section>
+<script> 
+
+/* =====================================================
+   KAAMCONNECT TOOLS STORE
+   Cart + COD Checkout + Customer Orders + Admin Sales
+===================================================== */
+
+let kcToolsProducts = [];
+let kcToolsCart = [];
+
+try {
+  kcToolsCart = JSON.parse(localStorage.getItem("kc_tools_cart") || "[]");
+  if (!Array.isArray(kcToolsCart)) kcToolsCart = [];
+} catch (_) {
+  kcToolsCart = [];
+}
+
+function kcToolsSaveCart() {
+  localStorage.setItem("kc_tools_cart", JSON.stringify(kcToolsCart));
+  kcToolsUpdateCartCount();
+}
+
+function kcToolsUpdateCartCount() {
+  const count = kcToolsCart.reduce((sum, item) => sum + item.quantity, 0);
+  const el = document.getElementById("kcToolsCartCount");
+  if (el) el.textContent = count;
+}
+
+function kcToolsShowNotice(message, type = "info") {
+  const el = document.getElementById("kcToolsNotice");
+  if (!el) return;
+  el.textContent = message;
+  el.className = "notice show " + type;
+}
+
+async function kcToolsIsAdmin() {
+  if (!sb) return false;
+
+  const { data: { user: currentUser }, error: authError } =
+    await sb.auth.getUser();
+
+  if (authError || !currentUser) return false;
+
+  const { data, error } = await sb
+    .from("kc_tools_admins")
+    .select("user_id")
+    .eq("user_id", currentUser.id)
+    .maybeSingle();
+
+  return !error && !!data;
+}
+
+async function kcToolsLoadProducts() {
+  const grid = document.getElementById("kcToolsProductGrid");
+  if (!grid) return;
+
+  if (!sb) {
+    grid.innerHTML = '<div class="empty">Supabase is not configured.</div>';
+    return;
+  }
+
+  grid.innerHTML = '<div class="empty">Loading products…</div>';
+
+  try {
+    const { data, error } = await sb
+      .from("kc_tools_products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    kcToolsProducts = data || [];
+    kcToolsRenderProducts();
+    await kcToolsRenderAdminProducts();
+  } catch (error) {
+    grid.innerHTML = '<div class="empty">Could not load products.</div>';
+    kcToolsShowNotice(error.message, "bad");
+  }
+}
+
+function kcToolsRenderProducts() {
+  const grid = document.getElementById("kcToolsProductGrid");
+  if (!grid) return;
+
+  const products = kcToolsProducts.filter(p => p.active);
+
+  if (!products.length) {
+    grid.innerHTML = `
+      <div class="empty">
+        No tools added yet. Sign in as admin and add your first product below.
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = products.map(p => {
+    const inCart = kcToolsCart.find(x => x.id === p.id);
+    const quantity = inCart ? inCart.quantity : 0;
+    const image = p.image_url || "";
+
+    return `
+      <article class="kc-tool-card">
+        <img
+          src="${esc(image)}"
+          alt="${esc(p.name)}"
+          loading="lazy"
+          onerror="this.onerror=null;this.src='';this.alt='Photo unavailable';"
+        >
+        <div>
+          <h3>${esc(p.name)}</h3>
+          <p>${esc(p.description || "Professional quality tool.")}</p>
+          <div class="kc-tool-price">${money(p.selling_price)}</div>
+          <div class="kc-tool-stock">
+            ${p.stock > 0 ? "✓ In stock: " + p.stock : "Out of stock"}
+          </div>
+          <div class="kc-tool-actions">
+            <button
+              class="btn btn-primary"
+              ${p.stock < 1 ? "disabled" : ""}
+              onclick="kcToolsAdd('${p.id}')"
+            >
+              ${quantity ? "Add more +" : "🛒 Add to Cart"}
+            </button>
+          </div>
+          ${quantity ? `<small class="tiny">In cart: ${quantity}</small>` : ""}
+        </div>
+      </article>`;
+  }).join("");
+}
+
+function kcToolsAdd(id) {
+  const product = kcToolsProducts.find(p => p.id === id && p.active);
+  if (!product || product.stock < 1) {
+    kcToolsShowNotice("This product is currently out of stock.", "bad");
+    return;
+  }
+
+  const item = kcToolsCart.find(x => x.id === id);
+  const currentQuantity = item ? item.quantity : 0;
+
+  if (currentQuantity >= product.stock) {
+    kcToolsShowNotice("You have added all currently available stock.", "bad");
+    return;
+  }
+
+  if (item) {
+    item.quantity += 1;
+  } else {
+    kcToolsCart.push({ id: product.id, quantity: 1 });
+  }
+
+  kcToolsSaveCart();
+  kcToolsRenderProducts();
+  kcToolsRenderCart();
+  kcToolsShowNotice(product.name + " added to cart.", "ok");
+}
+
+function kcToolsChangeQuantity(id, change) {
+  const item = kcToolsCart.find(x => x.id === id);
+  const product = kcToolsProducts.find(p => p.id === id);
+
+  if (!item) return;
+
+  const next = item.quantity + change;
+
+  if (next <= 0) {
+    kcToolsCart = kcToolsCart.filter(x => x.id !== id);
+  } else {
+    if (!product || next > product.stock) {
+      kcToolsShowNotice("Requested quantity exceeds current stock.", "bad");
+      return;
+    }
+    item.quantity = next;
+  }
+
+  kcToolsSaveCart();
+  kcToolsRenderProducts();
+  kcToolsRenderCart();
+}
+
+function kcToolsRemove(id) {
+  kcToolsCart = kcToolsCart.filter(x => x.id !== id);
+  kcToolsSaveCart();
+  kcToolsRenderProducts();
+  kcToolsRenderCart();
+}
+
+function kcToolsShowCart(show = true) {
+  const panel = document.getElementById("kcToolsCartPanel");
+  if (!panel) return;
+
+  panel.classList.toggle("hidden", !show);
+
+  if (show) {
+    kcToolsRenderCart();
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function kcToolsRenderCart() {
+  const list = document.getElementById("kcToolsCartItems");
+  const subtotalEl = document.getElementById("kcToolsSubtotal");
+  if (!list || !subtotalEl) return;
+
+  let subtotal = 0;
+
+  const rows = kcToolsCart.map(item => {
+    const p = kcToolsProducts.find(x => x.id === item.id);
+    if (!p) return "";
+
+    subtotal += Number(p.selling_price) * item.quantity;
+
+    return `
+      <div class="kc-cart-row">
+        <img src="${esc(p.image_url || "")}" alt="${esc(p.name)}">
+        <div>
+          <h4>${esc(p.name)}</h4>
+          <small>${money(p.selling_price)} each</small>
+          <div class="kc-quantity">
+            <button type="button" onclick="kcToolsChangeQuantity('${p.id}',-1)">−</button>
+            <strong>${item.quantity}</strong>
+            <button type="button" onclick="kcToolsChangeQuantity('${p.id}',1)">+</button>
+          </div>
+        </div>
+        <div>
+          <strong>${money(Number(p.selling_price) * item.quantity)}</strong>
+          <button class="btn btn-light" type="button"
+            onclick="kcToolsRemove('${p.id}')">Remove</button>
+        </div>
+      </div>`;
+  }).filter(Boolean);
+
+  list.innerHTML = rows.length
+    ? rows.join("")
+    : '<div class="empty">Your cart is empty. Add some tools first.</div>';
+
+  subtotalEl.textContent = money(subtotal);
+}
+
+document.getElementById("kcToolsCheckoutForm")?.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!sb) {
+    kcToolsShowNotice("Supabase is not configured.", "bad");
+    return;
+  }
+
+  if (!kcToolsCart.length) {
+    kcToolsShowNotice("Add at least one product to your cart.", "bad");
+    return;
+  }
+
+  const { data: { user: currentUser }, error: authError } =
+    await sb.auth.getUser();
+
+  if (authError || !currentUser) {
+    toast("Please sign in before placing your tools order.");
+    go("auth");
+    return;
+  }
+
+  const button = event.currentTarget.querySelector('button[type="submit"]');
+  button.disabled = true;
+  button.textContent = "Placing order…";
+
+  try {
+    const items = kcToolsCart.map(item => ({
+      product_id: item.id,
+      quantity: item.quantity
+    }));
+
+    const { data: orderId, error } = await sb.rpc("kc_tools_place_order", {
+      p_customer_name: document.getElementById("kcToolsCustomerName").value.trim(),
+      p_phone: document.getElementById("kcToolsPhone").value.trim(),
+      p_address: document.getElementById("kcToolsAddress").value.trim(),
+      p_items: items
+    });
+
+    if (error) throw error;
+
+    kcToolsCart = [];
+    kcToolsSaveCart();
+    kcToolsRenderCart();
+    kcToolsShowCart(false);
+    kcToolsShowNotice("Order placed successfully! Order ID: " + orderId, "ok");
+
+    await kcToolsLoadProducts();
+    await kcToolsLoadMyOrders();
+  } catch (error) {
+    kcToolsShowNotice("Order failed: " + error.message, "bad");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Place COD Order →";
+  }
+});
+
+document.getElementById("kcToolsProductForm")?.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!(await kcToolsIsAdmin())) {
+    kcToolsShowNotice("Only the registered admin can add products.", "bad");
+    return;
+  }
+
+  const payload = {
+    name: document.getElementById("kcToolName").value.trim(),
+    description: document.getElementById("kcToolDescription").value.trim(),
+    image_url: document.getElementById("kcToolImage").value.trim(),
+    selling_price: Number(document.getElementById("kcToolPrice").value),
+    cost_price: Number(document.getElementById("kcToolCost").value),
+    stock: Number(document.getElementById("kcToolStock").value),
+    active: true
+  };
+
+  if (!payload.name || !payload.image_url ||
+      !Number.isFinite(payload.selling_price) || payload.selling_price <= 0 ||
+      !Number.isFinite(payload.cost_price) || payload.cost_price < 0 ||
+      !Number.isInteger(payload.stock) || payload.stock < 0) {
+    kcToolsShowNotice("Please check the product details and prices.", "bad");
+    return;
+  }
+
+  try {
+    const { error } = await sb.from("kc_tools_products").insert(payload);
+    if (error) throw error;
+
+    event.currentTarget.reset();
+    document.getElementById("kcToolCost").value = "0";
+    document.getElementById("kcToolStock").value = "1";
+
+    kcToolsShowNotice("Product saved successfully.", "ok");
+    await kcToolsLoadProducts();
+  } catch (error) {
+    kcToolsShowNotice("Could not save product: " + error.message, "bad");
+  }
+});
+
+async function kcToolsRenderAdminProducts() {
+  const box = document.getElementById("kcToolsAdminProducts");
+  const panel = document.getElementById("kcToolsAdminPanel");
+  if (!box || !panel) return;
+
+  const admin = await kcToolsIsAdmin();
+  panel.classList.toggle("hidden", !admin);
+  if (!admin) return;
+
+  box.innerHTML = kcToolsProducts.map(p => `
+    <div class="kc-admin-product">
+      <div>
+        <strong>${esc(p.name)}</strong>
+        <small>${money(p.selling_price)} · Stock ${p.stock} · ${p.active ? "Active" : "Hidden"}</small>
+      </div>
+      <button class="btn btn-light"
+        onclick="kcToolsToggleProduct('${p.id}',${!p.active})">
+        ${p.active ? "Hide" : "Publish"}
+      </button>
+    </div>
+  `).join("") || '<p class="tiny">No products yet.</p>';
+}
+
+async function kcToolsToggleProduct(id, active) {
+  if (!(await kcToolsIsAdmin())) return;
+
+  const { error } = await sb.from("kc_tools_products")
+    .update({ active, updated_at: new Date().toISOString() })
+    .eq("id", id);
+
+  if (error) {
+    kcToolsShowNotice(error.message, "bad");
+    return;
+  }
+
+  await kcToolsLoadProducts();
+}
+
+async function kcToolsLoadMyOrders() {
+  if (!sb) return;
+
+  const { data: { user: currentUser }, error: authError } =
+    await sb.auth.getUser();
+
+  if (authError || !currentUser) {
+    toast("Please sign in to view your orders.");
+    go("auth");
+    return;
+  }
+
+  const box1 = document.getElementById("kcToolsMyOrders");
+  const box2 = document.getElementById("kcToolsMyOrders2");
+  if (box1) box1.innerHTML = '<div class="empty">Loading orders…</div>';
+
+  try {
+    const { data, error } = await sb
+      .from("kc_tools_orders")
+      .select("*, kc_tools_order_items(*)")
+      .eq("customer_id", currentUser.id)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    const html = kcToolsOrderCards(data || [], false);
+    if (box1) box1.innerHTML = html;
+    if (box2) box2.innerHTML = html;
+  } catch (error) {
+    if (box1) box1.innerHTML = '<div class="empty">Could not load orders: ' + esc(error.message) + '</div>';
+    if (box2) box2.innerHTML = "";
+  }
+}
+
+function kcToolsOrderCards(orders, admin) {
+  if (!orders.length) return '<div class="empty">No orders found yet.</div>';
+
+  return orders.map(order => `
+    <article class="kc-order-card">
+      <div class="kc-order-head">
+        <strong>Order #${esc(order.id.slice(0, 8).toUpperCase())}</strong>
+        <span class="kc-order-status">${esc(order.order_status)}</span>
+      </div>
+      <p class="tiny" style="margin:8px 0">
+        ${esc(new Date(order.created_at).toLocaleString())}
+      </p>
+      ${admin ? `
+        <p><strong>${esc(order.customer_name)}</strong><br>
+        ${esc(order.phone)}<br>${esc(order.address)}</p>` : ""}
+      ${(order.kc_tools_order_items || []).map(item => `
+        <div class="kc-order-line">
+          <img src="${esc(item.image_url || "")}" alt="">
+          <div>
+            <strong>${esc(item.product_name)}</strong><br>
+            <small>${item.quantity} × ${money(item.unit_price)}</small>
+          </div>
+          <strong>${money(item.line_total)}</strong>
+        </div>`).join("")}
+      <div class="kc-order-total">
+        <span>Total · COD</span><span>${money(order.total_amount)}</span>
+      </div>
+      ${admin ? `
+        <p class="tiny">Payment: ${esc(order.payment_status)}</p>
+        <label class="tiny" for="kc-status-${order.id}">Update order status</label>
+        <select id="kc-status-${order.id}" class="field"
+          onchange="kcToolsUpdateOrder('${order.id}',this.value)">
+          ${["pending","confirmed","shipped","delivered","cancelled"].map(s =>
+            `<option value="${s}" ${s === order.order_status ? "selected" : ""}>${s}</option>`
+          ).join("")}
+        </select>` : ""}
+    </article>
+  `).join("");
+}
+
+async function kcToolsLoadSales() {
+  const stats = document.getElementById("kcSalesStats");
+  const ordersBox = document.getElementById("kcSalesOrders");
+
+  if (!(await kcToolsIsAdmin())) {
+    if (stats) stats.innerHTML = '<div class="empty">Admin access required.</div>';
+    if (ordersBox) ordersBox.innerHTML = "";
+    return;
+  }
+
+  if (stats) stats.innerHTML = '<div class="panel">Loading sales…</div>';
+
+  try {
+    const { data: orders, error } = await sb
+      .from("kc_tools_orders")
+      .select("*, kc_tools_order_items(*)")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    const all = orders || [];
+    const active = all.filter(o => o.order_status !== "cancelled");
+    const revenue = active.reduce((s, o) => s + Number(o.total_amount), 0);
+    const delivered = active.filter(o => o.order_status === "delivered");
+    const deliveredRevenue = delivered.reduce((s, o) => s + Number(o.total_amount), 0);
+    const profit = active.reduce((sum, order) => {
+      return sum + (order.kc_tools_order_items || []).reduce((s, item) =>
+        s + (Number(item.unit_price) - Number(item.unit_cost)) * Number(item.quantity), 0);
+    }, 0);
+
+    stats.innerHTML = `
+      <div class="kc-sales-stat"><small>Non-cancelled sales value</small><strong>${money(revenue)}</strong></div>
+      <div class="kc-sales-stat"><small>Delivered order value</small><strong>${money(deliveredRevenue)}</strong></div>
+      <div class="kc-sales-stat"><small>Total orders</small><strong>${all.length}</strong></div>
+      <div class="kc-sales-stat"><small>Estimated product margin*</small><strong>${money(profit)}</strong></div>
+    `;
+
+    if (ordersBox) ordersBox.innerHTML = kcToolsOrderCards(all, true);
+  } catch (error) {
+    if (stats) stats.innerHTML = '<div class="empty">Sales error: ' + esc(error.message) + '</div>';
+  }
+}
+
+async function kcToolsUpdateOrder(id, status) {
+  if (!(await kcToolsIsAdmin())) {
+    toast("Admin access required.");
+    return;
+  }
+
+  if (!["pending","confirmed","shipped","delivered","cancelled"].includes(status)) return;
+
+  const { error } = await sb.from("kc_tools_orders")
+    .update({ order_status: status })
+    .eq("id", id);
+
+  if (error) {
+    toast("Could not update order: " + error.message);
+    return;
+  }
+
+  toast("Order status updated.");
+  await kcToolsLoadSales();
+}
+
+/* Connect page navigation and initial product load. */
+const kcOriginalGo = go;
+go = function(name) {
+  kcOriginalGo(name);
+
+  if (name === "tools") {
+    kcToolsLoadProducts();
+    kcToolsUpdateCartCount();
+  }
+
+  if (name === "sales") {
+    kcToolsLoadSales();
+  }
+};
+
+kcToolsUpdateCartCount();
+</script> 
 </body>
   </html>
