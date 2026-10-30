@@ -9012,28 +9012,28 @@ kcToolsUpdateCartCount();
       oldRender();
       return;
     }
+const toolPhotos = [
+  "tool-1.jpg",
+  "tool-2.jpg",
+  "tool-3.jpg",
+  "tool-4.jpg",
+  "tool-5.jpg",
+  "tool-6.jpg"
+];
 
-    const photoFor = product=>{
-      const name = String(product.name || "").toLowerCase();
+const photoFor = (product, index) => {
+  const name = String(product.name || "").toLowerCase();
 
-      if(/professional tool kit|tool kit/.test(name)) return repo+"tool-1.jpg";
-      if(/drill/.test(name)) return repo+"tool-2.jpg";
-      if(/screwdriver/.test(name)) return repo+"tool-3.jpg";
-      if(/plumbing/.test(name)) return repo+"tool-4.jpg";
-      if(/carpenter|carpentry/.test(name)) return repo+"tool-5.jpg";
-      if(/safety/.test(name)) return repo+"tool-6.jpg";
+  if (name.includes("drill")) return repo + "tool-2.jpg";
+  if (name.includes("screwdriver")) return repo + "tool-3.jpg";
+  if (name.includes("plumbing")) return repo + "tool-4.jpg";
+  if (name.includes("carpenter")) return repo + "tool-5.jpg";
+  if (name.includes("safety")) return repo + "tool-6.jpg";
+  if (name.includes("tool kit")) return repo + "tool-1.jpg";
 
-      let image = String(product.image_url || "");
-      if(image.includes("github.com/") && image.includes("/blob/")){
-        image = image.replace("https://github.com/","https://raw.githubusercontent.com/")
-                     .replace("/blob/","/");
-      }
-      if(image && !/^https?:\/\//i.test(image)){
-        image = repo + image.replace(/^\.?\//,"");
-      }
-      return image;
-    };
-
+  // Unknown product: use its position in the six-product list.
+  return repo + toolPhotos[index % toolPhotos.length];
+};
     grid.innerHTML = products.map(p=>{
       const inCart = kcToolsCart.find(x=>x.id === p.id);
       const quantity = inCart ? inCart.quantity : 0;
@@ -9042,7 +9042,7 @@ kcToolsUpdateCartCount();
       return `
         <article class="kc-tool-card">
           <img
-            src="${esc(photoFor(p))}"
+            src="${esc(photoFor(p, products.indexOf(p)))}"
             alt="${esc(p.name)}"
             loading="lazy"
             onerror="this.onerror=null;this.alt='Tool photo unavailable';"
