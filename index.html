@@ -4760,7 +4760,7 @@ function nextWelcomeSlide() {
 }
 
 function finishWelcome() {
-  localStorage.setItem("kc_welcome_completed", "true");
+  localStorage.setItem("kc_welcome_completed_v4", "true");
   localStorage.setItem("kc_last_screen", "home");
   go("home");
 }
@@ -4770,7 +4770,7 @@ function restoreLastScreen() {
 
   try {
     welcomeDone =
-      localStorage.getItem("kc_welcome_completed") === "true";
+  localStorage.getItem("kc_welcome_completed_v4") === "true";
 
     lastScreen =
       localStorage.getItem("kc_last_screen") || "home";
