@@ -3708,28 +3708,15 @@ body:has(#screen-splash.active) {
 .kc-admin-product strong { display:block; overflow-wrap:anywhere; }
 .kc-admin-product small { color:#77758a; }
 .kc-admin-product .btn { padding:8px 10px; min-height:36px; }
-/* Premium marketplace cards: one large product per row on every screen. */
-.kc-tools-grid { grid-template-columns:1fr !important; gap:18px; }
-.kc-tool-card {
-  display:flex; flex-direction:column; align-items:stretch; gap:0;
-  padding:14px; border-radius:24px; overflow:hidden;
-  box-shadow:0 14px 34px #30205b12;
-}
-.kc-tool-card img {
-  display:block; width:100%; height:220px; object-fit:contain;
-  border-radius:17px; background:linear-gradient(145deg,#f8f6ff,#f1edfb);
-  margin-bottom:15px;
-}
-.kc-tool-card h3 { font-size:19px; margin-bottom:7px; }
-.kc-tool-card p { font-size:13px; line-height:1.65; }
-.kc-tool-price { font-size:24px; }
-.kc-tool-actions .btn { min-height:44px; padding:11px 17px; font-size:13px; }
 @media(min-width:640px) {
-  .kc-tool-card img { height:260px; }
+  .kc-tools-grid { grid-template-columns:1fr 1fr; }
+  .kc-tool-card { grid-template-columns:95px minmax(0,1fr); }
+  .kc-tool-card img { width:95px; height:115px; }
 }
 @media(max-width:360px) {
-  .kc-tool-card img { width:100%; height:190px; }
-  .kc-tool-card h3 { font-size:16px; }
+  .kc-tool-card { grid-template-columns:83px minmax(0,1fr); gap:10px; }
+  .kc-tool-card img { width:83px; height:105px; }
+  .kc-tool-card h3 { font-size:14px; }
   .kc-sales-stats { grid-template-columns:1fr 1fr; }
 }
 
@@ -4275,8 +4262,7 @@ function go(name) {
   if (name === "worker") loadWorkerDashboard();
   if (name === "payroll") loadPayroll();
 if (name === "tools") {
-  if (typeof kcToolsLoadProducts === "function") kcToolsLoadProducts();
-  if (typeof kcToolsUpdateCartCount === "function") kcToolsUpdateCartCount();
+  loadToolsGallery();
 }
 }
 function support() {
@@ -7019,6 +7005,7 @@ if (sb) {
     if (user) {
       renderWelcomeProfile();
       renderProfile();
+      restoreLastScreen(); 
     }
   });
 
@@ -7030,6 +7017,9 @@ sb.auth.onAuthStateChange((event, session) => {
     renderWelcomeProfile();
     renderProfile();
 
+    if (session?.user) {
+     restoreLastScreen(); 
+    }
   }, 0);
 });
 }
@@ -7641,7 +7631,94 @@ function toggleProfileEdit(show) {
 }
 </script> 
   
-<!-- Legacy local-upload Tools screen removed; use the Supabase Tools Store below. -->
+<!-- KAAMCONNECT TOOLS & EQUIPMENT -->
+<section id="screen-tools" class="screen page tools-screen">
+
+  <div class="tools-hero">
+    <div class="tools-hero-icon">🧰</div>
+    <p class="tools-eyebrow">KAAMCONNECT EQUIPMENT STORE</p>
+    <h1>Tools & Equipment</h1>
+    <p>Explore your tools, manage prices and add equipment to your cart.</p>
+
+    <div class="tools-hero-stats">
+      <div>
+        <strong id="toolsItemCount">0</strong>
+        <span>Tools added</span>
+      </div>
+      <div>
+        <strong id="toolsCartCount">0</strong>
+        <span>In your cart</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-panel">
+    <div class="tools-section-title">
+      <div>
+        <span class="tools-eyebrow">YOUR COLLECTION</span>
+        <h2>Upload your tools</h2>
+      </div>
+      <span class="tools-badge">6+ photos</span>
+    </div>
+
+    <p class="tools-muted">
+      Choose multiple photos together. Add a name and price to each tool.
+    </p>
+
+    <label class="tools-upload-zone" for="toolsPhotoUpload">
+      <span class="tools-upload-icon">＋</span>
+      <strong>Upload equipment photos</strong>
+      <span>Select 6 or more photos if you want</span>
+      <input
+        id="toolsPhotoUpload"
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+        onchange="handleToolsPhotoUpload(event)"
+      >
+    </label>
+
+    <div id="toolsUploadNotice" class="tools-notice" aria-live="polite"></div>
+    <div id="toolsGallery" class="tools-gallery"></div>
+  </div>
+
+  <div class="tools-panel">
+    <div class="tools-section-title">
+      <div>
+        <span class="tools-eyebrow">YOUR SHOPPING</span>
+        <h2>Equipment cart</h2>
+      </div>
+      <span class="tools-cart-icon">🛒</span>
+    </div>
+
+    <div id="toolsCartItems">
+      <div class="tools-empty">
+        <span>🧺</span>
+        <strong>Your cart is waiting</strong>
+        <p>Add equipment from your collection to see it here.</p>
+      </div>
+    </div>
+
+    <div class="tools-cart-total">
+      <span>Total</span>
+      <strong id="toolsCartTotal">₹0</strong>
+    </div>
+
+    <button
+      class="btn btn-primary tools-checkout-btn"
+      type="button"
+      onclick="checkoutToolsCart()"
+    >
+      Continue with cart →
+    </button>
+
+    <p class="tools-muted">
+      This is a local equipment cart, not a confirmed purchase or payment.
+    </p>
+  </div>
+
+</section>
 <!-- KaamConnect Modern Support Page -->
 <section id="screen-support" class="screen page support-screen">
   <div class="support-hero">
@@ -7870,6 +7947,12 @@ function toggleProfileEdit(show) {
       <button class="btn btn-light" onclick="kcToolsLoadProducts()">Refresh products</button>
     </div>
 
+    <div class="panel">
+      <h2>My purchases</h2>
+      <p class="tiny">Your order history is linked to your signed-in account.</p>
+      <button class="btn btn-light" onclick="kcToolsLoadMyOrders()">Refresh order history</button>
+      <div id="kcToolsMyOrders2" style="margin-top:12px"></div>
+    </div>
   </div>
 </section>
 
