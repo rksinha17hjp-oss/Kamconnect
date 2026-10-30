@@ -8111,7 +8111,11 @@ function kcToolsRenderProducts() {
   grid.innerHTML = products.map(p => {
     const inCart = kcToolsCart.find(x => x.id === p.id);
     const quantity = inCart ? inCart.quantity : 0;
-    const image = p.image_url || "";
+    const image = String(p.image_url || "").trim();
+
+if (!image) {
+  console.warn("Product image missing:", p.name, p.id);
+  }
 
     return `
       <article class="kc-tool-card">
@@ -9012,88 +9016,6 @@ kcToolsUpdateCartCount();
       }
     }
   };
-})();
-
-
-/* 7. SIX REPOSITORY PHOTOS IN THE SUPABASE PRODUCT CARDS */
-(function(){
-  const repo =
-    "https://raw.githubusercontent.com/rksinha17hjp-oss/Kamconnect/main/";
-
-  const oldRender = window.kcToolsRenderProducts;
-  if(typeof oldRender !== "function") return;
-
-  window.kcToolsRenderProducts = function(){
-    const grid = document.getElementById("kcToolsProductGrid");
-    if(!grid) return;
-
-    const products = kcToolsProducts.filter(p=>p.active);
-
-    if(!products.length){
-      oldRender();
-      return;
-    }
-const toolPhotos = [
-  "tool-1.jpg",
-  "tool-2.jpg",
-  "tool-3.jpg",
-  "tool-4.jpg",
-  "tool-5.jpg",
-  "tool-6.jpg"
-];
-
-const photoFor = (product, index) => {
-  const name = String(product.name || "").toLowerCase();
-
-  if (name.includes("drill")) return repo + "tool-2.jpg";
-  if (name.includes("screwdriver")) return repo + "tool-3.jpg";
-  if (name.includes("plumbing")) return repo + "tool-4.jpg";
-  if (name.includes("carpenter")) return repo + "tool-5.jpg";
-  if (name.includes("safety")) return repo + "tool-6.jpg";
-  if (name.includes("tool kit")) return repo + "tool-1.jpg";
-
-  // Unknown product: use its position in the six-product list.
-  return repo + toolPhotos[index % toolPhotos.length];
-};
-    grid.innerHTML = products.map(p=>{
-      const inCart = kcToolsCart.find(x=>x.id === p.id);
-      const quantity = inCart ? inCart.quantity : 0;
-      const id = String(p.id).replace(/'/g,"");
-
-      return `
-        <article class="kc-tool-card">
-          <img
-            src="${esc(photoFor(p, products.indexOf(p)))}"
-            alt="${esc(p.name)}"
-            loading="lazy"
-            onerror="this.onerror=null;this.alt='Tool photo unavailable';"
-          >
-          <div>
-            <span class="eyebrow">KAAMCONNECT PROFESSIONAL TOOLS</span>
-            <h3>${esc(p.name)}</h3>
-            <p>${esc(p.description || "Professional quality equipment for everyday work.")}</p>
-            <div class="kc-tool-price">${money(p.selling_price)}</div>
-            <div class="kc-tool-stock">
-              ${Number(p.stock)>0 ? "✓ In stock: "+Number(p.stock) : "Out of stock"}
-            </div>
-            <div class="kc-tool-actions">
-              <button class="btn btn-primary"
-                ${Number(p.stock)<1 ? "disabled" : ""}
-                onclick="kcToolsAdd('${id}')">
-                ${quantity ? "Add more +" : "🛒 Add to Cart"}
-              </button>
-            </div>
-            ${quantity ? `<small class="tiny">In cart: ${quantity}</small>` : ""}
-          </div>
-        </article>
-      `;
-    }).join("");
-  };
-
-  // Re-render after products have loaded from Supabase.
-  if(kcToolsProducts.length){
-    window.kcToolsRenderProducts();
-  }
 })();
 </script>
 <!-- END KAAMCONNECT PROFESSIONAL PATCH -->
