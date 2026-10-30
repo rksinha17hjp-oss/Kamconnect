@@ -3642,22 +3642,37 @@ body:has(#screen-splash.active) {
 .tools-toolbar h2 { margin:0; }
 .kc-tools-grid { display:grid; grid-template-columns:1fr; gap:14px; }
 .kc-tool-card {
-  display:grid;
-  grid-template-columns:112px minmax(0,1fr);
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
   gap:14px;
-  align-items:center;
-  padding:12px;
+  padding:16px;
   background:#fff;
   border:1px solid #ebe7f4;
-  border-radius:23px;
-  box-shadow:0 9px 25px #20193b0a;
+  border-radius:25px;
+  box-shadow:0 10px 28px #20193b12;
 }
+
 .kc-tool-card img {
-  width:112px; height:125px; object-fit:contain;
-  border-radius:17px; background:#f7f5fb;
+  width:100%;
+  height:280px;
+  object-fit:contain;
+  display:block;
+  border-radius:19px;
+  background:#f7f5fb;
 }
-.kc-tool-card h3 { font-size:17px; line-height:1.35; margin:0 0 5px; }
-.kc-tool-card p { color:#77758a; font-size:11px; line-height:1.6; margin:0 0 9px; }
+
+.kc-tool-card h3 {
+  font-size:19px;
+  line-height:1.4;
+  margin:0 0 6px;
+}
+
+.kc-tool-card p {
+  font-size:13px;
+  line-height:1.6;
+  margin:0 0 10px;
+}
 .kc-tool-price { font-size:20px; font-weight:900; color:#6245c8; margin-bottom:8px; }
 .kc-tool-stock { font-size:10px; font-weight:800; color:#26804e; margin-bottom:8px; }
 .kc-tool-actions { display:flex; gap:7px; flex-wrap:wrap; }
@@ -3710,12 +3725,8 @@ body:has(#screen-splash.active) {
 .kc-admin-product .btn { padding:8px 10px; min-height:36px; }
 @media(min-width:640px) {
   .kc-tools-grid { grid-template-columns:1fr 1fr; }
-  .kc-tool-card { grid-template-columns:95px minmax(0,1fr); }
-  .kc-tool-card img { width:95px; height:115px; }
 }
 @media(max-width:360px) {
-  .kc-tool-card { grid-template-columns:83px minmax(0,1fr); gap:10px; }
-  .kc-tool-card img { width:83px; height:105px; }
   .kc-tool-card h3 { font-size:14px; }
   .kc-sales-stats { grid-template-columns:1fr 1fr; }
 }
