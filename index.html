@@ -9662,150 +9662,663 @@ input:focus,select:focus,textarea:focus{
 </style>
 
 <script>
-/* KEEP THE REAL SUPABASE STORE; REMOVE ONLY THE OLD DUPLICATE TOOLS SECTION */
-(function(){
-  const sections = document.querySelectorAll('[id="screen-tools"]');
-  sections.forEach(section=>{
-    if(!section.querySelector("#kcToolsProductGrid")) section.remove();
-  });
-})();
+/* ==========================================
+   KAAMCONNECT — FINAL DESIGN & NAVIGATION
+   Keeps existing Supabase and app functions.
+========================================== */
 
-/* SIX NAV ITEMS: HOME, SERVICES, BOOKING, WORKER, SUPPORT, PROFILE */
-(function(){
-  const nav=document.querySelector(".bottom-nav");
-  if(!nav) return;
+(function () {
+  "use strict";
 
-  const all=[...nav.querySelectorAll("button")];
-  const get=name=>all.find(b=>b.dataset.go===name);
-
-  const definitions=[
-    ["home","⌂","Home"],
-    ["services","⚒","Services"],
-    ["bookings","▣","Booking"],
-    ["workers","♙","Worker"],
-    ["support","♡","Support"],
-    ["profile","♧","Profile"]
-  ];
-
-  nav.innerHTML="";
-  definitions.forEach(([name,symbol,label])=>{
-    let button=get(name);
-    if(!button){
-      button=document.createElement("button");
-      button.type="button";
-      button.dataset.go=name;
-      button.addEventListener("click",()=>go(name));
+  /* 1. REMOVE ONLY THE OLD DUPLICATE TOOLS PAGE */
+  document.querySelectorAll('[id="screen-tools"]').forEach(section => {
+    if (!section.querySelector("#kcToolsProductGrid")) {
+      section.remove();
     }
-    button.innerHTML="<span>"+symbol+"</span>"+label;
-    button.classList.toggle("active",name==="home");
-    nav.appendChild(button);
   });
-})();
 
-/* HOME PAGE EXTRA CONTENT */
-(function(){
-  const home=document.getElementById("screen-home");
-  if(!home || document.getElementById("kcHomeProfessionalExtras")) return;
+  /* 2. FINAL RESPONSIVE DESIGN */
+  const finalStyle = document.createElement("style");
 
-  const extras=document.createElement("div");
-  extras.id="kcHomeProfessionalExtras";
-  extras.innerHTML=`
-    <section class="kc-home-tools">
-      <div>
-        <div style="font-size:10px;font-weight:900;letter-spacing:1px">
-          KAAMCONNECT EQUIPMENT STORE
-        </div>
-        <h2>Tools & Equipment</h2>
-        <p>Professional tools for everyday work.</p>
-        <button type="button" onclick="go('tools')">Explore Tools →</button>
-      </div>
-      <div class="kc-home-tools-icon">🧰</div>
-    </section>
-
-    <section class="section">
-      <div class="eyebrow">QUICK ACCESS</div>
-      <h2>Everything you need</h2>
-      <div class="kc-home-quick">
-        <button type="button" onclick="go('bookings')">
-          <span class="kc-q-icon">📋</span>
-          <span><strong>My Bookings</strong><small>Track your requests</small></span>
-        </button>
-        <button type="button" onclick="go('workers')">
-          <span class="kc-q-icon">👷</span>
-          <span><strong>Find a Worker</strong><small>Meet professionals</small></span>
-        </button>
-        <button type="button" onclick="go('services')">
-          <span class="kc-q-icon">🛠️</span>
-          <span><strong>All Services</strong><small>Explore home services</small></span>
-        </button>
-        <button type="button" onclick="go('support')">
-          <span class="kc-q-icon">🎧</span>
-          <span><strong>Help Center</strong><small>Get assistance</small></span>
-        </button>
-        <button type="button" onclick="go('profile')">
-          <span class="kc-q-icon">👤</span>
-          <span><strong>My Profile</strong><small>Account settings</small></span>
-        </button>
-        <button type="button" onclick="go('notifications')">
-          <span class="kc-q-icon">🔔</span>
-          <span><strong>Notifications</strong><small>Latest updates</small></span>
-        </button>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="eyebrow">WHY KAAMCONNECT</div>
-      <h2>Service made simple</h2>
-      <div class="kc-home-promise">
-        <div><span>🛡️</span><strong>Trusted Help</strong><small>Worker profiles</small></div>
-        <div><span>📅</span><strong>Easy Booking</strong><small>Choose your time</small></div>
-        <div><span>💬</span><strong>Support</strong><small>We're here to help</small></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="eyebrow">HOW IT WORKS</div>
-      <h2>Book in three simple steps</h2>
-      <p class="tiny">01 · Choose the service you need.</p>
-      <p class="tiny">02 · Select a professional and suitable time.</p>
-      <p class="tiny">03 · Confirm your booking and track its status.</p>
-      <button class="btn btn-primary" style="width:100%"
-        onclick="go('services')">Explore Services →</button>
-    </section>
-  `;
-  home.appendChild(extras);
-})();
-
-/* NOTIFICATIONS INTRO */
-(function(){
-  const page=document.getElementById("screen-notifications");
-  const list=document.getElementById("notificationList");
-  if(!page || !list || page.querySelector(".kc-notice-hero")) return;
-
-  const hero=document.createElement("div");
-  hero.className="kc-notice-hero";
-  hero.innerHTML=`
-    <div style="font-size:30px">🔔</div>
-    <h2>Your Notifications</h2>
-    <p>Booking updates and important account messages in one place.</p>
-  `;
-  list.parentNode.insertBefore(hero,list);
-})();
-
-/* TOOLS: CALL THE EXISTING SUPABASE PRODUCT LOADER */
-(function(){
-  const originalGo=window.go;
-  if(typeof originalGo!=="function") return;
-
-  window.go=function(name){
-    originalGo(name);
-    if(name==="tools"){
-      if(typeof kcToolsLoadProducts==="function") kcToolsLoadProducts();
-      if(typeof kcToolsUpdateCartCount==="function") kcToolsUpdateCartCount();
+  finalStyle.textContent = `
+    :root {
+      --kc-bg: #faf9f4;
+      --kc-card: #ffffff;
+      --kc-ink: #171923;
+      --kc-purple: #8065d8;
+      --kc-pink: #ed2788;
+      --kc-green: #e2f2e5;
+      --kc-border: #ecebf0;
+      --kc-shadow: 0 9px 26px rgba(20,25,45,.07);
     }
-  };
+
+    body {
+      background: var(--kc-bg) !important;
+      color: var(--kc-ink);
+      padding-bottom: 100px !important;
+    }
+
+    body, body button, body input, body select, body textarea {
+      font-family: "Impressum", "DM Sans", sans-serif;
+    }
+
+    #screen-home {
+      font-family: "Improbable", "DM Sans", sans-serif;
+      background: var(--kc-bg);
+    }
+
+    #screen-home h1,
+    #screen-home h2,
+    #screen-home h3,
+    #screen-home .home-heading,
+    #screen-home .cleaning-copy {
+      font-family: "Improbable", sans-serif !important;
+    }
+
+    #screen-home button,
+    #screen-home input,
+    #screen-home .chip {
+      font-family: "Impressum", sans-serif !important;
+    }
+
+    .brand {
+      font-family: "Improbable", sans-serif !important;
+    }
+
+    .screen {
+      min-height: calc(100vh - 70px);
+      background: var(--kc-bg);
+    }
+
+    .page {
+      padding: 18px 15px 115px !important;
+    }
+
+    .panel,
+    .booking-card,
+    .worker-card,
+    .profile-action {
+      border-radius: 22px !important;
+      box-shadow: var(--kc-shadow);
+    }
+
+    .btn {
+      border-radius: 999px !important;
+      font-weight: 800;
+    }
+
+    .btn-primary {
+      background: var(--kc-purple) !important;
+    }
+
+    /* HOME HEADER */
+
+    #screen-home .home-welcome {
+      align-items: center;
+      margin: 4px 0 25px;
+    }
+
+    #screen-home .welcome-profile {
+      max-width: 65%;
+      border-radius: 50px;
+      background: #fff;
+      border: 1px solid var(--kc-border);
+      box-shadow: var(--kc-shadow);
+    }
+
+    #screen-home .welcome-avatar {
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    #screen-home .welcome-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    #screen-home .welcome-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    #screen-home .welcome-actions .icon-btn {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      background: #fff;
+      border: 1px solid var(--kc-border);
+      box-shadow: var(--kc-shadow);
+    }
+
+    #screen-home .home-heading {
+      margin: 8px 0 18px;
+    }
+
+    #screen-home .home-heading h1 {
+      font-size: clamp(35px, 8vw, 52px) !important;
+      line-height: 1.08;
+      letter-spacing: -1px;
+    }
+
+    #screen-home .home-heading em {
+      color: var(--kc-purple);
+    }
+
+    /* SEARCH AND CATEGORY */
+
+    #screen-home .search {
+      min-height: 56px;
+      border-radius: 40px !important;
+      background: #f0f0ed !important;
+      border: 1px solid #fff !important;
+      box-shadow: 0 5px 16px #1519230b;
+    }
+
+    #screen-home .search input {
+      font-size: 14px;
+    }
+
+    #screen-home .chip {
+      border-radius: 30px !important;
+      padding: 12px 18px !important;
+      background: #efefed !important;
+    }
+
+    #screen-home .chip.active {
+      background: #171923 !important;
+      color: white !important;
+    }
+
+    /* CLEANING PROMO — KEEP ORIGINAL PHOTO */
+
+    #screen-home .cleaning-banner {
+      position: relative !important;
+      display: block !important;
+      width: 100%;
+      height: 430px !important;
+      min-height: 430px !important;
+      overflow: hidden !important;
+      isolation: isolate;
+      border-radius: 28px !important;
+      margin: 14px 0 28px;
+      padding: 16px;
+      background: linear-gradient(135deg,#e2f3e6,#edf3df) !important;
+      box-shadow: none !important;
+    }
+
+    #screen-home .cleaning-badges {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    #screen-home .cleaning-copy {
+      position: relative !important;
+      z-index: 3 !important;
+      width: 58% !important;
+      max-width: 58% !important;
+      margin-top: 40px !important;
+    }
+
+    #screen-home .cleaning-copy h2 {
+      font-size: clamp(23px, 6vw, 32px) !important;
+      line-height: 1.15;
+      color: #193b2b;
+    }
+
+    #screen-home .cleaning-copy .btn {
+      margin-top: 18px !important;
+      position: relative;
+      z-index: 5;
+    }
+
+    #screen-home .cleaning-image {
+      position: absolute !important;
+      z-index: 1 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 83% !important;
+      display: flex !important;
+      align-items: flex-end !important;
+      justify-content: flex-end !important;
+      pointer-events: none;
+    }
+
+    #screen-home .cleaning-image img {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      object-fit: contain !important;
+      object-position: bottom right !important;
+    }
+
+    /* SERVICE CARDS */
+
+    .service-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 13px;
+    }
+
+    .service-row {
+      border-radius: 23px !important;
+      box-shadow: var(--kc-shadow);
+      border: 1px solid var(--kc-border);
+    }
+
+    .service-row img {
+      object-fit: contain !important;
+      background: #f7f5fa;
+    }
+
+    /* PAGE PHOTOS — NO CROPPING */
+
+    .page-photo-banner {
+      width: 100% !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: hidden;
+      border-radius: 24px !important;
+      background: #e5f3e6 !important;
+      margin: 18px 0 22px !important;
+    }
+
+    .page-photo-banner img {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+
+    .page-photo-banner .banner-copy {
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      width: 100% !important;
+      padding: 18px !important;
+      background: #e5f3e6 !important;
+      color: #171923 !important;
+    }
+
+    .page-photo-banner .banner-copy h2,
+    .page-photo-banner .banner-copy p {
+      color: #171923 !important;
+      font-family: "Impressum", sans-serif !important;
+    }
+
+    /* WORKER CARDS */
+
+    .worker-grid {
+      display: grid !important;
+      grid-template-columns: minmax(0,1fr) !important;
+      gap: 15px !important;
+      max-width: 760px;
+      margin: 15px auto;
+    }
+
+    .worker-card-modern {
+      border-radius: 23px !important;
+      padding: 15px !important;
+      background: #fff !important;
+      box-shadow: var(--kc-shadow);
+    }
+
+    .worker-card-modern-photo {
+      object-fit: cover !important;
+      border-radius: 17px !important;
+    }
+
+    /* SUPPORT */
+
+    #screen-support {
+      background: var(--kc-bg) !important;
+    }
+
+    #screen-support .support-hero {
+      border-radius: 25px !important;
+    }
+
+    #screen-support .support-photo-banner img {
+      object-fit: contain !important;
+    }
+
+    .support-help-card {
+      border-radius: 18px !important;
+    }
+
+    /* PROFILE */
+
+    #screen-profile .profile-hero {
+      border-radius: 25px !important;
+    }
+
+    #screen-profile .profile-actions {
+      gap: 11px;
+    }
+
+    #screen-profile .profile-action {
+      background: white;
+      border: 1px solid var(--kc-border);
+    }
+
+    /* TOOLS STORE — LARGE PHOTOS */
+
+    #screen-tools .kc-tools-grid {
+      display: grid !important;
+      grid-template-columns: minmax(0,1fr) !important;
+      gap: 17px !important;
+      max-width: 760px;
+      margin: auto;
+    }
+
+    #screen-tools .kc-tool-card {
+      width: 100%;
+      padding: 14px !important;
+      border-radius: 23px !important;
+      background: #fff !important;
+      box-shadow: var(--kc-shadow);
+    }
+
+    #screen-tools .kc-tool-card > img {
+      width: 100% !important;
+      height: 240px !important;
+      object-fit: contain !important;
+      object-position: center !important;
+      background: #f8f7f4 !important;
+      border-radius: 17px !important;
+    }
+
+    #screen-tools .kc-tool-card h3 {
+      font-size: 17px !important;
+    }
+
+    #screen-tools .kc-tool-price {
+      font-size: 22px !important;
+      color: var(--kc-purple);
+    }
+
+    /* BOOKING, PAYROLL, ADMIN */
+
+    #screen-bookings .booking-card,
+    #screen-payroll .panel,
+    #screen-admin .panel,
+    #screen-worker .panel {
+      border-radius: 22px !important;
+      background: #fff;
+      box-shadow: var(--kc-shadow);
+    }
+
+    #screen-payroll input,
+    #screen-payroll select {
+      min-height: 46px;
+      border-radius: 12px;
+    }
+
+    /* BOTTOM NAV */
+
+    .bottom-nav {
+      position: fixed !important;
+      z-index: 99999 !important;
+      left: 9px !important;
+      right: 9px !important;
+      bottom: 8px !important;
+      width: auto !important;
+      display: grid !important;
+      grid-template-columns: repeat(6,minmax(0,1fr)) !important;
+      gap: 2px !important;
+      padding: 8px 3px calc(8px + env(safe-area-inset-bottom)) !important;
+      border: 1px solid #e9e6f0 !important;
+      border-radius: 24px !important;
+      background: #ffffffed !important;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 7px 28px #17152d20 !important;
+    }
+
+    .bottom-nav button {
+      min-width: 0 !important;
+      min-height: 51px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      padding: 3px 0 !important;
+      border: 0 !important;
+      border-radius: 14px !important;
+      background: transparent !important;
+      color: #777887 !important;
+      font-size: 9px !important;
+      font-weight: 800 !important;
+    }
+
+    .bottom-nav button span {
+      width: 30px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+    }
+
+    .bottom-nav button svg {
+      width: 21px;
+      height: 21px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .bottom-nav button.active {
+      color: var(--kc-purple) !important;
+      background: #f0ebff !important;
+    }
+
+    .footer {
+      padding-bottom: 120px !important;
+    }
+
+    @media(max-width:420px) {
+      #screen-home .cleaning-banner {
+        height: 410px !important;
+        min-height: 410px !important;
+      }
+
+      #screen-home .cleaning-copy {
+        width: 59% !important;
+        max-width: 59% !important;
+      }
+
+      #screen-home .cleaning-image {
+        width: 100% !important;
+        height: 82% !important;
+      }
+
+      #screen-home .welcome-profile {
+        max-width: calc(100% - 145px);
+        padding-right: 8px;
+      }
+
+      #screen-home .welcome-copy strong {
+        max-width: 115px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      #screen-tools .kc-tool-card > img {
+        height: 210px !important;
+      }
+    }
+
+    @media(min-width:721px) {
+      .screen {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .service-list {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+
+      #screen-tools .kc-tool-card > img {
+        height: 280px !important;
+      }
+    }
+  `;
+
+  document.head.appendChild(finalStyle);
+
+  /* 3. SIX MAIN NAVIGATION BUTTONS */
+  const nav = document.querySelector(".bottom-nav");
+
+  if (nav) {
+    const items = [
+      ["home", "Home", '<svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>'],
+      ["services", "Services", '<svg viewBox="0 0 24 24"><path d="M14.7 6.3a5 5 0 0 0-6.4 6.4L3 18l3 3 5.3-5.3a5 5 0 0 0 6.4-6.4L14 13l-3-3z"/></svg>'],
+      ["bookings", "Booking", '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>'],
+      ["workers", "Worker", '<svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2"/></svg>'],
+      ["support", "Support", '<svg viewBox="0 0 24 24"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><path d="M3 13h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>'],
+      ["profile", "Profile", '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>']
+    ];
+
+    nav.innerHTML = "";
+
+    items.forEach(([screen, label, svg]) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.go = screen;
+      button.innerHTML = "<span>" + svg + "</span>" + label;
+      button.addEventListener("click", () => {
+        if (typeof window.go === "function") window.go(screen);
+      });
+      nav.appendChild(button);
+    });
+  }
+
+  /* 4. ADD NOTIFICATION AND LOCATION SHORTCUTS */
+  const actions = document.querySelector("#screen-home .welcome-actions");
+
+  if (actions) {
+    if (!actions.querySelector(".kc-notification-shortcut")) {
+      const notification = document.createElement("button");
+      notification.type = "button";
+      notification.className = "icon-btn kc-notification-shortcut";
+      notification.title = "Notifications";
+      notification.setAttribute("aria-label", "Notifications");
+      notification.textContent = "♧";
+      notification.addEventListener("click", () => {
+        if (typeof window.go === "function") window.go("notifications");
+      });
+      actions.insertBefore(notification, actions.firstChild);
+    }
+
+    if (!actions.querySelector(".kc-location-shortcut")) {
+      const location = document.createElement("button");
+      location.type = "button";
+      location.className = "icon-btn kc-location-shortcut";
+      location.title = "My location";
+      location.setAttribute("aria-label", "My location");
+      location.textContent = "⌖";
+      location.addEventListener("click", () => {
+        if (typeof window.useMyLocation === "function") {
+          window.useMyLocation();
+        } else {
+          alert("Location feature is not available right now.");
+        }
+      });
+      actions.insertBefore(location, actions.firstChild);
+    }
+  }
+
+  /* 5. CUSTOMER PAGE SHORTCUT ON HOME */
+  const quick = document.querySelector("#kcHomeProfessionalExtras .kc-home-quick");
+
+  if (quick && !quick.querySelector('[data-kc-customer-shortcut]')) {
+    const customer = document.createElement("button");
+    customer.type = "button";
+    customer.dataset.kcCustomerShortcut = "true";
+    customer.innerHTML = `
+      <span class="kc-q-icon">👥</span>
+      <span>
+        <strong>Customer Page</strong>
+        <small>Explore customer services</small>
+      </span>
+    `;
+    customer.addEventListener("click", () => {
+      if (typeof window.go === "function") window.go("customers");
+    });
+    quick.appendChild(customer);
+  }
+
+  /* 6. NOTIFICATION INTRO */
+  const notificationPage = document.getElementById("screen-notifications");
+  const notificationList = document.getElementById("notificationList");
+
+  if (
+    notificationPage &&
+    notificationList &&
+    !notificationPage.querySelector(".kc-final-notification-hero")
+  ) {
+    const hero = document.createElement("div");
+    hero.className = "kc-final-notification-hero";
+    hero.style.cssText = `
+      margin: 14px 0;
+      padding: 22px;
+      border-radius: 23px;
+      color: white;
+      background: linear-gradient(130deg,#24213e,#6650b7);
+    `;
+    hero.innerHTML = `
+      <div style="font-size:30px">🔔</div>
+      <h2 style="color:white;margin:8px 0">Your Notifications</h2>
+      <p style="color:#eee9ff;font-size:13px;margin:0">
+        Booking updates and important account messages in one place.
+      </p>
+    `;
+    notificationList.parentNode.insertBefore(hero, notificationList);
+  }
+
+  /* 7. UPDATE NAVIGATION STATE WHEN A SCREEN OPENS */
+  const originalGo = window.go;
+
+  if (typeof originalGo === "function" && !window.kcFinalGoInstalled) {
+    window.kcFinalGoInstalled = true;
+
+    window.go = function (name) {
+      originalGo(name);
+
+      document.querySelectorAll(".bottom-nav button").forEach(button => {
+        button.classList.toggle("active", button.dataset.go === name);
+      });
+    };
+  }
+
+  /* 8. REFRESH CART COUNT */
+  if (typeof window.kcToolsUpdateCartCount === "function") {
+    window.kcToolsUpdateCartCount();
+  }
+
+  /* 9. KEEP HOME AS THE DEFAULT NAVIGATION STATE */
+  const activeScreen = document.querySelector(".screen.active");
+
+  if (activeScreen) {
+    const screenName = activeScreen.id.replace("screen-", "");
+    document.querySelectorAll(".bottom-nav button").forEach(button => {
+      button.classList.toggle("active", button.dataset.go === screenName);
+    });
+  }
+
 })();
 </script>
-<!-- END KAAMCONNECT COMPLETE PROFESSIONAL REDESIGN -->
 </body>
   </html>
