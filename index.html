@@ -4262,7 +4262,8 @@ function go(name) {
   if (name === "worker") loadWorkerDashboard();
   if (name === "payroll") loadPayroll();
 if (name === "tools") {
-  loadToolsGallery();
+  kcToolsLoadProducts();
+  kcToolsUpdateCartCount();
 }
 }
 function support() {
@@ -7632,93 +7633,7 @@ function toggleProfileEdit(show) {
 </script> 
   
 <!-- KAAMCONNECT TOOLS & EQUIPMENT -->
-<section id="screen-tools" class="screen page tools-screen">
 
-  <div class="tools-hero">
-    <div class="tools-hero-icon">🧰</div>
-    <p class="tools-eyebrow">KAAMCONNECT EQUIPMENT STORE</p>
-    <h1>Tools & Equipment</h1>
-    <p>Explore your tools, manage prices and add equipment to your cart.</p>
-
-    <div class="tools-hero-stats">
-      <div>
-        <strong id="toolsItemCount">0</strong>
-        <span>Tools added</span>
-      </div>
-      <div>
-        <strong id="toolsCartCount">0</strong>
-        <span>In your cart</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="tools-panel">
-    <div class="tools-section-title">
-      <div>
-        <span class="tools-eyebrow">YOUR COLLECTION</span>
-        <h2>Upload your tools</h2>
-      </div>
-      <span class="tools-badge">6+ photos</span>
-    </div>
-
-    <p class="tools-muted">
-      Choose multiple photos together. Add a name and price to each tool.
-    </p>
-
-    <label class="tools-upload-zone" for="toolsPhotoUpload">
-      <span class="tools-upload-icon">＋</span>
-      <strong>Upload equipment photos</strong>
-      <span>Select 6 or more photos if you want</span>
-      <input
-        id="toolsPhotoUpload"
-        type="file"
-        accept="image/*"
-        multiple
-        hidden
-        onchange="handleToolsPhotoUpload(event)"
-      >
-    </label>
-
-    <div id="toolsUploadNotice" class="tools-notice" aria-live="polite"></div>
-    <div id="toolsGallery" class="tools-gallery"></div>
-  </div>
-
-  <div class="tools-panel">
-    <div class="tools-section-title">
-      <div>
-        <span class="tools-eyebrow">YOUR SHOPPING</span>
-        <h2>Equipment cart</h2>
-      </div>
-      <span class="tools-cart-icon">🛒</span>
-    </div>
-
-    <div id="toolsCartItems">
-      <div class="tools-empty">
-        <span>🧺</span>
-        <strong>Your cart is waiting</strong>
-        <p>Add equipment from your collection to see it here.</p>
-      </div>
-    </div>
-
-    <div class="tools-cart-total">
-      <span>Total</span>
-      <strong id="toolsCartTotal">₹0</strong>
-    </div>
-
-    <button
-      class="btn btn-primary tools-checkout-btn"
-      type="button"
-      onclick="checkoutToolsCart()"
-    >
-      Continue with cart →
-    </button>
-
-    <p class="tools-muted">
-      This is a local equipment cart, not a confirmed purchase or payment.
-    </p>
-  </div>
-
-</section>
 <!-- KaamConnect Modern Support Page -->
 <section id="screen-support" class="screen page support-screen">
   <div class="support-hero">
