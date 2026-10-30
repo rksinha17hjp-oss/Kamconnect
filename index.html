@@ -3640,29 +3640,21 @@ body:has(#screen-splash.active) {
 .tools-hero-icon { font-size: clamp(55px,15vw,92px); filter: drop-shadow(0 9px 10px #0003); }
 .tools-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:22px 0 15px; }
 .tools-toolbar h2 { margin:0; }
-.kc-tools-grid {
-  display:grid;
-  grid-template-columns:1fr;
-  gap:20px;
-}
-
+.kc-tools-grid { display:grid; grid-template-columns:1fr; gap:14px; }
 .kc-tool-card {
   display:grid;
-  grid-template-columns:155px minmax(0,1fr);
-  gap:18px;
+  grid-template-columns:112px minmax(0,1fr);
+  gap:14px;
   align-items:center;
-  padding:18px;
+  padding:12px;
   background:#fff;
   border:1px solid #ebe7f4;
-  border-radius:25px;
-  box-shadow:0 10px 28px #20193b12;
+  border-radius:23px;
+  box-shadow:0 9px 25px #20193b0a;
 }
 .kc-tool-card img {
-  width:155px;
-  height:170px;
-  object-fit:contain;
-  border-radius:19px;
-  background:#f7f5fb;
+  width:112px; height:125px; object-fit:contain;
+  border-radius:17px; background:#f7f5fb;
 }
 .kc-tool-card h3 { font-size:17px; line-height:1.35; margin:0 0 5px; }
 .kc-tool-card p { color:#77758a; font-size:11px; line-height:1.6; margin:0 0 9px; }
@@ -3716,37 +3708,31 @@ body:has(#screen-splash.active) {
 .kc-admin-product strong { display:block; overflow-wrap:anywhere; }
 .kc-admin-product small { color:#77758a; }
 .kc-admin-product .btn { padding:8px 10px; min-height:36px; }
+/* Premium marketplace cards: one large product per row on every screen. */
+.kc-tools-grid { grid-template-columns:1fr !important; gap:18px; }
+.kc-tool-card {
+  display:flex; flex-direction:column; align-items:stretch; gap:0;
+  padding:14px; border-radius:24px; overflow:hidden;
+  box-shadow:0 14px 34px #30205b12;
+}
+.kc-tool-card img {
+  display:block; width:100%; height:220px; object-fit:contain;
+  border-radius:17px; background:linear-gradient(145deg,#f8f6ff,#f1edfb);
+  margin-bottom:15px;
+}
+.kc-tool-card h3 { font-size:19px; margin-bottom:7px; }
+.kc-tool-card p { font-size:13px; line-height:1.65; }
+.kc-tool-price { font-size:24px; }
+.kc-tool-actions .btn { min-height:44px; padding:11px 17px; font-size:13px; }
 @media(min-width:640px) {
-  .kc-tools-grid {
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-  }
-  .kc-tool-card {
-    grid-template-columns:125px minmax(0,1fr);
-  }
-  .kc-tool-card img {
-    width:125px;
-    height:145px;
-  }
+  .kc-tool-card img { height:260px; }
+}
+@media(max-width:360px) {
+  .kc-tool-card img { width:100%; height:190px; }
+  .kc-tool-card h3 { font-size:16px; }
+  .kc-sales-stats { grid-template-columns:1fr 1fr; }
 }
 
-@media(max-width:360px) {
-  .kc-tool-card {
-    grid-template-columns:115px minmax(0,1fr);
-    gap:12px;
-    padding:12px;
-  }
-  .kc-tool-card img {
-    width:115px;
-    height:135px;
-  }
-  .kc-tool-card h3 {
-    font-size:14px;
-  }
-  .kc-sales-stats {
-    grid-template-columns:1fr 1fr;
-  }
-}
 </style>
 </head>
 <body>
@@ -4289,8 +4275,8 @@ function go(name) {
   if (name === "worker") loadWorkerDashboard();
   if (name === "payroll") loadPayroll();
 if (name === "tools") {
-  kcToolsLoadProducts();
-  kcToolsUpdateCartCount();
+  if (typeof kcToolsLoadProducts === "function") kcToolsLoadProducts();
+  if (typeof kcToolsUpdateCartCount === "function") kcToolsUpdateCartCount();
 }
 }
 function support() {
@@ -7033,7 +7019,6 @@ if (sb) {
     if (user) {
       renderWelcomeProfile();
       renderProfile();
-      restoreLastScreen(); 
     }
   });
 
@@ -7045,9 +7030,6 @@ sb.auth.onAuthStateChange((event, session) => {
     renderWelcomeProfile();
     renderProfile();
 
-    if (session?.user) {
-     restoreLastScreen(); 
-    }
   }, 0);
 });
 }
@@ -7659,8 +7641,7 @@ function toggleProfileEdit(show) {
 }
 </script> 
   
-<!-- KAAMCONNECT TOOLS & EQUIPMENT -->
-
+<!-- Legacy local-upload Tools screen removed; use the Supabase Tools Store below. -->
 <!-- KaamConnect Modern Support Page -->
 <section id="screen-support" class="screen page support-screen">
   <div class="support-hero">
@@ -7889,12 +7870,6 @@ function toggleProfileEdit(show) {
       <button class="btn btn-light" onclick="kcToolsLoadProducts()">Refresh products</button>
     </div>
 
-    <div class="panel">
-      <h2>My purchases</h2>
-      <p class="tiny">Your order history is linked to your signed-in account.</p>
-      <button class="btn btn-light" onclick="kcToolsLoadMyOrders()">Refresh order history</button>
-      <div id="kcToolsMyOrders2" style="margin-top:12px"></div>
-    </div>
   </div>
 </section>
 
