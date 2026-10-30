@@ -5096,7 +5096,8 @@ body {
   </div>
 </section>
   <section id="screen-schedule" class="screen page"><button class="btn btn-light" onclick="go('detail')">← Back to service</button><div style="margin-top:22px"><div class="eyebrow">Choose a convenient time</div><h1 style="color:var(--navy);font-size:42px">Schedule</h1><p class="muted">Book at a time slot as per your convenience.</p></div><div class="panel"><div class="calendar-head"><h3 id="monthTitle">Month 2026</h3><div class="month-actions"><button class="icon-btn" onclick="changeMonth(-1)">‹</button><button class="icon-btn" onclick="changeMonth(1)">›</button></div></div><div id="calendar" class="calendar-grid"></div><div class="summary-band"><div>▦ <small>Selected Date</small><strong id="selectedDateText">Choose a date</strong></div><div>◷ <small>Selected Time</small><strong id="selectedTimeText">Choose a time</strong></div></div></div><div class="panel"><h3>Available Time Slots</h3><p class="tiny">Choose a time that works best for you. Slots shown are checked against the schedule when configured.</p><div id="slots" class="slots"></div><p id="slotNote" class="tiny" style="margin-top:12px"></p></div><button class="btn btn-primary" style="width:100%" onclick="goCheckout()">Continue to booking →</button></section>
-<section id="screen-checkout" class="screen page"><button class="btn btn-light" onclick="go('schedule')">← Back to schedule</button><div style="margin-top:20px"><div class="eyebrow">Almost there</div><h1 style="font-size:36px">Review & Book</h1><p class="tiny">Check your details before submitting your booking.</p></div><div id="checkoutSummary" class="panel"></div><form id="bookingForm" class="panel"><h3>Service address</h3><div class="form-grid"><div class="field"><label for="addressLabel">Address type</label><select id="addressLabel"><option>Home</option><option>Work</option><option>Other</option></select></div><div class="field"><label for="landmark">Landmark (optional)</label><input id="landmark" placeholder="Near a landmark"></div><div class="field full"><label for="address">House / street / locality</label><textarea id="address" required placeholder="Enter complete service address"></textarea></div><div class="field full"><label for="notes">Instructions (optional)</label><textarea id="notes" placeholder="Anything the professional should know?"></textarea></div><div class="field full"><label for="payment">Payment method</label><select id="payment"><option value="cash">Cash after service</option><option value="online" disabled>Online payment (not configured yet)</option></select></div></div><div id="bookingNotice" class="notice"></div><button id="confirmBooking" class="btn btn-primary" style="width:100%;margin-top:15px" type="submit">Confirm Booking</button><p class="tiny" style="margin-top:10px">Booking is confirmed only after Supabase accepts it. Availability and price are validated again by the backend.</p></form></section>
+<section id="screen-checkout" class="screen page"><button class="btn btn-light" onclick="go('schedule')">← Back to schedule</button><div style="margin-top:20px"><div class="eyebrow">Almost there</div><h1 style="font-size:36px">Confirm Booking</h1>
+<p class="tiny">Your service is just one step away. Confirm your booking details.</p> </div><div id="checkoutSummary" class="panel"></div><form id="bookingForm" class="panel"><h3>Service address</h3><div class="form-grid"><div class="field"><label for="addressLabel">Address type</label><select id="addressLabel"><option>Home</option><option>Work</option><option>Other</option></select></div><div class="field"><label for="landmark">Landmark (optional)</label><input id="landmark" placeholder="Near a landmark"></div><div class="field full"><label for="address">House / street / locality</label><textarea id="address" required placeholder="Enter complete service address"></textarea></div><div class="field full"><label for="notes">Instructions (optional)</label><textarea id="notes" placeholder="Anything the professional should know?"></textarea></div><div class="field full"><label for="payment">Payment method</label><select id="payment"><option value="cash">Cash after service</option><option value="online" disabled>Online payment (not configured yet)</option></select></div></div><div id="bookingNotice" class="notice"></div><button id="confirmBooking" class="btn btn-primary" style="width:100%;margin-top:15px" type="submit">Confirm Booking</button><p class="tiny" style="margin-top:10px">Booking is confirmed only after Supabase accepts it. Availability and price are validated again by the backend.</p></form></section>
 <section id="screen-bookings" class="screen page"><div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p>
 <div class="page-photo-banner">
   <img src="./plumbing-banner.jpg"
@@ -5192,7 +5193,43 @@ body {
   </div>
 </section>
 </main>
-<footer class="footer"><div class="wrap">© <span id="year"></span> KaamConnect · Local help, made simple. <span style="float:right">Privacy-first location sharing</span></div></footer>
+<footer class="footer kc-professional-footer">
+
+  <div class="kc-footer-features">
+
+    <div>
+      <strong>🛡️ 100% Secure</strong>
+      <span>& Private</span>
+    </div>
+
+    <div>
+      <strong>⚡ Instant Booking</strong>
+      <span>in Seconds</span>
+    </div>
+
+    <div>
+      <strong>🎧 24/7 Support</strong>
+      <span>Always Here</span>
+    </div>
+
+    <div>
+      <strong>⭐ Trusted Local</strong>
+      <span>Professionals</span>
+    </div>
+
+    <div>
+      <strong>🎁 Exclusive Offers</strong>
+      <span>& Discounts</span>
+    </div>
+
+  </div>
+
+  <div class="kc-footer-brand">
+    <strong>KaamConnect</strong>
+    <span>Local help, made simple. 💜</span>
+    <small>© <span id="year"></span> KaamConnect</small>
+  </div>
+</footer> 
 <nav class="bottom-nav" aria-label="Main navigation">
 <button class="active" data-go="home" onclick="go('home')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
 <button data-go="workers" onclick="go('workers')">
@@ -10213,7 +10250,106 @@ input:focus,select:focus,textarea:focus{
       font-family: "Improbable", "DM Sans", sans-serif;
       background: var(--kc-bg);
     }
+/* SERVICES PAGE */
 
+#screen-services .service-list {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 12px !important;
+}
+
+#screen-services .service-row {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  padding: 12px !important;
+  border-radius: 19px !important;
+  background: white !important;
+  min-height: 180px !important;
+}
+
+#screen-services .service-row img {
+  width: 100% !important;
+  height: 95px !important;
+  object-fit: contain !important;
+}
+
+#screen-services .service-row .arrow {
+  display: none !important;
+}
+
+.kc-services-promo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 23px;
+  color: white;
+  background: linear-gradient(120deg,#4d21c7,#9362ee);
+}
+
+.kc-services-promo span {
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.kc-services-promo h2 {
+  color: white;
+  font-size: 22px;
+  margin: 9px 0;
+}
+
+.kc-services-promo p {
+  font-size: 12px;
+}
+
+.kc-promo-shield {
+  font-size: 55px;
+}
+
+.kc-store-shortcut {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* WORKERS PAGE */
+
+#screen-workers .worker-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 14px !important;
+  max-width: 100% !important;
+}
+
+#screen-workers .worker-card {
+  display: grid;
+  grid-template-columns: 105px minmax(0,1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 21px;
+  background: white;
+}
+
+#screen-workers .worker-card img {
+  width: 105px !important;
+  height: 120px !important;
+  object-fit: cover !important;
+  border-radius: 16px !important;
+}
+
+#screen-workers .worker-card .btn {
+  grid-column: 1/-1;
+  width: 100%;
+}
+
+@media(max-width:380px) {
+  #screen-services .service-list {
+    grid-template-columns: 1fr !important;
+  }
+}
     #screen-home h1,
     #screen-home h2,
     #screen-home h3,
