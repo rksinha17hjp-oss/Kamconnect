@@ -3622,12 +3622,13 @@ async function renderWelcomeProfile(){
     avatarEl.textContent=(name[0]||"G").toUpperCase();
   }
 }
-function nextWelcomeSlide() {
+
+window.nextWelcomeSlide = function () {
   const slides = document.querySelectorAll(
     "#screen-splash .welcome-slide"
   );
 
-  let current = 0;
+  let current = -1;
 
   slides.forEach((slide, index) => {
     if (slide.classList.contains("active")) {
@@ -3635,18 +3636,35 @@ function nextWelcomeSlide() {
     }
   });
 
-  if (current < slides.length - 1) {
+  if (current >= 0 && current < slides.length - 1) {
     slides[current].classList.remove("active");
     slides[current + 1].classList.add("active");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
-}
+};
 
-function finishWelcome() {
+window.finishWelcome = function () {
   localStorage.setItem("kc_welcome_completed", "true");
   localStorage.setItem("kc_last_screen", "home");
   go("home");
-}
+};
+
+// Make all Welcome buttons respond to taps
+document.querySelectorAll("#screen-splash .splash-next")
+  .forEach((button, index) => {
+    button.type = "button";
+    button.style.pointerEvents = "auto";
+
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      if (index === 3) {
+        window.finishWelcome();
+      } else {
+        window.nextWelcomeSlide();
+      }
+    });
+  });
 function restoreLastScreen() {
   const navigationEntry = performance.getEntriesByType("navigation")[0];
   const isRefresh = navigationEntry?.type === "reload";
