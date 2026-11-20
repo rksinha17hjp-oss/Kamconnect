@@ -3219,11 +3219,58 @@ async function loadData(){
           review_count: s ? s.count : 0
         };
       });
-    }catch(e){
-      console.warn("Worker query:",e.message);
-    }
-  }
 
+}catch(e){
+  console.warn("Worker directory query failed:", e.message);
+}
+
+// Fallback: load directly from KaamConnect worker profiles
+if (!workers.length) {
+  try {
+    const { data, error } = await sb
+      .from("kc_worker_profiles")
+      .select(`
+        id,
+        full_name,
+        profession,
+        bio,
+        avatar_url,
+        banner_url,
+        experience_years,
+        service_area,
+        verified,
+        available,
+        rating,
+        review_count,
+        starting_price
+      `)
+      .eq("available", true);
+
+    if (error) throw error;
+
+    workers = (data || []).map(w => ({
+      id: w.id,
+      full_name: w.full_name,
+      profession: w.profession,
+      bio: w.bio || "",
+      avatar_url: w.avatar_url,
+      banner_url: w.banner_url,
+      experience_years: w.experience_years,
+      service_area: w.service_area,
+      verified: w.verified,
+      available: w.available,
+      rating: w.rating,
+      review_count: w.review_count || 0,
+      starting_price: w.starting_price
+    }));
+
+  } catch (fallbackError) {
+    console.error(
+      "Worker profile loading failed:",
+      fallbackError
+    );
+  }
+}
   renderHome();
   renderServices();
   renderWorkers();
@@ -3239,7 +3286,43 @@ function filterHome(){const q=$("homeSearch").value.toLowerCase().trim();const l
 function renderServices(){if(!$("serviceList"))return;const q=($("serviceSearch")?.value||"").toLowerCase().trim();const list=services.filter(s=>(activeCategory==="All"||s.category===activeCategory)&&(s.name+" "+s.category+" "+s.description).toLowerCase().includes(q));$("serviceList").innerHTML=list.map(serviceCard).join("")||'<div class="empty">No services found. Clear the search or choose another category.</div>';renderChips()}
 function openServiceByName(name){const s=services.find(x=>x.name.toLowerCase()===name.toLowerCase())||services.find(x=>x.name.toLowerCase().includes(name.toLowerCase()));if(s)openService(s.id);else go("services")}
 function openService(id){currentService=services.find(s=>String(s.id)===String(id));if(!currentService){toast("Service not found");return}currentWorker=null;currentPlan="Classic";renderDetail();go("detail")}
-function renderDetail(){const s=currentService;if(!s)return;const matched=workers.filter(w=>(w.profession||"").toLowerCase().includes(s.category.toLowerCase())||(w.specialties||[]).includes(s.category));const w=currentWorker||matched[0]||null;currentWorker=w;const photo=imgFor(s);$("detailContent").innerHTML=`<div class="detail-hero" style="background:${palette[services.indexOf(s)%palette.length]}"><img src="${esc(photo)}" alt="${esc(s.name)}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85'"><div class="detail-actions"><button class="icon-btn" onclick="go('services')">‹</button><button class="icon-btn" onclick="go('bookings')">🛒</button></div></div><div class="panel" style="border:0;box-shadow:none;padding:18px 4px"><div class="section-head"><div><h2>${esc(s.name)}</h2><p class="muted">${esc(s.description)}</p></div><span class="pill">Service</span></div><div class="price">${money(s.starting_price)} <span class="tiny">starting price</span></div><p class="tiny">Final price depends on the confirmed service plan and scope. Any discount is shown only when configured in the database.</p><h3 style="margin-top:22px">Choose your plan</h3><div class="plans"><button class="plan selected" data-plan="Classic" onclick="selectPlan('Classic',this)"><small>CLASSIC</small><strong>${money(s.starting_price)}</strong><small>Essential service</small></button><button class="plan" data-plan="Premium" onclick="selectPlan('Premium',this)"><small>PREMIUM</small><strong>${money(s.starting_price*1.16)}</strong><small>Extra attention</small></button><button class="plan" data-plan="Platinum" onclick="selectPlan('Platinum',this)"><small>PLATINUM</small><strong>${money(s.starting_price*1.32)}</strong><small>Extended scope</small></button></div><div id="workerInlineArea">${w?workerInline(w):'<div class="empty" style="margin-top:15px">No matching available worker has been listed yet. You can continue; worker assignment must be completed through your live backend.</div>'}</div><h3 style="margin-top:24px">Service Description</h3><p class="muted" style="line-height:1.8">${esc(s.description)} KaamConnect helps you request a local professional. Confirm the scope, access instructions and final quote before work begins.</p><h3>What's included</h3><ul class="rule-list"><li>Discussion of the requested work before starting.</li><li>Service-specific work based on the selected plan.</li><li>Booking status updates in your account.</li></ul><h3>Before you book</h3><ul class="rule-list"><li>Enter a complete service address.</li><li>Choose a date and time slot.</li><li>Final availability is checked by the backend when configured.</li></ul><div class="section"><h3>FAQs</h3><details class="panel"><summary>Can I change the booking time?</summary><p class="tiny">Use My Bookings to view your booking. Rescheduling depends on available slots and backend support.</p></details><details class="panel"><summary>When is payment due?</summary><p class="tiny">Cash after service is available as the default option. Online payment is disabled until a payment provider is configured.</p></details></div></div><div class="fixed-cta"><div class="fixed-cta-inner"><div class="price-capsule" id="detailPrice">${money(s.starting_price)}</div><button class="btn btn-primary" onclick="startSchedule()">Book Now →</button></div></div>`}
+
+function workerMatchesCategory(worker, category) {
+  const profession = String(
+    worker.profession || ""
+  ).toLowerCase();
+
+  const cat = String(category || "").toLowerCase();
+
+  const aliases = {
+    plumbing: ["plumber", "plumbing"],
+    electrical: ["electrician", "electrical"],
+    carpentry: ["carpenter", "carpentry"],
+    cleaning: ["cleaner", "cleaning"],
+    handyman: ["handyman"],
+    painting: ["painter", "painting"],
+    "ac & appliances": [
+      "ac",
+      "appliance",
+      "refrigerator",
+      "washing machine",
+      "geyser"
+    ]
+  };
+
+  const terms = aliases[cat] || [cat];
+
+  return terms.some(term =>
+    profession.includes(term)
+  ) || (worker.specialties || []).some(item =>
+    terms.some(term =>
+      String(item).toLowerCase().includes(term)
+    )
+  );
+}
+function renderDetail(){const s=currentService;if(!s)return;const matched = workers.filter(w =>
+  workerMatchesCategory(w, s.category)
+); const w=currentWorker||matched[0]||null;currentWorker=w;const photo=imgFor(s);$("detailContent").innerHTML=`<div class="detail-hero" style="background:${palette[services.indexOf(s)%palette.length]}"><img src="${esc(photo)}" alt="${esc(s.name)}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85'"><div class="detail-actions"><button class="icon-btn" onclick="go('services')">‹</button><button class="icon-btn" onclick="go('bookings')">🛒</button></div></div><div class="panel" style="border:0;box-shadow:none;padding:18px 4px"><div class="section-head"><div><h2>${esc(s.name)}</h2><p class="muted">${esc(s.description)}</p></div><span class="pill">Service</span></div><div class="price">${money(s.starting_price)} <span class="tiny">starting price</span></div><p class="tiny">Final price depends on the confirmed service plan and scope. Any discount is shown only when configured in the database.</p><h3 style="margin-top:22px">Choose your plan</h3><div class="plans"><button class="plan selected" data-plan="Classic" onclick="selectPlan('Classic',this)"><small>CLASSIC</small><strong>${money(s.starting_price)}</strong><small>Essential service</small></button><button class="plan" data-plan="Premium" onclick="selectPlan('Premium',this)"><small>PREMIUM</small><strong>${money(s.starting_price*1.16)}</strong><small>Extra attention</small></button><button class="plan" data-plan="Platinum" onclick="selectPlan('Platinum',this)"><small>PLATINUM</small><strong>${money(s.starting_price*1.32)}</strong><small>Extended scope</small></button></div><div id="workerInlineArea">${w?workerInline(w):'<div class="empty" style="margin-top:15px">No matching available worker has been listed yet. You can continue; worker assignment must be completed through your live backend.</div>'}</div><h3 style="margin-top:24px">Service Description</h3><p class="muted" style="line-height:1.8">${esc(s.description)} KaamConnect helps you request a local professional. Confirm the scope, access instructions and final quote before work begins.</p><h3>What's included</h3><ul class="rule-list"><li>Discussion of the requested work before starting.</li><li>Service-specific work based on the selected plan.</li><li>Booking status updates in your account.</li></ul><h3>Before you book</h3><ul class="rule-list"><li>Enter a complete service address.</li><li>Choose a date and time slot.</li><li>Final availability is checked by the backend when configured.</li></ul><div class="section"><h3>FAQs</h3><details class="panel"><summary>Can I change the booking time?</summary><p class="tiny">Use My Bookings to view your booking. Rescheduling depends on available slots and backend support.</p></details><details class="panel"><summary>When is payment due?</summary><p class="tiny">Cash after service is available as the default option. Online payment is disabled until a payment provider is configured.</p></details></div></div><div class="fixed-cta"><div class="fixed-cta-inner"><div class="price-capsule" id="detailPrice">${money(s.starting_price)}</div><button class="btn btn-primary" onclick="startSchedule()">Book Now →</button></div></div>`}
 function workerInline(w){return `<div class="worker-inline"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><div class="grow"><strong>${esc(w.full_name||'Professional')}</strong><div class="tiny">${esc(w.profession||'Service professional')} · ${w.verified?'<span class="verified">✓ Verified</span>':'Profile'}</div><div class="tiny">★ ${w.rating||'—'} (${w.review_count||0} reviews) · ${w.experience_years||'—'} years experience</div></div><button class="icon-btn" onclick="callWorker('${esc(w.id)}')" title="Call">☎</button><button class="icon-btn" onclick="messageWorker('${esc(w.id)}')" title="Message">☏</button></div>`}
 function selectPlan(plan,el){currentPlan=plan;document.querySelectorAll(".plan").forEach(p=>p.classList.toggle("selected",p.dataset.plan===plan));const mult=plan==="Classic"?1:plan==="Premium"?1.16:1.32;$("detailPrice").textContent=money(currentService.starting_price*mult)}
 function selectedPrice(){if(!currentService)return 0;return Math.round(currentService.starting_price*(currentPlan==="Classic"?1:currentPlan==="Premium"?1.16:1.32))}
@@ -3332,8 +3415,171 @@ finally {
 }});
 function to24h(t){const [clock,ap]=t.split(" ");let [h,m]=clock.split(":").map(Number);h=h%12+(ap==="PM"?12:0);return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":00"}
 function friendlyError(msg){if(/slot|available|duplicate|conflict/i.test(msg))return "This time may no longer be available. Please go back and choose another slot.";if(/row-level|permission|policy|not allowed/i.test(msg))return "Your account does not have permission for this action. Please sign in again or contact support.";return msg||"Something went wrong. Please try again."}
-function setAuthMode(mode){authMode=mode;$("loginTab").classList.toggle("active",mode==="login");$("signupTab").classList.toggle("active",mode==="signup");$("nameField").classList.toggle("hidden",mode!=="signup");$("authSubmit").textContent=mode==="login"?"Sign in":"Create account";$("authPassword").autocomplete=mode==="login"?"current-password":"new-password";hideNotice("authNotice")}
-$("authForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("authNotice");if(!sb){notice("authNotice","Add your Supabase project URL and publishable/anon key to enable real authentication.","bad");return}const email=$("authEmail").value.trim(),password=$("authPassword").value;const btn=$("authSubmit");btn.disabled=true;try{if(authMode==="signup"){const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name:$("authName").value.trim()}}});if(error)throw error;if(data.user){notice("authNotice",data.session?"Account created and signed in.":"Account created. Check your email to confirm it, then sign in.","ok");if(data.session){user=data.user;await ensureProfile();refreshAuth()}}}else{const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;user=data.user;await ensureProfile();notice("authNotice","Signed in successfully.","ok");refreshAuth();renderWelcomeProfile();toast("Welcome back");setTimeout(()=>go("home"),500)}}catch(err){notice("authNotice",err.message,"bad")}finally{btn.disabled=false}});
+
+function setAuthMode(mode) {
+  authMode = mode;
+
+  $("loginTab").classList.toggle("active", mode === "login");
+  $("signupTab").classList.toggle("active", mode === "signup");
+  $("nameField").classList.toggle("hidden", mode !== "signup");
+
+  $("authSubmit").textContent =
+    mode === "login" ? "Sign in" : "Create account";
+
+  $("authPassword").autocomplete =
+    mode === "login" ? "current-password" : "new-password";
+
+  hideNotice("authNotice");
+}
+
+function friendlyAuthMessage(error) {
+  const message = String(error?.message || error || "");
+
+  if (/invalid login credentials/i.test(message)) {
+    return "Email or password is incorrect. Please check and try again.";
+  }
+
+  if (/email not confirmed/i.test(message)) {
+    return "Please verify your email using the confirmation link sent to your inbox.";
+  }
+
+  if (/user already registered/i.test(message)) {
+    return "This email is already registered. Please sign in instead.";
+  }
+
+  if (/password should be at least/i.test(message)) {
+    return "Password must contain at least 6 characters.";
+  }
+
+  if (/rate limit/i.test(message)) {
+    return "Too many attempts. Please wait a few minutes and try again.";
+  }
+
+  if (/failed to fetch|networkerror/i.test(message)) {
+    return "Network error. Check your internet connection and try again.";
+  }
+
+  return message || "Authentication failed. Please try again.";
+}
+
+$("authForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  hideNotice("authNotice");
+
+  if (!sb) {
+    notice(
+      "authNotice",
+      "Supabase connection is unavailable. Check your project URL and publishable key.",
+      "bad"
+    );
+    return;
+  }
+
+  const email = $("authEmail").value.trim().toLowerCase();
+  const password = $("authPassword").value;
+  const name = $("authName").value.trim();
+  const btn = $("authSubmit");
+
+  if (!email || !password) {
+    notice("authNotice", "Enter your email and password.", "bad");
+    return;
+  }
+
+  if (authMode === "signup" && !name) {
+    notice("authNotice", "Please enter your full name.", "bad");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Please wait...";
+
+  try {
+    const redirectTo =
+      window.location.origin + window.location.pathname;
+
+    if (authMode === "signup") {
+      const { data, error } = await sb.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name
+          },
+          emailRedirectTo: redirectTo
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.session && data.user) {
+        user = data.user;
+
+        await ensureProfile();
+        await renderWelcomeProfile();
+        await renderProfile();
+
+        notice(
+          "authNotice",
+          "Account created successfully! You are now signed in.",
+          "ok"
+        );
+
+        toast("Welcome to KaamConnect!");
+        go("home");
+      } else {
+        notice(
+          "authNotice",
+          "Account created! Please check your email and verify your account before signing in.",
+          "ok"
+        );
+
+        $("authEmail").value = email;
+        setAuthMode("login");
+      }
+
+    } else {
+      const { data, error } = await sb.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) throw error;
+
+      if (!data.user || !data.session) {
+        throw new Error("Login session was not created. Please try again.");
+      }
+
+      user = data.user;
+
+      await ensureProfile();
+      await renderWelcomeProfile();
+      await renderProfile();
+
+      notice(
+        "authNotice",
+        "Login successful! Welcome back.",
+        "ok"
+      );
+
+      toast("Welcome back!");
+      go("home");
+    }
+
+  } catch (error) {
+    console.error("KaamConnect authentication error:", error);
+
+    notice(
+      "authNotice",
+      friendlyAuthMessage(error),
+      "bad"
+    );
+
+  } finally {
+    btn.disabled = false;
+    btn.textContent =
+      authMode === "login" ? "Sign in" : "Create account";
+  }
+});
 async function renderWelcomeProfile(){
   const nameEl=$("welcomeName"), avatarEl=$("welcomeAvatar");
   if(!nameEl||!avatarEl)return;
@@ -3777,8 +4023,14 @@ async function saveProfile(event) {
   }
 }
 async function signInWithGoogle() {
+
+async function signInWithGoogle() {
   if (!sb) {
-    alert("Supabase connection is not configured.");
+    notice(
+      "authNotice",
+      "Supabase connection is unavailable.",
+      "bad"
+    );
     return;
   }
 
@@ -3789,7 +4041,7 @@ async function signInWithGoogle() {
     const { data, error } = await sb.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo,
+        redirectTo: redirectTo,
         queryParams: {
           access_type: "offline",
           prompt: "select_account"
@@ -3797,20 +4049,20 @@ async function signInWithGoogle() {
       }
     });
 
-    if (error) {
-      console.error("Google sign-in error:", error);
-      alert("Google sign-in failed: " + error.message);
-      return;
-    }
-console.log("Google login started");
-console.log("Redirect URL:", window.location.origin + window.location.pathname);
-    console.log("OAuth sign-in started:", data);
+    if (error) throw error;
+
+    console.log("Google OAuth started:", data);
+
   } catch (error) {
-    console.error("Google sign-in exception:", error);
-    alert("Google sign-in error: " + error.message);
+    console.error("Google Login Error:", error);
+
+    notice(
+      "authNotice",
+      "Google Login failed: " + friendlyAuthMessage(error),
+      "bad"
+    );
   }
 }
-
 async function loadBookings() {
   const el = $("bookingsContent");
 
@@ -3855,9 +4107,12 @@ el.innerHTML = `
       .select("kc_booking_id,rating")
       .eq("customer_id", user.id)
       .in("kc_booking_id", data.map(b => b.id));
-
-    if (reviewError) throw reviewError;
-
+    if (reviewError) {
+  console.warn(
+    "Reviews could not be loaded:",
+    reviewError.message
+  );
+    }
     const reviewsByBooking = Object.fromEntries(
       (reviewRows || [])
         .filter(r => r.kc_booking_id)
@@ -5283,16 +5538,20 @@ const professions = profiles.map(w =>
 
 const visibleRows = (rows || []).filter(b => {
   const status = String(b.status || "").toLowerCase();
-  const assignedToMe = workerIds.includes(b.worker_id);
-
-  const isMatchingRequest =
-    b.worker_id === null &&
-    status === "requested" &&
-    professions.includes(
-      String(b.service_name || "").trim().toLowerCase()
-    ) &&
-    profiles.some(w => w.available && w.verified);
-
+  const assignedToMe = workerIds.includes(b.worker_id);  
+const matchingService = services.find(s =>
+  String(s.name || "").trim().toLowerCase() ===
+  String(b.service_name || "").trim().toLowerCase()
+);
+const isMatchingRequest =
+  b.worker_id === null &&
+  status === "requested" &&
+  matchingService &&
+  profiles.some(w =>
+    w.available &&
+    w.verified &&
+    workerMatchesCategory(w, matchingService.category)
+  );
   return assignedToMe || isMatchingRequest;
 });
 // Worker dashboard job statistics
@@ -5550,37 +5809,77 @@ else alert("Could not accept booking: " + e.message);
 function support(){toast("For support, please add a verified support email or phone number to the site.");}
 
 if (sb) {
-  sb.auth.getSession().then(({ data, error }) => {
-    if (error) {
-      console.error("Session error:", error.message);
-      return;
-    }
+
+  // Restore the existing login session
+  sb.auth.getSession().then(async ({ data, error }) => {
+    if (error) throw error;
 
     user = data.session?.user || null;
 
     if (user) {
-      renderWelcomeProfile();
-      renderProfile();
-      restoreLastScreen(); 
+      await ensureProfile();
+      await renderWelcomeProfile();
+      await renderProfile();
+
+      const navigation =
+        performance.getEntriesByType("navigation")[0];
+
+      const isRefresh = navigation?.type === "reload";
+      const lastScreen =
+        localStorage.getItem("kc_last_screen") || "home";
+
+      if (
+        isRefresh &&
+        lastScreen !== "splash" &&
+        lastScreen !== "auth"
+      ) {
+        go(lastScreen);
+      } else {
+        go("home");
+      }
+
+    } else {
+      restoreLastScreen();
     }
+
+  }).catch(error => {
+    console.error("Session restoration error:", error);
+    user = null;
+    go("home");
   });
 
-  
-sb.auth.onAuthStateChange((event, session) => {
-  setTimeout(() => {
-    user = session?.user || null;
+  // Listen for login, Google login and logout events
+  sb.auth.onAuthStateChange((event, session) => {
 
-    renderWelcomeProfile();
-    renderProfile();
+    setTimeout(async () => {
+      user = session?.user || null;
 
-    if (session?.user) {
-     restoreLastScreen(); 
-    }
-  }, 0);
-});
+      if (event === "SIGNED_IN" && user) {
+        await ensureProfile();
+        await renderWelcomeProfile();
+        await renderProfile();
+        go("home");
+        return;
+      }
+
+      await renderWelcomeProfile();
+      await renderProfile();
+
+      if (event === "SIGNED_OUT") {
+        go("home");
+      }
+
+    }, 0);
+
+  });
+
+} else {
+  user = null;
+  console.error("Supabase client could not be initialized.");
+  go("home");
 }
+
 renderWelcomeProfile();
-restoreLastScreen();
 loadData();
 async function loadPayroll() {
   const list = $("payrollList");
