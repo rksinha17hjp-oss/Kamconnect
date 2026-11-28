@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -14,20 +14,8 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 :root{--navy:#18356b;--ink:#151923;--muted:#737887;--purple:#8065d8;--pink:#ed2788;--bg:#f8f8f6;--line:#e9e9ed;--white:#fff;--green:#d9f0d0;--shadow:0 10px 28px #17213a0d;--radius:24px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.55;cursor:not-allowed}img{max-width:100%;display:block}a{color:inherit;text-decoration:none}.wrap{width:min(1100px,calc(100% - 28px));margin:auto}.hidden{display:none!important}.muted{color:var(--muted)}.tiny{font-size:12px;color:var(--muted);line-height:1.6}.eyebrow{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:800;color:var(--purple)}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:Manrope,sans-serif;letter-spacing:-.7px}h1{font-size:clamp(32px,7vw,52px);line-height:1.08;margin-bottom:12px}h2{font-size:clamp(22px,4vw,30px);margin-bottom:8px}h3{font-size:17px;margin-bottom:7px}.btn{border:0;border-radius:999px;padding:12px 18px;min-height:44px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .16s,box-shadow .16s}.btn:active{transform:scale(.97)}.btn-primary{background:var(--purple);color:white;box-shadow:0 7px 18px #8065d833}.btn-dark{background:#151515;color:#fff}.btn-light{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-outline{background:transparent;border:1px solid #d8d9df;color:var(--ink)}.icon-btn{width:48px;height:48px;border-radius:50%;border:1px solid #ffffffa8;background:#ffffffbd;box-shadow:0 6px 16px #17213a12;display:grid;place-items:center;font-size:20px;flex-shrink:0}.topbar{position:sticky;top:0;z-index:20;background:#f8f8f4ed;backdrop-filter:blur(14px);border-bottom:1px solid #e7e6e177}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}.brand{font:800 23px Manrope,sans-serif;letter-spacing:-1px}.brand span{color:var(--purple)}.nav-actions{display:flex;align-items:center;gap:8px}.nav-link{border:0;background:transparent;font-weight:700;font-size:13px;padding:10px}.screen{display:none;animation:fade .2s}.screen.active{display:block}@keyframes fade{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}.page{padding:22px 0 100px}.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:18px;background:linear-gradient(125deg,#eef9e7,#e4f3e9 58%,#fff5dc);border-radius:32px;padding:clamp(22px,4vw,42px);box-shadow:var(--shadow);min-height:300px}.hero h1 em{font-style:italic;font-weight:600}.hero p{color:#626b66;line-height:1.7;max-width:470px}.hero-art{align-self:stretch;display:flex;align-items:end;justify-content:center;min-height:220px}.hero-art img{max-height:300px;max-width:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 10px 14px #24332214)}.promo-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.pill{border:1px solid #ffffffc9;background:#ffffffa8;border-radius:999px;padding:10px 14px;font-size:12px;font-weight:800;display:inline-flex;gap:7px;align-items:center}.search-row{display:flex;gap:10px;margin:22px 0 16px}.search{display:flex;align-items:center;gap:10px;border:1px solid #e9e9eb;background:white;border-radius:999px;padding:5px 17px;flex:1;box-shadow:0 5px 16px #1d26300a}.search input{border:0;outline:0;min-width:0;width:100%;background:transparent;padding:12px 0}.search input:focus{box-shadow:none}.chips{display:flex;gap:9px;overflow:auto;padding:2px 0 14px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:0;border-radius:999px;padding:13px 20px;background:#eeeff1;font-weight:700;font-size:13px;color:#343740}.chip.active{background:#161616;color:white;box-shadow:0 6px 14px #0002}.section{margin:30px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:16px}.section-head p{margin-bottom:0}.feature-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px}.feature{border-radius:24px;padding:20px;background:#f9d6ed;min-height:135px;display:flex;align-items:center;justify-content:space-between;gap:10px}.feature:nth-child(2){background:#e0d9fa}.feature:nth-child(3){background:#dff2d9}.feature:nth-child(4){background:#d7edff}.feature .emoji{font-size:35px}.feature strong{display:block;font-size:16px;margin-bottom:6px}.service-list{display:grid;grid-template-columns:1fr;gap:12px}.service-row{display:grid;grid-template-columns:104px minmax(0,1fr) 46px;gap:15px;align-items:center;border-radius:29px;padding:11px;background:var(--card-bg,#f8d9ee);min-height:132px;transition:transform .15s;cursor:pointer}.service-row:active{transform:scale(.99)}.service-row img{width:104px;height:108px;object-fit:cover;border-radius:22px;background:#fff8}.service-row h3{font-size:17px;margin:0 0 5px}.service-row p{font-size:12px;color:#5c5c65;margin:0;line-height:1.5}.arrow{width:42px;height:42px;border-radius:50%;border:1px solid #2222;background:#ffffff3a;font-size:22px;display:grid;place-items:center}.service-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:11px;font-weight:700}.worker-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 16px;
-  width: 100%;
-  max-width: 760px;
-  margin-left: auto;
-  margin-right: auto;
-  align-items: stretch;
-}.worker-card{background:white;border:1px solid var(--line);border-radius:23px;padding:13px;box-shadow:var(--shadow);min-width:0}.worker-card img{width:100%;height:150px;object-fit:cover;border-radius:16px;background:#f0eef7}.worker-card h3{margin:12px 0 4px}.worker-card .btn{width:100%;margin-top:12px}.verified{font-size:10px;background:#e4f7e9;color:#147442;padding:5px 8px;border-radius:99px;font-weight:800;display:inline-block}.price{font-size:19px;font-weight:800}.panel{background:white;border:1px solid var(--line);border-radius:25px;padding:20px;box-shadow:var(--shadow);margin:14px 0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:800}.field input,.field select,.field textarea{width:100%;border:1px solid #dedfe5;border-radius:13px;padding:13px;background:white;min-height:46px;outline:0}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #8065d81b}.notice{display:none;padding:13px;border-radius:13px;font-size:13px;line-height:1.5;margin:12px 0}.notice.show{display:block}.notice.ok{background:#e4f7e9;color:#17633b}.notice.bad{background:#ffeded;color:#9c2525}.notice.info{background:#edf2ff;color:#234b93}.empty{padding:25px;border:1px dashed #d6d7de;border-radius:18px;text-align:center;color:var(--muted);line-height:1.6}.auth-card{max-width:520px;margin:20px auto}.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.month-actions{display:flex;gap:7px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:15px}.weekday{text-align:center;color:#858995;font-size:10px;font-weight:800;padding:8px 0}.day{aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:#262b34;font-size:13px}.day:disabled{color:#c9cbd1;cursor:not-allowed}.day.today{outline:1px solid var(--navy)}.day.selected{background:var(--navy);color:white}.day:not(:disabled):hover{background:#e8edf8}.summary-band{background:#f4f6fa;border-radius:16px;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.summary-band small{display:block;color:var(--muted);font-size:11px}.summary-band strong{display:block;margin-top:5px;color:var(--navy);font-size:13px}.slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.slot{border:1px solid #e2e3e8;background:white;border-radius:13px;padding:12px 6px;font-size:13px;font-weight:700}.slot.selected{background:var(--navy);color:white;border-color:var(--navy)}.slot:disabled{background:#f1f1f3;color:#b4b5bb}.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.plan{border:2px solid transparent;border-radius:18px;padding:14px 10px;text-align:left;background:#ded7fa;min-width:0}.plan:first-child{background:#161616;color:#fff}.plan:last-child{background:#d5edff}.plan.selected{border-color:var(--purple);box-shadow:0 0 0 2px #8065d822}.plan small,.plan strong{display:block}.plan small{font-size:11px;opacity:.8}.plan strong{font-size:18px;margin-top:7px}.detail-hero{height:290px;border-radius:30px;overflow:hidden;background:#f5c5e3;position:relative}.detail-hero img{width:100%;height:100%;object-fit:cover}.detail-actions{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between}.worker-inline{display:flex;align-items:center;gap:12px;background:#f5f5f7;border-radius:999px;padding:12px;margin:15px 0}.worker-inline img{width:55px;height:55px;border-radius:50%;object-fit:cover}.worker-inline .grow{flex:1;min-width:0}.worker-inline .icon-btn{width:42px;height:42px;background:white}.fixed-cta{position:fixed;z-index:30;left:0;right:0;bottom:0;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid #e8e8ed;padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center}.fixed-cta-inner{width:min(760px,100%);display:flex;align-items:center;gap:12px}.price-capsule{padding:13px 18px;border:1px solid var(--line);border-radius:999px;background:white;font-weight:800;white-space:nowrap}.fixed-cta .btn{flex:1;min-height:52px}.booking-card{border:1px solid var(--line);border-radius:19px;padding:16px;margin:12px 0;background:white}.booking-card .btn{margin:5px 6px 0 0}.status{display:inline-block;border-radius:999px;padding:6px 10px;background:#e7edff;color:#274c95;font-size:10px;font-weight:800}.tracking-page{background:#50001f;color:white;border-radius:28px;padding:22px;overflow:hidden}.tracking-phone{max-width:430px;margin:20px auto 0;background:#f9fafc;border:8px solid #101014;border-radius:44px;padding:14px;color:#151923;overflow:hidden}.map{height:330px;border-radius:27px;overflow:hidden;background:#eee}.arrival{position:relative;z-index:2;background:linear-gradient(110deg,#f3268b,#d80c69);border-radius:24px;padding:20px 145px 20px 18px;margin:-25px -3px 15px;min-height:140px;box-shadow:0 12px 25px #d10e6940}.arrival strong{display:block;font-size:19px;margin-bottom:8px}.eta{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:125px;height:125px;border:7px solid #fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#ed147c;color:white}.eta small{font-size:9px;font-weight:800}.eta b{font-size:38px;line-height:1.1}.tracking-info{background:white;border:1px solid #eee;border-radius:16px;padding:14px;margin:12px 0;font-size:12px}.tracking-info strong{font-size:13px}.otp{display:flex;gap:6px;justify-content:flex-end}.otp input{width:35px;text-align:center;border:1px solid #ddd;border-radius:7px;padding:8px 2px}.bottom-nav{display:none}.toast{position:fixed;top:82px;left:50%;transform:translateX(-50%);z-index:1000;background:#171923;color:white;border-radius:999px;padding:12px 18px;font-size:13px;box-shadow:var(--shadow);max-width:90%;text-align:center}.footer{padding:26px 0 100px;color:var(--muted);font-size:12px}.rule-list{padding-left:18px;color:#626773;font-size:13px;line-height:1.8}.review{border-bottom:1px solid var(--line);padding:12px 0}.review:last-child{border:0}
-@media(max-width:720px){.wrap{width:calc(100% - 22px)}.nav{min-height:60px}.nav-link{display:none}.brand{font-size:21px}.hero{grid-template-columns:1fr;padding:24px 20px;min-height:0}.hero-art{min-height:140px;max-height:180px}.hero-art img{max-height:185px}.hero h1{font-size:37px}.search-row{margin-top:17px}.feature-strip{grid-template-columns:1fr}.feature{min-height:110px}.service-row{grid-template-columns:82px minmax(0,1fr) 38px;gap:11px;min-height:112px;border-radius:24px;padding:9px}.service-row img{width:82px;height:92px;border-radius:18px}.service-row h3{font-size:14px}.service-row p{font-size:11px}.arrow{width:36px;height:36px}.worker-grid {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
-}.worker-card img{height:125px}.worker-card h3{font-size:14px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:15px;border-radius:20px}.page{padding-top:16px}.detail-hero{height:260px}.tracking-page{padding:16px 10px;border-radius:22px}.tracking-phone{border-width:6px;padding:9px;border-radius:35px}.map{height:280px}.arrival{padding:17px 115px 17px 13px;min-height:125px}.arrival strong{font-size:15px}.arrival span{font-size:11px}.eta{width:105px;height:105px;border-width:5px}.eta b{font-size:31px}.eta small{font-size:8px}.plans{gap:6px}.plan{padding:12px 8px}.plan strong{font-size:15px}.plan small{font-size:10px}.summary-band{padding:12px}.fixed-cta-inner{gap:8px}.price-capsule{padding:12px;font-size:13px}.fixed-cta .btn{font-size:12px;padding:12px}.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:25;background:#fff;border-top:1px solid var(--line);padding:7px 5px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px #17213a0d}.bottom-nav button{border:0;background:transparent;color:#747784;font-size:10px;font-weight:700;display:flex;align-items:center;flex-direction:column;gap:3px;padding:4px 1px}.bottom-nav button span{font-size:19px}.bottom-nav button.active{color:var(--purple)}body{padding-bottom:72px}.fixed-cta{bottom:66px}.fixed-cta~.bottom-nav{bottom:0}.footer{padding-bottom:100px}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.55;cursor:not-allowed}img{max-width:100%;display:block}a{color:inherit;text-decoration:none}.wrap{width:min(1100px,calc(100% - 28px));margin:auto}.hidden{display:none!important}.muted{color:var(--muted)}.tiny{font-size:12px;color:var(--muted);line-height:1.6}.eyebrow{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:800;color:var(--purple)}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:Manrope,sans-serif;letter-spacing:-.7px}h1{font-size:clamp(32px,7vw,52px);line-height:1.08;margin-bottom:12px}h2{font-size:clamp(22px,4vw,30px);margin-bottom:8px}h3{font-size:17px;margin-bottom:7px}.btn{border:0;border-radius:999px;padding:12px 18px;min-height:44px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .16s,box-shadow .16s}.btn:active{transform:scale(.97)}.btn-primary{background:var(--purple);color:white;box-shadow:0 7px 18px #8065d833}.btn-dark{background:#151515;color:#fff}.btn-light{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-outline{background:transparent;border:1px solid #d8d9df;color:var(--ink)}.icon-btn{width:48px;height:48px;border-radius:50%;border:1px solid #ffffffa8;background:#ffffffbd;box-shadow:0 6px 16px #17213a12;display:grid;place-items:center;font-size:20px;flex-shrink:0}.topbar{position:sticky;top:0;z-index:20;background:#f8f8f4ed;backdrop-filter:blur(14px);border-bottom:1px solid #e7e6e177}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}.brand{font:800 23px Manrope,sans-serif;letter-spacing:-1px}.brand span{color:var(--purple)}.nav-actions{display:flex;align-items:center;gap:8px}.nav-link{border:0;background:transparent;font-weight:700;font-size:13px;padding:10px}.screen{display:none;animation:fade .2s}.screen.active{display:block}@keyframes fade{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}.page{padding:22px 0 100px}.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:18px;background:linear-gradient(125deg,#eef9e7,#e4f3e9 58%,#fff5dc);border-radius:32px;padding:clamp(22px,4vw,42px);box-shadow:var(--shadow);min-height:300px}.hero h1 em{font-style:italic;font-weight:600}.hero p{color:#626b66;line-height:1.7;max-width:470px}.hero-art{align-self:stretch;display:flex;align-items:end;justify-content:center;min-height:220px}.hero-art img{max-height:300px;max-width:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 10px 14px #24332214)}.promo-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.pill{border:1px solid #ffffffc9;background:#ffffffa8;border-radius:999px;padding:10px 14px;font-size:12px;font-weight:800;display:inline-flex;gap:7px;align-items:center}.search-row{display:flex;gap:10px;margin:22px 0 16px}.search{display:flex;align-items:center;gap:10px;border:1px solid #e9e9eb;background:white;border-radius:999px;padding:5px 17px;flex:1;box-shadow:0 5px 16px #1d26300a}.search input{border:0;outline:0;min-width:0;width:100%;background:transparent;padding:12px 0}.search input:focus{box-shadow:none}.chips{display:flex;gap:9px;overflow:auto;padding:2px 0 14px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:0;border-radius:999px;padding:13px 20px;background:#eeeff1;font-weight:700;font-size:13px;color:#343740}.chip.active{background:#161616;color:white;box-shadow:0 6px 14px #0002}.section{margin:30px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:16px}.section-head p{margin-bottom:0}.feature-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px}.feature{border-radius:24px;padding:20px;background:#f9d6ed;min-height:135px;display:flex;align-items:center;justify-content:space-between;gap:10px}.feature:nth-child(2){background:#e0d9fa}.feature:nth-child(3){background:#dff2d9}.feature:nth-child(4){background:#d7edff}.feature .emoji{font-size:35px}.feature strong{display:block;font-size:16px;margin-bottom:6px}.service-list{display:grid;grid-template-columns:1fr;gap:12px}.service-row{display:grid;grid-template-columns:104px minmax(0,1fr) 46px;gap:15px;align-items:center;border-radius:29px;padding:11px;background:var(--card-bg,#f8d9ee);min-height:132px;transition:transform .15s;cursor:pointer}.service-row:active{transform:scale(.99)}.service-row img{width:104px;height:108px;object-fit:cover;border-radius:22px;background:#fff8}.service-row h3{font-size:17px;margin:0 0 5px}.service-row p{font-size:12px;color:#5c5c65;margin:0;line-height:1.5}.arrow{width:42px;height:42px;border-radius:50%;border:1px solid #2222;background:#ffffff3a;font-size:22px;display:grid;place-items:center}.service-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:11px;font-weight:700}.worker-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.worker-card{background:white;border:1px solid var(--line);border-radius:23px;padding:13px;box-shadow:var(--shadow);min-width:0}.worker-card img{width:100%;height:150px;object-fit:cover;border-radius:16px;background:#f0eef7}.worker-card h3{margin:12px 0 4px}.worker-card .btn{width:100%;margin-top:12px}.verified{font-size:10px;background:#e4f7e9;color:#147442;padding:5px 8px;border-radius:99px;font-weight:800;display:inline-block}.price{font-size:19px;font-weight:800}.panel{background:white;border:1px solid var(--line);border-radius:25px;padding:20px;box-shadow:var(--shadow);margin:14px 0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:800}.field input,.field select,.field textarea{width:100%;border:1px solid #dedfe5;border-radius:13px;padding:13px;background:white;min-height:46px;outline:0}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #8065d81b}.notice{display:none;padding:13px;border-radius:13px;font-size:13px;line-height:1.5;margin:12px 0}.notice.show{display:block}.notice.ok{background:#e4f7e9;color:#17633b}.notice.bad{background:#ffeded;color:#9c2525}.notice.info{background:#edf2ff;color:#234b93}.empty{padding:25px;border:1px dashed #d6d7de;border-radius:18px;text-align:center;color:var(--muted);line-height:1.6}.auth-card{max-width:520px;margin:20px auto}.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.month-actions{display:flex;gap:7px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:15px}.weekday{text-align:center;color:#858995;font-size:10px;font-weight:800;padding:8px 0}.day{aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:#262b34;font-size:13px}.day:disabled{color:#c9cbd1;cursor:not-allowed}.day.today{outline:1px solid var(--navy)}.day.selected{background:var(--navy);color:white}.day:not(:disabled):hover{background:#e8edf8}.summary-band{background:#f4f6fa;border-radius:16px;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.summary-band small{display:block;color:var(--muted);font-size:11px}.summary-band strong{display:block;margin-top:5px;color:var(--navy);font-size:13px}.slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.slot{border:1px solid #e2e3e8;background:white;border-radius:13px;padding:12px 6px;font-size:13px;font-weight:700}.slot.selected{background:var(--navy);color:white;border-color:var(--navy)}.slot:disabled{background:#f1f1f3;color:#b4b5bb}.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.plan{border:2px solid transparent;border-radius:18px;padding:14px 10px;text-align:left;background:#ded7fa;min-width:0}.plan:first-child{background:#161616;color:#fff}.plan:last-child{background:#d5edff}.plan.selected{border-color:var(--purple);box-shadow:0 0 0 2px #8065d822}.plan small,.plan strong{display:block}.plan small{font-size:11px;opacity:.8}.plan strong{font-size:18px;margin-top:7px}.detail-hero{height:290px;border-radius:30px;overflow:hidden;background:#f5c5e3;position:relative}.detail-hero img{width:100%;height:100%;object-fit:cover}.detail-actions{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between}.worker-inline{display:flex;align-items:center;gap:12px;background:#f5f5f7;border-radius:999px;padding:12px;margin:15px 0}.worker-inline img{width:55px;height:55px;border-radius:50%;object-fit:cover}.worker-inline .grow{flex:1;min-width:0}.worker-inline .icon-btn{width:42px;height:42px;background:white}.fixed-cta{position:fixed;z-index:30;left:0;right:0;bottom:0;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid #e8e8ed;padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center}.fixed-cta-inner{width:min(760px,100%);display:flex;align-items:center;gap:12px}.price-capsule{padding:13px 18px;border:1px solid var(--line);border-radius:999px;background:white;font-weight:800;white-space:nowrap}.fixed-cta .btn{flex:1;min-height:52px}.booking-card{border:1px solid var(--line);border-radius:19px;padding:16px;margin:12px 0;background:white}.booking-card .btn{margin:5px 6px 0 0}.status{display:inline-block;border-radius:999px;padding:6px 10px;background:#e7edff;color:#274c95;font-size:10px;font-weight:800}.tracking-page{background:#50001f;color:white;border-radius:28px;padding:22px;overflow:hidden}.tracking-phone{max-width:430px;margin:20px auto 0;background:#f9fafc;border:8px solid #101014;border-radius:44px;padding:14px;color:#151923;overflow:hidden}.map{height:330px;border-radius:27px;overflow:hidden;background:#eee}.arrival{position:relative;z-index:2;background:linear-gradient(110deg,#f3268b,#d80c69);border-radius:24px;padding:20px 145px 20px 18px;margin:-25px -3px 15px;min-height:140px;box-shadow:0 12px 25px #d10e6940}.arrival strong{display:block;font-size:19px;margin-bottom:8px}.eta{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:125px;height:125px;border:7px solid #fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#ed147c;color:white}.eta small{font-size:9px;font-weight:800}.eta b{font-size:38px;line-height:1.1}.tracking-info{background:white;border:1px solid #eee;border-radius:16px;padding:14px;margin:12px 0;font-size:12px}.tracking-info strong{font-size:13px}.otp{display:flex;gap:6px;justify-content:flex-end}.otp input{width:35px;text-align:center;border:1px solid #ddd;border-radius:7px;padding:8px 2px}.bottom-nav{display:none}.toast{position:fixed;top:82px;left:50%;transform:translateX(-50%);z-index:1000;background:#171923;color:white;border-radius:999px;padding:12px 18px;font-size:13px;box-shadow:var(--shadow);max-width:90%;text-align:center}.footer{padding:26px 0 100px;color:var(--muted);font-size:12px}.rule-list{padding-left:18px;color:#626773;font-size:13px;line-height:1.8}.review{border-bottom:1px solid var(--line);padding:12px 0}.review:last-child{border:0}
+@media(max-width:720px){.wrap{width:calc(100% - 22px)}.nav{min-height:60px}.nav-link{display:none}.brand{font-size:21px}.hero{grid-template-columns:1fr;padding:24px 20px;min-height:0}.hero-art{min-height:140px;max-height:180px}.hero-art img{max-height:185px}.hero h1{font-size:37px}.search-row{margin-top:17px}.feature-strip{grid-template-columns:1fr}.feature{min-height:110px}.service-row{grid-template-columns:82px minmax(0,1fr) 38px;gap:11px;min-height:112px;border-radius:24px;padding:9px}.service-row img{width:82px;height:92px;border-radius:18px}.service-row h3{font-size:14px}.service-row p{font-size:11px}.arrow{width:36px;height:36px}.worker-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.worker-card{padding:9px}.worker-card img{height:125px}.worker-card h3{font-size:14px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:15px;border-radius:20px}.page{padding-top:16px}.detail-hero{height:260px}.tracking-page{padding:16px 10px;border-radius:22px}.tracking-phone{border-width:6px;padding:9px;border-radius:35px}.map{height:280px}.arrival{padding:17px 115px 17px 13px;min-height:125px}.arrival strong{font-size:15px}.arrival span{font-size:11px}.eta{width:105px;height:105px;border-width:5px}.eta b{font-size:31px}.eta small{font-size:8px}.plans{gap:6px}.plan{padding:12px 8px}.plan strong{font-size:15px}.plan small{font-size:10px}.summary-band{padding:12px}.fixed-cta-inner{gap:8px}.price-capsule{padding:12px;font-size:13px}.fixed-cta .btn{font-size:12px;padding:12px}.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:25;background:#fff;border-top:1px solid var(--line);padding:7px 5px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px #17213a0d}.bottom-nav button{border:0;background:transparent;color:#747784;font-size:10px;font-weight:700;display:flex;align-items:center;flex-direction:column;gap:3px;padding:4px 1px}.bottom-nav button span{font-size:19px}.bottom-nav button.active{color:var(--purple)}body{padding-bottom:72px}.fixed-cta{bottom:66px}.fixed-cta~.bottom-nav{bottom:0}.footer{padding-bottom:100px}}
 @media(min-width:721px){.page{padding-bottom:70px}.service-list{grid-template-columns:1fr 1fr}.bottom-nav{display:none!important}}
 
 @font-face{font-family:'Improbable';src:url('./Improbable.ttf') format('truetype');font-display:swap;font-weight:100 900}
@@ -1052,1399 +1040,22 @@ body, body h1, body h2, body h3 { font-family: 'Impressum', 'DM Sans', sans-seri
     height: 82px;
     min-width: 82px;
   }
-} 
-  
-/* KaamConnect page banners */
-.page-photo-banner {
-  position: relative;
-  width: 100%;
-  margin: 18px 0 24px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: #f2f0f7;
-  isolation: isolate;
 }
-
-.page-photo-banner img {
-  display: block;
-  width: 100%;
-  height: clamp(230px, 42vw, 360px);
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-.page-photo-banner .banner-copy {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 48px 18px 18px;
-  color: #fff;
-  background: linear-gradient(transparent, #101522e8);
-  z-index: 1;
-}
-
-.page-photo-banner .banner-copy h2 {
-  color: #fff;
-  margin: 0 0 6px;
-  font-size: clamp(20px, 5vw, 29px);
-}
-
-.page-photo-banner .banner-copy p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.page-photo-banner img {
-  object-position: center top;
-}
-
-@media (max-width: 480px) {
-  .page-photo-banner img {
-    height: 250px;
-  }
-} 
-
-/* Large hero banners */
-.page-photo-banner {
-  position: relative;
-  width: 100%;
-  margin: 20px 0 28px;
-  border-radius: 30px;
-  overflow: hidden;
-  background: #e5f3e6;
-  isolation: isolate;
-}
-
-.page-photo-banner img {
-  display: block;
-  width: 100%;
-  height: 1020px;
-  object-fit: contain;
-  object-position: center center;
-background: #e5f3e6;
-}
-
-.page-photo-banner .banner-copy {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 100px 24px 30px;
-  color: #15151d;
-  background: linear-gradient(
-    transparent,
-    rgba(229, 243, 230, 0.98)
-  );
-  z-index: 1;
-}
-
-.page-photo-banner .banner-copy h2 {
-  margin: 0 0 14px;
-  font-family: "Improbable", Impact, sans-serif;
-  font-size: clamp(28px, 6vw, 42px);
-  line-height: 1.2;
-  color: #15151d;
-}
-
-.page-photo-banner .banner-copy p {
-  margin: 0;
-  font-family: "Improbable", Impact, sans-serif;
-  font-size: clamp(16px, 3.8vw, 20px);
-  line-height: 1.5;
-  color: #15151d;
-}
-@media (max-width: 600px) {
-  .page-photo-banner img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    object-position: center center;
-  }
-}
-  .page-photo-banner .banner-copy {
-    padding: 90px 20px 28px;
-  }
-
-  .page-photo-banner .banner-copy h2 {
-    font-size: 30px;
-  }
-
-  .page-photo-banner .banner-copy p {
-    font-size: 16px;
-  }
-  }
-/* Trusted Worker banner - same natural height as customer-support */
-#screen-services .trusted-home-banner {
-  width: 100%;
-  max-width: 100%;
-  position: relative;
-  left: auto;
-  transform: none;
-  margin: 20px 0 28px;
-  box-sizing: border-box;
-  overflow: hidden;
-  border-radius: 30px;
-}
-
-#screen-services .trusted-home-banner img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: center center;
-  box-sizing: border-box;
-}
-} 
-
-/* KaamConnect modern worker cards and detail profile */
-
-.worker-card-modern {
-  padding: 16px;
-  border: 1px solid #eee8da;
-  border-radius: 23px;
-  background: linear-gradient(145deg, #fff, #fffdf7);
-  box-shadow: 0 7px 24px rgba(40, 32, 12, .07);
-  overflow: hidden;
-}
-
-.worker-card-modern-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-}
-
-.worker-card-modern-photo {
-  width: 94px;
-  height: 105px;
-  flex-shrink: 0;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 18px;
-  background: #fff2ce;
-}
-
-.worker-card-modern-identity {
-  flex: 1;
-  min-width: 0;
-}
-
-.worker-card-modern-identity h3 {
-  margin: 8px 0 4px;
-  font-size: 17px;
-  font-weight: 850;
-  overflow-wrap: anywhere;
-}
-
-.worker-card-modern-identity p {
-  margin: 4px 0 8px;
-  color: #747064;
-  font-size: 12px;
-}
-
-.worker-modern-rating {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 5px;
-  font-size: 12px;
-}
-
-.worker-modern-rating span {
-  color: #eda900;
-  font-size: 18px;
-}
-
-.worker-modern-rating small {
-  color: #77736a;
-}
-
-.worker-modern-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
-  padding: 13px 0;
-  border-top: 1px solid #eeeae0;
-  border-bottom: 1px solid #eeeae0;
-}
-
-.worker-modern-info div,
-.worker-modern-price {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  min-width: 0;
-}
-
-.worker-modern-info small,
-.worker-modern-price small {
-  color: #858073;
-  font-size: 10px;
-}
-
-.worker-modern-info strong {
-  color: #302e27;
-  font-size: 12px;
-  overflow-wrap: anywhere;
-}
-
-.worker-modern-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.worker-modern-price strong {
-  color: #c68a12;
-  font-size: 18px;
-  font-weight: 900;
-}
-
-.worker-modern-actions {
-  display: flex;
-  gap: 7px;
-}
-
-.worker-modern-actions .btn {
-  padding: 10px 12px;
-  min-height: 40px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-/* Worker detail page */
-.worker-profile-screen {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-bottom: 30px;
-}
-
-.worker-profile-screen {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 12px 30px;
-}
-
-.worker-profile-hero {
-  position: relative;
-  width: 100%;
-  height: 330px;
-  margin: 15px 0 24px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: #e7e9df;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .10);
-}
-
-.worker-profile-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  object-fit: cover;
-  object-position: center;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.worker-profile-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 24px 20px;
-  color: white;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, .78),
-    rgba(0, 0, 0, .15) 65%,
-    transparent
-  );
-}
-
-.worker-profile-overlay h1 {
-  margin: 12px 0 5px;
-  font-size: clamp(24px, 5vw, 34px);
-  color: white;
-}
-
-.worker-profile-overlay p {
-  margin: 4px 0;
-  color: white;
-}
-
-.worker-profile-rating span {
-  font-size: 12px;
-  color: white;
-}
-
-.worker-profile-overlay .verified {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 20px;
-  background: #fff;
-  color: #242424;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-@media (max-width: 600px) {
-  .worker-profile-hero {
-    height: 290px;
-    border-radius: 20px;
-  }
-
-  .worker-profile-overlay {
-    padding: 18px 15px;
-  }
-}
-.worker-profile-heading h1 {
-  margin: 0 0 7px;
-  color: #24241f;
-  font-size: 25px;
-  font-weight: 900;
-  overflow-wrap: anywhere;
-}
-
-.worker-profile-heading p {
-  margin: 5px 0;
-  color: #69665c;
-}
-
-.worker-profile-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
-  margin: 15px 0;
-}
-
-.worker-profile-stat {
-  padding: 15px 5px;
-  text-align: center;
-  border: 1px solid #f2e9d6;
-  border-radius: 17px;
-  background: white;
-  box-shadow: 0 4px 13px rgba(57, 42, 10, .04);
-}
-
-.worker-profile-stat strong {
-  display: block;
-  color: #29271f;
-  font-size: 15px;
-  overflow-wrap: anywhere;
-}
-
-.worker-profile-stat small {
-  display: block;
-  margin-top: 5px;
-  color: #777368;
-  font-size: 10px;
-}
-
-.worker-profile-price-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 16px;
-  border-radius: 18px;
-  background: #fff3d0;
-  margin: 15px 0;
-}
-
-.worker-profile-price-panel small {
-  color: #777065;
-}
-
-.worker-profile-price-panel strong {
-  display: block;
-  margin-top: 5px;
-  color: #bc8010;
-  font-size: 23px;
-  font-weight: 900;
-}
-
-.worker-profile-tabs {
-  display: flex;
-  gap: 5px;
-  padding: 6px;
-  margin: 17px 0;
-  overflow-x: auto;
-  border-radius: 16px;
-  background: #f1f0ec;
-}
-
-.worker-profile-tabs button {
-  flex: 1;
-  min-width: max-content;
-  padding: 11px 12px;
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
-  color: #777267;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.worker-profile-tabs button.active {
-  background: #fff;
-  color: #26241f;
-  box-shadow: 0 3px 9px rgba(30, 25, 10, .08);
-}
-
-.worker-profile-panel {
-  padding: 18px;
-  border: 1px solid #eee9df;
-  border-radius: 20px;
-  background: white;
-  margin-bottom: 15px;
-}
-
-.worker-profile-panel h3 {
-  margin: 0 0 12px;
-  font-size: 18px;
-}
-
-.worker-profile-panel p {
-  color: #666257;
-  font-size: 13px;
-  line-height: 1.7;
-  overflow-wrap: anywhere;
-}
-
-.worker-profile-row {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding: 12px 0;
-  border-top: 1px solid #efede6;
-}
-
-.worker-profile-row span {
-  display: block;
-  margin-bottom: 4px;
-  color: #777267;
-  font-size: 11px;
-}
-
-.worker-profile-row strong {
-  color: #28271f;
-  font-size: 13px;
-}
-
-.worker-profile-book {
-  width: 100%;
-  min-height: 53px;
-  margin-top: 5px;
-  border-radius: 16px;
-  font-size: 15px;
-  font-weight: 900;
-}
-
-@media (max-width: 390px) {
-  .worker-card-modern {
-    padding: 12px;
-  }
-
-  .worker-card-modern-photo {
-    width: 78px;
-    height: 92px;
-  }
-
-  .worker-modern-bottom {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .worker-modern-actions {
-    width: 100%;
-  }
-
-  .worker-modern-actions .btn {
-    flex: 1;
-  }
-
-  .worker-profile-heading h1 {
-    font-size: 22px;
-  }
-
-  .worker-profile-stat {
-    padding: 12px 3px;
-  }
-}  
-  /* KaamConnect: single-column worker cards */
-.worker-card-modern {
-  width: 100%;
-  min-width: 0;
-  padding: 15px;
-  border: 1px solid #ededeb;
-  border-radius: 22px;
-  background: #fff;
-  box-shadow: 0 6px 20px rgba(25, 30, 40, 0.06);
-}
-
-.worker-card-modern-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  min-width: 0;
-}
-
-.worker-card-modern-photo {
-  width: 105px;
-  height: 115px;
-  flex: 0 0 105px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 17px;
-}
-
-.worker-card-modern-identity {
-  flex: 1;
-  min-width: 0;
-}
-
-.worker-card-modern-identity h3 {
-  margin: 9px 0 5px;
-  font-size: 18px;
-  line-height: 1.3;
-  overflow-wrap: break-word;
-  word-break: normal;
-}
-
-.worker-card-modern-identity p {
-  margin: 4px 0 8px;
-  font-size: 13px;
-}
-
-.worker-modern-info {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 12px;
-}
-
-.worker-modern-info strong {
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-
-.worker-modern-bottom {
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-}
-
-.worker-modern-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.worker-modern-actions .btn {
-  min-width: 82px;
-  min-height: 43px;
-  margin: 0;
-  white-space: nowrap;
-}
-
-@media (max-width: 390px) {
-  .worker-card-modern-photo {
-    width: 88px;
-    height: 100px;
-    flex-basis: 88px;
-  }
-
-  .worker-card-modern-identity h3 {
-    font-size: 16px;
-  }
-
-  .worker-modern-bottom {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .worker-modern-actions {
-    width: auto;
-  }
-}
-  .worker-profile-photo {
-  display: block;
-  width: 100%;
-  height: clamp(280px, 72vw, 440px);
-  margin: 0 auto 16px;
-  object-fit: cover;
-  object-position: center 30%;
-  border: 4px solid #fff;
-  border-radius: 24px;
-  box-shadow: 0 10px 28px rgba(57, 42, 10, .14);
-  background: #f4f0e8;
-  }
-  /* Worker profile: richer content panels */
-.worker-profile-kicker {
-  display: inline-block;
-  margin-bottom: 8px;
-  color: #b78213;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 1.2px;
-}
-
-.worker-profile-panel h4 {
-  margin: 20px 0 12px;
-  font-size: 15px;
-}
-
-.worker-profile-note {
-  margin-top: 16px;
-  padding: 15px;
-  border: 1px solid #f2e2b9;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #fff8e7, #fffdf7);
-}
-
-.worker-profile-note > strong {
-  display: block;
-  color: #76530b;
-  font-size: 13px;
-}
-
-.worker-profile-note p {
-  margin: 7px 0 0;
-  line-height: 1.7;
-}
-
-.worker-availability-status {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 15px;
-  margin-bottom: 14px;
-  border: 1px solid #dcefe0;
-  border-radius: 16px;
-  background: #f3fbf5;
-}
-
-.worker-availability-dot {
-  flex: 0 0 11px;
-  width: 11px;
-  height: 11px;
-  margin-top: 5px;
-  border-radius: 50%;
-  background: #20a464;
-}
-
-.worker-availability-status strong {
-  display: block;
-  font-size: 13px;
-}
-
-.worker-availability-status p {
-  margin: 5px 0 0;
-}
-
-.worker-experience-highlight {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 17px;
-  margin-bottom: 18px;
-  border: 1px solid #f0dfb7;
-  border-radius: 19px;
-  background: linear-gradient(135deg, #fff2cb, #fffaf0);
-}
-
-.worker-experience-icon {
-  display: grid;
-  flex: 0 0 48px;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border-radius: 15px;
-  background: #fff;
-  font-size: 24px;
-  box-shadow: 0 3px 10px rgba(90, 65, 10, .08);
-}
-
-.worker-experience-highlight small,
-.worker-experience-highlight strong {
-  display: block;
-}
-
-.worker-experience-highlight small {
-  color: #7c7054;
-  font-size: 11px;
-}
-
-.worker-experience-highlight strong {
-  margin-top: 4px;
-  font-size: 20px;
-}
-
-.worker-experience-highlight p {
-  margin: 5px 0 0;
-}
-
-.worker-review-summary {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 12px;
-  margin: 15px 0 18px;
-}
-
-.worker-review-average,
-.worker-review-total {
-  padding: 18px 12px;
-  text-align: center;
-  border: 1px solid #eee5d3;
-  border-radius: 18px;
-  background: linear-gradient(145deg, #fff9e9, #fff);
-}
-
-.worker-review-average > strong {
-  display: block;
-  font-size: 34px;
-  line-height: 1.2;
-}
-
-.worker-review-total > strong {
-  display: block;
-  margin: 6px 0;
-  font-size: 27px;
-}
-
-.worker-review-average small,
-.worker-review-total small {
-  display: block;
-  margin-top: 5px;
-  color: #777064;
-  font-size: 11px;
-}
-
-.worker-review-stars {
-  color: #e4a20a;
-  font-size: 18px;
-  letter-spacing: 2px;
-}
-
-.worker-review-stars span {
-  margin-left: 5px;
-  color: #625b4d;
-  font-size: 11px;
-  letter-spacing: 0;
-}
-
-.worker-review-card {
-  padding: 15px;
-  margin-bottom: 12px;
-  border: 1px solid #eee9df;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 4px 14px rgba(30, 25, 10, .035);
-}
-
-.worker-review-card-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.worker-review-avatar {
-  display: grid;
-  flex: 0 0 42px;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border-radius: 50%;
-  color: #7652cb;
-  background: #f0eaff;
-  font-size: 17px;
-  font-weight: 900;
-}
-
-.worker-review-person {
-  flex: 1;
-  min-width: 0;
-}
-
-.worker-review-person strong,
-.worker-review-person small {
-  display: block;
-  overflow-wrap: anywhere;
-}
-
-.worker-review-person strong {
-  font-size: 13px;
-}
-
-.worker-review-person small {
-  margin-top: 4px;
-  color: #888174;
-  font-size: 10px;
-}
-
-.worker-review-badge {
-  padding: 5px 8px;
-  border-radius: 20px;
-  color: #217247;
-  background: #eaf8ef;
-  font-size: 9px;
-  font-weight: 800;
-}
-
-.worker-review-card .worker-review-stars {
-  margin-top: 13px;
-}
-
-.worker-review-comment {
-  margin: 9px 0 0;
-  color: #625f56;
-  font-size: 13px;
-  line-height: 1.7;
-  overflow-wrap: anywhere;
-}
-
-.worker-review-empty {
-  padding: 24px 16px;
-  text-align: center;
-  border: 1px dashed #e7dfd0;
-  border-radius: 17px;
-  background: #fffdf8;
-}
-
-.worker-review-empty strong {
-  display: block;
-  font-size: 14px;
-}
-
-.worker-review-empty p {
-  margin-bottom: 0;
-}
-
-@media (max-width: 390px) {
-  .worker-profile-stats {
-    gap: 6px;
-  }
-
-  .worker-profile-stat {
-    padding: 12px 4px;
-  }
-
-  .worker-profile-stat strong {
-    font-size: 12px;
-  }
-
-  .worker-profile-tabs button {
-    padding: 10px;
-  }
-
-  .worker-review-badge {
-    font-size: 8px;
-  }
-} 
- 
-/* Worker Details banner - match Home banner size */
-.worker-profile-screen {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 12px 30px;
-}
-
-.worker-profile-hero {
-  position: relative;
-  width: 100%;
-  height: 520px !important;
-  min-height: 520px !important;
-  margin: 15px 0 24px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: #e7e9df;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .10);
-}
-
-.worker-profile-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.worker-profile-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 28px 22px;
-  color: white;
-  font-family: 'Improbable', sans-serif !important;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, .78),
-    rgba(0, 0, 0, .15) 65%,
-    transparent
-  );
-}
-
-.worker-profile-overlay h1 {
-  margin: 12px 0 5px;
-  font-family: 'Improbable', sans-serif !important;
-  font-size: clamp(30px, 6vw, 46px);
-  line-height: 1.1;
-  color: white;
-}
-
-.worker-profile-overlay p,
-.worker-profile-overlay span,
-.worker-profile-overlay strong {
-  font-family: 'Improbable', sans-serif !important;
-  color: white;
-}
-
-.worker-profile-overlay p {
-  margin: 5px 0;
-  font-size: 18px;
-}
-
-.worker-profile-overlay .verified {
-  display: inline-block;
-  padding: 7px 12px;
-  border-radius: 20px;
-  background: #ffc83d;
-  color: #242424;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.worker-profile-rating span {
-  font-size: 14px;
-  color: white;
-}
-
-/* Mobile banner size same as homepage */
-@media (max-width: 420px) {
-  .worker-profile-hero {
-    height: 540px !important;
-    min-height: 540px !important;
-    border-radius: 20px;
-  }
-
-  .worker-profile-overlay {
-    padding: 22px 16px;
-  }
-
-  .worker-profile-overlay h1 {
-    font-size: clamp(28px, 7vw, 38px);
-  }
-
-  .worker-profile-overlay p {
-    font-size: 16px;
-  }
-} 
-
-/* KAAMCONNECT PREMIUM UI UPGRADE */
-:root {
-  --navy: #18254b;
-  --ink: #20243a;
-  --purple: #7051e8;
-  --bg: #f7f7fc;
-  --line: #e9e7f4;
-  --shadow: 0 12px 32px rgba(44, 35, 92, 0.09);
-}
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-}
-
-.panel,
-.booking-card,
-.worker-card,
-.service-row {
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.booking-card,
-.worker-card,
-.service-row {
-  border-radius: 22px;
-  background: #fff;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #7658f0, #5938d6);
-  box-shadow: 0 8px 20px rgba(112, 81, 232, .24);
-}
-
-.btn-primary:active {
-  transform: scale(.97);
-}
-
-.panel {
-  border-radius: 24px;
-  background: #fff;
-}
-
-input,
-select,
-textarea {
-  border-radius: 13px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: 2px solid rgba(112, 81, 232, .25);
-  border-color: var(--purple);
-}
-
-@media (max-width: 560px) {
-  .page {
-    padding-top: 14px;
-  }
-
-  .panel {
-    padding: 16px;
-  }
-
-  .btn {
-    min-height: 46px;
-  }
-
-  .booking-card {
-    padding: 14px;
-  }
-}
-
-/* KAAMCONNECT — FULL SCREEN WELCOME BANNER */
-
-#screen-splash {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-height: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-  z-index: 9999 !important;
-  background: #e4f4e5 !important;
-}
-
-#screen-splash .splash-content {
-  width: 100% !important;
-  height: 100% !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-}
-
-#screen-splash .welcome-slide {
-  display: none !important;
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  padding: 22px 20px 28px !important;
-  margin: 0 !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 0 !important;
-  isolation: isolate !important;
-  border-radius: 0 !important;
-}
-
-#screen-splash .welcome-slide.active {
-  display: flex !important;
-}
-
-/* Photo fills the complete banner */
-#screen-splash .splash-photo {
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: -2 !important;
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-height: none !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  border-radius: 0 !important;
-}
-
-/* Gentle shade for readable text */
-#screen-splash .welcome-slide::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.35) 0%,
-    transparent 28%,
-    transparent 48%,
-    rgba(0,0,0,0.18) 68%,
-    rgba(0,0,0,0.68) 100%
-  );
-}
-
-/* Brand at the top, on the photo */
-#screen-splash .splash-brand {
-  position: relative !important;
-  z-index: 2 !important;
-  width: 100% !important;
-  flex: 0 0 auto !important;
-  margin: 8px 0 0 !important;
-  text-align: center !important;
-  color: #ffffff !important;
-  font-size: clamp(26px, 7vw, 38px) !important;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.55) !important;
-}
-
-/* Welcome title and note stay inside the banner */
-#screen-splash .splash-title {
-  position: relative !important;
-  z-index: 2 !important;
-  width: 100% !important;
-  flex: 0 0 auto !important;
-  margin: auto 0 8px !important;
-  padding: 0 4px !important;
-  text-align: center !important;
-  color: #ffffff !important;
-  font-size: clamp(23px, 6vw, 34px) !important;
-  line-height: 1.2 !important;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.7) !important;
-}
-
-#screen-splash .splash-note {
-  position: relative !important;
-  z-index: 2 !important;
-  width: 100% !important;
-  max-width: 420px !important;
-  flex: 0 0 auto !important;
-  margin: 0 0 18px !important;
-  padding: 0 6px !important;
-  text-align: center !important;
-  color: #ffffff !important;
-  font-size: clamp(14px, 3.8vw, 17px) !important;
-  line-height: 1.45 !important;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.8) !important;
-}
-
-/* Next / Get Started inside the photo */
-#screen-splash .splash-next {
-  position: relative !important;
-  z-index: 2 !important;
-  flex: 0 0 auto !important;
-  margin: 0 0 8px !important;
-  min-height: 50px !important;
-  padding: 13px 30px !important;
-  border: 0 !important;
-  border-radius: 999px !important;
-  background: #8065d8 !important;
-  color: #ffffff !important;
-  font-size: 16px !important;
-  font-weight: 700 !important;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.25) !important;
-}
-
-/* Prevent page scrolling while splash is active */
-body:has(#screen-splash.active) {
-  overflow: hidden !important;
-} 
-
-/* Improbable font for all Welcome Splash content */
-#screen-splash,
-#screen-splash * {
-  font-family: "Impressum", sans-serif !important;
-} 
-
-/* KAAMCONNECT — WELCOME SCREEN POLISH */
-/* Add this AFTER your existing splash CSS */
-
-#screen-splash .welcome-slide::after {
-  background: linear-gradient(
-    to bottom,
-    rgba(12, 14, 28, 0.20) 0%,
-    transparent 25%,
-    transparent 48%,
-    rgba(12, 14, 28, 0.22) 63%,
-    rgba(12, 14, 28, 0.82) 100%
-  ) !important;
-}
-
-/* Modern brand placement */
-#screen-splash .splash-brand {
-  margin-top: 14px !important;
-  font-family: "Improbable", sans-serif !important;
-  font-size: clamp(25px, 6.5vw, 34px) !important;
-  font-weight: 700 !important;
-  letter-spacing: 1px !important;
-  line-height: 1.2 !important;
-  text-shadow: 0 3px 14px rgba(0,0,0,.65) !important;
-}
-
-/* Modern styling for an existing home icon */
-#screen-splash .splash-brand svg,
-#screen-splash .splash-brand .home-icon,
-#screen-splash .splash-brand .fa-house {
-  width: 30px !important;
-  height: 30px !important;
-  vertical-align: middle !important;
-  color: #b9a0ff !important;
-  fill: none !important;
-  stroke: currentColor !important;
-  stroke-width: 2.2 !important;
-  stroke-linecap: round !important;
-  stroke-linejoin: round !important;
-  filter: drop-shadow(0 2px 5px rgba(128,101,216,.4)) !important;
-}
-
-/* Welcome heading */
-#screen-splash .splash-title {
-  margin: auto 0 12px !important;
-  padding: 0 8px !important;
-  font-family: "Improbable", sans-serif !important;
-  font-size: clamp(24px, 6vw, 33px) !important;
-  font-weight: 700 !important;
-  line-height: 1.22 !important;
-  letter-spacing: .2px !important;
-  text-wrap: balance !important;
-  text-shadow: 0 2px 12px rgba(0,0,0,.75) !important;
-}
-
-/* Description */
-#screen-splash .splash-note {
-  max-width: 360px !important;
-  margin-bottom: 22px !important;
-  padding: 0 10px !important;
-  font-family: "Improbable", sans-serif !important;
-  font-size: clamp(15px, 3.9vw, 18px) !important;
-  font-weight: 500 !important;
-  line-height: 1.55 !important;
-  letter-spacing: .25px !important;
-  text-wrap: pretty !important;
-  text-shadow: 0 2px 9px rgba(0,0,0,.9) !important;
-}
-
-/* Elegant NEXT button — keep existing functionality */
-#screen-splash .splash-next {
-  min-width: 174px !important;
-  min-height: 52px !important;
-  margin-bottom: 12px !important;
-  padding: 13px 32px !important;
-  border: 1px solid rgba(255,255,255,.24) !important;
-  border-radius: 999px !important;
-  background: linear-gradient(
-    135deg,
-    #9277ed,
-    #7657d1
-  ) !important;
-  color: #fff !important;
-  font-family: "Improbable", sans-serif !important;
-  font-size: 18px !important;
-  font-weight: 700 !important;
-  letter-spacing: 1px !important;
-  box-shadow: 0 7px 22px rgba(30,18,70,.35) !important;
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-/* Keep every splash element on the same font */
-#screen-splash,
-#screen-splash * {
-  font-family: "Improbable", sans-serif !important;
-}
-
-/* Modern KaamConnect home icon */
-#screen-splash .splash-brand {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 9px !important;
-}
-
-#screen-splash .kc-home-icon {
-  display: inline-block !important;
-  width: 31px !important;
-  height: 31px !important;
-  flex-shrink: 0 !important;
-  fill: none !important;
-  stroke: #b69aff !important;
-  stroke-width: 1.8 !important;
-  stroke-linecap: round !important;
-  stroke-linejoin: round !important;
-  filter: drop-shadow(0 2px 5px rgba(143,105,255,.35)) !important;
-} 
-
-/* KaamConnect welcome screen — placement correction */
-#screen-splash .welcome-slide {
-  position: relative !important;
-}
-
-#screen-splash .splash-brand {
-  position: absolute !important;
-  top: 10px !important;
-  left: 5% !important;
-  right: 5% !important;
-  width: auto !important;
-  margin: 0 !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
-  z-index: 5 !important;
-}
-
-/* Keep heading and description readable */
-#screen-splash .splash-title {
-  position: relative !important;
-  z-index: 2 !important;
-  width: 100% !important;
-  max-width: 360px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-#screen-splash .splash-note {
-  position: relative !important;
-  z-index: 2 !important;
-  width: 100% !important;
-  max-width: 360px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-#screen-splash .splash-next {
-  position: relative !important;
-  z-index: 2 !important;
-} 
 </style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#" onclick="go('home');return false">Kaam<span>Connect</span></a><div class="nav-actions"><button class="nav-link" onclick="go('services')">Services</button><button class="nav-link" onclick="go('bookings')">My bookings</button>
+<button class="icon-btn location-btn" aria-label="Use my location" title="Use my location" onclick="useMyLocation()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="8"></circle>
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+  </svg>
+</button> 
+  
 <button class="icon-btn" aria-label="Notifications"
         title="Notifications" onclick="go('notifications')">
   <svg xmlns="http://www.w3.org/2000/svg"
@@ -2455,143 +1066,10 @@ body:has(#screen-splash.active) {
     <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
     <path d="M10 21h4"></path>
   </svg>
-</button> 
-  
-<button class="icon-btn" aria-label="Profile" title="Profile" onclick="go('profile')">
-  <svg xmlns="http://www.w3.org/2000/svg"
-       width="23" height="23" viewBox="0 0 24 24"
-       fill="none" stroke="currentColor" stroke-width="1.8"
-       stroke-linecap="round" stroke-linejoin="round"
-       aria-hidden="true">
-    <circle cx="12" cy="8" r="4"/>
-    <path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>
-  </svg>
 </button>
-</div></div></header>
+<button class="icon-btn" aria-label="Account" onclick="go('auth')">♙</button></div></div></header>
 <main class="wrap">
 
-<section id="screen-splash" class="screen active page">
-  <div class="splash-content">
-
-    <!-- Slide 1: Welcome -->
-    <div class="welcome-slide active" data-slide="0">
-      
-<h1 class="splash-brand">
-  <svg class="kc-home-icon"
-       viewBox="0 0 24 24"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M3 10.5 12 3l9 7.5"/>
-    <path d="M5.5 9.5V21h13V9.5"/>
-    <path d="M9 21v-6h6v6"/>
-    <path d="M8 10.5h.01M16 10.5h.01"/>
-  </svg>
-  <span>KaamConnect</span>
-</h1>
-      <img class="splash-photo"
-           src="./welcome-home.png"
-           alt="Welcome to KaamConnect">
-
-      <h2 class="splash-title">Welcome to KaamConnect!</h2>
-      <p class="splash-note">
-        Reliable home services, trusted professionals, and easy
-        booking — all in one place.
-      </p>
-
-      <button class="splash-next" onclick="nextWelcomeSlide()">
-        Next <span>→</span>
-      </button>
-    </div>
-
-    <!-- Slide 2: Trusted Professionals -->
-    <div class="welcome-slide" data-slide="1">   
-<h1 class="splash-brand">
-  <svg class="kc-home-icon"
-       viewBox="0 0 24 24"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M3 10.5 12 3l9 7.5"/>
-    <path d="M5.5 9.5V21h13V9.5"/>
-    <path d="M9 21v-6h6v6"/>
-    <path d="M8 10.5h.01M16 10.5h.01"/>
-  </svg>
-  <span>KaamConnect</span>
-</h1>
-      <img class="splash-photo"
-           src="./trusted-professionals.png"
-           alt="Trusted professionals">
-
-      <h2 class="splash-title">Trusted Professionals</h2>
-      <p class="splash-note">
-        Skilled and reliable professionals to help take care
-        of your home with confidence.
-      </p>
-
-      <button class="splash-next" onclick="nextWelcomeSlide()">
-        Next <span>→</span>
-      </button>
-    </div>
-
-    <!-- Slide 3: Easy Booking -->
-    <div class="welcome-slide" data-slide="2">   
-<h1 class="splash-brand">
-  <svg class="kc-home-icon"
-       viewBox="0 0 24 24"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M3 10.5 12 3l9 7.5"/>
-    <path d="M5.5 9.5V21h13V9.5"/>
-    <path d="M9 21v-6h6v6"/>
-    <path d="M8 10.5h.01M16 10.5h.01"/>
-  </svg>
-  <span>KaamConnect</span>
-</h1>
-      <img class="splash-photo"
-           src="./easy-booking.png"
-           alt="Easy service booking">
-
-      <h2 class="splash-title">Easy Booking</h2>
-      <p class="splash-note">
-        Choose the service you need and book your preferred
-        professional in just a few simple steps.
-      </p>
-
-      <button class="splash-next" onclick="nextWelcomeSlide()">
-        Next <span>→</span>
-      </button>
-    </div>
-
-    <!-- Slide 4: Customer Support -->
-    <div class="welcome-slide" data-slide="3">
-<h1 class="splash-brand">
-  <svg class="kc-home-icon"
-       viewBox="0 0 24 24"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M3 10.5 12 3l9 7.5"/>
-    <path d="M5.5 9.5V21h13V9.5"/>
-    <path d="M9 21v-6h6v6"/>
-    <path d="M8 10.5h.01M16 10.5h.01"/>
-  </svg>
-  <span>KaamConnect</span>
-</h1>
-      <img class="splash-photo"
-           src="./customer-support.png"
-           alt="KaamConnect customer support">
-
-      <h2 class="splash-title">Customer Support</h2>
-      <p class="splash-note">
-        Need help? We're here to support you and make your
-        home-service experience easier.
-      </p>
-
-      <button class="splash-next" onclick="finishWelcome()">
-        Get Started <span>→</span>
-      </button>
-    </div>
-
-  </div>
-</section>
 <section id="screen-home" class="screen active page">
 
   <!-- Welcome header -->
@@ -2620,6 +1098,7 @@ body:has(#screen-splash.active) {
       <em>Smooth Services</em>
     </h1>
   </div>
+
   <!-- Search -->
   <div class="search-row">
     <label class="search">
@@ -2673,92 +1152,27 @@ body:has(#screen-splash.active) {
         onclick="go('services')">View all →</button>
     </div>
     <div id="homeServices" class="service-list"></div>
-  </div> 
-</section>
-<section id="screen-services" class="screen page"><div class="section-head"><div>
-<div class="page-photo-banner trusted-home-banner">
-  <img src="./trusted-workers.jpg"
-       alt="Trusted local professionals"
-       loading="lazy">
-  <div class="banner-copy">
-    <h2>Trusted hands for your home</h2>
-    <p>Find the right professional for your next task.</p>
   </div>
-</div>
-<button class="btn btn-light" onclick="go('home')">← Back</button><div class="eyebrow" style="margin-top:18px">Find the right help</div><h1 style="font-size:38px">Our Services</h1><p class="tiny">Browse all services and book the right professional.</p></div><button class="icon-btn" onclick="go('bookings')" aria-label="Bookings">🛒</button></div><label class="search"><span>⌕</span><input id="serviceSearch" placeholder="Search services, e.g. plumber, AC repair..." oninput="renderServices()"><button class="btn btn-light" onclick="document.getElementById('serviceSearch').value='';renderServices()">Clear</button></label><div id="serviceChips" class="chips" style="margin-top:12px"></div><div id="serviceList" class="service-list"></div></section>
-<section id="screen-workers" class="screen page"><button class="btn btn-light" onclick="go('home')">← Back</button>
-<div class="page-photo-banner">
-  <img src="./customer-support.jpg"
-       alt="KaamConnect customer support"
-       loading="lazy">
-  <div class="banner-copy">
-    <h2>Meet trusted professionals</h2>
-    <p>Discover people ready to help with your home services.</p>
-  </div>
-</div>
 
-<div class="section-head" style="margin-top:18px">
-  <div>
-    <div class="eyebrow">Local experts</div>
-    <h1 style="font-size:36px">Trusted Workers</h1>
-    <p class="tiny">Only worker profiles returned by your database appear here.</p>
-  </div>
-  <button class="icon-btn"
-          onclick="go('payroll')"
-          aria-label="Salary, Target and Bonus"
-          title="Salary & Bonus">💰</button>
-</div>
-<label class="search"><span>⌕</span><input id="workerSearch" placeholder="Search worker or speciality..." oninput="renderWorkers()"></label><div id="workerList" class="worker-grid" style="margin-top:16px"></div></section>
-
-<section id="screen-customers" class="screen page">
-  <button class="btn btn-light" onclick="go('home')">← Back</button>
-
-  <div class="page-photo-banner">
-    <img src="./customer-support.jpg"
-         alt="KaamConnect customers"
-         loading="lazy">
-    <div class="banner-copy">
-      <h2>Welcome, customers! 💜</h2>
-      <p>Discover trusted professionals for your everyday needs.</p>
+  <!-- Trusted workers -->
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Local professionals</div>
+        <h2>Meet trusted workers</h2>
+      </div>
+      <button class="btn btn-light"
+        onclick="go('workers')">View all →</button>
     </div>
-  </div>
-
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">Local professionals</div>
-      <h1 style="font-size:32px">Find your professional</h1>
-      <p class="tiny">Browse available workers and book a service.</p>
-    </div>
-    <span style="font-size:30px" aria-label="Customers">👥</span>
-  </div>
-
-  <div id="customerWorkerList" class="worker-grid"></div>
-</section>
-  <section id="screen-detail" class="screen page"><div id="detailContent"></div></section>
-
-<section id="screen-worker-profile" class="screen page worker-profile-screen">
-  <button class="btn btn-light"
-    onclick="go(workerProfileReturnScreen || 'workers')">
-    ← Back to workers
-  </button>
-
-  <div id="workerProfileContent">
-    <div class="empty">Select a professional to view their profile.</div>
+    <div id="homeWorkers" class="worker-grid"></div>
   </div>
 </section>
-  <section id="screen-schedule" class="screen page"><button class="btn btn-light" onclick="go('detail')">← Back to service</button><div style="margin-top:22px"><div class="eyebrow">Choose a convenient time</div><h1 style="color:var(--navy);font-size:42px">Schedule</h1><p class="muted">Book at a time slot as per your convenience.</p></div><div class="panel"><div class="calendar-head"><h3 id="monthTitle">Month 2026</h3><div class="month-actions"><button class="icon-btn" onclick="changeMonth(-1)">‹</button><button class="icon-btn" onclick="changeMonth(1)">›</button></div></div><div id="calendar" class="calendar-grid"></div><div class="summary-band"><div>▦ <small>Selected Date</small><strong id="selectedDateText">Choose a date</strong></div><div>◷ <small>Selected Time</small><strong id="selectedTimeText">Choose a time</strong></div></div></div><div class="panel"><h3>Available Time Slots</h3><p class="tiny">Choose a time that works best for you. Slots shown are checked against the schedule when configured.</p><div id="slots" class="slots"></div><p id="slotNote" class="tiny" style="margin-top:12px"></p></div><button class="btn btn-primary" style="width:100%" onclick="goCheckout()">Continue to booking →</button></section>
+<section id="screen-services" class="screen page"><div class="section-head"><div><button class="btn btn-light" onclick="go('home')">← Back</button><div class="eyebrow" style="margin-top:18px">Find the right help</div><h1 style="font-size:38px">Our Services</h1><p class="tiny">Browse all services and book the right professional.</p></div><button class="icon-btn" onclick="go('bookings')" aria-label="Bookings">🛒</button></div><label class="search"><span>⌕</span><input id="serviceSearch" placeholder="Search services, e.g. plumber, AC repair..." oninput="renderServices()"><button class="btn btn-light" onclick="document.getElementById('serviceSearch').value='';renderServices()">Clear</button></label><div id="serviceChips" class="chips" style="margin-top:12px"></div><div id="serviceList" class="service-list"></div></section>
+<section id="screen-workers" class="screen page"><button class="btn btn-light" onclick="go('home')">← Back</button><div class="section-head" style="margin-top:18px"><div><div class="eyebrow">Local experts</div><h1 style="font-size:36px">Trusted Workers</h1><p class="tiny">Only worker profiles returned by your database appear here.</p></div></div><label class="search"><span>⌕</span><input id="workerSearch" placeholder="Search worker or speciality..." oninput="renderWorkers()"></label><div id="workerList" class="worker-grid" style="margin-top:16px"></div></section>
+<section id="screen-detail" class="screen page"><div id="detailContent"></div></section>
+<section id="screen-schedule" class="screen page"><button class="btn btn-light" onclick="go('detail')">← Back to service</button><div style="margin-top:22px"><div class="eyebrow">Choose a convenient time</div><h1 style="color:var(--navy);font-size:42px">Schedule</h1><p class="muted">Book at a time slot as per your convenience.</p></div><div class="panel"><div class="calendar-head"><h3 id="monthTitle">Month 2026</h3><div class="month-actions"><button class="icon-btn" onclick="changeMonth(-1)">‹</button><button class="icon-btn" onclick="changeMonth(1)">›</button></div></div><div id="calendar" class="calendar-grid"></div><div class="summary-band"><div>▦ <small>Selected Date</small><strong id="selectedDateText">Choose a date</strong></div><div>◷ <small>Selected Time</small><strong id="selectedTimeText">Choose a time</strong></div></div></div><div class="panel"><h3>Available Time Slots</h3><p class="tiny">Choose a time that works best for you. Slots shown are checked against the schedule when configured.</p><div id="slots" class="slots"></div><p id="slotNote" class="tiny" style="margin-top:12px"></p></div><button class="btn btn-primary" style="width:100%" onclick="goCheckout()">Continue to booking →</button></section>
 <section id="screen-checkout" class="screen page"><button class="btn btn-light" onclick="go('schedule')">← Back to schedule</button><div style="margin-top:20px"><div class="eyebrow">Almost there</div><h1 style="font-size:36px">Review & Book</h1><p class="tiny">Check your details before submitting your booking.</p></div><div id="checkoutSummary" class="panel"></div><form id="bookingForm" class="panel"><h3>Service address</h3><div class="form-grid"><div class="field"><label for="addressLabel">Address type</label><select id="addressLabel"><option>Home</option><option>Work</option><option>Other</option></select></div><div class="field"><label for="landmark">Landmark (optional)</label><input id="landmark" placeholder="Near a landmark"></div><div class="field full"><label for="address">House / street / locality</label><textarea id="address" required placeholder="Enter complete service address"></textarea></div><div class="field full"><label for="notes">Instructions (optional)</label><textarea id="notes" placeholder="Anything the professional should know?"></textarea></div><div class="field full"><label for="payment">Payment method</label><select id="payment"><option value="cash">Cash after service</option><option value="online" disabled>Online payment (not configured yet)</option></select></div></div><div id="bookingNotice" class="notice"></div><button id="confirmBooking" class="btn btn-primary" style="width:100%;margin-top:15px" type="submit">Confirm Booking</button><p class="tiny" style="margin-top:10px">Booking is confirmed only after Supabase accepts it. Availability and price are validated again by the backend.</p></form></section>
-<section id="screen-bookings" class="screen page"><div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p>
-<div class="page-photo-banner">
-  <img src="./plumbing-banner.jpg"
-       alt="Professional plumber"
-       loading="lazy">
-  <div class="banner-copy">
-    <h2>Home repairs, made simple</h2>
-    <p>Book reliable local professionals for your home.</p>
-  </div>
-</div>
-<div id="bookingsContent"></div></section>
+<section id="screen-bookings" class="screen page"><div class="eyebrow">Your activity</div><h1 style="font-size:38px">My Bookings</h1><p class="tiny">Sign in to view and manage your actual bookings.</p><div id="bookingsContent"></div></section>
 <section id="screen-auth" class="screen page"><div class="auth-card panel"><div class="eyebrow">Welcome to KaamConnect</div><h1 style="font-size:34px">Your account</h1><p class="tiny">Sign in to book services or create an account to get started.</p><div class="chips"><button id="loginTab" class="chip active" onclick="setAuthMode('login')">Sign in</button><button id="signupTab" class="chip" onclick="setAuthMode('signup')">Create account</button></div><form id="authForm"><div class="form-grid"><div id="nameField" class="field full hidden"><label for="authName">Full name</label><input id="authName" autocomplete="name" placeholder="Your name"></div><div class="field full"><label for="authEmail">Email</label><input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></div><div class="field full"><label for="authPassword">Password</label><input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters"></div></div><div id="authNotice" class="notice"></div><button class="btn btn-primary" id="authSubmit" style="width:100%;margin-top:14px">Sign in</button></form><button type="button" class="btn btn-light"
   style="width:100%;margin-top:10px"
   onclick="signInWithGoogle()">
@@ -2766,59 +1180,6 @@ body:has(#screen-splash.active) {
 </button><button class="btn btn-light" style="width:100%;margin-top:10px" onclick="signOut()">Sign out</button><p class="tiny" style="margin-top:14px">Use the same email you registered with. If email confirmation is enabled in Supabase, confirm the email before signing in.</p></div></section>
 <section id="screen-profile" class="screen page"><div class="eyebrow">Your account 🌸</div><h1 style="font-size:38px">My Profile ✨</h1><p class="tiny">Manage your KaamConnect account, bookings and preferences in one place.</p><div id="profileContent" class="panel"></div><div class="profile-actions"><button class="profile-action" onclick="go('bookings')"><span class="profile-symbol">📋</span><span><strong>My bookings</strong><small>Check booking status and details</small></span></button><button class="profile-action" onclick="go('services')"><span class="profile-symbol">🧰</span><span><strong>Book a service</strong><small>Find trusted local professionals</small></span></button><button class="profile-action" onclick="useMyLocation()"><span class="profile-symbol">📍</span><span><strong>My location</strong><small>Use your location for a booking</small></span></button><button class="profile-action" onclick="support()"><span class="profile-symbol">💬</span><span><strong>Help & support</strong><small>Get help with KaamConnect</small></span></button></div><div id="roleDashboardLinks" class="panel hidden"></div></section>
 <section id="screen-admin" class="screen page"><div class="eyebrow">Control centre</div><h1 style="font-size:38px">Admin Dashboard 🛠️</h1><p class="tiny">Review professional profiles and manage worker approvals.</p><div id="adminStats" class="admin-stat-grid"><div class="admin-stat"><small>Worker profiles</small><strong>—</strong></div><div class="admin-stat"><small>Pending review</small><strong>—</strong></div><div class="admin-stat"><small>Approved</small><strong>—</strong></div></div><div class="panel"><div class="section-head"><div><h2>Worker approvals</h2><p class="tiny">Approve only profiles you have verified.</p></div><button class="btn btn-light" onclick="loadAdminWorkers()">↻ Refresh</button></div><div id="adminWorkersList"><div class="empty">Sign in with your admin account to load worker profiles.</div></div></div><div class="panel"><h2>Recent bookings</h2><div id="adminBookingsList"><div class="empty">Press refresh to load bookings.</div></div><button class="btn btn-light" onclick="loadAdminBookings()">Refresh bookings</button></div></section>
-
-<section id="screen-payroll" class="screen page">
-  <button class="btn btn-light" onclick="go('workers')">
-    ← Back to Workers
-  </button>
-
-  <h1>Salary, Target & Bonus 💰</h1>
-  <p class="tiny">Manage worker salary and monthly performance.</p>
-
-  <div id="payrollStats" class="admin-stat-grid"></div>
-
-  <form id="payrollForm" class="panel">
-    <h2>Add / Update Salary</h2>
-
-    <label for="payrollWorker">Worker</label>
-    <select id="payrollWorker" required>
-      <option value="">Select worker</option>
-    </select>
-
-    <label for="payrollStart">Salary period start</label>
-    <input id="payrollStart" type="date" required>
-
-    <label for="payrollEnd">Salary period end</label>
-    <input id="payrollEnd" type="date" required>
-
-    <label for="payrollTarget">Target jobs 🎯</label>
-    <input id="payrollTarget" type="number" min="0" value="20" required>
-
-    <label for="payrollCompleted">Completed jobs</label>
-    <input id="payrollCompleted" type="number" min="0" value="0" required>
-
-    <label for="payrollSalary">Base salary (₹)</label>
-    <input id="payrollSalary" type="number" min="0" value="12000" required>
-
-    <label for="payrollBonus">Target bonus (₹)</label>
-    <input id="payrollBonus" type="number" min="0" value="2000" required>
-
-    <label for="payrollNotes">Notes (optional)</label>
-    <input id="payrollNotes" placeholder="Payment or work details">
-
-    <div id="payrollCalc" class="summary-band"></div>
-    <div id="payrollNotice" class="notice"></div>
-
-    <button class="btn btn-primary" type="submit">
-      Save Salary Record
-    </button>
-  </form>
-
-  <div class="panel">
-    <h2>Salary Payment History</h2>
-    <div id="payrollList">Salary records will appear here.</div>
-  </div>
-</section>
 <section id="screen-worker" class="screen page"><div class="eyebrow">Professional space</div><h1 style="font-size:38px">Worker Dashboard 🧰</h1><p class="tiny">View assigned work and your profile status.</p><div class="panel"><div class="section-head"><div><h2>My professional profile</h2><p class="tiny">Approval and availability come from your database record.</p></div><button class="btn btn-light" onclick="loadWorkerDashboard()">↻ Refresh</button></div><div id="workerDashboardContent"><div class="empty">Sign in with your worker account to view details.</div></div></div><div class="panel"><h2>Assigned bookings</h2><div id="workerDashboardBookings"><div class="empty">Booking information will appear here when your worker account is linked.</div></div></div>
 </section>
 <section id="screen-tracking" class="screen page"><div class="tracking-page"><button class="icon-btn" onclick="go('bookings')">←</button><h1 style="text-align:center;margin:22px 0 6px">Real-time<br>tracking</h1><p style="text-align:center;color:#f6c6df">Your professional, on the way</p><div class="tracking-phone"><div id="trackingMap" class="map"></div><div class="arrival"><strong>Expert on the way</strong><span id="arrivalText">Waiting for worker location…</span><div class="eta"><small>ARRIVING IN</small><b id="etaValue">—</b><small>MINS</small></div></div><div class="tracking-info"><strong>Check-in OTP</strong><p class="tiny">Share this one-time code only with your assigned professional. The professional must verify it to start the service.</p><div id="trackingOtpValue" style="font-size:24px;letter-spacing:5px;font-weight:800;margin:10px 0">••••••</div><button class="btn btn-light" onclick="shareBookingOtp()">Share OTP securely</button><p id="otpNotice" class="tiny"></p></div><div id="trackingBooking" class="tracking-info"></div><p class="tiny">Map accuracy depends on the worker sharing live GPS during an active tracking session. Background tracking may be limited by mobile browsers.</p></div></div></section>
@@ -2846,20 +1207,10 @@ body:has(#screen-splash.active) {
 <footer class="footer"><div class="wrap">© <span id="year"></span> KaamConnect · Local help, made simple. <span style="float:right">Privacy-first location sharing</span></div></footer>
 <nav class="bottom-nav" aria-label="Main navigation">
 <button class="active" data-go="home" onclick="go('home')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
-<button data-go="workers" onclick="go('workers')">
-  <span>
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="9" cy="7" r="4"/>
-      <path d="M2 21v-2a7 7 0 0 1 14 0v2"/>
-      <path d="M16 4a4 4 0 0 1 0 7"/>
-      <path d="M19 14a6 6 0 0 1 3 5v2"/>
-    </svg>
-  </span>
-  Workers
-</button>  
 <button data-go="bookings" onclick="go('bookings')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg></span>Bookings</button>
- <button data-go="services" onclick="go('services')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a5 5 0 0 0-6.4 6.4L3 18l3 3 5.3-5.3a5 5 0 0 0 6.4-6.4L14 13l-3-3z"/><path d="m15 5 4-4M18 8l4-4"/></svg></span>Services</button>
+<button data-go="services" onclick="go('services')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a5 5 0 0 0-6.4 6.4L3 18l3 3 5.3-5.3a5 5 0 0 0 6.4-6.4L14 13l-3-3z"/><path d="m15 5 4-4M18 8l4-4"/></svg></span>Services</button>
 <button data-go="support" onclick="go('support')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><path d="M3 13h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM21 13h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2z"/></svg></span>Support</button>
+<button data-go="profile" onclick="go('profile')"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></span>Profile</button>
 </nav>
 <div id="toast" class="toast hidden" role="status"></div>
 <script>
@@ -2911,13 +1262,7 @@ function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidd
 function notice(id,msg,type="info"){const e=$(id);if(!e)return;e.className="notice show "+type;e.textContent=msg}
 function hideNotice(id){if($(id))$(id).className="notice"}
 
-function go(name) { 
-  if (
-  name !== "splash" &&
-  localStorage.getItem("kc_welcome_completed") === "true"
-) {
-  localStorage.setItem("kc_last_screen", name);
-  }
+function go(name) {
   const target = $("screen-" + name);
 
   if (!target) {
@@ -2961,36 +1306,20 @@ function go(name) {
   }
 
   if (name === "worker") loadWorkerDashboard();
-  if (name === "payroll") loadPayroll();
 }
-function support() {
-  const supportScreen = document.getElementById("screen-support");
-
-  if (supportScreen) {
-    go("support");
-    return;
-  }
-  toast("Open the Support page from the bottom navigation.");
-}
+function support(){toast("Support: add your customer support email/phone in the project settings.");}
 function imgFor(s){
   return s.image_url || (s.image_file ? "./" + s.image_file : "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=85");
 }
 function normalizeService(row){return {id:row.id,name:row.name,category:row.category||"Other",description:row.description||"",icon:row.icon||"✧",image_url:row.image_url||null,image_file:row.image_file||null,starting_price:Number(row.starting_price||0),duration_minutes:Number(row.duration_minutes||60),active:row.active!==false}}
+
 async function loadNotifications() {
   const list = document.getElementById("notificationList");
   if (!list) return;
-list.innerHTML = `
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
-    <div>
-      <h3 style="margin:0">Booking Updates</h3>
-      <p class="muted" style="margin:5px 0 0">Your latest service booking activity</p>
-    </div>
-    <button class="btn btn-light" onclick="loadNotifications()">
-      ↻ Refresh
-    </button>
-  </div>
-  <p class="muted">Loading notifications...</p>
-`;  
+
+  list.innerHTML = '<p class="muted">Loading notifications...</p>';
+
+  
 if (!sb) {
   list.innerHTML = "<p>Database connection is not available. Please refresh the page.</p>";
   return;
@@ -3032,60 +1361,19 @@ const loggedInUser = authData.user;
     list.innerHTML = data.map(b => {
       const status = String(b.status || "requested").toLowerCase();
 
-const messages = {
-  requested: [
-    "🕒",
-    "Request received",
-    "Your booking request has been submitted and is awaiting processing."
-  ],
-  pending: [
-    "⏳",
-    "Awaiting confirmation",
-    "Your service booking is waiting for confirmation."
-  ],
-  confirmed: [
-    "✅",
-    "Booking confirmed",
-    "Your booking has been confirmed. Check your booking details for the scheduled time."
-  ],
-  accepted: [
-    "🤝",
-    "Professional accepted",
-    "Your service professional has accepted the booking."
-  ],
-  on_the_way: [
-    "🚗",
-    "Professional on the way",
-    "Your professional is on the way. Open tracking to check available location updates."
-  ],
-  arrived: [
-    "📍",
-    "Professional arrived",
-    "Your professional has marked arrival."
-  ],
-  in_progress: [
-    "🛠️",
-    "Service in progress",
-    "Your service is marked as in progress."
-  ],
-  completed: [
-    "🎉",
-    "Service completed",
-    "Your booking is marked as completed. You can submit a rating if eligible."
-  ],
-  cancelled: [
-    "❌",
-    "Booking cancelled",
-    "This booking has been cancelled."
-  ],
-  rejected: [
-    "⚠️",
-    "Booking declined",
-    "This booking was declined. Contact support if you need help."
-  ]
-};
-  const message = messages[status] || ["🔔", "Booking update", "Current status: " + status];
-  const date = b.created_at ? new Date(b.created_at).toLocaleString() : "";
+      const messages = {
+        requested: ["🕒", "Booking requested", "Your booking request has been received."],
+        pending: ["🕒", "Booking pending", "Your booking is waiting for confirmation."],
+        confirmed: ["✅", "Booking confirmed", "Your booking has been confirmed."],
+        accepted: ["✅", "Booking accepted", "Your service professional has accepted the booking."],
+        completed: ["🎉", "Service completed", "Your booking is marked as completed."],
+        cancelled: ["❌", "Booking cancelled", "This booking has been cancelled."],
+        rejected: ["⚠️", "Booking declined", "This booking was declined."]
+      };
+
+      const message = messages[status] || ["🔔", "Booking update", "Current status: " + status];
+      const date = b.created_at ? new Date(b.created_at).toLocaleString() : "";
+
       return `
         <div style="padding:14px 0;border-bottom:1px solid #eee">
           <div style="font-size:22px">${message[0]}</div>
@@ -3160,117 +1448,19 @@ async function loadData(){
         avatar_url:w.photo_url,
         experience_years:null,
         service_area:w.area,
-        verified: false,
+        verified:true,
         available:w.available,
         rating:null,
         review_count:0,
         starting_price:w.price,
         postal_code:w.postal_code
       }));
-      
-      // Load separate banner photos for Worker Details
-      try {
-        const { data: bannerProfiles, error: bannerError } = await sb
-          .from("kc_worker_profiles")
-          .select("full_name,banner_url");
 
-        if (bannerError) throw bannerError;
-
-        const bannerByName = new Map(
-          (bannerProfiles || []).map(profile => [
-            (profile.full_name || "").trim().toLowerCase(),
-            profile.banner_url
-          ])
-        );
-
-        workers = workers.map(w => ({
-          ...w,
-          banner_url:
-            bannerByName.get(
-              (w.full_name || "").trim().toLowerCase()
-            ) || null
-        }));
-      } catch (bannerError) {
-        console.warn("Worker banner query:", bannerError.message);
-      }
-      const { data: reviews, error: reviewError } = await sb
-        .from("worker_reviews")
-        .select("worker_id, rating");
-
-      if (reviewError) throw reviewError;
-
-      const ratingStats = {};
-
-      (reviews || []).forEach(r => {
-        if (!ratingStats[r.worker_id]) {
-          ratingStats[r.worker_id] = { total: 0, count: 0 };
-        }
-
-        ratingStats[r.worker_id].total += r.rating;
-        ratingStats[r.worker_id].count++;
-      });
-
-      workers = workers.map(w => {
-        const s = ratingStats[w.id];
-
-        return {
-          ...w,
-          rating: s ? (s.total / s.count).toFixed(1) : null,
-          review_count: s ? s.count : 0
-        };
-      });
-
-}catch(e){
-  console.warn("Worker directory query failed:", e.message);
-}
-
-// Fallback: load directly from KaamConnect worker profiles
-if (!workers.length) {
-  try {
-    const { data, error } = await sb
-      .from("kc_worker_profiles")
-      .select(`
-        id,
-        full_name,
-        profession,
-        bio,
-        avatar_url,
-        banner_url,
-        experience_years,
-        service_area,
-        verified,
-        available,
-        rating,
-        review_count,
-        starting_price
-      `)
-      .eq("available", true);
-
-    if (error) throw error;
-
-    workers = (data || []).map(w => ({
-      id: w.id,
-      full_name: w.full_name,
-      profession: w.profession,
-      bio: w.bio || "",
-      avatar_url: w.avatar_url,
-      banner_url: w.banner_url,
-      experience_years: w.experience_years,
-      service_area: w.service_area,
-      verified: w.verified,
-      available: w.available,
-      rating: w.rating,
-      review_count: w.review_count || 0,
-      starting_price: w.starting_price
-    }));
-
-  } catch (fallbackError) {
-    console.error(
-      "Worker profile loading failed:",
-      fallbackError
-    );
+    }catch(e){
+      console.warn("Worker query:",e.message);
+    }
   }
-}
+
   renderHome();
   renderServices();
   renderWorkers();
@@ -3286,43 +1476,7 @@ function filterHome(){const q=$("homeSearch").value.toLowerCase().trim();const l
 function renderServices(){if(!$("serviceList"))return;const q=($("serviceSearch")?.value||"").toLowerCase().trim();const list=services.filter(s=>(activeCategory==="All"||s.category===activeCategory)&&(s.name+" "+s.category+" "+s.description).toLowerCase().includes(q));$("serviceList").innerHTML=list.map(serviceCard).join("")||'<div class="empty">No services found. Clear the search or choose another category.</div>';renderChips()}
 function openServiceByName(name){const s=services.find(x=>x.name.toLowerCase()===name.toLowerCase())||services.find(x=>x.name.toLowerCase().includes(name.toLowerCase()));if(s)openService(s.id);else go("services")}
 function openService(id){currentService=services.find(s=>String(s.id)===String(id));if(!currentService){toast("Service not found");return}currentWorker=null;currentPlan="Classic";renderDetail();go("detail")}
-
-function workerMatchesCategory(worker, category) {
-  const profession = String(
-    worker.profession || ""
-  ).toLowerCase();
-
-  const cat = String(category || "").toLowerCase();
-
-  const aliases = {
-    plumbing: ["plumber", "plumbing"],
-    electrical: ["electrician", "electrical"],
-    carpentry: ["carpenter", "carpentry"],
-    cleaning: ["cleaner", "cleaning"],
-    handyman: ["handyman"],
-    painting: ["painter", "painting"],
-    "ac & appliances": [
-      "ac",
-      "appliance",
-      "refrigerator",
-      "washing machine",
-      "geyser"
-    ]
-  };
-
-  const terms = aliases[cat] || [cat];
-
-  return terms.some(term =>
-    profession.includes(term)
-  ) || (worker.specialties || []).some(item =>
-    terms.some(term =>
-      String(item).toLowerCase().includes(term)
-    )
-  );
-}
-function renderDetail(){const s=currentService;if(!s)return;const matched = workers.filter(w =>
-  workerMatchesCategory(w, s.category)
-); const w=currentWorker||matched[0]||null;currentWorker=w;const photo=imgFor(s);$("detailContent").innerHTML=`<div class="detail-hero" style="background:${palette[services.indexOf(s)%palette.length]}"><img src="${esc(photo)}" alt="${esc(s.name)}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85'"><div class="detail-actions"><button class="icon-btn" onclick="go('services')">‹</button><button class="icon-btn" onclick="go('bookings')">🛒</button></div></div><div class="panel" style="border:0;box-shadow:none;padding:18px 4px"><div class="section-head"><div><h2>${esc(s.name)}</h2><p class="muted">${esc(s.description)}</p></div><span class="pill">Service</span></div><div class="price">${money(s.starting_price)} <span class="tiny">starting price</span></div><p class="tiny">Final price depends on the confirmed service plan and scope. Any discount is shown only when configured in the database.</p><h3 style="margin-top:22px">Choose your plan</h3><div class="plans"><button class="plan selected" data-plan="Classic" onclick="selectPlan('Classic',this)"><small>CLASSIC</small><strong>${money(s.starting_price)}</strong><small>Essential service</small></button><button class="plan" data-plan="Premium" onclick="selectPlan('Premium',this)"><small>PREMIUM</small><strong>${money(s.starting_price*1.16)}</strong><small>Extra attention</small></button><button class="plan" data-plan="Platinum" onclick="selectPlan('Platinum',this)"><small>PLATINUM</small><strong>${money(s.starting_price*1.32)}</strong><small>Extended scope</small></button></div><div id="workerInlineArea">${w?workerInline(w):'<div class="empty" style="margin-top:15px">No matching available worker has been listed yet. You can continue; worker assignment must be completed through your live backend.</div>'}</div><h3 style="margin-top:24px">Service Description</h3><p class="muted" style="line-height:1.8">${esc(s.description)} KaamConnect helps you request a local professional. Confirm the scope, access instructions and final quote before work begins.</p><h3>What's included</h3><ul class="rule-list"><li>Discussion of the requested work before starting.</li><li>Service-specific work based on the selected plan.</li><li>Booking status updates in your account.</li></ul><h3>Before you book</h3><ul class="rule-list"><li>Enter a complete service address.</li><li>Choose a date and time slot.</li><li>Final availability is checked by the backend when configured.</li></ul><div class="section"><h3>FAQs</h3><details class="panel"><summary>Can I change the booking time?</summary><p class="tiny">Use My Bookings to view your booking. Rescheduling depends on available slots and backend support.</p></details><details class="panel"><summary>When is payment due?</summary><p class="tiny">Cash after service is available as the default option. Online payment is disabled until a payment provider is configured.</p></details></div></div><div class="fixed-cta"><div class="fixed-cta-inner"><div class="price-capsule" id="detailPrice">${money(s.starting_price)}</div><button class="btn btn-primary" onclick="startSchedule()">Book Now →</button></div></div>`}
+function renderDetail(){const s=currentService;if(!s)return;const matched=workers.filter(w=>(w.profession||"").toLowerCase().includes(s.category.toLowerCase())||(w.specialties||[]).includes(s.category));const w=currentWorker||matched[0]||null;currentWorker=w;const photo=imgFor(s);$("detailContent").innerHTML=`<div class="detail-hero" style="background:${palette[services.indexOf(s)%palette.length]}"><img src="${esc(photo)}" alt="${esc(s.name)}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85'"><div class="detail-actions"><button class="icon-btn" onclick="go('services')">‹</button><button class="icon-btn" onclick="go('bookings')">🛒</button></div></div><div class="panel" style="border:0;box-shadow:none;padding:18px 4px"><div class="section-head"><div><h2>${esc(s.name)}</h2><p class="muted">${esc(s.description)}</p></div><span class="pill">Service</span></div><div class="price">${money(s.starting_price)} <span class="tiny">starting price</span></div><p class="tiny">Final price depends on the confirmed service plan and scope. Any discount is shown only when configured in the database.</p><h3 style="margin-top:22px">Choose your plan</h3><div class="plans"><button class="plan selected" data-plan="Classic" onclick="selectPlan('Classic',this)"><small>CLASSIC</small><strong>${money(s.starting_price)}</strong><small>Essential service</small></button><button class="plan" data-plan="Premium" onclick="selectPlan('Premium',this)"><small>PREMIUM</small><strong>${money(s.starting_price*1.16)}</strong><small>Extra attention</small></button><button class="plan" data-plan="Platinum" onclick="selectPlan('Platinum',this)"><small>PLATINUM</small><strong>${money(s.starting_price*1.32)}</strong><small>Extended scope</small></button></div><div id="workerInlineArea">${w?workerInline(w):'<div class="empty" style="margin-top:15px">No matching available worker has been listed yet. You can continue; worker assignment must be completed through your live backend.</div>'}</div><h3 style="margin-top:24px">Service Description</h3><p class="muted" style="line-height:1.8">${esc(s.description)} KaamConnect helps you request a local professional. Confirm the scope, access instructions and final quote before work begins.</p><h3>What's included</h3><ul class="rule-list"><li>Discussion of the requested work before starting.</li><li>Service-specific work based on the selected plan.</li><li>Booking status updates in your account.</li></ul><h3>Before you book</h3><ul class="rule-list"><li>Enter a complete service address.</li><li>Choose a date and time slot.</li><li>Final availability is checked by the backend when configured.</li></ul><div class="section"><h3>FAQs</h3><details class="panel"><summary>Can I change the booking time?</summary><p class="tiny">Use My Bookings to view your booking. Rescheduling depends on available slots and backend support.</p></details><details class="panel"><summary>When is payment due?</summary><p class="tiny">Cash after service is available as the default option. Online payment is disabled until a payment provider is configured.</p></details></div></div><div class="fixed-cta"><div class="fixed-cta-inner"><div class="price-capsule" id="detailPrice">${money(s.starting_price)}</div><button class="btn btn-primary" onclick="startSchedule()">Book Now →</button></div></div>`}
 function workerInline(w){return `<div class="worker-inline"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><div class="grow"><strong>${esc(w.full_name||'Professional')}</strong><div class="tiny">${esc(w.profession||'Service professional')} · ${w.verified?'<span class="verified">✓ Verified</span>':'Profile'}</div><div class="tiny">★ ${w.rating||'—'} (${w.review_count||0} reviews) · ${w.experience_years||'—'} years experience</div></div><button class="icon-btn" onclick="callWorker('${esc(w.id)}')" title="Call">☎</button><button class="icon-btn" onclick="messageWorker('${esc(w.id)}')" title="Message">☏</button></div>`}
 function selectPlan(plan,el){currentPlan=plan;document.querySelectorAll(".plan").forEach(p=>p.classList.toggle("selected",p.dataset.plan===plan));const mult=plan==="Classic"?1:plan==="Premium"?1.16:1.32;$("detailPrice").textContent=money(currentService.starting_price*mult)}
 function selectedPrice(){if(!currentService)return 0;return Math.round(currentService.starting_price*(currentPlan==="Classic"?1:currentPlan==="Premium"?1.16:1.32))}
@@ -3333,253 +1487,15 @@ function renderCalendar(){const y=monthCursor.getFullYear(),m=monthCursor.getMon
 function chooseDate(key){selectedDate=key;selectedTime="";renderCalendar();loadAvailability()}
 function updateSelectedSummary(){$("selectedDateText").textContent=selectedDate?new Date(selectedDate+"T12:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}):"Choose a date";$("selectedTimeText").textContent=selectedTime||"Choose a time"}
 function renderSlots(available=null){const times=["09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM"];if(!selectedDate){$("slots").innerHTML='<div class="empty" style="grid-column:1/-1">Select a date to view available times.</div>';return}const now=new Date();const isToday=selectedDate===dateKey(now);const slots=times.filter(t=>{if(!isToday)return true;const [time,ampm]=t.split(" "),[hh,mm]=time.split(":").map(Number);let h=hh%12+(ampm==="PM"?12:0);return h>now.getHours()||(h===now.getHours()&&mm>now.getMinutes())});$("slots").innerHTML=slots.map(t=>`<button class="slot ${selectedTime===t?'selected':''}" onclick="chooseTime('${t}')">${t}</button>`).join("")||'<div class="empty" style="grid-column:1/-1">No time slots left for this date.</div>';updateSelectedSummary()}
-
-function chooseTime(t) {
-  if (!selectedDate) {
-    toast("Please select a date first.");
-    return;
-  }
-
-  const [clock, ampm] = t.split(" ");
-  const [hours, minutes] = clock.split(":").map(Number);
-
-  const hour24 = (hours % 12) + (ampm === "PM" ? 12 : 0);
-  const chosen = new Date(
-    selectedDate + "T" +
-    String(hour24).padStart(2, "0") + ":" +
-    String(minutes).padStart(2, "0") + ":00"
-  );
-
-  if (chosen.getTime() <= Date.now()) {
-    toast("Please choose a future time.");
-    selectedTime = "";
-    renderSlots();
-    updateSelectedSummary();
-    return;
-  }
-
-  selectedTime = t;
-  renderSlots();
-  updateSelectedSummary();
-}
+function chooseTime(t){selectedTime=t;renderSlots();updateSelectedSummary()}
 async function loadAvailability(){if(!selectedDate||!sb||!currentService)return;try{const {data,error}=await sb.from("kc_worker_schedules").select("id,worker_id,start_time,end_time,break_start,break_end,weekday,is_available").eq("weekday",new Date(selectedDate+"T12:00:00").getDay()).eq("is_available",true);if(error)throw error;/* Worker-specific slot validation is repeated in the booking RPC. */if(!data?.length)$("slotNote").textContent="No worker schedule is published for this weekday yet. Available times shown are request preferences; booking may be declined by the backend.";else $("slotNote").textContent="Worker schedules found. Final slot availability is validated when the booking is submitted."}catch(e){$("slotNote").textContent="Schedule data could not be loaded. The backend will validate availability during booking."}}
 function goCheckout(){if(!currentService){toast("Choose a service first");go("services");return}if(!selectedDate||!selectedTime){toast("Please select a date and time");return}renderCheckout();go("checkout")}
 function renderCheckout(){$("checkoutSummary").innerHTML=`<h3>Booking summary</h3><div style="display:flex;justify-content:space-between;gap:12px"><div><strong>${esc(currentService.name)}</strong><p class="tiny">${esc(currentPlan)} plan · ${currentService.duration_minutes||60} minutes</p><p class="tiny">${new Date(selectedDate+"T12:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})} · ${esc(selectedTime)}</p></div><strong>${money(selectedPrice())}</strong></div><p class="tiny">Worker: ${currentWorker?esc(currentWorker.full_name):"To be assigned based on availability"}</p><p class="tiny">No coupon or online payment is applied unless configured in your backend.</p>`}
-let bookingSubmitting = false;
-  $("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("bookingNotice");if(!sb){notice("bookingNotice","Supabase is not configured. Add your project URL and publishable/anon key in index.html, then run supabase.sql.","bad");return}if(!user){notice("bookingNotice","Please sign in before confirming your booking.","bad");go("auth");return} 
-  if (!selectedDate || !selectedTime) {
-  notice(
-    "bookingNotice",
-    "Please select a booking date and time.",
-    "bad"
-  );
-  return;
-}
-const [clock, ampm] = selectedTime.split(" ");
-const [hours, minutes] = clock.split(":").map(Number);
-const hour24 = (hours % 12) + (ampm === "PM" ? 12 : 0);
-const chosenTime = new Date(
-  selectedDate + "T" +
-  String(hour24).padStart(2, "0") + ":" +
-  String(minutes).padStart(2, "0") + ":00"
-);
-if (chosenTime.getTime() <= Date.now()) {
-  notice(
-    "bookingNotice",
-    "This time has passed. Please choose a future slot.",
-    "bad"
-  );
-  return;
-}
-const address=$("address").value.trim();if(address.length<8){notice("bookingNotice","Please enter a complete service address.","bad");return}
-if (bookingSubmitting) return;
-bookingSubmitting = true;
-const btn = $("confirmBooking");
-btn.disabled = true;
-btn.textContent = "Submitting…";try{const {data,error}=await sb.rpc("kc_create_booking",{p_service_id:currentService.id,p_worker_id:currentWorker?.id||null,p_plan:currentPlan,p_service_date:selectedDate,p_start_time:to24h(selectedTime),p_address_label:$("addressLabel").value,p_address:address+( $("landmark").value.trim()?" · Landmark: "+$("landmark").value.trim():""),p_notes:$("notes").value.trim(),p_payment_method:$("payment").value});console.log("Booking RPC result:", { data, error, userId: user?.id });if (error) {
-  console.error("Booking RPC failed:", error);
-  throw new Error(error.message || JSON.stringify(error));
-}const row=Array.isArray(data)?data[0]:data;if(!row?.id)throw new Error("Booking was not returned by the server.");if(row.customer_otp&&window.sessionStorage)sessionStorage.setItem("kc_otp_"+row.id,row.customer_otp);notice("bookingNotice","Booking confirmed! ID: "+row.id+(row.customer_otp?" · Your one-time service OTP is "+row.customer_otp+" — share it only with your assigned professional. Save it now; it is not shown again.":""),"ok");toast("Booking created successfully");await loadBookings();setTimeout(()=>go("bookings"),5000)} catch (err) {
-  console.error("Booking error details:", err);
-  notice(
-    "bookingNotice",
-    "Booking request failed: " + (err.message || String(err)) +
-    ". Check browser Console and Network.",
-    "bad"
-  );
-}
-finally {
-  bookingSubmitting = false;
-  btn.disabled = false;
-  btn.textContent = "Confirm Booking";
-}});
+$("bookingForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("bookingNotice");if(!sb){notice("bookingNotice","Supabase is not configured. Add your project URL and publishable/anon key in index.html, then run supabase.sql.","bad");return}if(!user){notice("bookingNotice","Please sign in before confirming your booking.","bad");go("auth");return}const address=$("address").value.trim();if(address.length<8){notice("bookingNotice","Please enter a complete service address.","bad");return}const btn=$("confirmBooking");btn.disabled=true;btn.textContent="Submitting…";try{const {data,error}=await sb.rpc("kc_create_booking",{p_service_id:currentService.id,p_worker_id:currentWorker?.id||null,p_plan:currentPlan,p_service_date:selectedDate,p_start_time:to24h(selectedTime),p_address_label:$("addressLabel").value,p_address:address+( $("landmark").value.trim()?" · Landmark: "+$("landmark").value.trim():""),p_notes:$("notes").value.trim(),p_payment_method:$("payment").value});if(error)throw error;const row=Array.isArray(data)?data[0]:data;if(!row?.id)throw new Error("Booking was not returned by the server.");if(row.customer_otp&&window.sessionStorage)sessionStorage.setItem("kc_otp_"+row.id,row.customer_otp);notice("bookingNotice","Booking confirmed! ID: "+row.id+(row.customer_otp?" · Your one-time service OTP is "+row.customer_otp+" — share it only with your assigned professional. Save it now; it is not shown again.":""),"ok");toast("Booking created successfully");await loadBookings();setTimeout(()=>go("bookings"),5000)}catch(err){notice("bookingNotice",friendlyError(err.message),"bad")}finally{btn.disabled=false;btn.textContent="Confirm Booking"}});
 function to24h(t){const [clock,ap]=t.split(" ");let [h,m]=clock.split(":").map(Number);h=h%12+(ap==="PM"?12:0);return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":00"}
 function friendlyError(msg){if(/slot|available|duplicate|conflict/i.test(msg))return "This time may no longer be available. Please go back and choose another slot.";if(/row-level|permission|policy|not allowed/i.test(msg))return "Your account does not have permission for this action. Please sign in again or contact support.";return msg||"Something went wrong. Please try again."}
-
-function setAuthMode(mode) {
-  authMode = mode;
-
-  $("loginTab").classList.toggle("active", mode === "login");
-  $("signupTab").classList.toggle("active", mode === "signup");
-  $("nameField").classList.toggle("hidden", mode !== "signup");
-
-  $("authSubmit").textContent =
-    mode === "login" ? "Sign in" : "Create account";
-
-  $("authPassword").autocomplete =
-    mode === "login" ? "current-password" : "new-password";
-
-  hideNotice("authNotice");
-}
-
-function friendlyAuthMessage(error) {
-  const message = String(error?.message || error || "");
-
-  if (/invalid login credentials/i.test(message)) {
-    return "Email or password is incorrect. Please check and try again.";
-  }
-
-  if (/email not confirmed/i.test(message)) {
-    return "Please verify your email using the confirmation link sent to your inbox.";
-  }
-
-  if (/user already registered/i.test(message)) {
-    return "This email is already registered. Please sign in instead.";
-  }
-
-  if (/password should be at least/i.test(message)) {
-    return "Password must contain at least 6 characters.";
-  }
-
-  if (/rate limit/i.test(message)) {
-    return "Too many attempts. Please wait a few minutes and try again.";
-  }
-
-  if (/failed to fetch|networkerror/i.test(message)) {
-    return "Network error. Check your internet connection and try again.";
-  }
-
-  return message || "Authentication failed. Please try again.";
-}
-
-$("authForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
-  hideNotice("authNotice");
-
-  if (!sb) {
-    notice(
-      "authNotice",
-      "Supabase connection is unavailable. Check your project URL and publishable key.",
-      "bad"
-    );
-    return;
-  }
-
-  const email = $("authEmail").value.trim().toLowerCase();
-  const password = $("authPassword").value;
-  const name = $("authName").value.trim();
-  const btn = $("authSubmit");
-
-  if (!email || !password) {
-    notice("authNotice", "Enter your email and password.", "bad");
-    return;
-  }
-
-  if (authMode === "signup" && !name) {
-    notice("authNotice", "Please enter your full name.", "bad");
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = "Please wait...";
-
-  try {
-    const redirectTo =
-      window.location.origin + window.location.pathname;
-
-    if (authMode === "signup") {
-      const { data, error } = await sb.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: name
-          },
-          emailRedirectTo: redirectTo
-        }
-      });
-
-      if (error) throw error;
-
-      if (data.session && data.user) {
-        user = data.user;
-
-        await ensureProfile();
-        await renderWelcomeProfile();
-        await renderProfile();
-
-        notice(
-          "authNotice",
-          "Account created successfully! You are now signed in.",
-          "ok"
-        );
-
-        toast("Welcome to KaamConnect!");
-        go("home");
-      } else {
-        notice(
-          "authNotice",
-          "Account created! Please check your email and verify your account before signing in.",
-          "ok"
-        );
-
-        $("authEmail").value = email;
-        setAuthMode("login");
-      }
-
-    } else {
-      const { data, error } = await sb.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (error) throw error;
-
-      if (!data.user || !data.session) {
-        throw new Error("Login session was not created. Please try again.");
-      }
-
-      user = data.user;
-
-      await ensureProfile();
-      await renderWelcomeProfile();
-      await renderProfile();
-
-      notice(
-        "authNotice",
-        "Login successful! Welcome back.",
-        "ok"
-      );
-
-      toast("Welcome back!");
-      go("home");
-    }
-
-  } catch (error) {
-    console.error("KaamConnect authentication error:", error);
-
-    notice(
-      "authNotice",
-      friendlyAuthMessage(error),
-      "bad"
-    );
-
-  } finally {
-    btn.disabled = false;
-    btn.textContent =
-      authMode === "login" ? "Sign in" : "Create account";
-  }
-});
+function setAuthMode(mode){authMode=mode;$("loginTab").classList.toggle("active",mode==="login");$("signupTab").classList.toggle("active",mode==="signup");$("nameField").classList.toggle("hidden",mode!=="signup");$("authSubmit").textContent=mode==="login"?"Sign in":"Create account";$("authPassword").autocomplete=mode==="login"?"current-password":"new-password";hideNotice("authNotice")}
+$("authForm").addEventListener("submit",async e=>{e.preventDefault();hideNotice("authNotice");if(!sb){notice("authNotice","Add your Supabase project URL and publishable/anon key to enable real authentication.","bad");return}const email=$("authEmail").value.trim(),password=$("authPassword").value;const btn=$("authSubmit");btn.disabled=true;try{if(authMode==="signup"){const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name:$("authName").value.trim()}}});if(error)throw error;if(data.user){notice("authNotice",data.session?"Account created and signed in.":"Account created. Check your email to confirm it, then sign in.","ok");if(data.session){user=data.user;await ensureProfile();refreshAuth()}}}else{const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;user=data.user;await ensureProfile();notice("authNotice","Signed in successfully.","ok");refreshAuth();renderWelcomeProfile();toast("Welcome back");setTimeout(()=>go("home"),500)}}catch(err){notice("authNotice",err.message,"bad")}finally{btn.disabled=false}});
 async function renderWelcomeProfile(){
   const nameEl=$("welcomeName"), avatarEl=$("welcomeAvatar");
   if(!nameEl||!avatarEl)return;
@@ -3622,60 +1538,13 @@ async function renderWelcomeProfile(){
     avatarEl.textContent=(name[0]||"G").toUpperCase();
   }
 }
-
-window.nextWelcomeSlide = function () {
-  const slides = document.querySelectorAll(
-    "#screen-splash .welcome-slide"
-  );
-
-  let current = -1;
-
-  slides.forEach((slide, index) => {
-    if (slide.classList.contains("active")) {
-      current = index;
-    }
-  });
-
-  if (current >= 0 && current < slides.length - 1) {
-    slides[current].classList.remove("active");
-    slides[current + 1].classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-};
-
-window.finishWelcome = function () {
-  localStorage.setItem("kc_welcome_completed", "true");
-  localStorage.setItem("kc_last_screen", "home");
-  go("home");
-};
-
-// Make all Welcome buttons respond to taps
-document.querySelectorAll("#screen-splash .splash-next")
-  .forEach((button, index) => {
-    button.type = "button";
-    button.style.pointerEvents = "auto";
-
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      if (index === 3) {
-        window.finishWelcome();
-      } else {
-        window.nextWelcomeSlide();
-      }
-    });
-  });
-function restoreLastScreen() {
-  const navigationEntry = performance.getEntriesByType("navigation")[0];
-  const isRefresh = navigationEntry?.type === "reload";
-  const lastScreen = localStorage.getItem("kc_last_screen") || "home";
-
-  if (isRefresh) {
-    go(lastScreen === "splash" ? "home" : lastScreen);
-  } else {
-    go("splash");
-  }
+function restoreLastScreen(){
+  let last="home";
+  try { last=localStorage.getItem("kc_last_screen")||"home"; } catch(e) {}
+  if(last==="support") last="home";
+  if($("screen-"+last)) go(last);
 }
+
 async function ensureProfile(){if(!sb||!user)return;try{const activeUser=user;const {data:existing}=await sb.from("kc_profiles").select("full_name").eq("id",activeUser.id).maybeSingle();if(user?.id!==activeUser.id)return;const fullName=activeUser.user_metadata?.full_name||activeUser.user_metadata?.name||existing?.full_name||activeUser.email?.split("@")[0]||"Customer";await sb.from("kc_profiles").upsert({id:activeUser.id,full_name:fullName,email:activeUser.email},{onConflict:"id"})}catch(e){console.warn(e.message)}}
 async function signOut(){if(sb)await sb.auth.signOut();user=null;refreshAuth();toast("Signed out");go("home")}
 function refreshAuth(){if(sb)sb.auth.getUser().then(({data})=>{user=data.user||null;renderWelcomeProfile();renderProfile()}).catch(()=>{});else{user=null;renderWelcomeProfile()}}
@@ -4041,14 +1910,8 @@ async function saveProfile(event) {
   }
 }
 async function signInWithGoogle() {
-
-async function signInWithGoogle() {
   if (!sb) {
-    notice(
-      "authNotice",
-      "Supabase connection is unavailable.",
-      "bad"
-    );
+    alert("Supabase connection is not configured.");
     return;
   }
 
@@ -4059,7 +1922,7 @@ async function signInWithGoogle() {
     const { data, error } = await sb.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: redirectTo,
+        redirectTo,
         queryParams: {
           access_type: "offline",
           prompt: "select_account"
@@ -4067,769 +1930,27 @@ async function signInWithGoogle() {
       }
     });
 
-    if (error) throw error;
-
-    console.log("Google OAuth started:", data);
-
+    if (error) {
+      console.error("Google sign-in error:", error);
+      alert("Google sign-in failed: " + error.message);
+      return;
+    }
+console.log("Google login started");
+console.log("Redirect URL:", window.location.origin + window.location.pathname);
+    console.log("OAuth sign-in started:", data);
   } catch (error) {
-    console.error("Google Login Error:", error);
-
-    notice(
-      "authNotice",
-      "Google Login failed: " + friendlyAuthMessage(error),
-      "bad"
-    );
+    console.error("Google sign-in exception:", error);
+    alert("Google sign-in error: " + error.message);
   }
 }
-async function loadBookings() {
-  const el = $("bookingsContent");
-
-  if (!user) {
-    el.innerHTML = '<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';
-    return;
-  }
-
-  if (!sb) {
-    el.innerHTML = '<div class="empty">Supabase is not configured.</div>';
-    return;
-  }
-
-el.innerHTML = `
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
-    <div>
-      <h3 style="margin:0">My Bookings</h3>
-      <p class="tiny" style="margin:5px 0 0">Check your latest service status</p>
-    </div>
-    <button class="btn btn-light" onclick="loadBookings()">
-      ↻ Refresh
-    </button>
-  </div>
-  <div class="empty">Loading your bookings…</div>
-`;
-  try {
-    const { data, error } = await sb
-      .from("kc_bookings")
-      .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
-      .eq("customer_id", user.id)
-      .order("created_at", { ascending: false });
-
-    if (error) throw error;
-
-    if (!data || !data.length) {
-      el.innerHTML = '<div class="empty">No bookings yet. Explore services and book your first professional.</div>';
-      return;
-    }
-
-    const { data: reviewRows, error: reviewError } = await sb
-      .from("worker_reviews")
-      .select("kc_booking_id,rating")
-      .eq("customer_id", user.id)
-      .in("kc_booking_id", data.map(b => b.id));
-    if (reviewError) {
-  console.warn(
-    "Reviews could not be loaded:",
-    reviewError.message
-  );
-    }
-    const reviewsByBooking = Object.fromEntries(
-      (reviewRows || [])
-        .filter(r => r.kc_booking_id)
-        .map(r => [String(r.kc_booking_id), r])
-    );
-
-    el.innerHTML = data.map(b => {
-      const review = reviewsByBooking[String(b.id)];
-      const status = String(b.status || "requested").toLowerCase();
-
-      const reviewHTML = review
-        ? `<div style="margin-top:14px;padding:14px;background:#e4f7e9;border:1px solid #b7e4c7;border-radius:14px;color:#17633b">
-             <strong>✓ Your review submitted</strong>
-             <div style="font-size:22px;margin-top:6px;color:#e5a000">${"★".repeat(Number(review.rating) || 0)}${"☆".repeat(5 - (Number(review.rating) || 0))}</div>
-             <div style="font-size:12px;margin-top:4px">You rated this worker ${Number(review.rating)}/5 stars.</div>
-           </div>`
-        : status === "completed" && b.worker_id
-          ? `<div class="review-form" id="review-form-${esc(b.id)}" style="margin-top:14px">
-               <h4>Rate your experience</h4>
-               <select id="review-rating-${esc(b.id)}" required>
-                 <option value="">Choose stars</option>
-                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                 <option value="4">⭐⭐⭐⭐ Good</option>
-                 <option value="3">⭐⭐⭐ Average</option>
-                 <option value="2">⭐⭐ Poor</option>
-                 <option value="1">⭐ Very poor</option>
-               </select>
-               <button class="btn btn-primary" type="button"
-                 onclick="submitWorkerReview('${esc(b.id)}','${esc(b.worker_id)}')">
-                 Submit rating
-               </button>
-             </div>`
-          : "";
-
-      return `<article class="booking-card">
-        <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
-          <div>
-            <span class="status">${esc(status.replaceAll("_", " "))}</span>
-            <h3 style="margin-top:10px">${esc(b.service_name || "Service")}</h3>
-            <p class="tiny">${esc(b.plan_name || "")} · ${esc(b.service_date || "")} · ${esc((b.start_time || "").slice(0, 5))}</p>
-          </div>
-          <strong>${money(b.total_amount)}</strong>
-        </div>
-        <p class="tiny">Booking ID: ${esc(b.id)}</p>
-        <p class="tiny">${esc(b.address || "")}</p>
-        <button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button>
-        ${reviewHTML}
-      </article>`;
-    }).join("");
-
-  } catch (e) {
-    console.error("Load bookings error:", e);
-    el.innerHTML = '<div class="empty">Could not load bookings: ' +
-      esc(e.message) + '. Check your Supabase configuration and database permissions.</div>';
-  }
-}
-async function submitWorkerReview(bookingId, workerId) {
-  if (!sb || !user) {
-    toast("Please sign in first.");
-    return;
-  }
-
-  const ratingEl = document.getElementById("review-rating-" + bookingId);
-  const form = document.getElementById("review-form-" + bookingId);
-  const button = form?.querySelector("button");
-
-  if (!ratingEl || !form) {
-    toast("Rating form not found. Please refresh.");
-    return;
-  }
-
-  const rating = Number(ratingEl.value);
-
-  if (!ratingEl.value || !Number.isInteger(rating) || rating < 1 || rating > 5) {
-    toast("Please select a rating from 1 to 5 stars.");
-    return;
-  }
-
-  if (button) {
-    button.disabled = true;
-    button.textContent = "Submitting...";
-  }
-
-  try {
-    const { data: existing, error: checkError } = await sb
-      .from("worker_reviews")
-      .select("kc_booking_id")
-      .eq("kc_booking_id", bookingId)
-      .maybeSingle();
-
-    if (checkError) throw checkError;
-
-if (existing) {
-  await loadBookings();
-  toast("Your review has already been submitted. Your saved rating is shown below.");
-  return;
-}
-
-    const { data: booking, error: bookingError } = await sb
-      .from("kc_bookings")
-      .select("id,customer_id,worker_id,status")
-      .eq("id", bookingId)
-      .eq("customer_id", user.id)
-      .maybeSingle();
-
-    if (bookingError) throw bookingError;
-
-    if (
-      !booking ||
-      String(booking.status).toLowerCase() !== "completed" ||
-      String(booking.worker_id) !== String(workerId)
-    ) {
-      toast("Only your completed booking can be rated.");
-      return;
-    }
-
-    const { error } = await sb
-      .from("worker_reviews")
-      .insert({
-        booking_id: null,
-        kc_booking_id: bookingId,
-        customer_id: user.id,
-        worker_id: workerId,
-        rating: rating,
-        review: null
-      });
-
-    if (error) throw error;
-
-    toast("Your rating was submitted successfully!");
-
-    await loadBookings();
-    await loadData();
-    renderWorkers();
-
-  } catch (e) {
-    console.error("Rating submission error:", e);
-
-    if (e.code === "23505") {
-      toast("You have already rated this booking.");
-      await loadBookings();
-    } else {
-      toast("Could not submit rating: " + e.message);
-
-      if (button) {
-        button.disabled = false;
-        button.textContent = "Submit rating";
-      }
-    }
-  }
-}
-
-function renderWorkersInto(id, list) {
-  const el = $(id);
-  if (!el) return;
-
-  if (!list.length) {
-    el.innerHTML = `
-      <div class="empty" style="grid-column:1/-1">
-        No worker profiles are available yet.
-      </div>`;
-    return;
-  }
-
-  el.innerHTML = list.map(w => `
-    <article class="worker-card worker-card-modern">
-      <div class="worker-card-modern-top">
-        <img
-          class="worker-card-modern-photo"
-          src="${esc(w.avatar_url || './handyman.jpg')}"
-          alt="${esc(w.full_name || 'Worker')}"
-          onerror="this.onerror=null;this.src='./handyman.jpg'">
-
-        <div class="worker-card-modern-identity">
-          <span class="verified">
-            ${w.verified ? '✓ Verified Professional' : 'Profile Listed'}
-          </span>
-          <h3>${esc(w.full_name || 'Worker')}</h3>
-          <p>${esc(w.profession || 'Service professional')}</p>
-          <div class="worker-modern-rating">
-            <span>★</span>
-            <strong>${w.rating || 'New'}</strong>
-            <small>(${Number(w.review_count || 0)} reviews)</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="worker-modern-info">
-        <div>
-          <small>📍 Service area</small>
-          <strong>${esc(w.service_area || 'Not listed')}</strong>
-        </div>
-        <div>
-          <small>🏆 Experience</small>
-          <strong>${w.experience_years
-            ? esc(w.experience_years) + ' years'
-            : 'Not listed'}</strong>
-        </div>
-      </div>
-
-      <div class="worker-modern-bottom">
-        <div class="worker-modern-price">
-          <small>Starting price</small>
-          <strong>${w.starting_price
-            ? money(w.starting_price)
-            : 'Quote on request'}</strong>
-        </div>
-
-        <div class="worker-modern-actions">
-          <button class="btn btn-light"
-            onclick="openWorkerProfile('${esc(w.id)}','${id === 'homeWorkers' ? 'home' : 'workers'}')">
-            Details →
-          </button>
-          <button class="btn btn-primary"
-            onclick="bookWorker('${esc(w.id)}')">
-            Book
-          </button>
-        </div>
-      </div>
-    </article>
-  `).join('');
-}
-function renderWorkers() {
-  const q = ($("workerSearch")?.value || "").toLowerCase();
-
-  const filtered = workers.filter(w =>
-    ((w.full_name || "") + " " +
-     (w.profession || "") + " " +
-     (w.service_area || "")).toLowerCase().includes(q)
-  );
-
-  renderWorkersInto("workerList", filtered);
-}
+async function loadBookings(){const el=$("bookingsContent");if(!user){el.innerHTML='<div class="panel"><div class="empty">Sign in to view your bookings.<br><button class="btn btn-primary" style="margin-top:12px" onclick="go(\'auth\')">Sign in</button></div></div>';return}if(!sb){el.innerHTML='<div class="empty">Supabase is not configured.</div>';return}el.innerHTML='<div class="empty">Loading your bookings…</div>';try{const {data,error}=await sb.from("kc_bookings")
+  .select("id,service_name,plan_name,service_date,start_time,address,status,total_amount,worker_id,created_at")
+  .eq("customer_id", user.id)
+  .order("created_at",{ascending:false});if(error)throw error;if(!data?.length){el.innerHTML='<div class="empty">No bookings yet. Explore services and book your first professional.</div>';return}el.innerHTML=data.map(b=>`<article class="booking-card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><span class="status">${esc((b.status||"requested").replaceAll("_"," "))}</span><h3 style="margin-top:10px">${esc(b.service_name)}</h3><p class="tiny">${esc(b.plan_name)} · ${esc(b.service_date)} · ${esc((b.start_time||"").slice(0,5))}</p></div><strong>${money(b.total_amount)}</strong></div><p class="tiny">Booking ID: ${esc(b.id)}</p><p class="tiny">${esc(b.address)}</p><button class="btn btn-light" onclick="trackBooking('${esc(b.id)}')">Track / details</button></article>`).join("")}catch(e){el.innerHTML='<div class="empty">Could not load bookings: '+esc(e.message)+'. Run the SQL migration and check your Supabase configuration.</div>'}}
+function renderWorkersInto(id,list){const el=$(id);if(!el)return;if(!list.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">No worker profiles are available yet. Add real worker profiles after enabling the worker registration workflow.</div>';return}el.innerHTML=list.map(w=>`<article class="worker-card"><img src="${esc(w.avatar_url||'./handyman.jpg')}" alt="${esc(w.full_name||'Worker')}" onerror="this.src='./handyman.jpg'"><span class="verified">${w.verified?"✓ Verified":"Professional"}</span><h3>${esc(w.full_name||"Worker")}</h3><div class="tiny">${esc(w.profession||"Service professional")}</div><div class="tiny">★ ${w.rating||"—"} · ${w.review_count||0} reviews</div><div class="tiny">${w.experience_years?esc(w.experience_years)+" years experience":"Experience not listed"}</div><div class="price" style="margin-top:8px">${w.starting_price?money(w.starting_price):"Quote on request"}</div><button class="btn btn-light" onclick="viewWorker('${esc(w.id)}')">View profile</button><button class="btn btn-primary" onclick="bookWorker('${esc(w.id)}')">Book worker</button></article>`).join("")}
+function renderWorkers(){const q=($("workerSearch")?.value||"").toLowerCase();renderWorkersInto("workerList",workers.filter(w=>((w.full_name||"")+" "+(w.profession||"")+" "+(w.service_area||"")).toLowerCase().includes(q)))}
 function viewWorker(id){const w=workers.find(x=>String(x.id)===String(id));if(!w){toast("Worker not found");return}currentWorker=w;const s=services.find(s=>(w.profession||"").toLowerCase().includes(s.category.toLowerCase()))||services[0];if(s)currentService=s;renderDetail();$("workerInlineArea").innerHTML=workerInline(w);go("detail")}
 
-let workerProfileReturnScreen = "workers";
-
-function openWorkerProfile(id, returnScreen = "workers") {
-  const w = workers.find(x => String(x.id) === String(id));
-
-  if (!w) {
-    toast("Worker not found. Please refresh and try again.");
-    return;
-  }
-
-currentWorker = w;
-
-workerProfileReturnScreen =
-  returnScreen === "home" ? "home" : "workers";
-
-try {
-  localStorage.setItem("kc_last_worker_id", String(w.id));
-  localStorage.setItem(
-    "kc_worker_profile_return",
-    workerProfileReturnScreen
-  );
-} catch (e) {
-  console.warn("Could not save worker profile:", e);
-}
-  const content = $("workerProfileContent");
-  if (!content) return;
-
-  const experience = w.experience_years
-    ? String(w.experience_years) + " years"
-    : "Not listed";
-
-  const price = w.starting_price
-    ? money(w.starting_price)
-    : "Quote on request";
-
-  const rating = w.rating
-    ? "★ " + w.rating
-    : "New professional";
-
-  const reviewCount = Number(w.review_count || 0);
-
-  content.innerHTML = `
-
-<div class="worker-profile-hero">
-  <img
-    class="worker-profile-photo"
-    src="${esc(w.banner_url || './handyman.jpg')}"
-    alt="${esc(w.full_name || 'Worker')}"
-    onerror="this.onerror=null;this.src='./handyman.jpg'">
-
-  <div class="worker-profile-overlay">
-    <span class="verified">
-      ${w.verified ? "✓ Verified Professional" : "Professional"}
-    </span>
-
-    <h1>${esc(w.full_name || "Service Professional")}</h1>
-    <p>🛠️ ${esc(w.profession || "Home service professional")}</p>
-    <p class="worker-profile-rating">
-      <strong>${rating}</strong>
-      <span>(${reviewCount} reviews)</span>
-    </p>
-  </div>
-</div>
-    <div class="worker-profile-stats">
-      <div class="worker-profile-stat">
-        <strong>🏆</strong>
-        <strong>${esc(experience)}</strong>
-        <small>Experience</small>
-      </div>
-
-      <div class="worker-profile-stat">
-        <strong>★ ${esc(w.rating || "—")}</strong>
-        <strong>${reviewCount}</strong>
-        <small>Reviews</small>
-      </div>
-
-      <div class="worker-profile-stat">
-        <strong>📍</strong>
-        <strong>${w.available ? "Available" : "Check"}</strong>
-        <small>Availability</small>
-      </div>
-    </div>
-
-    <div class="worker-profile-price-panel">
-      <div>
-        <small>Starting price</small>
-        <strong>${price}</strong>
-      </div>
-      <small>Service charges</small>
-    </div>
-
-    <div class="worker-profile-tabs">
-      <button type="button" class="active"
-        onclick="workerProfileTab('about',this)">About</button>
-      <button type="button"
-        onclick="workerProfileTab('availability',this)">Availability</button>
-      <button type="button"
-        onclick="workerProfileTab('experience',this)">Experience</button>
-      <button type="button"
-        onclick="workerProfileTab('reviews',this)">Reviews</button>
-    </div>
-<div id="workerTab-about" class="worker-profile-panel">
-  <span class="worker-profile-kicker">MEET YOUR PROFESSIONAL</span>
-  <h3>About ${esc(w.full_name || "this professional")}</h3>
-
-  <p>
-    ${esc(w.full_name || "This professional")} is listed on KaamConnect
-    as a ${esc(w.profession || "home service")} professional serving
-    ${esc(w.service_area || "the selected service area")}.
-    You can review the service details, check availability, and request
-    a booking directly through KaamConnect.
-  </p>
-
-  <p>
-    The goal is to make arranging home services easier, with the service,
-    location, preferred time, and price discussed clearly before the work
-    begins. Share your requirements and any important details when booking
-    so the professional can understand the job.
-  </p>
-
-  <div class="worker-profile-row">
-    <div>🛠️</div>
-    <div>
-      <span>Primary service</span>
-      <strong>${esc(w.profession || "Not listed")}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>📍</div>
-    <div>
-      <span>Service coverage</span>
-      <strong>${esc(w.service_area || "Confirm location during booking")}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>💰</div>
-    <div>
-      <span>Starting price</span>
-      <strong>${price}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>✓</div>
-    <div>
-      <span>Profile status</span>
-      <strong>${w.verified ? "Verified professional" : "Professional profile"}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-note">
-    <strong>Before you book</strong>
-    <p>
-      Describe the work clearly, confirm the final price and timing with
-      the professional, and provide any access instructions needed for
-      your location.
-    </p>
-  </div>
-</div>
-    <div id="workerTab-availability" class="worker-profile-panel" hidden>
-  <span class="worker-profile-kicker">BOOKING INFORMATION</span>
-  <h3>Availability & Service Details</h3>
-
-  <div class="worker-availability-status">
-    <span class="worker-availability-dot"></span>
-    <div>
-      <strong>${w.available ? "Currently marked available" : "Availability needs confirmation"}</strong>
-      <p>
-        ${w.available
-          ? "This professional is marked as available in the current profile data."
-          : "This professional is not currently marked available. Check again before booking."}
-      </p>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>📍</div>
-    <div>
-      <span>Service location</span>
-      <strong>${esc(w.service_area || "Confirm your location during booking")}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>🗓️</div>
-    <div>
-      <span>Choose a date</span>
-      <strong>Select your preferred service date in the booking form</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>🕒</div>
-    <div>
-      <span>Choose a time</span>
-      <strong>Confirm the suitable time with the professional</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>💵</div>
-    <div>
-      <span>Price confirmation</span>
-      <strong>${price}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-note">
-    <strong>Good to know</strong>
-    <p>
-      The availability flag does not guarantee a particular time slot.
-      Submit your preferred date and time through booking and confirm
-      the final schedule before the service begins.
-    </p>
-  </div>
-</div>
-      <h3>Availability</h3>
-      <p>
-        ${w.available
-          ? "This worker is currently marked as available."
-          : "Please check availability while booking."}
-      </p>
-      <p>Choose a service date and time in the booking flow to continue.</p>
-    </div>
-
-    <div id="workerTab-experience" class="worker-profile-panel" hidden>
-  <span class="worker-profile-kicker">PROFESSIONAL SNAPSHOT</span>
-  <h3>Experience & Skills</h3>
-
-  <div class="worker-experience-highlight">
-    <div class="worker-experience-icon">🏆</div>
-    <div>
-      <small>Listed experience</small>
-      <strong>${esc(experience)}</strong>
-      <p>
-        ${w.experience_years
-          ? "Experience information is based on the professional profile."
-          : "Years of experience have not been provided in this profile yet."}
-      </p>
-    </div>
-  </div>
-
-  <h4>Professional overview</h4>
-
-  <div class="worker-profile-row">
-    <div>🔧</div>
-    <div>
-      <span>Service category</span>
-      <strong>${esc(w.profession || "Not listed")}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>📍</div>
-    <div>
-      <span>Working area</span>
-      <strong>${esc(w.service_area || "Not listed")}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>⭐</div>
-    <div>
-      <span>Customer rating</span>
-      <strong>${w.rating ? "★ " + esc(w.rating) + " out of 5" : "No rating available yet"}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-row">
-    <div>💼</div>
-    <div>
-      <span>Booking price</span>
-      <strong>${price}</strong>
-    </div>
-  </div>
-
-  <div class="worker-profile-note">
-    <strong>What to confirm before work starts</strong>
-    <p>
-      Explain the task, discuss any materials or equipment needed, and
-      agree on the final scope, price, and timing before the job begins.
-    </p>
-  </div>
-</div>
-      <h3>Experience & Skills</h3>
-      <div class="worker-profile-row">
-        <div>🛠️</div>
-        <div>
-          <span>Profession</span>
-          <strong>${esc(w.profession || "Not listed")}</strong>
-        </div>
-      </div>
-      <div class="worker-profile-row">
-        <div>🏆</div>
-        <div>
-          <span>Experience</span>
-          <strong>${esc(experience)}</strong>
-        </div>
-      </div>
-      <div class="worker-profile-row">
-        <div>📍</div>
-        <div>
-          <span>Service area</span>
-          <strong>${esc(w.service_area || "Not listed")}</strong>
-        </div>
-      </div>
-    </div>
-
-    <div id="workerTab-reviews" class="worker-profile-panel" hidden>
-  <span class="worker-profile-kicker">CUSTOMER FEEDBACK</span>
-  <h3>Ratings & Reviews</h3>
-
-  <div class="worker-review-summary">
-    <div class="worker-review-average">
-      <strong>${w.rating ? esc(w.rating) : "—"}</strong>
-      <div class="worker-review-stars">★★★★★</div>
-      <small>Average customer rating</small>
-    </div>
-
-    <div class="worker-review-total">
-      <strong>${reviewCount}</strong>
-      <small>Total ratings</small>
-    </div>
-  </div>
-
-  <div id="workerReviewsList">
-    <div class="empty">Loading customer reviews…</div>
-  </div>
-</div>
-      <h3>Customer Reviews</h3>
-      ${reviewCount
-        ? `<p><strong>★ ${esc(w.rating || "—")}</strong> based on ${reviewCount} customer ratings.</p>
-           <p>Individual review details are shown only when available in the existing review data.</p>`
-        : `<p>No customer reviews are available yet.</p>`}
-    </div>
-
-    <button class="btn btn-primary worker-profile-book"
-      onclick="bookWorker('${esc(w.id)}')">
-      Book This Worker →
-    </button>
-  `;
-  go("worker-profile");
-  loadWorkerProfileReviews(w.id);
-} 
-  function restoreLastWorkerProfile() {
-  try {
-    localStorage.removeItem("kc_last_worker_id");
-    localStorage.removeItem("kc_worker_profile_return");
-  } catch (e) {
-    console.warn("Could not clear saved worker profile:", e);
-  }
-  }
-function workerProfileTab(tab, button) {
-  ["about", "availability", "experience", "reviews"].forEach(name => {
-    const panel = $("workerTab-" + name);
-    if (panel) panel.hidden = name !== tab;
-  });
-
-  document.querySelectorAll(".worker-profile-tabs button")
-    .forEach(b => b.classList.remove("active"));
-
-  if (button) button.classList.add("active");
-} 
-async function loadWorkerProfileReviews(workerId) {
-  const list = $("workerReviewsList");
-  if (!list) return;
-
-  if (!sb) {
-    list.innerHTML = '<div class="empty">Reviews are currently unavailable.</div>';
-    return;
-  }
-
-  try {
-    const { data: reviewRows, error } = await sb
-      .from("worker_reviews")
-      .select("customer_id,rating,review,created_at")
-      .eq("worker_id", workerId)
-      .order("created_at", { ascending: false })
-      .limit(30);
-
-    if (error) throw error;
-
-    if (!reviewRows || !reviewRows.length) {
-      list.innerHTML = `
-        <div class="worker-review-empty">
-          <div style="font-size:34px">💬</div>
-          <strong>No customer reviews yet</strong>
-          <p>When customers submit ratings for this professional, they will appear here.</p>
-        </div>`;
-      return;
-    }
-
-    const customerIds = [
-      ...new Set(reviewRows.map(r => r.customer_id).filter(Boolean))
-    ];
-
-    let customerNames = {};
-
-    if (customerIds.length) {
-      const { data: profiles, error: profileError } = await sb
-        .from("kc_profiles")
-        .select("id,full_name")
-        .in("id", customerIds);
-
-      if (!profileError && profiles) {
-        customerNames = Object.fromEntries(
-          profiles.map(p => [String(p.id), p.full_name])
-        );
-      }
-    }
-
-    list.innerHTML = reviewRows.map(r => {
-      const score = Math.max(0, Math.min(5, Number(r.rating) || 0));
-      const name = customerNames[String(r.customer_id)] || "KaamConnect customer";
-      const date = r.created_at
-        ? new Date(r.created_at).toLocaleDateString("en-IN", {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-          })
-        : "Date not available";
-
-      const comment = String(r.review || "").trim();
-
-      return `
-        <article class="worker-review-card">
-          <div class="worker-review-card-top">
-            <div class="worker-review-avatar">
-              ${esc(name.trim().charAt(0).toUpperCase() || "C")}
-            </div>
-
-            <div class="worker-review-person">
-              <strong>${esc(name)}</strong>
-              <small>${esc(date)}</small>
-            </div>
-
-            <span class="worker-review-badge">✓ Customer</span>
-          </div>
-
-          <div class="worker-review-stars" aria-label="${score} out of 5 stars">
-            ${"★".repeat(score)}${"☆".repeat(5 - score)}
-            <span>${score}/5</span>
-          </div>
-
-          <p class="worker-review-comment">
-            ${comment
-              ? esc(comment)
-              : "Customer rating submitted. No written comment was provided."}
-          </p>
-        </article>`;
-    }).join("");
-
-  } catch (error) {
-    console.error("Worker reviews could not be loaded:", error);
-
-    list.innerHTML = `
-      <div class="worker-review-empty">
-        <strong>Reviews could not be loaded right now.</strong>
-        <p>Please check review-table permissions and try again.</p>
-      </div>`;
-  }
-}  
 function bookWorker(id) {
   const w = workers.find(x => String(x.id) === String(id));
 
@@ -4973,15 +2094,7 @@ async function useMyLocation() {
 async function trackBooking(id) {
   trackingBookingId = id;
   go("tracking");
-setTimeout(() => {
-  initTrackingMap();
 
-  if (mapInstance) {
-    mapInstance.invalidateSize();
-  }
-
-  subscribeTracking(id);
-}, 300);
   const otp = window.sessionStorage
     ? sessionStorage.getItem("kc_otp_" + id)
     : null;
@@ -5012,26 +2125,24 @@ setTimeout(() => {
     const status = String(data.status || "requested")
       .toLowerCase();
 
-const steps = [
-  ["requested", "Booking requested"],
-  ["confirmed", "Booking accepted"],
-  ["on_the_way", "Worker travelling"],
-  ["arrived", "Worker has arrived"],
-  ["in_progress", "Service in progress"],
-  ["completed", "Service completed"]
-];
-const labels = {
-  pending: "Booking pending",
-  accepted: "Booking accepted",
-  confirmed: "Booking accepted",
-  requested: "Booking requested",
-  on_the_way: "Worker is travelling",
-  arrived: "Worker has arrived",
-  in_progress: "Service in progress",
-  completed: "Service completed",
-  cancelled: "Booking cancelled",
-  rejected: "Booking declined"
-};
+    const steps = [
+      ["requested", "Booking requested"],
+      ["confirmed", "Booking confirmed"],
+      ["in_progress", "Service in progress"],
+      ["completed", "Service completed"]
+    ];
+
+    const labels = {
+      pending: "Booking pending",
+      accepted: "Booking accepted",
+      confirmed: "Booking confirmed",
+      requested: "Booking requested",
+      in_progress: "Service in progress",
+      completed: "Service completed",
+      cancelled: "Booking cancelled",
+      rejected: "Booking declined"
+    };
+
     const flow = status === "accepted"
       ? "confirmed"
       : status;
@@ -5089,215 +2200,10 @@ const labels = {
     }
   }
 }
-
-function initTrackingMap() {
-  if (!window.L) {
-    const el = $("arrivalText");
-    if (el) el.textContent = "Map library is unavailable.";
-    return;
-  }
-
-  const el = $("trackingMap");
-  if (!el || !el.isConnected) return;
-
-  if (!mapInstance) {
-    // Neutral world view: no invented worker location.
-    mapInstance = L.map(el, {
-      zoomControl: true
-    }).setView([20, 0], 2);
-
-    L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        maxZoom: 19,
-        attribution: "© OpenStreetMap contributors"
-      }
-    ).addTo(mapInstance);
-  }
-
-  setTimeout(() => {
-    if (mapInstance) mapInstance.invalidateSize();
-  }, 250);
-
-  if (sb && trackingBookingId) {
-    subscribeTracking(trackingBookingId);
-  }
-}
-
-async function subscribeTracking(id) {
-  if (!sb || !id) return;
-
-  if (locationChannel) {
-    await sb.removeChannel(locationChannel);
-    locationChannel = null;
-  }
-
-  const arrivalEl = $("arrivalText");
-
-  if (arrivalEl) {
-    arrivalEl.textContent = "Checking the latest worker location…";
-  }
-
-  try {
-    const { data, error } = await sb
-      .from("kc_worker_locations")
-      .select("latitude,longitude,updated_at,worker_id")
-      .eq("booking_id", id)
-      .order("updated_at", { ascending: false })
-      .limit(1);
-
-    if (error) throw error;
-
-    if (data && data.length) {
-      updateWorkerMarker(data[0]);
-    } else if (arrivalEl) {
-      arrivalEl.textContent =
-        "No GPS update yet. The assigned worker must share their location.";
-    }
-
-    locationChannel = sb
-      .channel("tracking-" + id)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "kc_worker_locations",
-          filter: "booking_id=eq." + id
-        },
-        payload => {
-          if (payload.new) updateWorkerMarker(payload.new);
-        }
-      )
-      .subscribe();
-  } catch (error) {
-    console.error("Tracking error:", error);
-
-    if (arrivalEl) {
-      arrivalEl.textContent =
-        "Could not load GPS. Check location permissions and database access.";
-    }
-  }
-}
-
-function updateWorkerMarker(row) {
-  if (!mapInstance || !row) return;
-
-  const lat = Number(row.latitude);
-  const lng = Number(row.longitude);
-
-  if (
-    row.latitude == null ||
-    row.longitude == null ||
-    !Number.isFinite(lat) ||
-    !Number.isFinite(lng) ||
-    lat < -90 || lat > 90 ||
-    lng < -180 || lng > 180
-  ) {
-    return;
-  }
-
-  const position = [lat, lng];
-
-  if (workerMarker) {
-    workerMarker.setLatLng(position);
-  } else {
-    workerMarker = L.marker(position)
-      .addTo(mapInstance)
-      .bindPopup("Assigned professional");
-  }
-
-  mapInstance.setView(position, 15);
-
-  const arrivalEl = $("arrivalText");
-  if (arrivalEl) {
-    const time = row.updated_at
-      ? new Date(row.updated_at).toLocaleTimeString("en-IN")
-      : "time unavailable";
-
-    arrivalEl.textContent = "Last GPS update: " + time;
-  }
-
-  const etaEl = $("etaValue");
-  if (etaEl) {
-    etaEl.textContent = "Not available";
-  }
-}
-async function startWorkerLocationSharing(bookingId) {
-  if (!sb || !user) {
-    toast("Please sign in with the worker account.");
-    return;
-  }
-
-  if (!navigator.geolocation) {
-    toast("GPS is not supported by this browser.");
-    return;
-  }
-
-  const options = {
-    enableHighAccuracy: true,
-    maximumAge: 0,
-    timeout: 20000
-  };
-
-  const savePosition = async (pos, showSuccess = false) => {
-    try {
-      const { error } = await sb.rpc(
-        "kc_update_worker_location",
-        {
-          p_booking_id: bookingId,
-          p_latitude: pos.coords.latitude,
-          p_longitude: pos.coords.longitude,
-          p_accuracy: pos.coords.accuracy
-        }
-      );
-
-      if (error) {
-        console.error("Location RPC failed:", error);
-        toast("Location save failed: " + error.message);
-        return false;
-      }
-
-      if (showSuccess) {
-        toast("Live location saved successfully!");
-      }
-
-      return true;
-    } catch (error) {
-      console.error("Location save error:", error);
-      toast("Location error: " + error.message);
-      return false;
-    }
-  };
-
-  navigator.geolocation.getCurrentPosition(
-    async (pos) => {
-      const saved = await savePosition(pos, true);
-
-      if (!saved) return;
-
-      if (locWatch !== null) {
-        navigator.geolocation.clearWatch(locWatch);
-      }
-
-      locWatch = navigator.geolocation.watchPosition(
-        async (nextPos) => {
-          await savePosition(nextPos);
-        },
-        (error) => {
-          toast("GPS update failed: " + error.message);
-        },
-        options
-      );
-
-      toast("Live tracking active. Keep this page open.");
-    },
-    (error) => {
-      toast("GPS permission/error: " + error.message);
-    },
-    options
-  );
-}
+function initTrackingMap(){if(!window.L||mapInstance)return;const el=$("trackingMap");if(!el||!el.isConnected)return;mapInstance=L.map(el,{zoomControl:false}).setView([25.5941,85.1376],13);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(mapInstance);setTimeout(()=>mapInstance?.invalidateSize(),250);if(sb&&trackingBookingId)subscribeTracking(trackingBookingId)}
+async function subscribeTracking(id){if(!sb||!id)return;if(locationChannel)sb.removeChannel(locationChannel);try{const {data,error}=await sb.from("kc_worker_locations").select("latitude,longitude,updated_at,worker_id").eq("booking_id",id).order("updated_at",{ascending:false}).limit(1);if(!error&&data?.[0])updateWorkerMarker(data[0]);locationChannel=sb.channel("tracking-"+id).on("postgres_changes",{event:"*",schema:"public",table:"kc_worker_locations",filter:"booking_id=eq."+id},payload=>{if(payload.new)updateWorkerMarker(payload.new)}).subscribe()}catch(e){console.warn(e.message)}}
+function updateWorkerMarker(row){if(!mapInstance||!row.latitude||!row.longitude)return;const p=[Number(row.latitude),Number(row.longitude)];if(workerMarker)workerMarker.setLatLng(p);else workerMarker=L.marker(p).addTo(mapInstance).bindPopup("Assigned professional");mapInstance.setView(p,15);$("arrivalText").textContent="Worker location updated "+new Date(row.updated_at).toLocaleTimeString();$("etaValue").textContent="—"}
+async function startWorkerLocationSharing(bookingId){if(!sb||!user){toast("Worker must sign in first");return}if(!navigator.geolocation){toast("GPS is not supported");return}if(locWatch!==null)navigator.geolocation.clearWatch(locWatch);locWatch=navigator.geolocation.watchPosition(async pos=>{try{const {error}=await sb.rpc("kc_update_worker_location",{p_booking_id:bookingId,p_latitude:pos.coords.latitude,p_longitude:pos.coords.longitude,p_accuracy:pos.coords.accuracy});if(error)console.error(error.message)}catch(e){console.error(e.message)}},err=>toast("GPS error: "+err.message),{enableHighAccuracy:true,maximumAge:10000,timeout:20000});toast("Location sharing started for this active booking. Keep this page open.");}
 function stopWorkerLocationSharing(){if(locWatch!==null){navigator.geolocation.clearWatch(locWatch);locWatch=null}if(locationChannel&&sb){sb.removeChannel(locationChannel);locationChannel=null}toast("Location sharing stopped on this device.")}
   
 async function isAdminUser(){if(!sb||!user)return false;try{const {data,error}=await sb.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();return !error&&!!data}catch(e){return false}}
@@ -5309,12 +2215,12 @@ async function loadAdminBookings() {
   const list = $("adminBookingsList");
   if (!list) return;
 
-  if (!sb || !(await isAdminUser())) {
-    list.innerHTML = '<div class="empty">Admin access required. Please sign in with your admin account.</div>';
+  if (!(await isAdminUser())) {
+    list.innerHTML = '<div class="empty">Admin access required.</div>';
     return;
   }
 
-  list.innerHTML = '<div class="empty">Loading bookings...</div>';
+  list.innerHTML = '<div class="empty">Loading bookings…</div>';
 
   try {
     const { data, error } = await sb
@@ -5325,134 +2231,28 @@ async function loadAdminBookings() {
 
     if (error) throw error;
 
-    const rows = data || [];
-    const statusOf = b =>
-      String(b.status || "requested").toLowerCase();
-
-    const pending = rows.filter(b =>
-      ["requested", "pending"].includes(statusOf(b))
-    ).length;
-
-    const active = rows.filter(b =>
-      ["confirmed", "accepted", "on_the_way", "arrived", "in_progress"].includes(statusOf(b))
-    ).length;
-
-    const completed = rows.filter(b =>
-      statusOf(b) === "completed"
-    ).length;
-
-    list.innerHTML = `
-      <div class="admin-stat-grid" style="margin-bottom:16px">
-        <div class="admin-stat">
-          <small>Recent bookings loaded</small>
-          <strong>${rows.length}</strong>
-        </div>
-        <div class="admin-stat">
-          <small>Pending</small>
-          <strong>${pending}</strong>
-        </div>
-        <div class="admin-stat">
-          <small>Active</small>
-          <strong>${active}</strong>
-        </div>
-        <div class="admin-stat">
-          <small>Completed</small>
-          <strong>${completed}</strong>
-        </div>
-      </div>
-
-      <div style="display:grid;gap:10px;margin-bottom:16px">
-        <input id="adminBookingSearch"
-          type="search"
-          placeholder="Search service, booking ID, customer ID..."
-          aria-label="Search bookings">
-
-        <select id="adminBookingStatus" aria-label="Filter bookings by status">
-          <option value="all">All statuses</option>
-          <option value="requested">Requested</option>
-          <option value="pending">Pending</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="accepted">Accepted</option>
-          <option value="on_the_way">On the way</option>
-          <option value="arrived">Arrived</option>
-          <option value="in_progress">In progress</option>
-          <option value="completed">Completed</option>
-          <option value="cancelled">Cancelled</option>
-          <option value="rejected">Rejected</option>
-        </select>
-      </div>
-
-      <div id="adminBookingResults"></div>
-    `;
-
-    const results = $("adminBookingResults");
-    const search = $("adminBookingSearch");
-    const statusFilter = $("adminBookingStatus");
-
-    function renderFilteredBookings() {
-      const query = (search.value || "").trim().toLowerCase();
-      const selectedStatus = statusFilter.value;
-
-      const filtered = rows.filter(b => {
-        const text = [
-          b.service_name,
-          b.plan_name,
-          b.id,
-          b.customer_id,
-          b.worker_id,
-          b.address,
-          b.status
-        ].join(" ").toLowerCase();
-
-        const matchesSearch = text.includes(query);
-        const matchesStatus =
-          selectedStatus === "all" ||
-          statusOf(b) === selectedStatus;
-
-        return matchesSearch && matchesStatus;
-      });
-
-      if (!filtered.length) {
-        results.innerHTML =
-          '<div class="empty">No bookings match this search or status.</div>';
-        return;
-      }
-
-      results.innerHTML = filtered.map(b => `
-        <article class="booking-card" style="margin-bottom:12px">
-          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
-            <strong>${esc(b.service_name || "Home service")}</strong>
-            <span class="status">${esc(statusOf(b))}</span>
-          </div>
-
-          <p class="tiny">
-            ${esc(b.plan_name || "Classic")} ·
-            ${esc(b.service_date || "Date not set")} ·
-            ${esc(b.start_time || "Time not set")}
-          </p>
-
-          <p class="tiny">Address: ${esc(b.address || "Not available")}</p>
-          <p class="tiny">Amount: ${money(b.total_amount || 0)}</p>
-          <p class="tiny">Customer ID: ${esc(b.customer_id || "—")}</p>
-          <p class="tiny">Worker ID: ${esc(b.worker_id || "Not assigned")}</p>
-          <p class="tiny">Booking ID: ${esc(b.id)}</p>
-          <p class="tiny">Created: ${
-            b.created_at ? esc(new Date(b.created_at).toLocaleString()) : "—"
-          }</p>
-        </article>
-      `).join("");
+    if (!data || data.length === 0) {
+      list.innerHTML = '<div class="empty">No bookings found.</div>';
+      return;
     }
 
-    search.addEventListener("input", renderFilteredBookings);
-    statusFilter.addEventListener("change", renderFilteredBookings);
-
-    renderFilteredBookings();
-
+    list.innerHTML = data.map(b => `
+      <article class="booking-card">
+        <strong>${esc(b.service_name || "Home service")}</strong>
+        <span class="status">${esc(b.status || "requested")}</span>
+        <p class="tiny">${esc(b.plan_name || "Classic")} · ${esc(b.service_date || "Date not set")} · ${esc(b.start_time || "Time not set")}</p>
+        <p class="tiny">${esc(b.address || "Address not available")}</p>
+        <p class="tiny">Amount: ${money(b.total_amount || 0)}</p>
+        <p class="tiny">Customer ID: ${esc(b.customer_id || "—")}</p>
+        <p class="tiny">Worker ID: ${esc(b.worker_id || "Not assigned")}</p>
+        <p class="tiny">Booking ID: ${esc(b.id)}</p>
+      </article>
+    `).join("");
   } catch (e) {
-    list.innerHTML =
-      `<div class="empty">Could not load bookings: ${esc(e.message)}</div>`;
+    list.innerHTML = `<div class="empty">Could not load bookings: ${esc(e.message)}</div>`;
   }
 }
+
 async function verifyStartOtp(bookingId) {
   const input = document.getElementById("otp-" + bookingId);
   const result = document.getElementById("otp-result-" + bookingId);
@@ -5515,33 +2315,17 @@ const workerIds = profiles.map(w => w.id);
 content.innerHTML = profiles.map(w => `
   <div class="worker-inline">
     <div class="icon-btn">🧰</div>
-
     <div class="grow">
       <strong>${esc(w.full_name || user.email || "Professional")}</strong>
-
       <div class="tiny">
         ${esc(w.profession || "Professional")} ·
         ${esc(w.service_area || "Area not set")}
       </div>
-
-      <div class="tiny">
-        Availability:
-        <strong>${w.available ? "🟢 Online" : "⚪ Offline"}</strong>
-      </div>
-
-      <button
-        class="btn btn-primary"
-        type="button"
-        onclick="setWorkerAvailability(${!w.available})">
-        ${w.available ? "Go Offline" : "Go Online"}
-      </button>
     </div>
-
-    <span class="status">
-      ${w.verified ? "Verified" : "Pending verification"}
-    </span>
+    <span class="status">${w.verified ? "Verified" : "Pending verification"}</span>
   </div>
 `).join("");
+
 const { data: rows, error: bookingError } = await sb
   .from("kc_bookings")
   .select("id,service_name,plan_name,service_date,start_time,address,status,worker_id,created_at")
@@ -5556,57 +2340,19 @@ const professions = profiles.map(w =>
 
 const visibleRows = (rows || []).filter(b => {
   const status = String(b.status || "").toLowerCase();
-  const assignedToMe = workerIds.includes(b.worker_id);  
-const matchingService = services.find(s =>
-  String(s.name || "").trim().toLowerCase() ===
-  String(b.service_name || "").trim().toLowerCase()
-);
-const isMatchingRequest =
-  b.worker_id === null &&
-  status === "requested" &&
-  matchingService &&
-  profiles.some(w =>
-    w.available &&
-    w.verified &&
-    workerMatchesCategory(w, matchingService.category)
-  );
+  const assignedToMe = workerIds.includes(b.worker_id);
+
+  const isMatchingRequest =
+    b.worker_id === null &&
+    status === "requested" &&
+    professions.includes(
+      String(b.service_name || "").trim().toLowerCase()
+    ) &&
+    profiles.some(w => w.available && w.verified);
+
   return assignedToMe || isMatchingRequest;
 });
-// Worker dashboard job statistics
-const oldStats = $("workerJobStats");
-if (oldStats) oldStats.remove();
 
-const totalJobs = visibleRows.length;
-const assignedJobs = visibleRows.filter(b =>
-  workerIds.includes(b.worker_id)
-);
-const completedJobs = assignedJobs.filter(b =>
-  String(b.status || "").toLowerCase() === "completed"
-);
-const activeJobs = assignedJobs.filter(b =>
-  ["confirmed", "on_the_way", "arrived", "in_progress"]
-    .includes(String(b.status || "").toLowerCase())
-);
-
-content.insertAdjacentHTML("beforeend", `
-  <div class="panel" id="workerJobStats" style="margin-top:14px">
-    <h3>📊 Job Summary</h3>
-    <div class="admin-stat-grid" style="margin-top:12px">
-      <div class="admin-stat">
-        <small>Visible jobs</small>
-        <strong>${totalJobs}</strong>
-      </div>
-      <div class="admin-stat">
-        <small>Active jobs</small>
-        <strong>${activeJobs.length}</strong>
-      </div>
-      <div class="admin-stat">
-        <small>Completed</small>
-        <strong>${completedJobs.length}</strong>
-      </div>
-    </div>
-  </div>
-`); 
 if (visibleRows.length === 0) {
   bookings.innerHTML =
     '<div class="empty">No matching requests or assigned bookings found.</div>';
@@ -5616,7 +2362,6 @@ if (visibleRows.length === 0) {
 bookings.innerHTML = visibleRows.map(b => {
   const status = String(b.status || "requested").toLowerCase();
   const isAssigned = workerIds.includes(b.worker_id);
-
   const canAccept =
     !isAssigned &&
     b.worker_id === null &&
@@ -5628,11 +2373,9 @@ bookings.innerHTML = visibleRows.map(b => {
         String(b.service_name || "").trim().toLowerCase()
     );
 
-  const canShareLocation =
+  const readyForOtp =
     isAssigned &&
     ["confirmed", "on_the_way", "arrived"].includes(status);
-
-  const readyForOtp = isAssigned && status === "arrived";
 
   return `
     <article class="booking-card">
@@ -5656,30 +2399,6 @@ bookings.innerHTML = visibleRows.map(b => {
         <p id="accept-result-${esc(b.id)}" class="tiny"></p>
       ` : ""}
 
-      ${canShareLocation ? `
-        <button class="btn btn-light"
-          onclick="startWorkerLocationSharing('${esc(b.id)}')">
-          📍 Share Live Location
-        </button>
-        <p class="tiny">Keep this page open while sharing your GPS.</p>
-      ` : ""}
-
-      ${isAssigned && status === "confirmed" ? `
-        <button class="btn btn-primary"
-          onclick="updateWorkerBookingStatus('${esc(b.id)}','on_the_way')">
-          🚗 Start Travelling
-        </button>
-        <p id="status-result-${esc(b.id)}" class="tiny"></p>
-      ` : ""}
-
-      ${isAssigned && status === "on_the_way" ? `
-        <button class="btn btn-primary"
-          onclick="updateWorkerBookingStatus('${esc(b.id)}','arrived')">
-          📍 I Have Arrived
-        </button>
-        <p id="status-result-${esc(b.id)}" class="tiny"></p>
-      ` : ""}
-
       ${readyForOtp ? `
         <label for="otp-${esc(b.id)}">Customer's service-start OTP</label>
         <input id="otp-${esc(b.id)}" inputmode="numeric" maxlength="8"
@@ -5696,10 +2415,9 @@ bookings.innerHTML = visibleRows.map(b => {
       ${status === "in_progress" && isAssigned ? `
         <p class="tiny">✅ OTP verified. Service is in progress.</p>
         <button class="btn btn-primary"
-          onclick="completeWorkerService('${esc(b.id)}')">
-          ✅ Complete Service
+          onclick="startWorkerLocationSharing('${esc(b.id)}')">
+          📍 Share Live Location
         </button>
-        <p id="status-result-${esc(b.id)}" class="tiny"></p>
       ` : ""}
 
       ${status === "completed" ? '<p class="tiny">✅ Service completed</p>' : ""}
@@ -5707,6 +2425,7 @@ bookings.innerHTML = visibleRows.map(b => {
     </article>
   `;
 }).join("");
+
 } catch (e) {
 content.innerHTML =
 '<div class="empty">Could not load worker profile: ' + esc(e.message) + '</div>';
@@ -5715,88 +2434,6 @@ bookings.innerHTML =
 }
 }
 
-async function updateWorkerBookingStatus(bookingId, nextStatus) {
-  const result = document.getElementById("status-result-" + bookingId);
-
-  try {
-    if (!sb || !user) throw new Error("Please sign in first.");
-
-    if (result) result.textContent = "Updating booking status…";
-
-    const { data, error } = await sb.rpc(
-      "kc_worker_update_booking_status",
-      {
-        p_booking_id: bookingId,
-        p_status: nextStatus
-      }
-    );
-
-    if (error) throw error;
-
-    if (result) result.textContent = "✅ Status updated: " + nextStatus.replaceAll("_", " ");
-    toast("Booking status updated.");
-    await loadWorkerDashboard();
-  } catch (e) {
-    if (result) result.textContent = "❌ " + e.message;
-    else toast("Status update failed: " + e.message);
-  }
-}
-
-async function completeWorkerService(bookingId) {
-  const result = document.getElementById("status-result-" + bookingId);
-
-  if (!confirm("Have you finished this service?")) return;
-
-  try {
-    if (!sb || !user) throw new Error("Please sign in first.");
-
-    if (result) result.textContent = "Completing service…";
-
-    const { data, error } = await sb.rpc(
-      "kc_worker_update_booking_status",
-      {
-        p_booking_id: bookingId,
-        p_status: "completed"
-      }
-    );
-
-    if (error) throw error;
-
-    stopWorkerLocationSharing();
-    if (result) result.textContent = "✅ Service completed successfully.";
-    toast("Service completed!");
-    await loadWorkerDashboard();
-  } catch (e) {
-    if (result) result.textContent = "❌ " + e.message;
-    else toast("Could not complete service: " + e.message);
-  }
-}
-async function setWorkerAvailability(available) {
-  if (!user || !sb) {
-    alert("Please sign in first.");
-    return;
-  }
-
-  try {
-    const { data, error } = await sb.rpc(
-      "kc_set_worker_availability",
-      { p_available: available }
-    );
-
-    if (error) throw error;   
-if (!available) {
-  stopWorkerLocationSharing();
-}
-toast(
-  available
-    ? "You are now Online!"
-    : "You are now Offline!"
-);
-    await loadWorkerDashboard();
-  } catch (e) {
-    alert("Availability update failed: " + e.message);
-  }
-}
 async function acceptKaamConnectBooking(bookingId) {
 const result = $("accept-result-" + bookingId);
 
@@ -5827,278 +2464,38 @@ else alert("Could not accept booking: " + e.message);
 function support(){toast("For support, please add a verified support email or phone number to the site.");}
 
 if (sb) {
-
-  // Restore the existing login session
-  sb.auth.getSession().then(async ({ data, error }) => {
-    if (error) throw error;
+  sb.auth.getSession().then(({ data, error }) => {
+    if (error) {
+      console.error("Session error:", error.message);
+      return;
+    }
 
     user = data.session?.user || null;
 
     if (user) {
-      await ensureProfile();
-      await renderWelcomeProfile();
-      await renderProfile();
-
-      const navigation =
-        performance.getEntriesByType("navigation")[0];
-
-      const isRefresh = navigation?.type === "reload";
-      const lastScreen =
-        localStorage.getItem("kc_last_screen") || "home";
-
-      if (
-        isRefresh &&
-        lastScreen !== "splash" &&
-        lastScreen !== "auth"
-      ) {
-        go(lastScreen);
-      } else {
-        go("home");
-      }
-
-    } else {
-      restoreLastScreen();
+      renderWelcomeProfile();
+      renderProfile();
+      go("home");
     }
-
-  }).catch(error => {
-    console.error("Session restoration error:", error);
-    user = null;
-    go("home");
   });
 
-  // Listen for login, Google login and logout events
-  sb.auth.onAuthStateChange((event, session) => {
+  
+sb.auth.onAuthStateChange((event, session) => {
+  setTimeout(() => {
+    user = session?.user || null;
 
-    setTimeout(async () => {
-      user = session?.user || null;
+    renderWelcomeProfile();
+    renderProfile();
 
-      if (event === "SIGNED_IN" && user) {
-        await ensureProfile();
-        await renderWelcomeProfile();
-        await renderProfile();
-        go("home");
-        return;
-      }
-
-      await renderWelcomeProfile();
-      await renderProfile();
-
-      if (event === "SIGNED_OUT") {
-        go("home");
-      }
-
-    }, 0);
-
-  });
-
-} else {
-  user = null;
-  console.error("Supabase client could not be initialized.");
-  go("home");
+    if (session?.user) {
+      go("home");
+    }
+  }, 0);
+});
 }
-
 renderWelcomeProfile();
+restoreLastScreen();
 loadData();
-async function loadPayroll() {
-  const list = $("payrollList");
-  const workerSelect = $("payrollWorker");
-
-  if (!sb || !(await isAdminUser())) {
-    if (list) list.innerHTML = '<p class="tiny">Admin access required.</p>';
-    notice("payrollNotice", "Please sign in with an authorized admin account.", "error");
-    return;
-  }
-
-  list.innerHTML = '<p class="tiny">Loading salary records...</p>';
-
-  try {
-    const { data: workersData, error: workersError } = await sb
-      .from("worker_profiles")
-      .select("id,full_name,service,area")
-      .order("full_name");
-
-    if (workersError) throw workersError;
-
-    const workersList = workersData || [];
-    const previousWorker = workerSelect.value;
-
-    workerSelect.innerHTML =
-      '<option value="">Select worker</option>' +
-      workersList.map(w =>
-        `<option value="${esc(w.id)}">${esc(w.full_name || "Unnamed worker")} — ${esc(w.service || "Service not set")}</option>`
-      ).join("");
-
-    if (workersList.some(w => w.id === previousWorker)) {
-      workerSelect.value = previousWorker;
-    }
-
-    const { data, error } = await sb
-      .from("kc_worker_payroll")
-      .select("*, worker_profiles(full_name,service,area)")
-      .order("period_end", { ascending: false });
-
-    if (error) throw error;
-
-    const records = data || [];
-    const total = records.reduce((sum, r) => sum + Number(r.total_amount || 0), 0);
-    const pending = records
-      .filter(r => r.payment_status === "pending")
-      .reduce((sum, r) => sum + Number(r.total_amount || 0), 0);
-    const paid = records
-      .filter(r => r.payment_status === "paid")
-      .reduce((sum, r) => sum + Number(r.total_amount || 0), 0);
-
-    $("payrollStats").innerHTML = `
-      <div class="admin-stat"><small>Salary records</small><strong>${records.length}</strong></div>
-      <div class="admin-stat"><small>Total salary</small><strong>${money(total)}</strong></div>
-      <div class="admin-stat"><small>Pending payment</small><strong>${money(pending)}</strong></div>
-      <div class="admin-stat"><small>Paid</small><strong>${money(paid)}</strong></div>
-    `;
-
-    if (!records.length) {
-      list.innerHTML = '<p class="tiny">No salary records found.</p>';
-      return;
-    }
-
-    list.innerHTML = records.map(r => {
-      const w = r.worker_profiles || {};
-      const status = r.payment_status || "pending";
-
-      return `
-        <article class="panel" style="margin-top:12px">
-          <strong>${esc(w.full_name || "Worker")}</strong>
-          <p class="tiny">${esc(w.service || "")} ${w.area ? "· " + esc(w.area) : ""}</p>
-          <p class="tiny">Period: ${esc(r.period_start)} to ${esc(r.period_end)}</p>
-          <p>Target: ${r.target_jobs} · Completed: ${r.completed_jobs}</p>
-          <p>Base salary: ${money(r.base_salary)}</p>
-          <p>Bonus: ${money(r.bonus_amount)}</p>
-          <p><strong>Total: ${money(r.total_amount)}</strong></p>
-          <p>Status: <strong>${esc(status.toUpperCase())}</strong></p>
-          ${r.notes ? `<p class="tiny">Notes: ${esc(r.notes)}</p>` : ""}
-          <button class="btn ${status === "paid" ? "btn-light" : "btn-primary"}"
-            onclick="setPayrollStatus('${esc(r.id)}','${status === "paid" ? "pending" : "paid"}')">
-            ${status === "paid" ? "Mark Pending" : "Mark Paid"}
-          </button>
-        </article>
-      `;
-    }).join("");
-
-  } catch (e) {
-    list.innerHTML = `<p class="tiny">Could not load payroll: ${esc(e.message)}</p>`;
-    console.error("Payroll load error:", e);
-  }
-}
-
-function calculatePayroll() {
-  const target = Math.max(0, Number($("payrollTarget").value) || 0);
-  const completed = Math.max(0, Number($("payrollCompleted").value) || 0);
-  const salary = Math.max(0, Number($("payrollSalary").value) || 0);
-  const bonus = Math.max(0, Number($("payrollBonus").value) || 0);
-  const earnedBonus = target > 0 && completed >= target ? bonus : 0;
-  const total = salary + earnedBonus;
-
-  $("payrollCalc").innerHTML =
-    `Base: ${money(salary)} · Earned bonus: ${money(earnedBonus)} · <strong>Total: ${money(total)}</strong>`;
-
-  return { target, completed, salary, earnedBonus, total };
-}
-
-["payrollTarget", "payrollCompleted", "payrollSalary", "payrollBonus"].forEach(id => {
-  $(id)?.addEventListener("input", calculatePayroll);
-});
-
-$("payrollForm")?.addEventListener("submit", async function (event) {
-  event.preventDefault();
-
-  if (!sb || !(await isAdminUser())) {
-    notice("payrollNotice", "Admin access required.", "error");
-    return;
-  }
-
-  const workerId = $("payrollWorker").value;
-  const periodStart = $("payrollStart").value;
-  const periodEnd = $("payrollEnd").value;
-
-  if (!workerId || !periodStart || !periodEnd) {
-    notice("payrollNotice", "Please complete all required fields.", "error");
-    return;
-  }
-
-  if (periodEnd < periodStart) {
-    notice("payrollNotice", "Period end must be on or after period start.", "error");
-    return;
-  }
-
-  const calc = calculatePayroll();
-
-  const payload = {
-    worker_id: workerId,
-    period_start: periodStart,
-    period_end: periodEnd,
-    target_jobs: calc.target,
-    completed_jobs: calc.completed,
-    base_salary: calc.salary,
-    bonus_amount: calc.earnedBonus,
-    total_amount: calc.total,
-    notes: $("payrollNotes").value.trim() || null,
-    created_by: user.id,
-    updated_at: new Date().toISOString()
-  };
-
-  const button = this.querySelector('button[type="submit"]');
-  button.disabled = true;
-
-  try {
-    const { error } = await sb
-      .from("kc_worker_payroll")
-      .upsert(payload, {
-        onConflict: "worker_id,period_start,period_end"
-      });
-
-    if (error) throw error;
-
-    notice("payrollNotice", "Salary record saved successfully.", "success");
-    await loadPayroll();
-  } catch (e) {
-    notice("payrollNotice", "Save failed: " + e.message, "error");
-    console.error("Payroll save error:", e);
-  } finally {
-    button.disabled = false;
-  }
-});
-
-async function setPayrollStatus(id, status) {
-  if (!["paid", "pending"].includes(status)) return;
-
-  if (!sb || !(await isAdminUser())) {
-    toast("Admin access required.");
-    return;
-  }
-
-  const updateData = {
-    payment_status: status,
-    paid_at: status === "paid" ? new Date().toISOString() : null,
-    paid_by: status === "paid" ? user.id : null,
-    updated_at: new Date().toISOString()
-  };
-
-  try {
-    const { error } = await sb
-      .from("kc_worker_payroll")
-      .update(updateData)
-      .eq("id", id);
-
-    if (error) throw error;
-
-    toast(status === "paid" ? "Salary marked as paid." : "Salary marked as pending.");
-    await loadPayroll();
-  } catch (e) {
-    toast("Payment update failed: " + e.message);
-    console.error("Payroll status error:", e);
-  }
-}
-
-calculatePayroll();
 </script> 
   
 
@@ -6143,15 +2540,7 @@ calculatePayroll();
         <span class="support-card-arrow">↗</span>
       </a>
     </div>
-<div class="page-photo-banner">
-  <img src="./quick-booking.jpg"
-       alt="Quick service booking"
-       loading="lazy">
-  <div class="banner-copy">
-    <h2>Need help quickly?</h2>
-    <p>Find answers and get support with your booking.</p>
-  </div>
-</div>
+
     <div class="support-contact-card">
       <div class="support-contact-heading">
         <span class="support-contact-icon">💬</span>
@@ -6212,4 +2601,4 @@ calculatePayroll();
   </div>
 </section>
 </body>
-  </html>
+</html>
